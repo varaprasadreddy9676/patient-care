@@ -1,0 +1,379 @@
+/**
+ * MedicsCare Theme - Ionic Bridge
+ * Maps Ionic color variables to MedicsCare theme tokens
+ *
+ * This file ensures smooth migration from Ionic's color system
+ * to the MedicsCare enterprise theme system while maintaining
+ * backward compatibility with existing Ionic components.
+ */
+
+// ===================================
+
+// 🔄 IONIC TO MEDICSCARE MAPPING
+// ===================================
+
+// Primary Colors
+:root {
+  // Map Ionic primary to MedicsCare primary
+  --ion-color-primary: var(--mc-color-primary-500);
+  --ion-color-primary-rgb: var(--mc-color-primary-500-rgb, 0, 37, 130);
+  --ion-color-primary-contrast: var(--mc-text-on-primary);
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: var(--mc-color-primary-600);
+  --ion-color-primary-tint: var(--mc-color-primary-400);
+
+  // Map Ionic secondary to MedicsCare neutral
+  --ion-color-secondary: var(--mc-color-neutral-600);
+  --ion-color-secondary-rgb: var(--mc-color-neutral-600-rgb, 75, 85, 99);
+  --ion-color-secondary-contrast: var(--mc-text-inverse);
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: var(--mc-color-neutral-700);
+  --ion-color-secondary-tint: var(--mc-color-neutral-500);
+
+  // Map Ionic tertiary to MedicsCare accent color
+  --ion-color-tertiary: var(--mc-color-info-500);
+  --ion-color-tertiary-rgb: var(--mc-color-info-500-rgb, 59, 130, 246);
+  --ion-color-tertiary-contrast: var(--mc-text-inverse);
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: var(--mc-color-info-600);
+  --ion-color-tertiary-tint: var(--mc-color-info-400);
+
+  // Map Ionic success to MedicsCare success
+  --ion-color-success: var(--mc-color-success-500);
+  --ion-color-success-rgb: var(--mc-color-success-500-rgb, 5, 150, 105);
+  --ion-color-success-contrast: var(--mc-text-on-success);
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: var(--mc-color-success-600);
+  --ion-color-success-tint: var(--mc-color-success-400);
+
+  // Map Ionic warning to MedicsCare warning
+  --ion-color-warning: var(--mc-color-warning-500);
+  --ion-color-warning-rgb: var(--mc-color-warning-500-rgb, 217, 119, 6);
+  --ion-color-warning-contrast: var(--mc-text-on-warning);
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: var(--mc-color-warning-600);
+  --ion-color-warning-tint: var(--mc-color-warning-400);
+
+  // Map Ionic danger to MedicsCare error
+  --ion-color-danger: var(--mc-color-error-500);
+  --ion-color-danger-rgb: var(--mc-color-error-500-rgb, 220, 53, 69);
+  --ion-color-danger-contrast: var(--mc-text-on-error);
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: var(--mc-color-error-600);
+  --ion-color-danger-tint: var(--mc-color-error-400);
+
+  // Map Ionic light/dark to MedicsCare background colors
+  --ion-color-light: var(--mc-bg-primary);
+  --ion-color-light-rgb: var(--mc-bg-primary-rgb, 249, 250, 251);
+  --ion-color-light-contrast: var(--mc-text-primary);
+  --ion-color-light-contrast-rgb: var(--mc-text-primary-rgb, 17, 24, 39);
+  --ion-color-light-shade: var(--mc-bg-secondary);
+  --ion-color-light-tint: var(--mc-bg-tertiary);
+
+  --ion-color-medium: var(--mc-bg-secondary);
+  --ion-color-medium-rgb: var(--mc-bg-secondary-rgb, 243, 244, 246);
+  --ion-color-medium-contrast: var(--mc-text-secondary);
+  --ion-color-medium-contrast-rgb: var(--mc-text-secondary-rgb, 75, 85, 99);
+  --ion-color-medium-shade: var(--mc-bg-tertiary);
+  --ion-color-medium-tint: var(--mc-bg-primary);
+
+  --ion-color-dark: var(--mc-color-neutral-900);
+  --ion-color-dark-rgb: var(--mc-color-neutral-900-rgb, 17, 24, 39);
+  --ion-color-dark-contrast: var(--mc-text-inverse);
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: var(--mc-color-neutral-800);
+  --ion-color-dark-tint: var(--mc-color-neutral-700);
+
+  // Ionic Step Colors (for progress indicators)
+  --ion-color-step-50: var(--mc-color-neutral-100);
+  --ion-color-step-100: var(--mc-color-neutral-200);
+  --ion-color-step-150: var(--mc-color-neutral-300);
+  --ion-color-step-200: var(--mc-color-neutral-300);
+  --ion-color-step-250: var(--mc-color-neutral-400);
+  --ion-color-step-300: var(--mc-color-neutral-400);
+  --ion-color-step-350: var(--mc-color-neutral-500);
+  --ion-color-step-400: var(--mc-color-neutral-500);
+  --ion-color-step-450: var(--mc-color-neutral-600);
+  --ion-color-step-500: var(--mc-color-neutral-600);
+  --ion-color-step-550: var(--mc-color-neutral-700);
+  --ion-color-step-600: var(--mc-color-neutral-700);
+  --ion-color-step-650: var(--mc-color-neutral-800);
+  --ion-color-step-700: var(--mc-color-neutral-800);
+  --ion-color-step-750: var(--mc-color-neutral-900);
+  --ion-color-step-800: var(--mc-color-neutral-900);
+  --ion-color-step-850: var(--mc-color-neutral-900);
+  --ion-color-step-900: var(--mc-color-neutral-900);
+}
+
+// ===================================
+
+// 🏥 MEDICAL CONTEXT IONIC MAPPING
+// ===================================
+
+// Map additional medical colors for Ionic components
+:root {
+  // Patient Status Colors for Ionic components
+  --ion-color-patient-active: var(--mc-patient-active-text);
+  --ion-color-patient-active-rgb: var(--mc-patient-active-text-rgb, 4, 120, 87);
+  --ion-color-patient-active-contrast: var(--mc-patient-active-bg);
+  --ion-color-patient-active-contrast-rgb: 236, 253, 245;
+
+  --ion-color-patient-critical: var(--mc-patient-critical-text);
+  --ion-color-patient-critical-rgb: var(--mc-patient-critical-text-rgb, 185, 28, 28);
+  --ion-color-patient-critical-contrast: var(--mc-patient-critical-bg);
+  --ion-color-patient-critical-contrast-rgb: 254, 242, 242;
+
+  // Appointment Status Colors
+  --ion-color-appointment-booked: var(--mc-appointment-booked-text);
+  --ion-color-appointment-booked-rgb: var(--mc-appointment-booked-text-rgb, 37, 99, 235);
+  --ion-color-appointment-booked-contrast: var(--mc-appointment-booked-bg);
+  --ion-color-appointment-booked-contrast-rgb: 239, 246, 255;
+
+  --ion-color-appointment-completed: var(--mc-appointment-completed-text);
+  --ion-color-appointment-completed-rgb: var(--mc-appointment-completed-text-rgb, 4, 120, 87);
+  --ion-color-appointment-completed-contrast: var(--mc-appointment-completed-bg);
+  --ion-color-appointment-completed-contrast-rgb: 236, 253, 245;
+
+  // Bill Status Colors
+  --ion-color-bill-paid: var(--mc-bill-paid-text);
+  --ion-color-bill-paid-rgb: var(--mc-bill-paid-text-rgb, 4, 120, 87);
+  --ion-color-bill-paid-contrast: var(--mc-bill-paid-bg);
+  --ion-color-bill-paid-contrast-rgb: 236, 253, 245;
+
+  --ion-color-bill-overdue: var(--mc-bill-overdue-text);
+  --ion-color-bill-overdue-rgb: var(--mc-bill-overdue-text-rgb, 185, 28, 28);
+  --ion-color-bill-overdue-contrast: var(--mc-bill-overdue-bg);
+  --ion-color-bill-overdue-contrast-rgb: 254, 242, 242;
+}
+
+// ===================================
+
+// 🎨 IONIC COMPONENT THEMING OVERRIDES
+// ===================================
+
+// Ensure Ionic components use MedicsCare design tokens
+.ion-color-patient-active {
+  --ion-color-base: var(--ion-color-patient-active) !important;
+  --ion-color-base-rgb: var(--ion-color-patient-active-rgb) !important;
+  --ion-color-contrast: var(--ion-color-patient-active-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-patient-active-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-patient-active-shade) !important;
+  --ion-color-tint: var(--ion-color-patient-active-tint) !important;
+}
+
+.ion-color-patient-critical {
+  --ion-color-base: var(--ion-color-patient-critical) !important;
+  --ion-color-base-rgb: var(--ion-color-patient-critical-rgb) !important;
+  --ion-color-contrast: var(--ion-color-patient-critical-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-patient-critical-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-patient-critical-shade) !important;
+  --ion-color-tint: var(--ion-color-patient-critical-tint) !important;
+}
+
+.ion-color-appointment-booked {
+  --ion-color-base: var(--ion-color-appointment-booked) !important;
+  --ion-color-base-rgb: var(--ion-color-appointment-booked-rgb) !important;
+  --ion-color-contrast: var(--ion-color-appointment-booked-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-appointment-booked-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-appointment-booked-shade) !important;
+  --ion-color-tint: var(--ion-color-appointment-booked-tint) !important;
+}
+
+.ion-color-appointment-completed {
+  --ion-color-base: var(--ion-color-appointment-completed) !important;
+  --ion-color-base-rgb: var(--ion-color-appointment-completed-rgb) !important;
+  --ion-color-contrast: var(--ion-color-appointment-completed-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-appointment-completed-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-appointment-completed-shade) !important;
+  --ion-color-tint: var(--ion-color-appointment-completed-tint) !important;
+}
+
+.ion-color-bill-paid {
+  --ion-color-base: var(--ion-color-bill-paid) !important;
+  --ion-color-base-rgb: var(--ion-color-bill-paid-rgb) !important;
+  --ion-color-contrast: var(--ion-color-bill-paid-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-bill-paid-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-bill-paid-shade) !important;
+  --ion-color-tint: var(--ion-color-bill-paid-tint) !important;
+}
+
+.ion-color-bill-overdue {
+  --ion-color-base: var(--ion-color-bill-overdue) !important;
+  --ion-color-base-rgb: var(--ion-color-bill-overdue-rgb) !important;
+  --ion-color-contrast: var(--ion-color-bill-overdue-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-bill-overdue-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-bill-overdue-shade) !important;
+  --ion-color-tint: var(--ion-color-bill-overdue-tint) !important;
+}
+
+// ===================================
+
+// 🌙 DARK THEME IONIC BRIDGE
+// ===================================
+
+[data-theme="dark"] {
+  // Override Ionic colors for dark theme
+  --ion-color-light: var(--mc-bg-secondary);
+  --ion-color-light-rgb: var(--mc-bg-secondary-rgb, 30, 41, 59);
+  --ion-color-light-contrast: var(--mc-text-primary);
+  --ion-color-light-contrast-rgb: var(--mc-text-primary-rgb, 248, 250, 252);
+  --ion-color-light-shade: var(--mc-bg-tertiary);
+  --ion-color-light-tint: var(--mc-bg-primary);
+
+  --ion-color-medium: var(--mc-bg-tertiary);
+  --ion-color-medium-rgb: var(--mc-bg-tertiary-rgb, 51, 65, 85);
+  --ion-color-medium-contrast: var(--mc-text-secondary);
+  --ion-color-medium-contrast-rgb: var(--mc-text-secondary-rgb, 203, 213, 225);
+  --ion-color-medium-shade: var(--mc-bg-primary);
+  --ion-color-medium-tint: var(--mc-bg-secondary);
+
+  --ion-color-dark: var(--mc-bg-inverse);
+  --ion-color-dark-rgb: var(--mc-bg-inverse-rgb, 248, 250, 252);
+  --ion-color-dark-contrast: var(--mc-text-inverse);
+  --ion-color-dark-contrast-rgb: var(--mc-text-inverse-rgb, 15, 23, 42);
+  --ion-color-dark-shade: var(--mc-color-neutral-100);
+  --ion-color-dark-tint: var(--mc-color-neutral-200);
+}
+
+// ===================================
+
+// ♿ HIGH CONTRAST IONIC SUPPORT
+// ===================================
+
+[data-contrast="high"] {
+  // Enhanced Ionic colors for high contrast mode
+  --ion-color-primary: var(--mc-interactive-default);
+  --ion-color-primary-contrast: var(--mc-interactive-default-contrast);
+  --ion-color-secondary: var(--mc-interactive-default);
+  --ion-color-secondary-contrast: var(--mc-interactive-default-contrast);
+  --ion-color-tertiary: var(--mc-interactive-default);
+  --ion-color-tertiary-contrast: var(--mc-interactive-default-contrast);
+  --ion-color-success: var(--mc-interactive-default);
+  --ion-color-success-contrast: var(--mc-interactive-default-contrast);
+  --ion-color-warning: var(--mc-interactive-default);
+  --ion-color-warning-contrast: var(--mc-interactive-default-contrast);
+  --ion-color-danger: var(--mc-interactive-default);
+  --ion-color-danger-contrast: var(--mc-interactive-default-contrast);
+}
+
+// ===================================
+
+// 🔄 BACKWARD COMPATIBILITY UTILITIES
+// ===================================
+
+// CSS classes to help migrate existing Ionic components
+.ion-color-mc-primary {
+  --ion-color-base: var(--mc-color-primary-500) !important;
+  --ion-color-base-rgb: var(--mc-color-primary-500-rgb) !important;
+  --ion-color-contrast: var(--mc-text-on-primary) !important;
+  --ion-color-contrast-rgb: var(--mc-text-on-primary-rgb) !important;
+}
+
+.ion-color-mc-success {
+  --ion-color-base: var(--mc-color-success-500) !important;
+  --ion-color-base-rgb: var(--mc-color-success-500-rgb) !important;
+  --ion-color-contrast: var(--mc-text-on-success) !important;
+  --ion-color-contrast-rgb: var(--mc-text-on-success-rgb) !important;
+}
+
+.ion-color-mc-warning {
+  --ion-color-base: var(--mc-color-warning-500) !important;
+  --ion-color-base-rgb: var(--mc-color-warning-500-rgb) !important;
+  --ion-color-contrast: var(--mc-text-on-warning) !important;
+  --ion-color-contrast-rgb: var(--mc-text-on-warning-rgb) !important;
+}
+
+.ion-color-mc-error {
+  --ion-color-base: var(--mc-color-error-500) !important;
+  --ion-color-base-rgb: var(--mc-color-error-500-rgb) !important;
+  --ion-color-contrast: var(--mc-text-on-error) !important;
+  --ion-color-contrast-rgb: var(--mc-text-on-error-rgb) !important;
+}
+
+.ion-color-mc-info {
+  --ion-color-base: var(--mc-color-info-500) !important;
+  --ion-color-base-rgb: var(--mc-color-info-500-rgb) !important;
+  --ion-color-contrast: var(--mc-text-inverse) !important;
+  --ion-color-contrast-rgb: var(--mc-text-inverse-rgb) !important;
+}
+
+// ===================================
+
+// 🎯 IONIC COMPONENT ENHANCEMENTS
+// ===================================
+
+// Enhance Ionic components with MedicsCare styling
+ion-button {
+  // Use MedicsCare transitions and shadows
+  transition: var(--mc-button-transition);
+  box-shadow: var(--mc-shadow-sm);
+
+  &:hover {
+    box-shadow: var(--mc-shadow-md);
+  }
+
+  &:active {
+    box-shadow: var(--mc-shadow-sm);
+    transform: translateY(1px);
+  }
+}
+
+ion-card {
+  // Use MedicsCare card styling
+  border-radius: var(--mc-card-radius);
+  box-shadow: var(--mc-card-shadow);
+  background-color: var(--mc-card-bg);
+  border: 1px solid var(--mc-card-border);
+
+  &:hover {
+    box-shadow: var(--mc-shadow-lg);
+  }
+}
+
+ion-item {
+  // Use MedicsCare background and border colors
+  --background: var(--mc-bg-primary);
+  --border-color: var(--mc-border-primary);
+
+  &:hover {
+    --background: var(--mc-bg-secondary);
+  }
+}
+
+ion-toolbar {
+  // Use MedicsCare header styling
+  --background: var(--mc-header-bg);
+  --border-color: var(--mc-header-border);
+}
+
+ion-footer {
+  // Use MedicsCare footer styling
+  --background: var(--mc-footer-bg);
+  --border-color: var(--mc-footer-border);
+}
+
+ion-input,
+ion-textarea,
+ion-select {
+  --background: var(--mc-input-bg);
+  --color: var(--mc-input-text);
+  --placeholder-color: var(--mc-input-placeholder);
+  --placeholder-opacity: 1;
+  --padding-start: var(--mc-input-padding-x);
+  --padding-end: var(--mc-input-padding-x);
+  --padding-top: var(--mc-input-padding-y);
+  --padding-bottom: var(--mc-input-padding-y);
+  --border-color: var(--mc-input-border);
+  --border-width: var(--mc-input-border-width);
+  --border-style: solid;
+  --border-radius: var(--mc-input-radius);
+  --background-focused: var(--mc-input-bg);
+  --highlight-color: transparent;
+  --highlight-color-focused: transparent;
+  --highlight-color-valid: transparent;
+  --highlight-color-invalid: transparent;
+  --inner-padding-top: 0;
+  --inner-padding-bottom: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+}

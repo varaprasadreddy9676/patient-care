@@ -1,0 +1,291 @@
+/**
+ * MedicsCare Reminder Page
+ * Professional reminder management using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 PAGE LAYOUT
+// ===================================
+
+:host {
+  display: block;
+}
+
+ion-header {
+  background: transparent;
+
+  ion-toolbar {
+    --background: transparent;
+    --border-width: 0;
+    padding: var(--mc-spacing-sm) var(--mc-spacing-md);
+  }
+}
+
+ion-grid {
+  margin-bottom: var(--mc-spacing-lg);
+}
+
+// ===================================
+// 📋 PAGE TITLE
+// ===================================
+
+.page-title {
+  text-align: center;
+  font-size: var(--mc-font-display-md);
+  font-weight: var(--font-weight-semibold);
+  font-family: Poppins;
+  margin: var(--mc-spacing-md) 0 0;
+  color: var(--mc-text-primary);
+}
+
+// ===================================
+// 📊 EMPTY STATE
+// ===================================
+
+.empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  padding: var(--mc-spacing-2xl);
+
+  h3 {
+    margin: 0;
+    font-weight: var(--font-weight-medium);
+    font-family: Poppins;
+    color: var(--mc-text-secondary);
+  }
+}
+
+// ===================================
+// 📝 REMINDER CARDS
+// ===================================
+
+.reminder-card {
+  margin: var(--mc-spacing-md);
+  border-radius: var(--mc-radius-lg);
+  box-shadow: var(--mc-shadow-sm);
+  overflow: hidden;
+  transition: var(--transition);
+  background: var(--mc-bg-inverse);
+  border: 1px solid var(--mc-border-primary);
+
+  &:hover {
+    box-shadow: var(--mc-shadow-md);
+    transform: translateY(-1px);
+  }
+}
+
+// ===================================
+// 📋 HEADER CONTENT
+// ===================================
+
+.header-content {
+  background-color: var(--mc-color-primary-500);
+  padding: var(--mc-spacing-md);
+}
+
+.patient-name,
+.booking-id {
+  font-family: Poppins;
+  color: var(--mc-text-inverse);
+}
+
+.patient-name {
+  font-size: var(--mc-font-heading-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--mc-spacing-xs);
+}
+
+.booking-id {
+  font-size: var(--mc-font-body-md);
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+// ===================================
+// 📋 DETAIL ROWS
+// ===================================
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--mc-spacing-sm) 0;
+
+  ion-icon {
+    font-size: var(--mc-font-heading-xl);
+    margin-right: var(--mc-spacing-md);
+    min-width: 24px;
+    color: var(--mc-color-primary-500);
+  }
+}
+
+.detail-content {
+  flex: 1;
+  color: var(--mc-text-primary);
+}
+
+.detail-content strong {
+  display: block;
+  margin-bottom: var(--mc-spacing-xs);
+  color: var(--mc-text-primary);
+  font-family: Poppins;
+  font-weight: var(--font-weight-medium);
+}
+
+.detail-content p {
+  margin: 0;
+  font-size: var(--mc-font-body-md);
+  font-family: Poppins;
+  color: var(--mc-text-secondary);
+}
+
+// ===================================
+// 📹 VIDEO CONSULTATION STYLING
+// ===================================
+
+.video-consultation .header-content {
+  background-color: var(--mc-color-success-500);
+}
+
+.video-alert {
+  border-radius: var(--mc-radius-sm);
+  background-color: var(--mc-color-secondary-50);
+  margin: var(--mc-spacing-sm) 0;
+  transition: var(--transition);
+  border-left: 4px solid var(--mc-color-secondary-300);
+
+  &.warning {
+    background-color: var(--mc-color-warning-50);
+    color: var(--mc-color-warning-700);
+    border-left-color: var(--mc-color-warning-300);
+  }
+
+  &.urgent {
+    background-color: var(--mc-color-danger-50);
+    color: var(--mc-color-danger-700);
+    border-left-color: var(--mc-color-danger-300);
+  }
+}
+
+.timer-text {
+  font-weight: var(--font-weight-semibold);
+  margin-left: var(--mc-spacing-xs);
+}
+
+// ===================================
+// ✨ ANIMATIONS
+// ===================================
+
+// Pulse Animation
+.pulse {
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+.warning.pulse {
+  animation: pulse-animation-warning 2s infinite;
+}
+
+.urgent.pulse {
+  animation: pulse-animation-urgent 1.5s infinite;
+}
+
+@keyframes pulse-animation-warning {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+  }
+}
+
+@keyframes pulse-animation-urgent {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+  }
+}
+
+// Shake Animation
+.urgent {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 768px) {
+  .reminder-card {
+    margin: var(--mc-spacing-sm);
+    border-radius: var(--mc-radius-md);
+  }
+
+  .header-content {
+    padding: var(--mc-spacing-sm) var(--mc-spacing-md);
+  }
+
+  .patient-name {
+    font-size: var(--mc-font-heading-md);
+  }
+
+  .detail-row {
+    padding: var(--mc-spacing-xs) 0;
+
+    ion-icon {
+      font-size: var(--mc-font-heading-lg);
+      margin-right: var(--mc-spacing-sm);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: var(--mc-font-heading-lg);
+  }
+
+  .detail-content strong {
+    font-size: var(--mc-font-body-md);
+  }
+
+  .detail-content p {
+    font-size: var(--mc-font-body-sm);
+  }
+}

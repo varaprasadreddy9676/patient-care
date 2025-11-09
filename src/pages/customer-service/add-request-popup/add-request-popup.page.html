@@ -1,0 +1,54 @@
+<div mat-dialog-title class="dialog-header">
+  <!-- Success Header -->
+  <div class="header-success" *ngIf="!issueObject.issueCode">
+    <ion-icon name="checkmark-circle" class="success-icon"></ion-icon>
+    <h2>Request Registered</h2>
+  </div>
+
+  <!-- Submit Header -->
+  <div class="header-submit" *ngIf="issueObject.issueCode">
+    <ion-icon name="create-outline" class="submit-icon"></ion-icon>
+    <h2>Submit Support Request</h2>
+  </div>
+</div>
+
+<mat-dialog-content class="dialog-content">
+  <!-- Success State -->
+  <div class="success-content" *ngIf="!issueObject.issueCode">
+    <div class="success-message">
+      <p class="issue-confirmation">
+        <strong>"{{ issueObject.issueDescription }}"</strong> service request has been registered.
+      </p>
+      <p class="process-info">We will process your request as soon as possible.</p>
+    </div>
+
+    <div class="dialog-actions">
+      <ion-button class="close-btn" expand="block" [mat-dialog-close]>
+        Close
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Submit Form -->
+  <div class="submit-content" *ngIf="issueObject.issueCode">
+    <div class="form-section">
+      <label class="form-label">Additional Information (Optional)</label>
+      <ion-textarea
+        class="form-textarea"
+        [(ngModel)]="issueObject.problemDescription"
+        placeholder="Please describe your issue in detail..."
+        rows="5"
+        auto-grow="true">
+      </ion-textarea>
+    </div>
+
+    <div class="dialog-actions">
+      <ion-button class="cancel-btn" fill="outline" expand="block" [mat-dialog-close]>
+        Cancel
+      </ion-button>
+      <ion-button class="submit-btn" expand="block" (click)="reportNewIssue()">
+        Submit Request
+      </ion-button>
+    </div>
+  </div>
+</mat-dialog-content>

@@ -1,0 +1,291 @@
+/**
+ * MedicsCare Date Range Filter Component
+ * Ultra-compact, professional date filter using the MedicsCare Theme System
+ */
+
+.filter-container {
+  padding: 0;
+  background: transparent;
+
+  .filter-card {
+    margin: 0 0 var(--mc-spacing-sm);
+    background: var(--mc-bg-card);
+    border: 1px solid var(--mc-card-border);
+    border-radius: var(--mc-radius-sm);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: all var(--mc-transition-base);
+
+    &:hover {
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border-color: var(--mc-color-primary-200);
+    }
+
+    .filter-toggle {
+      --padding-start: var(--mc-spacing-sm);
+      --padding-end: var(--mc-spacing-sm);
+      --padding-top: 6px;
+      --padding-bottom: 6px;
+      --min-height: 38px;
+      --detail-icon: none;
+      cursor: pointer;
+      transition: all var(--mc-transition-base);
+      position: relative;
+
+      // Force hide the iOS detail icon
+      .item-detail-icon {
+        display: none !important;
+      }
+
+      ion-icon[part="detail-icon"] {
+        display: none !important;
+      }
+
+      &:hover {
+        --background: var(--mc-bg-secondary);
+      }
+
+      // Visual hint that it's clickable (hidden on mobile and when open)
+      &::after {
+        content: 'Click to filter';
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 9px;
+        color: var(--mc-text-tertiary);
+        opacity: 0.6;
+        pointer-events: none;
+
+        @media (max-width: 600px) {
+          display: none;
+        }
+      }
+
+      // Hide hint when panel is open
+      &.open::after {
+        display: none;
+      }
+
+      ion-icon[slot="start"] {
+        color: var(--mc-color-primary-500);
+        font-size: 18px;
+        margin-right: var(--mc-spacing-xs);
+      }
+
+      ion-icon[slot="end"] {
+        color: var(--mc-text-tertiary);
+        font-size: 16px;
+        transition: transform var(--mc-transition-base);
+      }
+
+      ion-label {
+        margin: 0;
+
+        h2 {
+          font-size: var(--mc-font-body-sm);
+          font-weight: 600;
+          color: var(--mc-text-primary);
+          margin: 0 0 1px 0;
+          line-height: 1.2;
+        }
+
+        p {
+          font-size: var(--mc-font-body-xs);
+          color: var(--mc-text-secondary);
+          margin: 0;
+          line-height: 1.2;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .date-filter-panel {
+    padding: var(--mc-spacing-sm);
+    border-top: 1px solid var(--mc-border-secondary);
+    background: var(--mc-bg-secondary);
+    animation: slideDown 0.25s ease-out;
+
+    .date-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: var(--mc-spacing-sm);
+
+      @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      ion-item {
+        --padding-start: var(--mc-spacing-sm);
+        --padding-end: var(--mc-spacing-sm);
+        --padding-top: var(--mc-spacing-xs);
+        --padding-bottom: var(--mc-spacing-xs);
+        --border-color: var(--mc-border-secondary);
+        --background: var(--mc-bg-card);
+        --min-height: 52px;
+        border-radius: var(--mc-radius-sm);
+        border: 1px solid var(--mc-border-secondary);
+
+        ion-label {
+          color: var(--mc-text-secondary);
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: var(--mc-spacing-xs);
+        }
+
+        ion-input {
+          --color: var(--mc-text-primary);
+          font-size: var(--mc-font-body-sm);
+          font-weight: 500;
+          margin-top: 4px;
+        }
+      }
+    }
+
+    .quick-filters {
+      display: flex;
+      gap: 4px;
+      margin-bottom: var(--mc-spacing-sm);
+      flex-wrap: wrap;
+
+      ion-chip {
+        --background: var(--mc-bg-card);
+        --color: var(--mc-text-secondary);
+        height: 24px;
+        font-size: 10px;
+        font-weight: 600;
+        border: 1px solid var(--mc-border-secondary);
+        border-radius: var(--mc-radius-sm);
+        transition: all var(--mc-transition-base);
+        cursor: pointer;
+        padding: 0 8px;
+
+        ion-label {
+          margin: 0;
+          padding: 0;
+        }
+
+        &:hover {
+          --background: var(--mc-color-primary-50);
+          --color: var(--mc-color-primary-600);
+          border-color: var(--mc-color-primary-200);
+        }
+
+        &.selected {
+          --background: var(--mc-color-primary-500);
+          --color: var(--mc-text-inverse);
+          border-color: var(--mc-color-primary-600);
+          box-shadow: 0 1px 2px rgba(0, 37, 130, 0.15);
+        }
+      }
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+
+      ion-button {
+        --padding-start: var(--mc-spacing-sm);
+        --padding-end: var(--mc-spacing-sm);
+        --border-radius: var(--mc-radius-sm);
+        height: 30px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: none;
+        min-width: 60px;
+
+        &[fill="outline"] {
+          --color: var(--mc-text-secondary);
+          --border-color: var(--mc-border-secondary);
+
+          &:hover {
+            --color: var(--mc-text-primary);
+            --border-color: var(--mc-border-primary);
+          }
+        }
+
+        &:not([fill="outline"]) {
+          --background: var(--mc-color-primary-500);
+          --background-hover: var(--mc-color-primary-600);
+          --background-activated: var(--mc-color-primary-700);
+        }
+      }
+    }
+  }
+}
+
+// ===================================
+// 🎨 ANIMATIONS
+// ===================================
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 600px) {
+  .filter-container {
+    .filter-card {
+      margin: 0 0 var(--mc-spacing-sm);
+
+      .filter-toggle {
+        --padding-start: var(--mc-spacing-xs);
+        --padding-end: var(--mc-spacing-xs);
+        --min-height: 36px;
+
+        ion-icon[slot="start"] {
+          font-size: 16px;
+        }
+
+        ion-icon[slot="end"] {
+          font-size: 14px;
+        }
+
+        ion-label {
+          h2 {
+            font-size: var(--mc-font-body-xs);
+          }
+
+          p {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+
+    .date-filter-panel {
+      padding: var(--mc-spacing-xs);
+
+      .quick-filters {
+        ion-chip {
+          height: 22px;
+          font-size: 9px;
+          padding: 0 6px;
+        }
+      }
+
+      .filter-actions {
+        ion-button {
+          flex: 1;
+          min-width: 55px;
+          height: 28px;
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}

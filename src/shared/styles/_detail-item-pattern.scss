@@ -1,0 +1,384 @@
+/**
+ * MedicsCare Detail Item Pattern
+ * Standard icon + content pattern for consistent information display
+ */
+
+// ===================================
+// 📋 DETAIL ITEM PATTERN MIXIN
+// ===================================
+
+@mixin detail-item-pattern {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--mc-spacing-3) 0;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--mc-border-primary);
+  }
+
+  // First item emphasis (typically the most important info)
+  &:first-child .detail-content {
+    font-weight: 600;
+    color: var(--mc-text-primary);
+  }
+
+  // Hover state for interactive detail items
+  &:hover {
+    background: var(--mc-color-primary-50);
+    border-radius: var(--mc-radius-md);
+    padding: var(--mc-spacing-3);
+    margin: 0 calc(-1 * var(--mc-spacing-3));
+    transition: var(--mc-transition-base);
+  }
+}
+
+// ===================================
+// 🎯 DETAIL ICON STYLES
+// ===================================
+
+@mixin detail-icon-styles {
+  font-size: var(--mc-font-heading-md);
+  color: var(--mc-color-primary-500);
+  margin-right: var(--mc-spacing-lg);
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: var(--mc-transition-base);
+
+  // Hover effect for icons
+  .detail-item:hover & {
+    color: var(--mc-color-primary-600);
+    transform: scale(1.05);
+  }
+}
+
+// ===================================
+// 📝 DETAIL CONTENT STYLES
+// ===================================
+
+@mixin detail-content-styles {
+  flex: 1;
+  line-height: 1.5;
+  font-size: var(--mc-font-body-md);
+  color: var(--mc-text-primary);
+  min-width: 0; // Prevent flex item overflow
+
+  // Doctor name styling (medical context)
+  .doctor-name {
+    font-weight: 600;
+    margin-bottom: var(--mc-spacing-1);
+    color: var(--mc-text-primary);
+  }
+
+  // Specialty styling (medical context)
+  .specialty {
+    color: var(--mc-text-secondary);
+    font-size: var(--mc-font-body-sm);
+  }
+
+  // Additional content styling
+  .detail-subtitle {
+    color: var(--mc-text-secondary);
+    font-size: var(--mc-font-body-sm);
+    margin-top: var(--mc-spacing-1);
+  }
+
+  .detail-meta {
+    color: var(--mc-text-tertiary);
+    font-size: var(--mc-font-body-xs);
+    margin-top: var(--mc-spacing-1);
+  }
+}
+
+// ===================================
+// 🏥 MEDICAL CONTEXT VARIANTS
+// ===================================
+
+// Patient information detail item
+@mixin patient-detail-item {
+  .detail-icon {
+    color: var(--mc-color-info-500);
+  }
+
+  .detail-content {
+    .patient-name {
+      font-weight: 600;
+      color: var(--mc-color-info-700);
+    }
+
+    .patient-id {
+      color: var(--mc-text-secondary);
+      font-size: var(--mc-font-body-sm);
+      font-family: 'Courier New', monospace;
+    }
+  }
+}
+
+// Doctor information detail item
+@mixin doctor-detail-item {
+  .detail-icon {
+    color: var(--mc-color-success-500);
+  }
+
+  .detail-content {
+    .doctor-name {
+      font-weight: 600;
+      color: var(--mc-text-primary);
+    }
+
+    .specialty {
+      color: var(--mc-color-success-600);
+      font-size: var(--mc-font-body-sm);
+    }
+  }
+}
+
+// Appointment information detail item
+@mixin appointment-detail-item {
+  .detail-icon {
+    color: var(--mc-color-primary-500);
+  }
+
+  .detail-content {
+    .appointment-time {
+      font-weight: 500;
+      color: var(--mc-color-primary-600);
+    }
+
+    .appointment-type {
+      color: var(--mc-text-secondary);
+      font-size: var(--mc-font-body-sm);
+    }
+  }
+}
+
+// Payment information detail item
+@mixin payment-detail-item {
+  .detail-icon {
+    color: var(--mc-color-warning-500);
+  }
+
+  .detail-content {
+    .payment-amount {
+      font-weight: 600;
+      color: var(--mc-color-warning-600);
+      font-size: var(--mc-font-heading-sm);
+    }
+
+    .payment-status {
+      color: var(--mc-text-secondary);
+      font-size: var(--mc-font-body-sm);
+    }
+  }
+}
+
+// ===================================
+// 📱 RESPONSIVE DETAIL ITEMS
+// ===================================
+
+@mixin detail-item-responsive {
+  @media (max-width: 600px) {
+    padding: var(--mc-spacing-2) 0;
+
+    &:hover {
+      padding: var(--mc-spacing-2);
+      margin: 0 calc(-1 * var(--mc-spacing-2));
+    }
+
+    .detail-icon {
+      font-size: var(--mc-font-heading-sm);
+      margin-right: var(--mc-spacing-md);
+    }
+
+    .detail-content {
+      font-size: var(--mc-font-body-sm);
+
+      .doctor-name {
+        font-size: var(--mc-font-body-md);
+      }
+
+      .specialty {
+        font-size: var(--mc-font-body-xs);
+      }
+    }
+  }
+}
+
+// ===================================
+// 🎨 ICON COLOR VARIANTS
+// ===================================
+
+@mixin detail-icon-variant($color) {
+  .detail-icon {
+    color: var(--mc-color-#{$color}-500);
+
+    .detail-item:hover & {
+      color: var(--mc-color-#{$color}-600);
+    }
+  }
+}
+
+// Predefined icon variants
+@mixin detail-icon-primary {
+  @include detail-icon-variant('primary');
+}
+
+@mixin detail-icon-success {
+  @include detail-icon-variant('success');
+}
+
+@mixin detail-icon-warning {
+  @include detail-icon-variant('warning');
+}
+
+@mixin detail-icon-error {
+  @include detail-icon-variant('error');
+}
+
+@mixin detail-icon-info {
+  @include detail-icon-variant('info');
+}
+
+// ===================================
+// 🎬 ANIMATIONS FOR DETAIL ITEMS
+// ===================================
+
+@mixin detail-item-animations {
+  animation: fadeInUp 0.4s ease-out;
+
+  // Staggered animation for multiple detail items
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.05}s;
+    }
+  }
+
+  // Hover animation
+  &:hover {
+    transform: translateX(var(--mc-spacing-1));
+  }
+}
+
+// ===================================
+// ♿ ACCESSIBILITY ENHANCEMENTS
+// ===================================
+
+@mixin detail-item-accessibility {
+  // High contrast mode
+  [data-contrast="high"] & {
+    border-bottom-width: 2px;
+
+    &:hover {
+      border: 2px solid var(--mc-border-focus);
+    }
+
+    .detail-icon {
+      font-weight: 700;
+    }
+  }
+
+  // Focus styles for keyboard navigation
+  &:focus-within {
+    outline: 2px solid var(--mc-color-primary-500);
+    outline-offset: 2px;
+    border-radius: var(--mc-radius-md);
+  }
+}
+
+// ===================================
+// 🌙 DARK MODE SUPPORT
+// ===================================
+
+@mixin detail-item-dark-mode {
+  [data-theme="dark"] & {
+    border-bottom-color: var(--mc-border-secondary);
+
+    &:hover {
+      background: var(--mc-color-primary-900);
+    }
+
+    .detail-icon {
+      color: var(--mc-color-primary-400);
+
+      &:hover {
+        color: var(--mc-color-primary-300);
+      }
+    }
+
+    .detail-content {
+      color: var(--mc-text-primary);
+
+      .specialty {
+        color: var(--mc-text-secondary);
+      }
+    }
+  }
+}
+
+// ===================================
+// 🎯 COMPLETE DETAIL ITEM CLASS
+// ===================================
+
+.detail-item {
+  @include detail-item-pattern;
+  @include detail-item-responsive;
+  @include detail-item-accessibility;
+  @include detail-item-dark-mode;
+
+  // Base icon and content styles
+  .detail-icon {
+    @include detail-icon-styles;
+  }
+
+  .detail-content {
+    @include detail-content-styles;
+  }
+
+  // Animation support (optional)
+  &.animate {
+    @include detail-item-animations;
+  }
+}
+
+// ===================================
+// 🏥 SPECIALIZED MEDICAL DETAIL ITEMS
+// ===================================
+
+.detail-item-patient {
+  @include patient-detail-item;
+}
+
+.detail-item-doctor {
+  @include doctor-detail-item;
+}
+
+.detail-item-appointment {
+  @include appointment-detail-item;
+}
+
+.detail-item-payment {
+  @include payment-detail-item;
+}
+
+// ===================================
+// 🎨 VARIANT CLASSES
+// ===================================
+
+.detail-item-primary {
+  @include detail-icon-primary;
+}
+
+.detail-item-success {
+  @include detail-icon-success;
+}
+
+.detail-item-warning {
+  @include detail-icon-warning;
+}
+
+.detail-item-error {
+  @include detail-icon-error;
+}
+
+.detail-item-info {
+  @include detail-icon-info;
+}

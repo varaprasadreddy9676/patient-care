@@ -1,0 +1,9 @@
+<ion-card>
+  <ion-card-content>
+    <div class="file-drop-area" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)" routerLink="/home/attachment-list" routerLinkActive="active">
+      <p>Drag and drop files here <br>or</p>
+      <ion-button routerLink="/home/attachment-list" routerLinkActive="active">Upload your Medical Records</ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>

@@ -1,0 +1,385 @@
+// Variables - Now using theme tokens for consistency
+// Legacy variables mapped to theme system
+$primary-color: var(--mc-text-primary);
+$input-background: var(--mc-bg-primary);
+$border-color: var(--mc-border-primary);
+$brand-color: var(--mc-color-primary-500);
+$secondary-color: var(--mc-text-secondary);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin responsive($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin full-width-height {
+  width: 100vw;
+  // iOS-safe height: uses 100dvh on iOS, 100vh on Android
+  height: var(--app-height, 100vh);
+}
+
+// Styles
+ion-card-header {
+  background: var(--mc-color-primary-500);
+  color: var(--mc-text-inverse);
+  border-top-left-radius: var(--mc-radius-base);
+  border-top-right-radius: var(--mc-radius-base);
+}
+
+ion-card-title {
+  font-size: var(--mc-font-display-sm);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--mc-text-inverse);
+}
+
+ion-card-subtitle {
+  color: var(--mc-bg-primary);
+  opacity: 0.9;
+  font-size: var(--mc-font-body-xl);
+  font-weight: 400;
+}
+
+.background {
+  background: url("../../../assets/new_icons_list/login-background.png") left/81% 100%
+    no-repeat;
+  background-size: cover;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 32px;
+}
+
+.login-card {
+  max-width: 450px;
+  width: 100%;
+  margin: 0;
+  border-radius: var(--mc-radius-base);
+  box-shadow: var(--mc-shadow-xl);
+}
+
+ion-col {
+  color: $primary-color;
+}
+
+.fields {
+  height: var(--mc-form-input-height);  // 48px for consistency
+  gap: var(--mc-spacing-2);
+  border-radius: var(--mc-form-input-radius);  // 12px for controls
+  background-color: var(--mc-bg-primary);
+  border: 1px solid var(--mc-border-primary);
+  --padding-start: var(--mc-spacing-3);
+  margin-top: var(--mc-spacing-2);
+}
+
+@include responsive(450px) {
+  .text {
+    margin-top: 0%;
+  }
+
+  .message {
+    font-size: var(--mc-font-display-sm);
+    line-height: 33px;
+    padding-left: 15%;
+  }
+
+  .name_field,
+  .input {
+    width: 100%;
+  }
+
+  .login-card {
+    padding-left: 0;
+  }
+
+  .row_three {
+    margin-top: 0;
+  }
+}
+
+ion-select {
+  padding-right: 20px;
+  width: 100%;
+}
+
+ion-select::part(icon) {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// header & footer
+.landing_header,
+.landing_footer {
+  background: var(--primary-main);
+  // Use a fixed height with safe-area padding instead of viewport units for headers/footers
+  height: 80px;
+  @include flex-center;
+  justify-content: center;
+
+  // Add safe-area padding on iOS
+  .ios & {
+    padding-top: var(--safe-area-top);
+    padding-bottom: var(--safe-area-bottom);
+  }
+}
+
+/* Input Fields */
+.custom-input,
+.custom-select {
+  background-color: var(--mc-bg-primary);
+  font-size: var(--mc-font-form-input);
+  height: var(--mc-form-input-height);  // 48px for consistency
+  width: 100%;
+  box-shadow: none;
+  border: 1px solid var(--mc-border-primary);
+  color: var(--mc-text-primary);
+  font-weight: 500;
+  border-radius: var(--mc-form-input-radius);
+  padding: 0 var(--mc-spacing-4);
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--mc-text-tertiary);
+    font-weight: 400;
+  }
+}
+
+.genField {
+  padding-left: var(--mc-spacing-2);
+}
+
+.grid-style {
+  margin: 0% 4%;
+  padding: 1%;
+}
+
+/* Labels */
+.label {
+  font-size: var(--mc-font-form-label);
+  font-weight: 500;
+  color: var(--mc-text-primary);
+  font-family: var(--ion-font-family);
+  display: flex;
+  align-items: center;
+  gap: var(--mc-spacing-2);
+  margin-bottom: var(--mc-spacing-1);
+
+  ion-icon {
+    font-size: var(--mc-icon-size-md);  // 24px for consistency
+    min-width: var(--mc-icon-size-md);
+    color: var(--mc-color-primary-500);
+  }
+}
+
+/* Buttons */
+.signup-button {
+  font-weight: 600;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 1px;
+}
+
+.cancel-button {
+  font-weight: 600;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 1px;
+}
+
+ion-button {
+  text-transform: none;  // Sentence case for better UX
+  border-radius: var(--mc-button-radius);
+  font-size: var(--mc-font-button-md);
+  font-weight: 600;
+  height: var(--mc-button-height);
+  letter-spacing: 0.025em;  // Subtle letter spacing for readability
+}
+
+.button-container {
+  margin-top: var(--mc-spacing-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--mc-spacing-4);
+}
+
+.sign-in-button,
+.sign-up-button {
+  --border-radius: var(--mc-button-radius);
+  margin: 0;
+  --background: var(--mc-color-primary-500);  // Primary blue CTA
+  --color: var(--mc-text-inverse);
+  font-weight: 600;
+  font-size: var(--mc-font-button-md);
+  letter-spacing: 0.025em;
+  height: var(--mc-button-height);
+
+  ion-icon {
+    margin-right: var(--mc-spacing-2);
+    font-size: var(--mc-icon-size-md);
+  }
+
+  &:hover {
+    --background: var(--mc-color-primary-600);
+  }
+
+  &:active {
+    --background: var(--mc-color-primary-700);
+  }
+}
+
+.divider {
+  @include flex-center;
+  gap: var(--mc-spacing-4);
+  margin: var(--mc-spacing-2) 0;
+
+  &-line {
+    flex: 1;
+    height: 1px;
+    background: var(--mc-border-primary);
+  }
+
+  &-text {
+    color: var(--mc-text-tertiary);
+    font-size: var(--mc-font-body-sm);
+    font-weight: 500;
+  }
+}
+
+.signup-text {
+  text-align: center;
+  margin: 0;
+  color: var(--mc-text-secondary);
+  font-size: var(--mc-font-body-sm);
+
+  b {
+    color: var(--mc-color-primary-500);
+    font-weight: 600;
+  }
+}
+
+// Gender Segment Styling
+.gender-segment {
+  margin-top: var(--mc-spacing-2);
+  width: 100%;
+  height: var(--mc-form-input-height);
+  border-radius: var(--mc-form-input-radius);
+  border: 1px solid var(--mc-border-primary);
+  background: var(--mc-bg-primary);
+
+  ion-segment-button {
+    --indicator-color: var(--mc-color-primary-500);
+    --color: var(--mc-text-secondary);
+    --color-checked: var(--mc-text-inverse);
+    font-size: var(--mc-font-body-sm);
+    font-weight: 500;
+    min-height: var(--mc-form-input-height);
+
+    &:first-child {
+      border-top-left-radius: var(--mc-form-input-radius);
+      border-bottom-left-radius: var(--mc-form-input-radius);
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--mc-form-input-radius);
+      border-bottom-right-radius: var(--mc-form-input-radius);
+    }
+
+    &.segment-button-checked {
+      --background: var(--mc-color-primary-500);
+      --color: var(--mc-text-inverse);
+    }
+  }
+}
+
+// Responsive Design
+@media (min-width: 992px) {
+  .background {
+    padding-right: 3%;
+  }
+
+  .login-card {
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .background {
+    padding-right: 8%;
+  }
+
+  .login-card {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 767px) {
+  .background {
+    justify-content: center;
+    background-size: cover;
+    // iOS-safe height: uses 100dvh on iOS, 100vh on Android
+    height: var(--app-height, 100vh);
+  }
+
+  .login-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-card {
+    max-height: 545px;
+    overflow-y: auto;
+  }
+
+  ion-card-title {
+    font-size: var(--mc-font-heading-xl);
+    letter-spacing: 0;
+  }
+
+  ion-card-subtitle {
+    font-size: var(--mc-font-body-lg);
+    font-weight: unset;
+  }
+
+  .custom-input {
+    font-size: var(--mc-font-body-md);
+  }
+
+  .grid-style {
+    margin: 0;
+  }
+
+  .label {
+    font-size: var(--mc-font-form-label);
+  }
+
+  .fields {
+    margin-top: 2px;
+  }
+
+  .button-container {
+    margin-top: 10px;
+  }
+
+  .sign-up-button {
+    font-size: var(--mc-font-button-md);
+  }
+
+  .divider {
+    margin: 0;
+  }
+
+  .signup-text {
+    font-size: var(--mc-font-body-sm);
+  }
+}

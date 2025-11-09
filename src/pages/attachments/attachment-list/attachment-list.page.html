@@ -1,0 +1,182 @@
+<ion-content class="attachment-list-page">
+  <div class="container">
+    <!-- Modern Header -->
+    <header class="header">
+      <h1>Medical Attachments</h1>
+      <p class="subtitle">
+        <span *ngIf="familyMember">Viewing attachments for {{ familyMember.fullName }}</span>
+        <span *ngIf="!familyMember">Manage your medical documents and images</span>
+      </p>
+    </header>
+
+    <!-- Hidden File Inputs (always in DOM) -->
+    <input
+      accept="application/pdf,image/png,image/jpeg"
+      #fileInput
+      type="file"
+      (change)="onFileChange($event)"
+      style="display: none;" />
+    <input
+      accept="image/png,image/jpeg"
+      #fileInputpng
+      type="file"
+      (change)="onFileChange($event)"
+      style="display: none;" />
+
+    <!-- Action Bar -->
+    <div class="action-bar" *ngIf="!appointment && attachmentDates && attachmentDates.length > 0">
+      <div class="info-section">
+        <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+        <span class="info-text">Supported formats: PDF, JPEG, JPG, PNG</span>
+      </div>
+      <div class="button-group">
+        <ion-button
+          fill="outline"
+          size="default"
+          *ngIf="selectedAttachments.length == 0"
+          (click)="hideCheckBox = !hideCheckBox"
+          class="secondary-button">
+          <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+          Select
+        </ion-button>
+        <ion-button
+          fill="solid"
+          size="default"
+          *ngIf="selectedAttachments.length == 0"
+          (click)="buttonClick()"
+          class="primary-button">
+          <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+          Attach File
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Selection Action Bar -->
+    <div class="selection-action-bar" *ngIf="selectedAttachments.length > 0">
+      <div class="selection-info">
+        <ion-icon name="checkmark-circle" class="selection-icon"></ion-icon>
+        <span class="selection-count">{{ selectedAttachments.length }} item<span *ngIf="selectedAttachments.length > 1">s</span> selected</span>
+      </div>
+      <div class="selection-actions">
+        <ion-button
+          fill="clear"
+          size="small"
+          *ngIf="!appointment && selectedAttachments.length === 1"
+          (click)="renameAttachment(selectedAttachments[0])"
+          class="action-btn">
+          <ion-icon slot="start" name="create-outline"></ion-icon>
+          Rename
+        </ion-button>
+        <ion-button
+          fill="clear"
+          size="small"
+          color="danger"
+          *ngIf="!appointment"
+          (click)="removeAttachment()"
+          class="action-btn">
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+          Delete
+        </ion-button>
+        <ion-button
+          fill="clear"
+          size="small"
+          *ngIf="appointment"
+          (click)="shareAttachmentToVisit()"
+          class="action-btn">
+          <ion-icon slot="start" name="share-outline"></ion-icon>
+          Share
+        </ion-button>
+        <ion-button
+          fill="clear"
+          size="small"
+          (click)="unmarkAttachments()"
+          class="action-btn cancel-btn">
+          <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+          Cancel
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!attachmentDates || attachmentDates.length === 0">
+      <div class="empty-icon-wrapper">
+        <ion-icon name="document-attach-outline" class="empty-icon"></ion-icon>
+      </div>
+      <h3 class="text-professional-title">No attachments yet</h3>
+      <p class="text-professional-body">Start adding medical documents, reports, and images to keep all your health records organized in one place</p>
+      <ion-button
+        *ngIf="!appointment"
+        (click)="buttonClick()"
+        size="default"
+        fill="solid"
+        class="add-first-button">
+        <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+        Add First Attachment
+      </ion-button>
+    </div>
+
+    <!-- Attachments Grid by Date -->
+    <div class="attachments-container" *ngIf="attachmentDates && attachmentDates.length > 0">
+      <div *ngFor="let date of attachmentDates" class="date-section">
+        <!-- Date Header -->
+        <div class="date-header">
+          <ion-icon name="calendar-outline" class="date-icon"></ion-icon>
+          <h3 class="date-title">{{ stringToDate(date) | date:"EEEE, MMMM dd, yyyy" }}</h3>
+        </div>
+
+        <!-- Attachments Grid -->
+        <div class="attachments-grid">
+          <div
+            *ngFor="let attachment of attachments[date]"
+            class="attachment-card"
+            [class.selected]="attachment.isSelected"
+            [class.uploading]="currentUpload && currentUpload.fileName === attachment.fileName">
+
+            <!-- Selection Checkbox -->
+            <ion-checkbox
+              *ngIf="!hideCheckBox"
+              (ionChange)="fileChecked($event, attachment)"
+              [(ngModel)]="attachment.isSelected"
+              class="attachment-checkbox"
+              mode="ios">
+            </ion-checkbox>
+
+            <!-- Attachment Thumbnail -->
+            <div class="attachment-thumbnail" (click)="openFile(attachment)" [class.disabled]="disableThumbnailClick">
+              <img
+                *ngIf="attachment.contentType !== 'application/pdf'"
+                [src]="sanitizeURI(attachment.thumbnailBase64DataURI)"
+                [alt]="attachment.fileName"
+                class="thumbnail-image">
+
+              <img
+                *ngIf="attachment.contentType === 'application/pdf'"
+                [src]="sanitizeURI(attachment.thumbnailBase64DataURI)"
+                [alt]="attachment.fileName"
+                class="thumbnail-image">
+
+              <!-- PDF Badge -->
+              <div class="file-type-badge" *ngIf="attachment.contentType === 'application/pdf'">
+                <ion-icon name="document-text-outline"></ion-icon>
+                <span>PDF</span>
+              </div>
+
+              <!-- Image Badge -->
+              <div class="file-type-badge image-badge" *ngIf="attachment.contentType !== 'application/pdf'">
+                <ion-icon name="image-outline"></ion-icon>
+                <span>Image</span>
+              </div>
+            </div>
+
+            <!-- Attachment Info -->
+            <div class="attachment-info">
+              <div class="file-name" [title]="attachment.fileName">
+                {{ attachment.fileName }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

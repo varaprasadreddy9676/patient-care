@@ -1,0 +1,162 @@
+<ion-content class="bill-details-page">
+  <div class="container" *ngIf="fetchedBill">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Bill Details</h1>
+      <p class="subtitle">View and manage your medical bill</p>
+    </header>
+
+    <!-- Main Bill Card -->
+    <div class="bill-card">
+      <!-- Status Section -->
+      <div class="status-section">
+        <div class="bill-id" *ngIf="fetchedBill.id">
+          <span class="id-label">Bill ID:</span>
+          <span class="id-value">{{ fetchedBill.id }}</span>
+        </div>
+        <div class="status-badge"
+             [class.status-paid]="fetchedBill.billStatus === 'FullyPaid'"
+             [class.status-partial]="fetchedBill.billStatus === 'partiallyPaid'">
+          {{ fetchedBill.billStatus === 'FullyPaid' ? 'Fully Paid' : 'Partially Paid' }}
+        </div>
+      </div>
+
+      <!-- Bill Information -->
+      <div class="bill-details">
+        <div class="detail-item">
+          <ion-icon name="person-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">{{ fetchedBill.familyMemberName }}</div>
+        </div>
+
+        <div class="detail-item">
+          <ion-icon name="business-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">{{ fetchedBill.hospitalName }}</div>
+        </div>
+
+        <div class="detail-item">
+          <ion-icon name="calendar-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">{{ fetchedBill.billdate }}</div>
+        </div>
+
+        <div class="detail-item" *ngIf="fetchedBill.consultantName">
+          <ion-icon name="medical-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            <div class="doctor-name">{{ fetchedBill.consultantName }}</div>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="fetchedBill.visitID">
+          <ion-icon name="document-text-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            <span class="detail-label">Visit ID:</span> {{ fetchedBill.visitID }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Billing Summary Section -->
+    <div class="billing-section" *ngIf="bill && bill[0]">
+      <h3 class="section-title">Bill Items</h3>
+
+      <!-- Bill Charges Table -->
+      <div class="charges-table" *ngIf="bill[0].billDetail && bill[0].billDetail.length > 0">
+        <!-- Table Header -->
+        <div class="table-header">
+          <div class="table-cell header-cell sno-col">S.No</div>
+          <div class="table-cell header-cell description-col">Description</div>
+          <div class="table-cell header-cell amount-col">Amount</div>
+        </div>
+
+        <!-- Table Body -->
+        <div class="table-body">
+          <div class="table-row" *ngFor="let charge of bill[0].billDetail; let i = index">
+            <div class="table-cell sno-col">{{ i + 1 }}</div>
+            <div class="table-cell description-col">{{ charge.chargeName || charge.name || 'Consultation' }}</div>
+            <div class="table-cell amount-col">₹{{ getChargeAmount(charge) }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No charges message -->
+      <div class="empty-charges" *ngIf="!bill[0].billDetail || bill[0].billDetail.length === 0">
+        <p>No charges available</p>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Bill Amounts -->
+      <div class="amount-summary">
+        <div class="amount-row" *ngIf="bill[0].taxAmount">
+          <span class="amount-label">Tax Amount:</span>
+          <span class="amount-value">₹{{ bill[0].taxAmount }}</span>
+        </div>
+
+        <div class="amount-row total-row">
+          <span class="amount-label">Total Amount:</span>
+          <span class="amount-value total">₹{{ bill[0].netAmount }}</span>
+        </div>
+
+        <div class="amount-row paid-row" *ngIf="bill[0].receiptAmount">
+          <span class="amount-label">Paid Amount:</span>
+          <span class="amount-value paid">₹{{ bill[0].receiptAmount }}</span>
+        </div>
+
+        <div class="amount-row pending-row" *ngIf="pendingAmount > 0">
+          <span class="amount-label">Pending Amount:</span>
+          <span class="amount-value pending">₹{{ pendingAmount }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Details Section -->
+    <div class="payment-section" *ngIf="bill && bill[0] && bill[0].receiptId">
+      <h3 class="section-title">Payment Details</h3>
+
+      <div class="payment-info">
+        <div class="detail-item">
+          <ion-icon name="receipt-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            <span class="detail-label">Receipt ID:</span>
+            <span class="receipt-id">{{ bill[0].receiptId }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <ion-icon name="calendar-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            <span class="detail-label">Payment Date:</span> {{ bill[0].date }}
+          </div>
+        </div>
+      </div>
+
+      <div class="receipt-actions">
+        <ion-button fill="solid" class="view-button"
+                    (click)="viewReceipt(bill[0].receiptId)">
+          <ion-icon slot="start" name="eye-outline"></ion-icon>
+          View Receipt
+        </ion-button>
+        <ion-button fill="clear" class="download-button"
+                    (click)="downloadReceipt(bill[0].receiptId)">
+          <ion-icon slot="start" name="download-outline"></ion-icon>
+          Download Receipt
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons" *ngIf="fetchedBill.billStatus !== 'FullyPaid' && pendingAmount > 0">
+      <ion-button expand="block" (click)="makePayment()">
+        <ion-icon slot="start" name="wallet-outline"></ion-icon>
+        Pay ₹{{ pendingAmount }}
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!fetchedBill">
+    <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+    <h2>No Bill Details</h2>
+    <p>Unable to load bill information</p>
+  </div>
+</ion-content>

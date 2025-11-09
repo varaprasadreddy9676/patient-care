@@ -1,0 +1,269 @@
+/**
+ * MedicsCare Confirm Appointment Page
+ * Professional appointment confirmation using the MedicsCare Theme System
+ */
+
+.appointment-confirmation {
+  --padding-top: var(--mc-spacing-2xl);
+  --padding-bottom: var(--mc-spacing-2xl);
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-xl);
+    padding-bottom: 160px; // Extra bottom padding to account for page footer (75px) + app tab bar (85px)
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: var(--mc-spacing-2xl);
+
+    h1 {
+      font-size: var(--mc-font-heading-lg);
+      font-weight: 600;
+      color: var(--color-gray-900);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--mc-font-body-md);
+      color: var(--color-gray-600);
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+
+  // ===================================
+  // 📋 APPOINTMENT DETAILS
+  // ===================================
+
+  .appointment-details {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4) var(--spacing-5);
+    box-shadow: var(--shadow-sm);
+    animation: fadeInUp 0.4s ease-out;
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--spacing-3) 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+
+    &:first-child .detail-content {
+      font-weight: 600;
+      color: var(--mc-text-primary);
+    }
+  }
+
+  .detail-icon {
+    font-size: var(--mc-font-heading-md);
+    color: var(--mc-color-primary-500);
+    margin-right: var(--mc-spacing-lg);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .detail-content {
+    flex: 1;
+    line-height: 1.5;
+
+    .doctor-name {
+      font-weight: 600;
+      margin-bottom: var(--spacing-1);
+      color: var(--mc-text-primary);
+    }
+
+    .specialty {
+      color: var(--color-gray-600);
+      font-size: var(--mc-font-body-sm);
+    }
+  }
+
+  // ===================================
+  // 💳 PRICING SECTION
+  // ===================================
+
+  .consultation-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--mc-spacing-lg);
+  }
+
+  .price-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .price-label {
+      font-size: var(--mc-font-body-sm);
+      color: var(--mc-text-secondary);
+    }
+
+    .price-amount {
+      font-weight: var(--mc-font-weight-medium);
+      color: var(--mc-text-primary);
+    }
+  }
+
+  .free-consultation-notice {
+    text-align: center;
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-3);
+    color: var(--color-gray-700);
+    margin: var(--mc-spacing-2xl) 0 var(--spacing-3) 0;
+    font-size: var(--mc-font-body-sm);
+    font-weight: 500;
+  }
+
+  // ===================================
+  // 🔘 ACTION BUTTONS
+  // ===================================
+
+  .action-buttons {
+    margin-top: var(--mc-spacing-xl);
+    padding: 0;
+
+    .primary-button {
+      --background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-700));
+      --color: var(--color-white);
+      --border-radius: var(--radius-md);
+      --padding-top: var(--mc-spacing-lg);
+      --padding-bottom: var(--mc-spacing-lg);
+      --box-shadow: var(--shadow-md);
+      font-weight: 600;
+
+      &:hover {
+        --background: linear-gradient(90deg, var(--color-primary-700), var(--color-primary-800));
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+}
+
+// ===================================
+// 🔘 FOOTER STYLING
+// ===================================
+
+.appointment-footer {
+  --background: var(--color-white);
+  --border-top: 1px solid var(--color-gray-100);
+  padding: var(--mc-spacing-lg);
+
+  .action-buttons {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+
+    .primary-button {
+      --background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-700));
+      --color: var(--color-white);
+      --border-radius: var(--radius-md);
+      --padding-top: var(--mc-spacing-lg);
+      --padding-bottom: var(--mc-spacing-lg);
+      --box-shadow: var(--shadow-md);
+      font-weight: 600;
+
+      &:hover {
+        --background: linear-gradient(90deg, var(--color-primary-700), var(--color-primary-800));
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .appointment-footer {
+    padding: var(--mc-spacing-md);
+
+    .action-buttons {
+      padding: 0;
+    }
+  }
+}
+
+// ===================================
+// 🎬 ANIMATIONS
+// ===================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===================================
+// 📊 LOADING STATE
+// ===================================
+
+.loading-progress {
+  --progress-background: var(--mc-color-primary-500);
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 600px) {
+  .appointment-confirmation {
+    .container {
+      padding: 0 var(--mc-spacing-md);
+      padding-bottom: 180px; // Extra bottom padding for smaller screens to account for page footer + app tab bar
+    }
+
+    .header h1 {
+      font-size: var(--mc-font-heading-md);
+    }
+
+    .header .subtitle {
+      font-size: var(--mc-font-body-sm);
+    }
+
+    .appointment-details {
+      padding: var(--spacing-3) var(--spacing-4);
+    }
+
+    .detail-item {
+      padding: var(--spacing-2) 0;
+    }
+
+    .consultation-type {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .price-info {
+        align-items: flex-start;
+        margin-top: var(--mc-spacing-sm);
+      }
+    }
+
+    .action-buttons {
+      margin-top: var(--mc-spacing-lg);
+    }
+  }
+}

@@ -1,0 +1,82 @@
+<div class="rename-dialog-container">
+  <!-- Dialog Header -->
+  <div class="dialog-header">
+    <ion-icon name="create-outline" class="header-icon"></ion-icon>
+    <h2 class="header-title">Rename Attachment</h2>
+  </div>
+
+  <!-- Dialog Content -->
+  <div class="dialog-content">
+    <!-- Thumbnail Preview -->
+    <div class="thumbnail-preview">
+      <img
+        [src]="sanitizeURI(attachment.thumbnailBase64DataURI)"
+        [alt]="attachment.fileName"
+        class="preview-image"
+      />
+      <div class="file-type-indicator" *ngIf="attachment.contentType === 'application/pdf'">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <span>PDF Document</span>
+      </div>
+      <div class="file-type-indicator image-type" *ngIf="attachment.contentType !== 'application/pdf'">
+        <ion-icon name="image-outline"></ion-icon>
+        <span>Image File</span>
+      </div>
+    </div>
+
+    <!-- Current File Name Display -->
+    <div class="current-file-info" *ngIf="fileName">
+      <div class="info-label">
+        <ion-icon name="document-outline" class="info-icon"></ion-icon>
+        <span>Current name:</span>
+      </div>
+      <div class="current-name">{{ fileName }}</div>
+    </div>
+
+    <!-- Input Field -->
+    <div class="input-section">
+      <label for="fileNameInput" class="input-label">New file name</label>
+      <input
+        id="fileNameInput"
+        cdkFocusInitial
+        class="file-name-input"
+        type="text"
+        (keyup.enter)="saveDialog()"
+        maxlength="260"
+        [(ngModel)]="attachment.fileName"
+        placeholder="Enter new file name"
+      />
+      <div class="input-hint">Maximum 260 characters</div>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-banner" *ngIf="isFileNameExists">
+      <ion-icon name="alert-circle-outline" class="error-icon"></ion-icon>
+      <div class="error-content">
+        <strong>Name already exists</strong>
+        <p>A file named "<strong>{{ fileName }}</strong>" already exists. Please choose a different name.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog Actions -->
+  <div class="dialog-actions">
+    <ion-button
+      fill="outline"
+      size="default"
+      (click)="closeDialog()"
+      class="cancel-button">
+      <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+      Cancel
+    </ion-button>
+    <ion-button
+      fill="solid"
+      size="default"
+      (click)="saveDialog()"
+      class="save-button"
+      [disabled]="!attachment.fileName || attachment.fileName.trim().length === 0">
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+      Save Changes
+    </ion-button>
+  </div>
+</div>

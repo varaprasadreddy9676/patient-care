@@ -1,0 +1,23 @@
+╭──────────────────────────────────────────────────────────────╮
+│ ✻ Welcome to Claude Code!                                    │
+│                                                              │
+│   /help for help, /status for your current setup             │
+│                                                              │
+│   cwd: /Users/sai/Documents/ubq/medics-care/medics-care-app  │
+╰──────────────────────────────────────────────────────────────╯
+
+ Tips for getting started:
+
+  Use Claude to help with file analysis, editing, bash commands and git
+  Be as specific as you would with another engineer for the best results
+  ✔ Run /init to create a CLAUDE.md file with instructions for Claude
+⏺ Compact summary (ctrl+r to expand)
+  ⎿  Read src/services/authentication/biometric.service.ts (44 lines)
+  ⎿  Read src/pages/login/token-verification/token-verification.page.html (46 lines)
+  ⎿  Read src/app/app.component.ts (216 lines)
+  ⎿  Read src/pages/financials/bills/bills.page.html (187 lines)
+  ⎿  Read src/pages/financials/bills/bills.page.scss (615 lines)
+
+> /compact 
+  ⎿  Compacted. ctrl+r to see full summary
+

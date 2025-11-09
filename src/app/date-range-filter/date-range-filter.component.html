@@ -1,0 +1,57 @@
+<div class="filter-container">
+  <ion-card class="filter-card">
+    <ion-item lines="none" (click)="toggleDateFilter()" class="filter-toggle" [class.open]="isFilterOpen" detail="false">
+      <ion-icon name="calendar-outline" slot="start"></ion-icon>
+      <ion-label>
+        <h2>{{ title }}</h2>
+        <p>{{ formattedDateRange }}</p>
+      </ion-label>
+      <ion-icon
+        [name]="isFilterOpen ? 'chevron-up-outline' : 'chevron-down-outline'"
+        slot="end"
+      ></ion-icon>
+    </ion-item>
+
+    <div class="date-filter-panel" [@slideToggle]="isFilterOpen ? 'open' : 'closed'" *ngIf="isFilterOpen">
+      <div class="date-inputs">
+        <ion-item>
+          <ion-label position="stacked">Start Date</ion-label>
+          <ion-input
+            type="date"
+            [value]="startDate"
+            (ionChange)="updateStartDate($event)"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">End Date</ion-label>
+          <ion-input
+            type="date"
+            [value]="endDate"
+            (ionChange)="updateEndDate($event)"
+            [min]="startDate"
+          ></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="quick-filters">
+        <ion-chip
+          *ngFor="let filter of enabledQuickFilters"
+          (click)="setQuickFilter(filter.value)"
+          [class.selected]="currentFilter === filter.value"
+        >
+          <ion-label>{{ filter.label }}</ion-label>
+        </ion-chip>
+      </div>
+
+      <div class="filter-actions">
+        <ion-button fill="outline" (click)="clearFilter()">
+          Clear
+        </ion-button>
+        <ion-button (click)="applyDateFilter()">
+          Apply Filter
+        </ion-button>
+      </div>
+    </div>
+  </ion-card>
+</div>

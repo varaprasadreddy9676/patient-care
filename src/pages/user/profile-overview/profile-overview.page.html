@@ -1,0 +1,54 @@
+<ion-content class="profile-content">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>My Profile</h1>
+      <p class="subtitle">Manage your personal information and settings</p>
+    </header>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <img 
+          *ngIf="user?.profilePicture" 
+          [src]="user.profilePicture" 
+          alt="Profile Picture"
+          class="avatar-image">
+        <div 
+          *ngIf="!user?.profilePicture" 
+          class="avatar-initials">
+          {{ getInitials() }}
+        </div>
+      </div>
+      
+      <div class="profile-info">
+        <h2 class="profile-name">{{ getDisplayName() }}</h2>
+        <p class="profile-email" *ngIf="user?.email">{{ user.email }}</p>
+        <p class="profile-phone" *ngIf="user?.phone">{{ user.phone }}</p>
+      </div>
+    </div>
+
+    <!-- Menu Items -->
+    <div class="menu-section">
+      <div 
+        *ngFor="let item of menuItems" 
+        class="menu-item"
+        [class]="'menu-item-' + item.color"
+        (click)="onMenuItemClick(item)">
+        
+        <div class="menu-icon">
+          <ion-icon [name]="item.icon + '-outline'"></ion-icon>
+        </div>
+        
+        <div class="menu-content">
+          <h3 class="menu-title">{{ item.title }}</h3>
+          <p class="menu-subtitle">{{ item.subtitle }}</p>
+        </div>
+        
+        <div class="menu-arrow">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

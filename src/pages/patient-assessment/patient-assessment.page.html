@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>AI Powered Analysis</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Patient Info Card -->
+  <div class="patient-info-container">
+    <ion-card *ngIf="patientName && !loadingPatientInfo" class="patient-card">
+      <ion-card-content>
+        <div class="patient-info">
+          <div class="patient-avatar">
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </div>
+          <div class="patient-details">
+            <h2 class="patient-name">{{ patientName }}</h2>
+            <div class="patient-meta">
+              <span class="meta-item">
+                <ion-icon name="fingerprint-outline"></ion-icon>
+                {{ patientId }}
+              </span>
+              <span class="meta-item" *ngIf="mrn">
+                <ion-icon name="document-text-outline"></ion-icon>
+                {{ mrn }}
+              </span>
+            </div>
+            <p *ngIf="hospitalName" class="hospital-info">
+              <ion-icon name="medkit-outline"></ion-icon>
+              {{ hospitalName }}
+            </p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Loading Patient Info -->
+    <ion-card *ngIf="loadingPatientInfo" class="loading-card">
+      <ion-card-content>
+        <div class="loading-patient-info">
+          <ion-spinner name="crescent"></ion-spinner>
+          <p>Loading patient information...</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Conversation History -->
+  <div class="conversation-history" *ngIf="hasConversation">
+    <div *ngFor="let item of conversationHistory; let i = index" class="conversation-item">
+      <!-- User Question -->
+      <div class="message user-message">
+        <div class="message-content">
+          <div class="message-text">{{ item.question }}</div>
+        </div>
+      </div>
+
+      <!-- AI Response -->
+      <div class="message ai-message">
+        <div class="message-content">
+          <div class="message-text" [innerHTML]="item.response"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Question Input with Send Button -->
+  <div class="input-container">
+    <ion-textarea
+      [(ngModel)]="userRequest"
+      placeholder="Ask anything ..."
+      rows="2"
+      [disabled]="loading"
+      class="chat-input"
+      (keyup.enter)="handleEnter($event)">
+    </ion-textarea>
+    <ion-button
+      class="send-button"
+      (click)="getAssessment()"
+      [disabled]="loading || loadingPatientInfo || !userRequest?.trim()">
+      <ion-icon name="send" *ngIf="!loading"></ion-icon>
+      <ion-spinner name="crescent" *ngIf="loading"></ion-spinner>
+    </ion-button>
+  </div>
+
+  <!-- Info Note -->
+  <ion-note class="info-note" *ngIf="!hasConversation && !loading">
+    <ion-icon name="information-circle-outline"></ion-icon>
+    AI-powered analysis considers patient history, vital signs, medications, and lab reports to provide intelligent health insights.
+  </ion-note>
+
+</ion-content>

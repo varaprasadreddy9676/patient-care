@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-toolbar class="primaryDark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="hospital-list" icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="titleHeader">
+      <ion-text *ngIf="isFacilityEdit" class="titleText">Modify Facility</ion-text>
+      <ion-text *ngIf="!isFacilityEdit" class="titleText">Add Facility</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-grid>
+      <ion-row class="rowEqualDistribution">
+        <ion-grid no-padding>
+          <ion-row no-padding justify-content-start align-items-start>
+            <ion-col ion-item no-lines no-padding text-center col-2 class="text-body-sm" style="
+            font-weight: 500;">
+              {{type}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-row>
+      <ion-row class="rowEqualDistribution">
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="facilityName" autocomplete="off" placeholder="Facility Name" required
+              [(ngModel)]="name" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="locationName" autocomplete="off" placeholder="Location Name" required
+              [(ngModel)]="location.name" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput type="tel" maxlength="6" minlength="6" name="locationPin" autocomplete="off"
+              placeholder="PIN Code" required [(ngModel)]="location.pincode" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="locationArea" autocomplete="off" placeholder="Area" required
+              [(ngModel)]="location.area" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="locationCity" autocomplete="off" placeholder="City" required
+              [(ngModel)]="location.city" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="locationLat" autocomplete="off" placeholder="Latitude" required
+              [(ngModel)]="location.latitude" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="locationLong" autocomplete="off" placeholder="Longitude" required
+              [(ngModel)]="location.longitude" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput type="tel" maxlength="10" minlength="10" name="contactNumber" autocomplete="off"
+              placeholder="Contact Number" required [(ngModel)]="phone" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col>
+
+          <mat-slide-toggle name="active" [(ngModel)]="active">
+
+          </mat-slide-toggle> Active
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+
+</ion-content>
+
+<ion-footer padding-top no-border align="center">
+
+  <ion-button (click)="validate()" [disabled]="disableSaveButton" margin-bottom class="button-secondary button-size"
+    translucent>
+    Save
+  </ion-button>
+  <ion-button *ngIf="isFacilityEdit" (click)="confirmAlert()" [disabled]="disableSaveButton" margin-bottom
+    class="button-secondary button-size" translucent>
+    Delete
+  </ion-button>
+
+
+</ion-footer>

@@ -1,0 +1,1013 @@
+/**
+ * MedicsCare Visit Summary Page
+ * Professional visit document viewer using the MedicsCare Theme System
+ */
+
+.visit-summary-page {
+  --background: var(--mc-bg-secondary);
+  --padding-top: var(--mc-spacing-2xl);
+  --padding-bottom: var(--mc-spacing-2xl);
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-xl);
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: 12px;
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    h1 {
+      font-size: var(--mc-font-heading-lg);
+      font-weight: 700;
+      color: var(--mc-text-primary);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--mc-font-body-sm);
+      color: var(--mc-text-secondary);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .view-toggle-btn {
+      --color: var(--mc-text-secondary);
+      --padding-start: var(--mc-spacing-sm);
+      --padding-end: var(--mc-spacing-sm);
+      min-height: 44px;
+      min-width: 44px;
+
+      ion-icon {
+        font-size: 24px;
+      }
+
+      &:hover {
+        --color: var(--mc-color-primary-500);
+      }
+    }
+  }
+
+  // ===================================
+  // 🔄 LOADING STATE
+  // ===================================
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mc-spacing-6) var(--mc-spacing-4);
+    min-height: 200px;
+    gap: var(--mc-spacing-3);
+    animation: fadeIn 0.5s ease-out;
+
+    ion-spinner {
+      --color: var(--mc-color-primary-500);
+      width: 40px;
+      height: 40px;
+    }
+
+    .loading-text {
+      color: var(--mc-text-secondary);
+      font-size: var(--mc-font-body-md);
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  // ===================================
+  // 📄 EMPTY STATE
+  // ===================================
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mc-spacing-6) var(--mc-spacing-4);
+    text-align: center;
+    animation: fadeInUp 0.5s ease-out;
+
+    .empty-icon {
+      font-size: var(--mc-font-display-md);
+      color: var(--mc-color-gray-400);
+      margin-bottom: var(--mc-spacing-4);
+    }
+
+    p {
+      font-size: var(--mc-font-body-md);
+      color: var(--mc-text-secondary);
+      margin: var(--mc-spacing-2) 0;
+
+      &.help-text {
+        font-size: var(--mc-font-body-sm);
+        color: var(--mc-text-tertiary);
+      }
+    }
+  }
+
+  // ===================================
+  // 📄 COMPACT LIST VIEW (Mobile-First)
+  // ===================================
+
+  .documents-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mc-spacing-sm);
+    margin-bottom: var(--mc-spacing-4);
+
+    .document-item {
+      background: var(--mc-bg-card);
+      border-radius: var(--mc-radius-md);
+      padding: var(--mc-spacing-3) var(--mc-spacing-4);
+      box-shadow: var(--mc-card-shadow);
+      border: 1px solid var(--mc-card-border);
+      display: flex;
+      align-items: center;
+      gap: var(--mc-spacing-3);
+      min-height: 96px;
+      max-height: 120px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      animation: fadeInUp 0.3s ease-out;
+
+      &:active {
+        background: var(--mc-bg-secondary);
+        transform: scale(0.98);
+      }
+
+      // Compact Document Icon
+      .document-icon-compact {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: var(--mc-radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        ion-icon {
+          font-size: 28px;
+          color: var(--mc-text-inverse);
+        }
+
+        .pdf-badge-compact {
+          position: absolute;
+          bottom: -4px;
+          right: -4px;
+          background: var(--mc-color-error-500);
+          color: var(--mc-text-inverse);
+          font-size: 9px;
+          font-weight: 700;
+          padding: 2px 4px;
+          border-radius: var(--mc-radius-sm);
+          box-shadow: var(--mc-shadow-sm);
+          line-height: 1;
+        }
+
+        &.category-discharge {
+          background: linear-gradient(135deg, var(--mc-color-primary-500) 0%, var(--mc-color-primary-600) 100%);
+        }
+
+        &.category-lab {
+          background: linear-gradient(135deg, var(--mc-color-success-500) 0%, var(--mc-color-success-600) 100%);
+        }
+
+        &.category-radiology {
+          background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); // Cyan gradient
+        }
+
+        &.category-art {
+          background: linear-gradient(135deg, var(--mc-color-warning-500) 0%, var(--mc-color-warning-600) 100%);
+        }
+
+        &.category-prescription {
+          background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+        }
+
+        &.category-default {
+          background: linear-gradient(135deg, var(--mc-color-gray-600) 0%, var(--mc-color-gray-700) 100%);
+        }
+      }
+
+      // Document Content
+      .document-content {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .document-title {
+          font-size: var(--mc-font-body-md);
+          font-weight: 600;
+          color: var(--mc-text-primary);
+          margin: 0;
+          line-height: 1.4;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .document-meta {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .category-pill {
+            display: inline-block;
+            font-size: var(--mc-font-body-xs);
+            font-weight: 500;
+            padding: 2px var(--mc-spacing-sm);
+            border-radius: var(--mc-radius-full);
+            color: var(--mc-text-inverse);
+            line-height: 1.4;
+
+            &.pill-discharge {
+              background: var(--mc-color-primary-500);
+            }
+
+            &.pill-lab {
+              background: var(--mc-color-success-500);
+            }
+
+            &.pill-radiology {
+              background: #06b6d4; // Cyan color
+            }
+
+            &.pill-art {
+              background: var(--mc-color-warning-500);
+            }
+
+            &.pill-prescription {
+              background: #9333ea;
+            }
+
+            &.pill-default {
+              background: var(--mc-color-gray-600);
+            }
+          }
+        }
+      }
+
+      // Compact Action Buttons
+      .document-actions-compact {
+        flex-shrink: 0;
+        display: flex;
+        gap: 4px;
+
+        .icon-btn {
+          --padding-start: 0;
+          --padding-end: 0;
+          margin: 0;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          ion-icon {
+            font-size: 20px;
+          }
+
+          &.primary-action {
+            --color: var(--mc-color-primary-500);
+
+            &:hover {
+              --background: var(--mc-color-primary-50);
+            }
+          }
+
+          &.secondary-action {
+            --color: var(--mc-text-secondary);
+
+            &:hover {
+              --background: var(--mc-color-gray-100);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ===================================
+  // 💊 PRESCRIPTION DETAILS SECTION
+  // ===================================
+
+  .prescription-details-section {
+    margin-bottom: var(--mc-spacing-6);
+    animation: fadeInUp 0.3s ease-out;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--mc-spacing-4);
+      padding: var(--mc-spacing-3) 0;
+      border-bottom: 2px solid var(--mc-color-gray-200);
+
+      .section-title-wrapper {
+        display: flex;
+        align-items: center;
+        gap: var(--mc-spacing-2);
+
+        .section-icon {
+          font-size: 24px;
+          color: var(--mc-color-primary-500);
+        }
+
+        .section-title {
+          font-size: var(--mc-font-heading-md);
+          font-weight: 700;
+          color: var(--mc-text-primary);
+          margin: 0;
+        }
+
+        .count-badge {
+          background: var(--mc-color-primary-500);
+          color: var(--mc-text-inverse);
+          font-size: var(--mc-font-body-xs);
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: var(--mc-radius-full);
+          min-width: 24px;
+          text-align: center;
+        }
+      }
+
+      .toggle-btn {
+        --color: var(--mc-text-secondary);
+        --padding-start: 8px;
+        --padding-end: 8px;
+        min-height: 44px;
+        min-width: 44px;
+
+        ion-icon {
+          font-size: 24px;
+        }
+
+        &:hover {
+          --color: var(--mc-color-primary-500);
+        }
+      }
+    }
+
+    .prescription-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--mc-spacing-4);
+    }
+
+    .prescription-card {
+      background: var(--mc-bg-card);
+      border-radius: var(--mc-radius-lg);
+      box-shadow: var(--mc-card-shadow);
+      overflow: hidden;
+      border: 1px solid var(--mc-card-border);
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: var(--mc-card-shadow-hover);
+      }
+
+      // Prescription Header
+      .prescription-header {
+        background: linear-gradient(135deg, var(--mc-color-primary-500) 0%, var(--mc-color-primary-600) 100%);
+        padding: var(--mc-spacing-4);
+        color: var(--mc-text-inverse);
+
+        .prescription-meta {
+          .prescription-title {
+            display: flex;
+            align-items: center;
+            gap: var(--mc-spacing-2);
+            font-size: var(--mc-font-heading-sm);
+            font-weight: 700;
+            margin: 0 0 var(--mc-spacing-3) 0;
+            color: var(--mc-text-inverse);
+
+            .title-icon {
+              font-size: 24px;
+            }
+          }
+
+          .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-3);
+            font-size: var(--font-body-sm);
+
+            .meta-item {
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              color: rgba(255, 255, 255, 0.95);
+
+              .meta-icon {
+                font-size: 16px;
+              }
+
+              strong {
+                font-weight: 600;
+              }
+
+              &.status-badge {
+                background: rgba(255, 255, 255, 0.2);
+                padding: 4px 12px;
+                border-radius: var(--radius-full);
+                font-weight: 600;
+
+                &.locked {
+                  background: var(--mc-color-success-500);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Prescription Sections
+      .prescription-sections {
+        padding: var(--spacing-4);
+
+        .prescription-section {
+          margin-bottom: var(--spacing-5);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .section-header-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            font-size: var(--font-body-lg);
+            font-weight: 700;
+            color: var(--mc-color-primary-600);
+            margin: 0 0 var(--spacing-3) 0;
+            padding-bottom: var(--spacing-2);
+            border-bottom: 2px solid var(--mc-color-primary-100);
+
+            .section-header-icon {
+              font-size: 20px;
+            }
+          }
+
+          .drug-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-3);
+          }
+
+          .drug-item {
+            display: flex;
+            gap: var(--spacing-3);
+            padding: var(--spacing-4);
+            background: var(--mc-bg-secondary);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--mc-color-primary-500);
+            transition: all 0.2s ease;
+
+            &:hover {
+              background: var(--color-gray-100);
+              transform: translateX(4px);
+            }
+
+            .drug-number {
+              flex-shrink: 0;
+              width: 32px;
+              height: 32px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: var(--mc-color-primary-500);
+              color: var(--color-white);
+              font-weight: 700;
+              font-size: var(--font-body-sm);
+              border-radius: 50%;
+            }
+
+            .drug-content {
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              gap: var(--spacing-2);
+
+              .drug-name {
+                font-size: var(--font-body-lg);
+                font-weight: 700;
+                color: var(--mc-text-primary);
+                line-height: 1.4;
+              }
+
+              .drug-details {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: var(--spacing-2);
+
+                .drug-detail-item {
+                  display: flex;
+                  align-items: center;
+                  gap: 6px;
+                  font-size: var(--font-body-sm);
+                  color: var(--mc-text-secondary);
+
+                  .detail-icon {
+                    font-size: 16px;
+                    color: var(--mc-color-primary-500);
+                  }
+
+                  strong {
+                    font-weight: 600;
+                    color: var(--mc-text-primary);
+                  }
+                }
+              }
+
+              .drug-timeline {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-2);
+                padding: var(--spacing-2) var(--spacing-3);
+                background: var(--color-white);
+                border-radius: var(--radius-sm);
+                font-size: var(--font-body-sm);
+                color: var(--mc-text-secondary);
+                margin-top: var(--spacing-1);
+
+                .timeline-icon {
+                  font-size: 16px;
+                  color: var(--mc-color-success-500);
+                }
+
+                .arrow-icon {
+                  font-size: 14px;
+                  color: var(--color-gray-400);
+                }
+
+                span {
+                  font-weight: 500;
+                  color: var(--mc-text-primary);
+                }
+              }
+            }
+          }
+
+          .no-drugs {
+            padding: var(--spacing-4);
+            text-align: center;
+            color: var(--mc-text-tertiary);
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+
+  // ===================================
+  // 📄 DOCUMENTS GRID (Optional Thumbnail View)
+  // ===================================
+
+  .documents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-5);
+    margin-bottom: var(--spacing-6);
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  // ===================================
+  // 📄 DOCUMENT TILE
+  // ===================================
+
+  .document-tile {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-5);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-gray-200);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    animation: fadeInUp 0.4s ease-out;
+
+    &:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    // Document Icon
+    .document-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 0 auto;
+
+      ion-icon {
+        font-size: 48px;
+        color: var(--color-white);
+      }
+
+      .pdf-badge {
+        position: absolute;
+        bottom: -8px;
+        right: -8px;
+        background: var(--mc-color-error-500);
+        color: var(--color-white);
+        font-size: var(--font-body-xs);
+        font-weight: 700;
+        padding: var(--spacing-1) var(--spacing-2);
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow-sm);
+      }
+
+      &.category-discharge {
+        background: linear-gradient(135deg, var(--mc-color-primary-500) 0%, var(--mc-color-primary-600) 100%);
+      }
+
+      &.category-lab {
+        background: linear-gradient(135deg, var(--mc-color-success-500) 0%, var(--mc-color-success-600) 100%);
+      }
+
+      &.category-radiology {
+        background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); // Cyan gradient
+      }
+
+      &.category-art {
+        background: linear-gradient(135deg, var(--mc-color-warning-500) 0%, var(--mc-color-warning-600) 100%);
+      }
+
+      &.category-prescription {
+        background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+      }
+
+      &.category-default {
+        background: linear-gradient(135deg, var(--color-gray-600) 0%, var(--color-gray-700) 100%);
+      }
+    }
+
+    // Document Info
+    .document-info {
+      text-align: center;
+      flex: 1;
+
+      .document-name {
+        font-size: var(--font-body-md);
+        font-weight: 600;
+        color: var(--mc-text-primary);
+        margin: 0 0 var(--spacing-2) 0;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .document-category-badge {
+        display: inline-block;
+        font-size: var(--font-body-xs);
+        font-weight: 500;
+        padding: var(--spacing-1) var(--spacing-3);
+        border-radius: var(--radius-full);
+        color: var(--color-white);
+
+        &.badge-discharge {
+          background: var(--mc-color-primary-500);
+        }
+
+        &.badge-lab {
+          background: var(--mc-color-success-500);
+        }
+
+        &.badge-radiology {
+          background: #06b6d4; // Cyan color
+        }
+
+        &.badge-art {
+          background: var(--mc-color-warning-500);
+        }
+
+        &.badge-prescription {
+          background: #9333ea;
+        }
+
+        &.badge-default {
+          background: var(--color-gray-600);
+        }
+      }
+    }
+
+    // Document Actions
+    .document-actions {
+      display: flex;
+      gap: var(--spacing-2);
+      padding-top: var(--spacing-2);
+      border-top: 1px solid var(--color-gray-200);
+
+      .action-btn {
+        flex: 1;
+        margin: 0;
+        font-size: var(--font-body-sm);
+        font-weight: 500;
+        height: 36px;
+
+        ion-icon {
+          font-size: 18px;
+        }
+
+        &.view-btn {
+          --color: var(--mc-color-primary-500);
+
+          &:hover {
+            --background: var(--mc-color-primary-50);
+          }
+        }
+
+        &.download-btn {
+          --color: var(--mc-color-success-500);
+
+          &:hover {
+            --background: var(--mc-color-success-50);
+          }
+        }
+      }
+    }
+  }
+
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 600px) {
+  .visit-summary-page {
+    .container {
+      padding: 0 var(--mc-spacing-md);
+    }
+
+    .header {
+      margin-bottom: 8px;
+
+      h1 {
+        font-size: var(--font-heading-md);
+      }
+
+      .subtitle {
+        font-size: 12px;
+      }
+    }
+
+    // Mobile-specific prescription styles
+    .prescription-details-section {
+      .section-header {
+        .section-title-wrapper {
+          .section-icon {
+            font-size: 20px;
+          }
+
+          .section-title {
+            font-size: var(--font-body-lg);
+          }
+
+          .count-badge {
+            font-size: 10px;
+            padding: 2px 8px;
+          }
+        }
+      }
+
+      .prescription-card {
+        .prescription-header {
+          padding: var(--spacing-3);
+
+          .prescription-meta {
+            .prescription-title {
+              font-size: var(--font-body-lg);
+
+              .title-icon {
+                font-size: 20px;
+              }
+            }
+
+            .meta-row {
+              flex-direction: column;
+              gap: var(--spacing-2);
+              font-size: 12px;
+
+              .meta-item {
+                .meta-icon {
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+
+        .prescription-sections {
+          padding: var(--spacing-3);
+
+          .prescription-section {
+            .section-header-title {
+              font-size: var(--font-body-md);
+
+              .section-header-icon {
+                font-size: 18px;
+              }
+            }
+
+            .drug-item {
+              flex-direction: column;
+              gap: var(--spacing-2);
+              padding: var(--spacing-3);
+
+              .drug-number {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+              }
+
+              .drug-content {
+                .drug-name {
+                  font-size: var(--font-body-md);
+                }
+
+                .drug-details {
+                  grid-template-columns: 1fr;
+                  gap: var(--spacing-2);
+
+                  .drug-detail-item {
+                    font-size: 12px;
+
+                    .detail-icon {
+                      font-size: 14px;
+                    }
+                  }
+                }
+
+                .drug-timeline {
+                  flex-wrap: wrap;
+                  font-size: 12px;
+
+                  .timeline-icon {
+                    font-size: 14px;
+                  }
+
+                  .arrow-icon {
+                    font-size: 12px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Compact list optimizations for mobile
+    .documents-list {
+      .document-item {
+        padding: 8px 12px;
+        min-height: 88px;
+        gap: 8px;
+
+        .document-icon-compact {
+          width: 44px;
+          height: 44px;
+
+          ion-icon {
+            font-size: 24px;
+          }
+        }
+
+        .document-content {
+          .document-title {
+            font-size: var(--font-body-sm);
+          }
+
+          .document-meta .category-pill {
+            font-size: 10px;
+            padding: 2px 6px;
+          }
+        }
+
+        .document-actions-compact {
+          gap: 2px;
+
+          .icon-btn {
+            width: 40px;
+            height: 40px;
+
+            ion-icon {
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
+
+    // Grid view adjustments for mobile
+    .documents-grid {
+      grid-template-columns: 1fr;
+
+      .document-tile {
+        padding: var(--spacing-4);
+
+        .document-icon {
+          width: 64px;
+          height: 64px;
+
+          ion-icon {
+            font-size: 36px;
+          }
+        }
+
+        .document-actions {
+          flex-direction: column;
+          gap: var(--spacing-2);
+
+          .action-btn {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ===================================
+// 🎨 ANIMATIONS
+// ===================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ===================================
+// 🍎 PLATFORM-SPECIFIC STYLES
+// ===================================
+
+// iOS specific styles
+.ios {
+  .visit-summary-page {
+    .document-tile {
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+}
+
+// Android specific styles
+.md {
+  .visit-summary-page {
+    .document-tile {
+      border-radius: var(--radius-md);
+    }
+  }
+}

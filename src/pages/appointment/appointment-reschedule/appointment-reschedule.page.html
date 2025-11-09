@@ -1,0 +1,111 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2 class="header-text">Reschedule Appointment</h2>
+  </div>
+
+  <mat-dialog-content>
+    <form class="appointment-form">
+      <div class="form-field">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date of Appointment</mat-label>
+          <input 
+            matInput 
+            [matDatepicker]="picker"
+            [min]="minAppointmentDate"
+            [(ngModel)]="dateOfAppointment"
+            (ngModelChange)="getTimeSlot()"
+            name="appointmentDate"
+            required
+            readonly
+          >
+          <mat-datepicker-toggle matSuffix [for]="picker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-error *ngIf="timeSlotArray.length === 0">
+          No time slots available on this date. Please select a different date.
+        </mat-error>
+      </div>
+
+      <!-- Time Slot Selection -->
+      <div class="form-field time-slots">
+        <label class="time-slot-label">Select Time Slot</label>
+        <mat-radio-group 
+          class="time-slot-group" 
+          [(ngModel)]="slots" 
+          name="timeSlot" 
+          required
+        >
+          <mat-radio-button 
+            value="Morning" 
+            [disabled]="timeSlotMorning.length === 0"
+            (change)="onRadioSelected($event.value)"
+          >
+            <ion-icon name="sunny-outline"></ion-icon>
+            Morning
+          </mat-radio-button>
+
+          <mat-radio-button 
+            value="Afternoon" 
+            [disabled]="timeSlotAfternoon.length === 0"
+            (change)="onRadioSelected($event.value)"
+          >
+            <ion-icon name="partly-sunny-outline"></ion-icon>
+            Afternoon
+          </mat-radio-button>
+
+          <mat-radio-button 
+            value="Evening" 
+            [disabled]="timeSlotEvening.length === 0"
+            (change)="onRadioSelected($event.value)"
+          >
+            <ion-icon name="moon-outline"></ion-icon>
+            Evening
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <!-- Time Selection -->
+      <div class="form-field">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select Time</mat-label>
+          <mat-select 
+            [(ngModel)]="timeOfAppointment"
+            name="timeOfAppointment"
+            [disabled]="timeSlotMorning.length === 0 || timeSlotAfternoon.length === 0 || timeSlotEvening.length === 0"
+            required
+          >
+            <mat-option 
+              *ngFor="let slot of timeSlotArray" 
+              [value]="slot"
+              (click)="getTime(slot.time)"
+            >
+              {{ slot.time }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Please select an appointment time</mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>    
+    <ion-button 
+      fill="outline" 
+      color="medium" 
+      [mat-dialog-close]
+    >
+      Cancel
+    </ion-button>
+
+    <ion-button 
+    fill="solid" 
+    color="primary" 
+    (click)="rescheduleAppointment()"
+    [disabled]="!dateOfAppointment || !timeOfAppointment"
+  >
+    Confirm Reschedule
+  </ion-button>
+  </mat-dialog-actions>
+</div>

@@ -1,0 +1,62 @@
+<ion-content class="service-requests">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <div class="title-section">
+        <h1>Service Requests</h1>
+        <p class="subtitle">Manage your support requests</p>
+      </div>
+      <ion-button class="new-request-btn" fill="solid" routerLink="/home/new-service-request">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        <span class="desktop-text">New Request</span>
+        <span class="mobile-text">New</span>
+      </ion-button>
+    </header>
+
+    <!-- Empty State -->
+    <div *ngIf="reportedIssues.length == 0" class="empty-state">
+      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+      <h2>No Service Requests</h2>
+      <p>You don't have any open service requests at the moment</p>
+    </div>
+
+    <!-- Request Cards -->
+    <div class="requests-list" *ngIf="reportedIssues.length > 0">
+      <div class="request-card" *ngFor="let reportedIssues of reportedIssues">
+        <div *ngIf="reportedIssues.status == 'OPEN'">
+          <div class="card-header">
+            <div class="status-badge status-open">
+              <ion-icon name="ellipse" class="status-dot"></ion-icon>
+              Open
+            </div>
+            <div class="card-date">
+              <ion-icon name="calendar-outline"></ion-icon>
+              {{toDBdateFormat(reportedIssues.reportedDate)}}
+            </div>
+          </div>
+
+          <div class="card-body">
+            <h3 class="issue-title">{{reportedIssues.issueDescription}}</h3>
+
+            <div class="timestamp">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>Reported at {{getTime(reportedIssues.reportedDate)}}</span>
+            </div>
+
+            <div class="status-message">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <p>We are reviewing your request and will respond shortly</p>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <ion-button fill="clear" color="danger" (click)="deleteIssue(reportedIssues)">
+              <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+              Cancel Request
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

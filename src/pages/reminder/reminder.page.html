@@ -1,0 +1,74 @@
+<!-- <ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="breadcrumb">
+      <ion-text color="medium" class="breadcrumb-path">
+        <span routerLink="/home" class="breadcrumb-item">Home</span>
+        <ion-icon name="chevron-forward-outline" class="breadcrumb-separator"></ion-icon>
+        <span class="breadcrumb-item active">Reminders</span>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <ng-container *ngIf="noReminders">
+    <div class="empty-state">
+      <ion-text color="medium">
+        <h3 class="text-lg">No upcoming reminders</h3>
+      </ion-text>
+    </div>
+  </ng-container>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="6" size-md="6" size-lg="4" *ngFor="let reminder of reminders">
+        <ion-card class="reminder-card" (click)="goToAppointment(reminder.objectId)" *ngIf="reminder.reminderType === 'APPOINTMENT'">
+          <ion-card-header class="ion-no-padding">
+            <div class="header-content ion-padding">
+              <h2 class="patient-name">{{ reminder.familyMemberName }}</h2>
+              <p class="booking-id"><b>ID</b> : {{ reminder.reminderDetails.bookingId }}</p>
+            </div>
+          </ion-card-header>
+
+          <ion-card-content>
+            <div class="detail-row">
+              <ion-icon name="person"></ion-icon>
+              <div class="detail-content">
+                <strong>{{ reminder.reminderDetails.doctorName }}</strong>
+                <p>{{ reminder.reminderDetails.specialityName }}</p>
+              </div>
+            </div>
+
+            <div class="detail-row">
+              <ion-icon name="calendar"></ion-icon>
+              <div class="detail-content">
+                <span>{{ dateValidation(reminder.reminderDetails.appointmentDate) }}</span>
+              </div>
+            </div>
+            
+            <div class="detail-row">
+              <ion-icon name="time"></ion-icon>
+              <div class="detail-content">
+                <p *ngIf="reminder.reminderNotificationDetails.title !== 'Be Ready for the Video Consultation'">
+                  {{ reminder.reminderDetails.appointmentTime }}
+                </p>
+                <p *ngIf="reminder.reminderNotificationDetails.title === 'Be Ready for the Video Consultation'" class="video-alert"
+                [ngClass]="{'pulse': true, 'warning': timeState === 'warning', 'urgent': timeState === 'urgent'}">
+                  Your video consultation will begin in 
+                  <span class="timer-text">{{ timeRemaining }}</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="detail-row">
+              <ion-icon name="business"></ion-icon>
+              <div class="detail-content">
+                <p>{{ reminder.reminderDetails.hospitalName }}</p>
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

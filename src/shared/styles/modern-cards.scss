@@ -1,0 +1,143 @@
+/**
+ * Modern Card & Component Styles
+ * Standardized rounded edges for a modern, cohesive design
+ * Using MedicsCare theme system variables
+ */
+
+// ===================================
+// 💳 BASE CARD STYLES
+// ===================================
+
+.modern-card {
+  background: var(--mc-card-bg, white);
+  border-radius: var(--mc-radius-lg);
+  padding: var(--mc-spacing-5);
+  margin: var(--mc-spacing-4) 0;
+  box-shadow: var(--mc-card-shadow);
+  border: 1px solid var(--mc-card-border, rgba(0, 0, 0, 0.04));
+  transition: var(--mc-transition-base);
+
+  // Subtle hover effect for interactive cards
+  &.interactive {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--mc-shadow-lg);
+      border-color: var(--mc-border-focus);
+    }
+
+    &:active {
+      transform: translateY(0);
+      transition-duration: 0.1s;
+    }
+  }
+
+  // Card size variants
+  &.card-compact {
+    padding: var(--mc-spacing-3) var(--mc-spacing-4);
+    border-radius: var(--mc-radius-md);
+    margin: var(--mc-spacing-2) 0;
+  }
+
+  &.card-spacious {
+    padding: var(--mc-spacing-6);
+    border-radius: var(--mc-radius-xl);
+    margin: var(--mc-spacing-5) 0;
+  }
+
+  // Card border variants
+  &.card-subtle {
+    border: 1px solid var(--mc-border-secondary);
+  }
+
+  &.card-prominent {
+    border: 2px solid var(--mc-border-primary);
+  }
+}
+
+// Ionic card overrides for consistency
+ion-card {
+  border-radius: var(--mc-radius-lg) !important;
+  box-shadow: var(--mc-card-shadow) !important;
+  margin: var(--mc-spacing-4) !important;
+
+  &.card-compact {
+    border-radius: var(--mc-radius-md) !important;
+  }
+
+  &.card-spacious {
+    border-radius: var(--mc-radius-xl) !important;
+  }
+}
+
+// Grid layouts with consistent spacing
+.cards-grid {
+  display: grid;
+  gap: 16px;
+  
+  &.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  &.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  &.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  // Responsive behavior
+  @media (max-width: 768px) {
+    &.grid-2,
+    &.grid-3,
+    &.grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    &.grid-2,
+    &.grid-3,
+    &.grid-4 {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+}
+
+// Content spacing utilities
+.content-container {
+  padding: 20px 16px;
+  max-width: 100%;
+  
+  // Add consistent vertical rhythm
+  > * + * {
+    margin-top: 24px;
+  }
+  
+  // Responsive padding
+  @media (min-width: 768px) {
+    padding: 24px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+// Dark mode support - DISABLED to prevent automatic dark theme
+/*
+@media (prefers-color-scheme: dark) {
+  .modern-card {
+    background: #1f2937;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+
+    &.interactive:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+*/

@@ -1,0 +1,173 @@
+<ion-content class="appointment-details-page">
+  <div class="container" *ngIf="currentAppointment">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Appointment Details</h1>
+      <p class="subtitle">View and manage your appointment</p>
+    </header>
+
+    <div class="appointment-card">
+      <!-- Appointment ID and Status -->
+      <div class="status-section">
+        <div class="appointment-id" *ngIf="currentAppointment.bookingId">
+          <span class="id-label">Appointment ID:</span>
+          <span class="id-value">{{ currentAppointment?.bookingId }}</span>
+        </div>
+        <div class="status-badge" [class.status-scheduled]="currentAppointment.status === 'SCHEDULED'">
+          {{ getStatus(currentAppointment.status) }}
+        </div>
+      </div>
+
+      <!-- Appointment Details -->
+      <div class="appointment-details">
+        <div class="detail-item detail-item-patient">
+          <ion-icon name="person-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">{{ currentAppointment.patient.name }}</div>
+        </div>
+
+        <div class="detail-item detail-item-appointment">
+          <ion-icon name="calendar-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            <div class="appointment-time">
+              {{ currentAppointment.appointmentDate | date:"MMM d, yyyy" }} at
+              {{ timeFormatTo12hour(currentAppointment.appointmentTime) }}
+            </div>
+            <div class="appointment-type">
+              {{ currentAppointment.videoConsultation ? 'Video Consultation' : 'Hospital Visit' }}
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-item detail-item-doctor">
+          <ion-icon name="medical-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            <div class="doctor-name">{{ formatDoctorName(currentAppointment.doctorName) }}</div>
+            <div class="specialty">{{ currentAppointment.specialityName }}</div>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="currentAppointment.videoConsultation">
+          <ion-icon name="videocam-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">Video Consultation</div>
+        </div>
+        <div class="detail-item" *ngIf="!currentAppointment.videoConsultation">
+          <ion-icon name="medkit-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">Consultation at Hospital</div>
+        </div>
+      </div>
+
+      <!-- Payment Details -->
+      <div class="payment-section" *ngIf="currentAppointment?.consultationCharge?.price && currentAppointment.receiptId">
+        <div class="payment-info">
+          <span class="payment-label">PAID:</span>
+          <span class="payment-amount">₹{{ currentAppointment.consultationCharge.price }}.00</span>
+        </div>
+        <ion-button fill="clear" (click)="viewReceipt()" class="receipt-button">
+          <ion-icon slot="start" name="receipt-outline"></ion-icon>
+          View receipt
+        </ion-button>
+      </div>
+
+      <!-- Attachments -->
+      <div class="attachments-section" *ngIf="attachments.length !== 0">
+        <h3 class="section-title">Attachments</h3>
+        <ion-segment scrollable="true">
+          <span style="width: 87px" padding-horizontal *ngFor="let attachment of attachments">
+            <ion-checkbox (ionChange)="attachmentChecked($event, attachment)" [(ngModel)]="attachment.isSelected"
+              color="secondary" id="selection-badge" mode="ios" name="attachmentCheckBox"></ion-checkbox>
+
+            <ion-button fill="clear" class="ion-no-padding attachment-button" [disabled]="disableThumbnailClick">
+              <ion-thumbnail style="width: 100%; height: 67px">
+                <img *ngIf="attachment.contentType !== 'application/pdf'"
+                  [src]="sanitizeBase64URI(attachment.thumbnail)" (click)="openFile(attachment)" />
+                <img *ngIf="attachment.contentType == 'application/pdf'" src="assets/icon/pdf-icon.svg"
+                  (click)="openFile(attachment)" />
+              </ion-thumbnail>
+            </ion-button>
+            <div class="bodyText" style="height: 16px; overflow: hidden">
+              {{ attachment.fileName }}
+            </div>
+          </span>
+        </ion-segment>
+      </div>
+
+      <!-- Add Files Button -->
+      <div class="add-files-section"
+        *ngIf="currentAppointment.status === 'SCHEDULED' || currentAppointment.status === 'STARTED' ||
+          currentAppointment.status === 'RE_SCHEDULED' || currentAppointment.status === 'AWAITING_CONFIRMATION_FROM_HOSPITAL'">
+        <ion-button fill="clear" (click)="goToAttachment()" class="add-files-button">
+          <ion-icon slot="start" name="document-outline"></ion-icon>
+          View/add files
+        </ion-button>
+      </div>
+
+      <!-- Main Action Buttons -->
+      <div class="action-buttons">
+        <ion-button expand="block" (click)="warn()"
+          *ngIf="currentAppointment.videoConsultation && (currentAppointment.status === 'STARTED' || currentAppointment.status === 'SCHEDULED' || currentAppointment.status === 'RE_SCHEDULED')">
+          <ion-icon slot="start" name="videocam-outline"></ion-icon>
+          Start Consultation
+        </ion-button>
+
+        <ion-button expand="block" color="danger" (click)="confirmAlert('cancel')"
+          *ngIf="currentAppointment.status === 'SCHEDULED' || currentAppointment.status === 'RE_SCHEDULED'">
+          <ion-icon slot="start" name="close-outline"></ion-icon>
+          Cancel
+        </ion-button>
+
+        <ion-button expand="block" color="danger" (click)="confirmAlert('remove')"
+          *ngIf="currentAppointment.status === 'PAYMENT_FAILED' || currentAppointment.status === 'DRAFT' || currentAppointment.status === 'CANCELLED'">
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+          Remove
+        </ion-button>
+
+        <ion-button expand="block" color="dark" (click)="goToVisit()"
+          *ngIf="currentAppointment.status === 'CLOSED'">
+          <ion-icon slot="start" name="list-outline"></ion-icon>
+          Show Visit Record
+        </ion-button>
+
+        <ion-button expand="block" color="danger" (click)="appointmentRetry()"
+          *ngIf="currentAppointment.status === 'AWAITING_CONFIRMATION_FROM_HOSPITAL'">
+          <ion-icon slot="start" name="refresh-outline"></ion-icon>
+          Retry
+        </ion-button>
+
+        <ion-button expand="block" color="warning" (click)="rescheduleAppointment()"
+          *ngIf="!(isPastAppointment) && (currentAppointment.status === 'SCHEDULED' || currentAppointment.status === 'RE_SCHEDULED' || currentAppointment.status === 'AWAITING_CONFIRMATION_FROM_HOSPITAL')">
+          <ion-icon slot="start" name="calendar-outline"></ion-icon>
+          Reschedule
+        </ion-button>
+
+        <ion-button expand="block" color="success" (click)="makePayment()"
+          *ngIf="!(isPastAppointment) && (currentAppointment.status === 'PAYMENT_FAILED' || currentAppointment.status === 'PAYMENT_PENDING')">
+          <ion-icon slot="start" name="card-outline"></ion-icon>
+          Make Payment
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<!-- Footer for Attachments -->
+<ion-footer *ngIf="selectedAttachments.length > 0">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-text>{{ selectedAttachments.length }} items selected</ion-text>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <ion-button fill="clear" color="danger" (click)="removeAttachment()">
+            REMOVE
+          </ion-button>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <ion-button fill="clear" (click)="unmarkAttachments()">
+            CANCEL
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

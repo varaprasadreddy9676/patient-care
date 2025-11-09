@@ -1,0 +1,77 @@
+ion-list {
+  width: 100%;
+  margin-left: 8px;
+}
+
+ion-card {
+  cursor: pointer;
+  padding: 0 3px 3px 3px;
+  background-color: white;
+}
+.button {
+  padding-bottom: 5%;
+  --background: white;
+  --color: teal;
+}
+
+ion-fab {
+  // Use transform to move FAB up from bottom
+  // Footer is 60px + 25px spacing = 85px
+  transform: translateY(-85px);
+  z-index: 1001;
+
+  // Additional safe area support for devices with notches
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    transform: translateY(calc(-85px - env(safe-area-inset-bottom)));
+  }
+}
+
+.row-spacing {
+  margin-top: 15px;
+}
+
+ion-avatar {
+  width: 80px;
+  height: 80px;
+  padding-left: 0;
+}
+
+.text {
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+.floating-button {
+  width: 100%;
+  position: fixed;
+  bottom: 1.5%;
+  text-align: center;
+}
+
+.noPadding {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.ios .noPadding {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: -25px;
+}
+
+// for icon
+.member-icon {
+  font-size: var(--font-heading-xl);
+  margin-right: 10px;
+  padding-top: 8px;
+}

@@ -1,0 +1,82 @@
+<div class="landing_header">
+  <ion-grid class="ion-no-padding">
+    <ion-row class="ion-no-padding">
+      <ion-col>
+        <img src="assets/new_icons_list/main_logo_dark.png" />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+<div class="background">
+  <ion-card class="login-card">
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">Welcome to medics care</ion-card-title>
+      <ion-card-subtitle class="ion-text-center">Your Health, Digitally Connected</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid class="grid-style">
+        <ion-row>
+          <ion-col>
+            <ion-label class="label"><ion-icon name="person"></ion-icon>Name</ion-label>
+            <ion-input class="fields custom-input" type="text" placeholder="Enter your name" [(ngModel)]="name"
+              autocomplete="off"></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" size-sm="6">
+            <ion-label class="label"><ion-icon name="male-female"></ion-icon>Gender</ion-label>
+            <select class="fields custom-select genField" [(ngModel)]="gender">
+              <option [ngValue]="null" disabled selected>Select Gender</option>
+              <option *ngFor="let gender of genders" [ngValue]="gender">
+                {{ gender.name }}
+              </option>
+            </select>
+          </ion-col>
+          <ion-col size="12" size-sm="6">
+            <ion-label class="label"><ion-icon name="calendar"></ion-icon>Date of Birth</ion-label>
+            <ion-input class="fields custom-input" type="date" placeholder="dd/mm/yyyy"
+              [(ngModel)]="dateOfBirth"></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" size-sm="6">
+            <ion-label class="label"><ion-icon name="mail"></ion-icon>Email</ion-label>
+            <ion-input class="fields custom-input" type="email" placeholder="abc123@gmail.com"
+              [(ngModel)]="email"></ion-input>
+          </ion-col>
+          <ion-col size="12" size-sm="6">
+            <ion-label class="label"><ion-icon name="call"></ion-icon>Phone Number</ion-label>
+            <ion-input class="fields custom-input" type="tel" placeholder="12345 67890" [(ngModel)]="phoneNumber"
+              maxlength="10"></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <div class="button-container">
+          <ion-button (click)="validateUser()" expand="block" class="sign-up-button">
+            <ion-icon name="person-add-outline" slot="start"></ion-icon>
+            Sign Up
+          </ion-button>
+
+          <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-text">or</span>
+            <span class="divider-line"></span>
+          </div>
+
+          <p class="signup-text">Already have an account? <b>Sign in</b> now!</p>
+
+          <ion-button (click)="gotoSignIn()" expand="block" class="sign-in-button">
+            <ion-icon name="log-in-outline" slot="start"></ion-icon>
+            Sign In
+          </ion-button>
+        </div>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<div class="landing_footer"></div>

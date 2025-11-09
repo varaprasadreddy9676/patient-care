@@ -1,0 +1,341 @@
+/**
+ * MedicsCare Theme Core
+ * Central theme tokens for the enterprise healthcare application
+ *
+ * Token Naming Convention: --mc-[category]-[subcategory]-[variant]
+ * Categories: color, bg, text, border, shadow, spacing, radius, z-index
+ */
+
+// ===================================
+// 🎨 BRAND COLORS
+// ===================================
+
+:root {
+  // Primary Brand Colors (MedicsCare Blue) - Updated for consistency
+  --mc-color-primary-50: #eff6ff;
+  --mc-color-primary-100: #dbeafe;
+  --mc-color-primary-200: #bfdbfe;
+  --mc-color-primary-300: #93c5fd;
+  --mc-color-primary-400: #60a5fa;
+  --mc-color-primary-500: #1D4ED8;    // Main brand color (updated from #002582)
+  --mc-color-primary-600: #1d4ed8;
+  --mc-color-primary-700: #1e40af;
+  --mc-color-primary-800: #1e3a8a;
+  --mc-color-primary-900: #1e293b;
+
+  // Neutral Colors (Professional Grays)
+  --mc-color-neutral-50: #f9fafb;
+  --mc-color-neutral-100: #f3f4f6;
+  --mc-color-neutral-200: #e5e7eb;
+  --mc-color-neutral-300: #d1d5db;
+  --mc-color-neutral-400: #9ca3af;
+  --mc-color-neutral-500: #6b7280;
+  --mc-color-neutral-600: #4b5563;
+  --mc-color-neutral-700: #374151;
+  --mc-color-neutral-800: #1f2937;
+  --mc-color-neutral-900: #111827;
+
+  // Semantic Colors
+  --mc-color-success-50: #ecfdf5;
+  --mc-color-success-100: #d1fae5;
+  --mc-color-success-500: #059669;
+  --mc-color-success-600: #047857;
+
+  --mc-color-warning-50: #fffbeb;
+  --mc-color-warning-100: #fef3c7;
+  --mc-color-warning-500: #d97706;
+  --mc-color-warning-600: #b45309;
+
+  --mc-color-error-50: #fef2f2;
+  --mc-color-error-100: #fee2e2;
+  --mc-color-error-500: #dc3545;
+  --mc-color-error-600: #b91c1c;
+
+  --mc-color-info-50: #eff6ff;
+  --mc-color-info-100: #dbeafe;
+  --mc-color-info-500: #3b82f6;
+  --mc-color-info-600: #2563eb;
+}
+
+// ===================================
+// 📋 SEMANTIC COLOR TOKENS
+// ===================================
+
+:root {
+  // Background Colors
+  --mc-bg-primary: var(--mc-color-neutral-50);
+  --mc-bg-secondary: var(--mc-color-neutral-100);
+  --mc-bg-tertiary: white;
+  --mc-bg-inverse: white;
+  --mc-bg-overlay: rgba(0, 0, 0, 0.5);
+  --mc-bg-disabled: var(--mc-color-neutral-200);
+
+  // Text Colors
+  --mc-text-primary: var(--mc-color-neutral-900);
+  --mc-text-secondary: var(--mc-color-neutral-600);
+  --mc-text-tertiary: var(--mc-color-neutral-500);
+  --mc-text-inverse: white;
+  --mc-text-disabled: var(--mc-color-neutral-400);
+  --mc-text-on-primary: white;
+  --mc-text-on-success: white;
+  --mc-text-on-warning: white;
+  --mc-text-on-error: white;
+
+  // Border Colors
+  --mc-border-primary: var(--mc-color-neutral-300);
+  --mc-border-secondary: var(--mc-color-neutral-200);
+  --mc-border-focus: var(--mc-color-primary-500);
+  --mc-border-success: var(--mc-color-success-500);
+  --mc-border-warning: var(--mc-color-warning-500);
+  --mc-border-error: var(--mc-color-error-500);
+  --mc-border-disabled: var(--mc-color-neutral-200);
+
+  // Interactive States
+  --mc-interactive-default: var(--mc-color-primary-500);
+  --mc-interactive-hover: var(--mc-color-primary-600);
+  --mc-interactive-active: var(--mc-color-primary-700);
+  --mc-interactive-disabled: var(--mc-color-neutral-400);
+}
+
+// ===================================
+// 🏥 MEDICAL CONTEXT COLORS
+// ===================================
+
+:root {
+  // Patient Status
+  --mc-medical-patient-active: var(--mc-color-success-500);
+  --mc-medical-patient-inactive: var(--mc-color-neutral-500);
+  --mc-medical-patient-pending: var(--mc-color-warning-500);
+  --mc-medical-patient-critical: var(--mc-color-error-500);
+
+  // Appointment Status
+  --mc-medical-appointment-booked: var(--mc-color-info-500);
+  --mc-medical-appointment-confirmed: var(--mc-color-primary-500);
+  --mc-medical-appointment-in-progress: var(--mc-color-warning-500);
+  --mc-medical-appointment-completed: var(--mc-color-success-500);
+  --mc-medical-appointment-cancelled: var(--mc-color-error-500);
+  --mc-medical-appointment-no-show: var(--mc-color-neutral-500);
+
+  // Bill Payment Status
+  --mc-medical-bill-paid: var(--mc-color-success-500);
+  --mc-medical-bill-pending: var(--mc-color-warning-500);
+  --mc-medical-bill-overdue: var(--mc-color-error-500);
+  --mc-medical-bill-partial: var(--mc-color-info-500);
+  --mc-medical-bill-refunded: var(--mc-color-neutral-500);
+
+  // Medical Record Status
+  --mc-medical-record-draft: var(--mc-color-neutral-500);
+  --mc-medical-record-finalized: var(--mc-color-success-500);
+  --mc-medical-record-amended: var(--mc-color-warning-500);
+  --mc-medical-record-archived: var(--mc-color-neutral-400);
+
+  // Department Colors
+  --mc-medical-department-general: var(--mc-color-primary-500);
+  --mc-medical-department-emergency: var(--mc-color-error-500);
+  --mc-medical-department-cardiology: #e11d48;
+  --mc-medical-department-pediatrics: #0891b2;
+  --mc-medical-department-orthopedics: #ea580c;
+  --mc-medical-department-neurology: #7c3aed;
+}
+
+// ===================================
+// 📏 SPACING SYSTEM (8-PT GRID)
+// ===================================
+
+:root {
+  --mc-spacing-0: 0;
+  --mc-spacing-1: 0.25rem;   // 4px
+  --mc-spacing-2: 0.5rem;    // 8px
+  --mc-spacing-3: 0.75rem;   // 12px
+  --mc-spacing-4: 1rem;      // 16px
+  --mc-spacing-5: 1.25rem;   // 20px
+  --mc-spacing-6: 1.5rem;    // 24px
+  --mc-spacing-8: 2rem;      // 32px
+  --mc-spacing-10: 2.5rem;   // 40px
+  --mc-spacing-12: 3rem;     // 48px
+  --mc-spacing-16: 4rem;     // 64px
+  --mc-spacing-20: 5rem;     // 80px
+  --mc-spacing-24: 6rem;     // 96px
+
+  // Legacy spacing tokens (for backward compatibility)
+  --mc-spacing-xs: var(--mc-spacing-1);
+  --mc-spacing-sm: var(--mc-spacing-2);
+  --mc-spacing-md: var(--mc-spacing-4);
+  --mc-spacing-lg: var(--mc-spacing-6);
+  --mc-spacing-xl: var(--mc-spacing-8);
+  --mc-spacing-2xl: var(--mc-spacing-12);
+  --mc-spacing-3xl: var(--mc-spacing-16);
+  --mc-spacing-4xl: var(--mc-spacing-24);
+}
+
+// ===================================
+// 🌟 SHADOWS
+// ===================================
+
+:root {
+  --mc-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --mc-shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --mc-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --mc-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --mc-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+// ===================================
+// 🔺 BORDER RADIUS
+// ===================================
+
+:root {
+  --mc-radius-none: 0;
+  --mc-radius-xs: 0.25rem;      // 4px
+  --mc-radius-sm: 0.375rem;     // 6px
+  --mc-radius-base: 0.75rem;    // 12px
+  --mc-radius-md: 1rem;         // 16px
+  --mc-radius-lg: 1.25rem;      // 20px
+  --mc-radius-xl: 2rem;         // 32px
+  --mc-radius-full: 9999px;
+
+  // Legacy radius tokens (for backward compatibility)
+  --mc-radius-base: var(--mc-radius-base);
+  --mc-radius-md: var(--mc-radius-md);
+}
+
+// ===================================
+// 📊 Z-INDEX SCALE
+// ===================================
+
+:root {
+  --mc-z-base: 0;
+  --mc-z-dropdown: 1000;
+  --mc-z-sticky: 1020;
+  --mc-z-fixed: 1030;
+  --mc-z-modal-backdrop: 1040;
+  --mc-z-modal: 1050;
+  --mc-z-popover: 1060;
+  --mc-z-tooltip: 1070;
+  --mc-z-notification: 1080;
+}
+
+// ===================================
+// 🎯 COMPONENT-SPECIFIC TOKENS
+// ===================================
+
+:root {
+  // Button Tokens (48-52px height for accessibility)
+  --mc-button-padding-x: var(--mc-spacing-6);
+  --mc-button-padding-y: var(--mc-spacing-3);
+  --mc-button-height: 3rem;         // 48px
+  --mc-button-height-lg: 3.25rem;   // 52px
+  --mc-button-radius: var(--mc-radius-md);    // 12px for controls
+  --mc-button-font-weight: 600;
+  --mc-button-transition: all 0.2s ease;
+
+  // Card Tokens
+  --mc-card-padding: var(--mc-spacing-6);
+  --mc-card-radius: var(--mc-radius-base);    // 16px for cards
+  --mc-card-bg: var(--mc-bg-primary);
+  --mc-card-border: var(--mc-border-primary);
+  --mc-card-shadow: var(--mc-shadow-base);
+
+  // Form Tokens
+  --mc-form-input-padding: var(--mc-spacing-3) var(--mc-spacing-4);
+  --mc-form-input-height: var(--mc-button-height);  // 48px for consistency
+  --mc-form-input-radius: var(--mc-radius-md);     // 12px for controls
+  --mc-form-input-border: var(--mc-border-primary);
+  --mc-form-input-focus-border: var(--mc-border-focus);
+  --mc-form-label-size: 0.875rem;
+  --mc-form-label-weight: 500;
+
+  // Unified input skin tokens
+  --mc-input-bg: var(--mc-form-input-bg, var(--mc-bg-primary));
+  --mc-input-text: var(--mc-form-input-text, var(--mc-text-primary));
+  --mc-input-placeholder: var(--mc-form-input-placeholder, var(--mc-text-tertiary));
+  --mc-input-border: var(--mc-form-input-border);
+  --mc-input-border-width: 1px;
+  --mc-input-radius: var(--mc-form-input-radius);
+  --mc-input-padding-x: var(--mc-spacing-4);
+  --mc-input-padding-y: var(--mc-spacing-3);
+  --mc-input-height: var(--mc-form-input-height);
+  --mc-input-focus-border: var(--mc-form-input-focus-border);
+  --mc-input-focus-ring-size: 3px;
+  --mc-input-focus-ring-color: rgba(0, 71, 187, 0.18);
+  --mc-input-invalid-border: var(--mc-color-error-500);
+  --mc-input-invalid-ring-color: rgba(220, 38, 38, 0.22);
+  --mc-input-disabled-opacity: 0.6;
+  --mc-input-caret-color: var(--mc-color-primary-600);
+
+  // Status Badge Tokens
+  --mc-badge-height: 1.5rem;       // 24px height
+  --mc-badge-padding-x: var(--mc-spacing-2);
+  --mc-badge-font-size: 0.75rem;
+  --mc-badge-font-weight: 600;
+  --mc-badge-radius: var(--mc-radius-base);
+
+  // Header/Footer Tokens
+  --mc-header-height: 60px;
+  --mc-header-bg: var(--mc-bg-primary);
+  --mc-header-border: var(--mc-border-primary);
+  --mc-header-padding: var(--mc-spacing-4) var(--mc-spacing-6);
+
+  --mc-footer-height: 70px;
+  --mc-footer-bg: var(--mc-bg-primary);
+  --mc-footer-border: var(--mc-border-primary);
+
+  // Icon Tokens
+  --mc-icon-size-xs: 0.75rem;      // 12px
+  --mc-icon-size-sm: 1rem;         // 16px
+  --mc-icon-size-base: 1.5rem;     // 24px (standard)
+  --mc-icon-size-lg: 2rem;         // 32px
+  --mc-icon-size-xl: 2.5rem;       // 40px
+  --mc-icon-stroke-width: 1.5px;
+
+  // Focus Ring Tokens
+  --mc-focus-ring-width: 2px;
+  --mc-focus-ring-offset: 2px;
+  --mc-focus-ring-color: var(--mc-color-primary-500);
+
+  // Hover/Active States
+  --mc-hover-overlay: rgba(0, 0, 0, 0.04);
+  --mc-active-overlay: rgba(0, 0, 0, 0.08);
+  --mc-disabled-opacity: 0.6;
+
+  // Dark mode hover/active states
+  --mc-hover-overlay-dark: rgba(255, 255, 255, 0.06);
+  --mc-active-overlay-dark: rgba(255, 255, 255, 0.12);
+}
+
+// ===================================
+// 📱 RESPONSIVE BREAKPOINTS
+// ===================================
+
+// CSS Custom Properties for responsive design
+:root {
+  --mc-breakpoint-sm: 640px;
+  --mc-breakpoint-md: 768px;
+  --mc-breakpoint-lg: 1024px;
+  --mc-breakpoint-xl: 1280px;
+  --mc-breakpoint-2xl: 1536px;
+}
+
+// ===================================
+// ♿ ACCESSIBILITY TOKENS
+// ===================================
+
+:root {
+  // Focus states
+  --mc-focus-width: 2px;
+  --mc-focus-color: var(--mc-color-primary-500);
+  --mc-focus-offset: 2px;
+
+  // Reduced motion support
+  --mc-transition-fast: 0.15s ease;
+  --mc-transition-base: 0.2s ease;
+  --mc-transition-slow: 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --mc-transition-fast: 0s;
+    --mc-transition-base: 0s;
+    --mc-transition-slow: 0s;
+  }
+}

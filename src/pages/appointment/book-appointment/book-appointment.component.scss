@@ -1,0 +1,31 @@
+/**
+ * MedicsCare Book Appointment Component
+ * Professional appointment booking using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 BOOKING CONTAINER
+// ===================================
+
+.booking-container {
+  padding: var(--mc-spacing-lg);
+}
+
+.booking-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.booking-image {
+  width: 2000px;
+  margin-bottom: var(--mc-spacing-md);
+}
+
+// ===================================
+// 🔘 BUTTON STYLES
+// ===================================
+
+ion-button {
+  width: 100%;
+}

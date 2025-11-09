@@ -1,0 +1,433 @@
+<ion-content class="emr-page">
+  <div class="empty-state" *ngIf="emrData">
+    <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+    <p>No medical records available for this visit.</p>
+  </div>
+
+  <div class="container" *ngIf="emr && !emrData">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Medical Record</h1>
+      <p class="subtitle">Complete visit details and medical documentation</p>
+    </header>
+
+    <!-- Visit Details Card -->
+    <div class="visit-card">
+      <h3 class="section-title">Visit Information</h3>
+
+      <div class="visit-details">
+        <div class="detail-item">
+          <ion-icon name="person-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">{{ emr?.visit?.patientName }}</div>
+        </div>
+
+        <div class="detail-item">
+          <ion-icon name="calendar-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            {{ emr?.visit?.visitDate | date:'MMM dd, yyyy' }} at {{ emr?.visit?.visitTime }}
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <ion-icon name="medical-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            <div class="doctor-name">{{ sanitizeDoctorName(emr?.visit?.doctorName) }}</div>
+            <div class="specialty">{{ emr?.visit?.specialityName }}</div>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="emr?.visit?.videoConsultation">
+          <ion-icon name="videocam-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">Video consultation</div>
+        </div>
+        <div class="detail-item" *ngIf="!emr?.visit?.videoConsultation">
+          <ion-icon name="medkit-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">Consultation at Hospital</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Chief Complaints -->
+    <div class="record-section" *ngIf="emr.cheifComplaints.length > 0">
+      <h3 class="section-title">Chief Complaint</h3>
+      <div class="section-content">
+        <ul class="record-list">
+          <li *ngFor="let chiefComplaints of emr.cheifComplaints">
+            {{ chiefComplaints.problemDescription}} since {{ chiefComplaints.remarks }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Allergy -->
+    <div class="record-section" *ngIf="emr.allergies.length > 0">
+      <h3 class="section-title">Allergies</h3>
+      <div class="section-content">
+        <ul class="record-list">
+          <li *ngFor="let allergies of emr.allergies">
+            {{ allergies.allergyWith}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Vital Signs -->
+    <div class="record-section" *ngIf="emr.vitalSigns.length > 0">
+      <h3 class="section-title">Vital Signs</h3>
+      <div class="section-content">
+        <ul class="record-list">
+          <li *ngFor="let vitalSigns of emr.vitalSigns">
+            {{ vitalSigns.itemName}} - {{ vitalSigns.observedValue}} {{ vitalSigns.unit }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Diagnosis -->
+    <div class="record-section" *ngIf="emr.diagnosis.length > 0">
+      <h3 class="section-title">Diagnosis</h3>
+      <div class="section-content">
+        <ul class="record-list">
+          <li *ngFor="let diagnosis of emr.diagnosis">
+            {{ diagnosis.name}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="record-section" *ngIf="emr.notes.length > 0">
+      <h3 class="section-title">Notes</h3>
+      <div class="section-content">
+        <ul class="record-list">
+          <li *ngFor="let notes of emr.notes">
+            {{ notes.visitNote}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Investigation -->
+    <div class="record-section" *ngIf="radiologyReports || labReports">
+      <h3 class="section-title">Investigation</h3>
+      <div class="section-content">
+
+      <!-- Radiology Report -->
+
+      <div *ngIf="radiologyReports">
+        <div *ngFor="let radiologyReports of radiologyReports.radiologyReportList, index as i"
+          style="margin-top: 10px;">
+
+          <div class="solid-border">
+            <ion-row class="whiteSmoke-background" style="padding: 8px">
+              <ion-col size="8.5" class="ion-no-padding">
+                {{ i+1 }}. {{ radiologyReports.serviceName }}
+              </ion-col>
+              <ion-col size="3.5" align="end" class="ion-no-padding align-column-center">
+                {{ radiologyReports.serviceStatus }}
+              </ion-col>
+            </ion-row>
+
+            <div *ngIf="radiologyReports.serviceStatus == 'PROCESSED' && radiologyReports.reportTemplate"
+              [innerHtml]="radiologyReports.reportTemplate" class="top-border">
+            </div>
+
+            <ion-row *ngIf="radiologyReports.serviceStatus == 'PROCESSED'" class="ion-no-padding top-border"
+              style="padding: 8px">
+              <ion-col size="8" class="ion-no-padding">
+                <div>
+                  Signed By:
+                </div>
+                <div>
+                  {{ radiologyReports.doctor.signedDoctorName }}
+                </div>
+              </ion-col>
+
+              <ion-col size="4" class="ion-no-padding">
+                <div style="width: fit-content; float: right">
+                  <div>
+                    Date:
+                  </div>
+                  <div>
+                    {{ radiologyReports.signedDateTime.split(' ')[0] }}
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+
+          </div>
+          <!-- Radiology Result Attachments -->
+
+          <ion-grid *ngIf="radiologyReports.attachments && radiologyReports.attachments.length > 0" style="margin: 9px">
+
+            <ion-row class="ion-no-padding">
+              <ion-col size="12" *ngFor="let attachment of radiologyReports.attachments" padding-top align="center">
+
+                <ion-button fill="clear" class="ion-no-padding attachment-button" [disabled]="disableThumbnailClick">
+
+                  <img [hidden]="!(attachment.contentType.split('/')[0]=='image')"
+                    [src]="sanitizeBase64URI(attachment.base64DataURI)" (click)="openFile(attachment)"
+                    style="width: 100%">
+
+                  <div class="file-placeholder" [hidden]="attachment.contentType.split('/')[0]=='image'" (click)="openFile(attachment)">
+                    <ion-icon name="document-outline"></ion-icon>
+                    <span class="file-type">
+                      {{ attachment.contentType.split("/")[1] }}
+                    </span>
+                  </div>
+
+                  <!--<div style="height: 200px; width: 100%" 
+                    [hidden]="attachment.contentType.split('/')[0]=='image'">
+
+                     <embed id="plugin" [type]="attachment.contentType" [src]="sanitizeBase64URI(attachment.base64DataURI)"
+                       headers="Content-Type: application/pdf" background-color="0xFF525659" top-toolbar-height="56" javascript="allow" top-level-url="undefined"></div> -->
+
+                </ion-button>
+                <div class="bodyText">
+                  {{ attachment.fileName }}
+
+                </div>
+
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        </div>
+      </div>
+
+      <!-- Lab Reports -->
+
+      <div *ngIf="labReports">
+        <div *ngFor="let labReports of labReports.labReports, index as i" style="margin-top: 10px;">
+
+          <div class="solid-border">
+            <ion-row class="whiteSmoke-background" style="padding: 8px">
+              <ion-col size="8.5" class="ion-no-padding">
+                {{ radiologyReports ? radiologyReports.radiologyReportList.length + i + 1 : i + 1 }}.
+                {{ labReports.serviceName }}
+              </ion-col>
+              <ion-col size="3.5" align="end" class="ion-no-padding align-column-center">
+                {{ labReports.status | uppercase }}
+              </ion-col>
+            </ion-row>
+
+            <div *ngIf="labReports.status == 'Processed' && labReports.reportTemplate"
+              [innerHtml]="labReports.reportTemplate" class="top-border">
+            </div>
+
+            <!-- Lab Report Type Start-->
+
+            <div class="top-border" class="text-body-xs"
+              *ngIf="labReports.reportObservations && labReports.resultType === 'OBSERVATIONS' && labReports.status == 'Processed'">
+              <ion-grid>
+                <ion-row align="center" style="padding-bottom: 11px">
+                  <ion-col size="3.5" class="ion-no-padding" style="padding-left: 1px;">
+                    Test Name</ion-col>
+                  <ion-col size="2.5" class="ion-no-padding">Test Value
+                  </ion-col>
+                  <ion-col size="3" class="ion-no-padding">Unit</ion-col>
+                  <ion-col size="3" class="ion-no-padding" style="padding-right: 1px;">
+                    Normal Range</ion-col>
+                </ion-row>
+                <ion-row *ngFor="let reportObservation of labReports.reportObservations">
+                  <ion-col size="3.5" class="ion-no-padding" style="padding-left: 1px;">
+                    {{ reportObservation.testName }}
+                  </ion-col>
+                  <ion-col size="2.5" class="ion-no-padding" align="end" style="padding-right: 5px;">
+                    {{ reportObservation.testValue }}
+                  </ion-col>
+                  <ion-col size="3" class="ion-no-padding">
+                    {{ reportObservation.unit }}
+                  </ion-col>
+                  <ion-col size="3" class="ion-no-padding" style="padding-right: 1px;">
+                    {{ reportObservation.normalRange }}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+
+            <div
+              *ngIf="labReports.status == 'Processed' && labReports.resultValue && labReports.resultType === 'TEMPLATE' && !labReports.reportTemplate"
+              class="top-border" style="padding: 2px;">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12">
+                    {{ labReports.serviceName }}: {{ labReports.resultValue }}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+            <!-- Lab Report Type End-->
+
+            <ion-row *ngIf="labReports.status == 'Processed'" class="ion-no-padding top-border" style="padding: 8px">
+              <ion-col size="8" class="ion-no-padding">
+                <div>
+                  Signed By:
+                </div>
+                <div>
+                  {{ labReports.signedBy.name }}
+                </div>
+              </ion-col>
+
+              <ion-col size="4" class="ion-no-padding">
+                <div style="width: fit-content; float: right">
+                  <div>
+                    Date:
+                  </div>
+                  <div>
+                    {{ labReports.signedBy.signedDateTime.split(' ')[0] }}
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+
+          </div>
+
+          <!-- Lab Result Attachments -->
+
+          <ion-grid *ngIf="labReports.attachments && labReports.attachments.length > 0" style="margin: 9px">
+
+
+
+            <ion-row class="ion-no-padding">
+              <ion-col *ngFor="let attachment of labReports.attachments" size="12" padding-top align="center">
+
+                <ion-button fill="clear" class="ion-no-padding attachment-button" [disabled]="disableThumbnailClick">
+
+                  <img [hidden]="!(attachment.contentType.split('/')[0]=='image')"
+                    [src]="sanitizeBase64URI(attachment.base64DataURI)" (click)="openFile(attachment)"
+                    style="width: 100%">
+
+                  <div class="file-placeholder" [hidden]="attachment.contentType.split('/')[0]=='image'" (click)="openFile(attachment)">
+                    <ion-icon name="document-outline"></ion-icon>
+                    <span class="file-type">
+                      {{ attachment.contentType.split("/")[1] }}
+                    </span>
+                  </div>
+
+                </ion-button>
+                <div class="bodyText">
+                  {{ attachment.fileName }}
+
+                </div>
+
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- Prescription -->
+    <div class="record-section" *ngIf="emr.prescription.length > 0">
+      <div class="section-header">
+        <h3 class="section-title">Prescription</h3>
+        <ion-button fill="clear" (click)="showPrescriptionPDF()" class="download-button">
+          <ion-icon slot="icon-only" name="arrow-down-circle-outline"></ion-icon>
+        </ion-button>
+      </div>
+      <div class="section-content">
+        <div class="prescription-list">
+          <div class="prescription-item" *ngFor="let prescription of emr.prescription, index as i">
+            <span class="prescription-number">{{i+1}}.</span>
+            <div class="prescription-details">
+              <div class="drug-name">{{ prescription.drugName}}</div>
+              <div class="dosage-info">{{ prescription.dosageDesc }} x {{ prescription.duration }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advice -->
+    <div class="record-section" *ngIf="emr.advice.length > 0">
+      <h3 class="section-title">Advice</h3>
+      <div class="section-content">
+        <ul class="record-list">
+          <li *ngFor="let advice of emr.advice">
+            {{ advice.adiceNote}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Visit Attachments -->
+    <div class="record-section" *ngIf="visitAttachments.length !== 0">
+      <h3 class="section-title">Attachments</h3>
+      <div class="section-content">
+
+      <ion-row class="ion-no-padding">
+        <ion-col size="12" *ngFor="let attachment of visitAttachments" padding-top align="center">
+
+          <ion-button fill="clear" class="ion-no-padding attachment-button" [disabled]="disableThumbnailClick">
+
+            <img [hidden]="!(attachment.contentType.split('/')[0]=='image')"
+              [src]="sanitizeBase64URI(attachment.base64DataURI)" (click)="openFile(attachment)" style="width: 100%">
+
+            <div class="file-placeholder" [hidden]="attachment.contentType.split('/')[0]=='image'" (click)="openFile(attachment)">
+              <ion-icon name="document-outline"></ion-icon>
+              <span class="file-type">
+                {{ attachment.contentType.split("/")[1] }}
+              </span>
+            </div>
+          </ion-button>
+          <!-- <div class="bodyText">{{ attachment.fileName }}</div> -->
+
+        </ion-col>
+      </ion-row>
+      </div>
+    </div>
+
+    <!-- Discharge Summary -->
+    <div class="record-section" *ngIf="dischargeSummary">
+      <h3 class="section-title">Discharge Summary</h3>
+      <div class="section-content" [innerHtml]="dischargeSummary.description"></div>
+    </div>
+
+  </div>
+
+  <!-- <ion-grid style="margin: 9px" *ngIf="emr.materialOrder.length > 0">
+
+    <div class="headerRow" style="border-radius: 3px; padding: 1px;">
+      <ion-row class="ion-no-padding">
+        <ion-col size="2" class="align-column-center">
+
+          <img class="advice-icon" src="assets/icon/adviceIconOutline.png">
+
+        </ion-col>
+        <ion-col size="10" class="align-column-center">
+
+          <ion-label class="headerLabel">
+            <strong>
+              MATERIAL ORDER
+            </strong>
+          </ion-label>
+
+        </ion-col>
+      </ion-row>
+    </div>
+
+
+    <ion-grid class="bodyText">
+      <ul>
+        <li class="extraRowSpacing" *ngFor="let materialOrder of  emr.materialOrder">
+          {{ materialOrder.itemName}} - quantity {{ materialOrder.quantity}}
+        </li>
+      </ul>
+    </ion-grid>
+
+
+  </ion-grid> -->
+
+</ion-content>
+<ion-fab *ngIf="emr && !emrData" class="button-secondary" style="cursor: pointer;" vertical="bottom" horizontal="end" slot="fixed" margin-end
+  margin-bottom>
+  <ion-avatar class="emr-download-ion" (click)="showEmrPDF()">
+    <img src="assets/icon/download.svg" />
+  </ion-avatar>
+</ion-fab>

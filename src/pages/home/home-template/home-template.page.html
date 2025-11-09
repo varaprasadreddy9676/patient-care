@@ -1,0 +1,10 @@
+<div class="main-container">
+  <app-header-profile></app-header-profile>
+
+  <!-- Use ion-content - Ionic automatically handles offset! -->
+  <ion-content [fullscreen]="true">
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-content>
+</div>
+
+<app-footer-navigation></app-footer-navigation>

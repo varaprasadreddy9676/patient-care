@@ -1,0 +1,109 @@
+/**
+ * MedicsCare Select Patient Page
+ * Professional patient selection using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 PAGE LAYOUT
+// ===================================
+
+* {
+  padding: 0;
+  margin-top: 2%;
+}
+
+.display-full-width {
+  width: 100%;
+  padding: var(--mc-spacing-lg);
+}
+
+// ===================================
+// 🔧 MATERIAL COMPONENT STYLES
+// ===================================
+
+::ng-deep .custom-dialog-container .mat-dialog-container {
+  padding: 0px !important;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+mat-dialog-content {
+  padding-left: var(--mc-spacing-xl);
+  padding-right: var(--mc-spacing-xl);
+  color: var(--mc-text-primary);
+}
+
+// ===================================
+// 📝 CONTENT ELEMENTS
+// ===================================
+
+.feature {
+  width: 250px;
+  border-radius: var(--mc-radius-sm);
+}
+
+p {
+  text-align: left;
+  margin-left: var(--mc-spacing-md);
+}
+
+.greyText {
+  margin-left: var(--mc-spacing-md);
+}
+
+.row-spacing {
+  margin-top: var(--mc-spacing-sm);
+}
+
+.disabledText {
+  color: var(--mc-text-tertiary);
+}
+
+.auto-selected-patient {
+  color: var(--mc-color-primary-500);
+  font-weight: var(--mc-font-weight-semibold);
+}
+
+// ===================================
+// 👤 AVATAR & ICONS
+// ===================================
+
+ion-avatar {
+  width: 38px;
+  height: 40px;
+}
+
+.hospital-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.profile-icon {
+  margin-left: var(--mc-spacing-md);
+}
+
+// ===================================
+// 📋 PATIENT LIST
+// ===================================
+
+ion-grid {
+  text-align: left;
+  border: 1px solid var(--mc-border-primary);
+  padding-top: var(--mc-spacing-sm);
+  padding-bottom: var(--mc-spacing-sm);
+}
+
+ion-item {
+  margin-left: var(--mc-spacing-md);
+  margin-top: var(--mc-spacing-md);
+  cursor: pointer;
+}
+
+// ===================================
+// 🔘 BUTTON STYLES
+// ===================================
+
+.button-size {
+  width: 180px;
+  margin-bottom: var(--mc-spacing-xl);
+}

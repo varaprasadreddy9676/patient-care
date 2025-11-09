@@ -1,0 +1,1557 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * MedicsCare Healthcare Application Theme System
+ *
+ * This file integrates the enterprise theme system with Ionic framework.
+ * All colors, typography, and styling are managed through the MedicsCare
+ * theme system for consistency and maintainability.
+ */
+
+// ===================================
+// 🎨 MEDICSCARE THEME SYSTEM
+// ===================================
+
+// Import the complete MedicsCare theme system
+@import './shared/styles/theme-main';
+
+// Import design system patterns
+@import './shared/styles/_detail-item-pattern';
+
+// ===================================
+// 📱 iOS LAYOUT UTILITIES
+// ===================================
+// Safe-area and dynamic viewport utilities for iOS compatibility
+// These are iOS-specific and will not affect Android
+@import './theme/_ios-safe-layout';
+@import './theme/_overlay-guard';
+
+// Core CSS required for Ionic components to work properly
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode Integration
+ * -----------------------------------------------------
+ * Note: MedicsCare theme system handles dark mode through CSS custom properties.
+ * Ionic dark mode classes are disabled to prevent conflicts.
+ */
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+/* @import "@ionic/angular/css/palettes/dark.system.css"; */
+
+// ===================================
+// 🏥 MEDICSCARE THEME INTEGRATION
+// ===================================
+
+:root {
+  // Font family remains the same (Poppins)
+  --ion-font-family: 'Poppins', sans-serif;
+
+  // Legacy variable mapping for backward compatibility
+  // These map to the new MedicsCare theme system
+  --color-primary: var(--mc-color-primary-500);
+  --color-primary-light: var(--mc-color-primary-100);
+  --color-primary-dark: var(--mc-color-primary-800);
+  --color-primary-tint: var(--mc-color-primary-400);
+
+  --color-secondary: var(--mc-color-neutral-600);
+  --color-secondary-light: var(--mc-color-neutral-50);
+  --color-accent: var(--mc-color-warning-500);
+
+  --color-success: var(--mc-color-success-500);
+  --color-success-light: var(--mc-color-success-50);
+  --color-warning: var(--mc-color-warning-500);
+  --color-warning-light: var(--mc-color-warning-50);
+  --color-error: var(--mc-color-error-500);
+  --color-error-light: var(--mc-color-error-50);
+  --color-info: var(--mc-color-info-500);
+  --color-info-light: var(--mc-color-info-50);
+
+  --color-text-primary: var(--mc-text-primary);
+  --color-text-secondary: var(--mc-text-secondary);
+  --color-text-muted: var(--mc-text-tertiary);
+  --color-text-disabled: var(--mc-text-disabled);
+  --color-text-placeholder: var(--mc-text-tertiary);
+  --color-text-inverse: var(--mc-text-inverse);
+
+  --color-bg-primary: var(--mc-bg-primary);
+  --color-bg-secondary: var(--mc-bg-secondary);
+  --color-bg-tertiary: var(--mc-bg-tertiary);
+  --color-bg-overlay: var(--mc-bg-overlay);
+  --color-bg-disabled: var(--mc-bg-disabled);
+
+  --color-border-primary: var(--mc-border-primary);
+  --color-border-secondary: var(--mc-border-secondary);
+  --color-border-focus: var(--mc-border-focus);
+  --color-divider: var(--mc-border-secondary);
+
+  // Medical-specific colors from theme system
+  --color-patient-active: var(--mc-patient-active-text);
+  --color-patient-inactive: var(--mc-patient-inactive-text);
+  --color-appointment-confirmed: var(--mc-appointment-confirmed-text);
+  --color-appointment-pending: var(--mc-appointment-in-progress-text);
+  --color-appointment-cancelled: var(--mc-appointment-cancelled-text);
+  --color-bill-paid: var(--mc-bill-paid-text);
+  --color-bill-pending: var(--mc-bill-pending-text);
+  --color-bill-overdue: var(--mc-bill-overdue-text);
+  --color-prescription-active: var(--mc-medication-active-text);
+
+  // Neutral colors from theme system
+  --color-white: var(--mc-color-neutral-50);
+  --color-gray-50: var(--mc-color-neutral-50);
+  --color-gray-100: var(--mc-color-neutral-100);
+  --color-gray-200: var(--mc-color-neutral-200);
+  --color-gray-300: var(--mc-color-neutral-300);
+  --color-gray-400: var(--mc-color-neutral-400);
+  --color-gray-500: var(--mc-color-neutral-500);
+  --color-gray-600: var(--mc-color-neutral-600);
+  --color-gray-700: var(--mc-color-neutral-700);
+  --color-gray-800: var(--mc-color-neutral-800);
+  --color-gray-900: var(--mc-color-neutral-900);
+
+  // Primary color palette from theme system
+  --color-primary-50: var(--mc-color-primary-50);
+  --color-primary-100: var(--mc-color-primary-100);
+  --color-primary-200: var(--mc-color-primary-200);
+  --color-primary-300: var(--mc-color-primary-300);
+  --color-primary-400: var(--mc-color-primary-400);
+  --color-primary-500: var(--mc-color-primary-500);
+  --color-primary-600: var(--mc-color-primary-600);
+  --color-primary-700: var(--mc-color-primary-700);
+  --color-primary-800: var(--mc-color-primary-800);
+  --color-primary-900: var(--mc-color-primary-900);
+
+  // Shadows from theme system
+  --shadow-sm: var(--mc-shadow-sm);
+  --shadow-base: var(--mc-shadow-base);
+  --shadow-md: var(--mc-shadow-md);
+  --shadow-lg: var(--mc-shadow-lg);
+  --shadow-xl: var(--mc-shadow-xl);
+
+  // Border radius from theme system
+  --radius-none: var(--mc-radius-none);
+  --radius-sm: var(--mc-radius-sm);
+  --radius-base: var(--mc-radius-base);
+  --radius-md: var(--mc-radius-md);
+  --radius-lg: var(--mc-radius-lg);
+  --radius-xl: var(--mc-radius-xl);
+  --radius-2xl: var(--mc-radius-xl);
+  --radius-full: var(--mc-radius-full);
+
+  /* ===== RESPONSIVE SPACING SYSTEM ===== */
+  /* Fluid spacing that scales with viewport for consistent layouts */
+
+  --spacing-0: 0;
+  --spacing-1: clamp(0.25rem, 0.5vw, 0.5rem);      /* 4px - 8px */
+  --spacing-2: clamp(0.5rem, 1vw, 0.75rem);        /* 8px - 12px */
+  --spacing-3: clamp(0.75rem, 1.5vw, 1rem);        /* 12px - 16px */
+  --spacing-4: clamp(1rem, 2vw, 1.5rem);           /* 16px - 24px */
+  --spacing-5: clamp(1.25rem, 2.5vw, 1.75rem);     /* 20px - 28px */
+  --spacing-6: clamp(1.5rem, 3vw, 2rem);           /* 24px - 32px */
+  --spacing-8: clamp(2rem, 4vw, 3rem);             /* 32px - 48px */
+  --spacing-10: clamp(2.5rem, 5vw, 4rem);          /* 40px - 64px */
+  --spacing-12: clamp(3rem, 6vw, 5rem);            /* 48px - 80px */
+  --spacing-16: clamp(4rem, 8vw, 6rem);            /* 64px - 96px */
+  --spacing-20: clamp(5rem, 10vw, 8rem);           /* 80px - 128px */
+
+  /* Fallback to theme system values */
+  --mc-spacing-xs-responsive: var(--spacing-1);
+  --mc-spacing-sm-responsive: var(--spacing-2);
+  --mc-spacing-md-responsive: var(--spacing-4);
+  --mc-spacing-lg-responsive: var(--spacing-6);
+  --mc-spacing-xl-responsive: var(--spacing-8);
+  --mc-spacing-2xl-responsive: var(--spacing-12);
+
+  /* Small screen spacing adjustments (reduce spacing on smaller screens) */
+  @media (max-width: 374px) {
+    --spacing-1: clamp(0.25rem, 1vw, 0.375rem);    /* 4px - 6px */
+    --spacing-2: clamp(0.375rem, 1.5vw, 0.5rem);   /* 6px - 8px */
+    --spacing-3: clamp(0.5rem, 2vw, 0.75rem);      /* 8px - 12px */
+    --spacing-4: clamp(0.75rem, 2.5vw, 1rem);      /* 12px - 16px */
+    --spacing-5: clamp(1rem, 3vw, 1.25rem);        /* 16px - 20px */
+    --spacing-6: clamp(1.25rem, 3.5vw, 1.5rem);    /* 20px - 24px */
+    --spacing-8: clamp(1.5rem, 4vw, 2rem);         /* 24px - 32px */
+  }
+
+  // Z-index from theme system
+  --z-index-dropdown: var(--mc-z-dropdown);
+  --z-index-sticky: var(--mc-z-sticky);
+  --z-index-fixed: var(--mc-z-fixed);
+  --z-index-modal-backdrop: var(--mc-z-modal-backdrop);
+  --z-index-modal: var(--mc-z-modal);
+  --z-index-popover: var(--mc-z-popover);
+  --z-index-tooltip: var(--mc-z-tooltip);
+
+  /* ===== RESPONSIVE TYPOGRAPHY SYSTEM ===== */
+  /* Fluid, accessible typography that scales with viewport and respects user preferences */
+
+  /* Base font size - respects user browser settings */
+  font-size: 16px; /* Fallback for older browsers */
+
+  /*
+   * Fluid Typography using clamp()
+   * Format: clamp(min-size, preferred-size, max-size)
+   * Preferred size uses viewport width (vw) for smooth scaling
+   * All sizes use rem for user font preference support
+   */
+
+  /* Display Sizes - for hero text, large headers */
+  --font-display-xl: clamp(1.75rem, 5vw + 0.5rem, 3rem);      /* 28px - 48px */
+  --font-display-lg: clamp(1.5rem, 4vw + 0.5rem, 2.25rem);    /* 24px - 36px */
+  --font-display-md: clamp(1.25rem, 3.5vw + 0.5rem, 2rem);    /* 20px - 32px */
+  --font-display-sm: clamp(1.125rem, 3vw + 0.5rem, 1.75rem);  /* 18px - 28px */
+
+  /* Heading Sizes - for structured content hierarchy */
+  --font-heading-xl: clamp(1.125rem, 2.5vw + 0.5rem, 1.5rem); /* 18px - 24px */
+  --font-heading-lg: clamp(1rem, 2vw + 0.5rem, 1.25rem);      /* 16px - 20px */
+  --font-heading-md: clamp(0.9375rem, 1.5vw + 0.5rem, 1.125rem); /* 15px - 18px */
+  --font-heading-sm: clamp(0.875rem, 1.25vw + 0.5rem, 1rem);  /* 14px - 16px */
+  --font-heading-xs: clamp(0.875rem, 1vw + 0.5rem, 0.9375rem); /* 14px - 15px */
+
+  /* Body Text Sizes - for content and UI elements */
+  --font-body-xl: clamp(1rem, 1.5vw + 0.5rem, 1.125rem);      /* 16px - 18px */
+  --font-body-lg: clamp(0.9375rem, 1.25vw + 0.5rem, 1rem);    /* 15px - 16px */
+  --font-body-md: clamp(0.875rem, 1vw + 0.5rem, 0.875rem);    /* 14px - 14px */
+  --font-body-sm: clamp(0.8125rem, 0.75vw + 0.5rem, 0.8125rem); /* 13px - 13px */
+  --font-body-xs: clamp(0.75rem, 0.5vw + 0.5rem, 0.75rem);    /* 12px - 12px */
+
+  /* Component-specific sizes */
+  --font-button-lg: clamp(0.9375rem, 1.25vw + 0.5rem, 1rem);  /* 15px - 16px */
+  --font-button-md: clamp(0.875rem, 1vw + 0.5rem, 0.9375rem); /* 14px - 15px */
+  --font-button-sm: clamp(0.8125rem, 0.75vw + 0.5rem, 0.8125rem); /* 13px - 13px */
+
+  --font-menu-item: clamp(0.9375rem, 1.25vw + 0.5rem, 1rem);  /* 15px - 16px */
+  --font-menu-label: clamp(0.875rem, 1vw + 0.5rem, 0.875rem); /* 14px - 14px */
+
+  --font-form-label: clamp(0.875rem, 1vw + 0.5rem, 0.875rem); /* 14px - 14px */
+  --font-form-input: clamp(1rem, 1.25vw + 0.5rem, 1rem);      /* 16px - 16px (prevents iOS zoom) */
+  --font-form-help: clamp(0.8125rem, 0.75vw + 0.5rem, 0.8125rem); /* 13px - 13px */
+
+  /* ===== RESPONSIVE BREAKPOINT OVERRIDES ===== */
+  /* Fine-tuned adjustments for specific screen sizes with known issues */
+
+  /* Large Tablets & Small Desktops (1024px - 1200px) */
+  @media (min-width: 1024px) and (max-width: 1200px) {
+    --font-display-xl: clamp(2.5rem, 4vw, 2.75rem);
+    --font-display-lg: clamp(2rem, 3.5vw, 2.25rem);
+  }
+
+  /* Standard Tablets (768px - 1023px) */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    --font-display-xl: clamp(2rem, 3.5vw, 2.5rem);
+    --font-display-lg: clamp(1.75rem, 3vw, 2rem);
+    --font-heading-xl: clamp(1.125rem, 2vw, 1.375rem);
+  }
+
+  /* Large Phones (540px - 767px) */
+  @media (min-width: 540px) and (max-width: 767px) {
+    --font-display-xl: clamp(1.75rem, 4vw, 2.25rem);
+    --font-display-lg: clamp(1.5rem, 3.5vw, 1.75rem);
+    --font-heading-xl: clamp(1rem, 2vw, 1.25rem);
+    --font-heading-lg: clamp(0.9375rem, 1.75vw, 1.125rem);
+  }
+
+  /* Standard Phones (414px - 539px) - iPhone Plus, Pixel */
+  @media (min-width: 414px) and (max-width: 539px) {
+    --font-display-xl: clamp(1.5rem, 4.5vw, 1.875rem);
+    --font-display-lg: clamp(1.375rem, 4vw, 1.625rem);
+    --font-display-md: clamp(1.25rem, 3.5vw, 1.5rem);
+    --font-heading-xl: clamp(1rem, 2.25vw, 1.25rem);
+    --font-body-lg: clamp(0.9375rem, 1.5vw, 1rem);
+  }
+
+  /* Mid-size Phones (390px - 413px) - iPhone 12/13/14 Standard */
+  @media (min-width: 390px) and (max-width: 413px) {
+    --font-display-xl: clamp(1.5rem, 5vw, 1.75rem);
+    --font-display-lg: clamp(1.25rem, 4.5vw, 1.5rem);
+    --font-display-md: clamp(1.125rem, 4vw, 1.375rem);
+    --font-heading-xl: clamp(1rem, 2.5vw, 1.125rem);
+    --font-heading-lg: clamp(0.9375rem, 2vw, 1rem);
+  }
+
+  /* Small Phones (375px - 389px) - iPhone SE (2nd/3rd gen), iPhone X/11 */
+  @media (min-width: 375px) and (max-width: 389px) {
+    --font-display-xl: clamp(1.375rem, 5.5vw, 1.625rem);
+    --font-display-lg: clamp(1.25rem, 5vw, 1.5rem);
+    --font-display-md: clamp(1.125rem, 4.5vw, 1.25rem);
+    --font-heading-xl: clamp(1rem, 3vw, 1.125rem);
+    --font-heading-lg: clamp(0.9375rem, 2.5vw, 1rem);
+    --font-heading-md: clamp(0.875rem, 2vw, 0.9375rem);
+  }
+
+  /* Very Small Phones (360px - 374px) - Galaxy S5, older Android devices */
+  @media (max-width: 374px) {
+    /* More aggressive scaling for very small screens */
+    --font-display-xl: clamp(1.25rem, 6vw, 1.5rem);           /* 20px - 24px */
+    --font-display-lg: clamp(1.125rem, 5.5vw, 1.375rem);      /* 18px - 22px */
+    --font-display-md: clamp(1rem, 5vw, 1.25rem);             /* 16px - 20px */
+    --font-display-sm: clamp(0.9375rem, 4.5vw, 1.125rem);     /* 15px - 18px */
+
+    --font-heading-xl: clamp(0.9375rem, 3.5vw, 1.125rem);     /* 15px - 18px */
+    --font-heading-lg: clamp(0.875rem, 3vw, 1rem);            /* 14px - 16px */
+    --font-heading-md: clamp(0.875rem, 2.5vw, 0.9375rem);     /* 14px - 15px */
+    --font-heading-sm: clamp(0.8125rem, 2vw, 0.875rem);       /* 13px - 14px */
+    --font-heading-xs: clamp(0.8125rem, 1.75vw, 0.875rem);    /* 13px - 14px */
+
+    --font-body-xl: clamp(0.9375rem, 2vw, 1rem);              /* 15px - 16px */
+    --font-body-lg: clamp(0.875rem, 1.75vw, 0.9375rem);       /* 14px - 15px */
+    --font-body-md: clamp(0.8125rem, 1.5vw, 0.875rem);        /* 13px - 14px */
+    --font-body-sm: clamp(0.75rem, 1.25vw, 0.8125rem);        /* 12px - 13px */
+    --font-body-xs: clamp(0.6875rem, 1vw, 0.75rem);           /* 11px - 12px */
+
+    --font-button-lg: clamp(0.875rem, 2vw, 0.9375rem);        /* 14px - 15px */
+    --font-button-md: clamp(0.8125rem, 1.75vw, 0.875rem);     /* 13px - 14px */
+    --font-button-sm: clamp(0.75rem, 1.5vw, 0.8125rem);       /* 12px - 13px */
+
+    --font-menu-item: clamp(0.875rem, 2vw, 0.9375rem);        /* 14px - 15px */
+    --font-form-input: 1rem;                                   /* 16px - prevents iOS zoom */
+  }
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: var(--mc-bg-primary);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== TYPOGRAPHY UTILITY CLASSES ===== */
+/* Use these classes in your HTML for consistent typography */
+
+/* Legacy classes - updated to use new system */
+.body-text {
+  font-size: var(--font-body-lg);
+  font-weight: lighter;
+}
+
+.header-text {
+  font-size: var(--font-heading-xl);
+  font-weight: 600;
+}
+
+/* Display Typography */
+.text-display-xl { font-size: var(--font-display-xl); font-weight: 700; line-height: 1.1; }
+.text-display-lg { font-size: var(--font-display-lg); font-weight: 700; line-height: 1.2; }
+.text-display-md { font-size: var(--font-display-md); font-weight: 600; line-height: 1.2; }
+.text-display-sm { font-size: var(--font-display-sm); font-weight: 600; line-height: 1.3; }
+
+/* Heading Typography */
+.text-heading-xl { font-size: var(--font-heading-xl); font-weight: 600; line-height: 1.3; }
+.text-heading-lg { font-size: var(--font-heading-lg); font-weight: 600; line-height: 1.4; }
+.text-heading-md { font-size: var(--font-heading-md); font-weight: 600; line-height: 1.4; }
+.text-heading-sm { font-size: var(--font-heading-sm); font-weight: 500; line-height: 1.4; }
+.text-heading-xs { font-size: var(--font-heading-xs); font-weight: 500; line-height: 1.5; }
+
+/* Body Typography - Enhanced for professional medical app */
+.text-body-xl { font-size: var(--font-body-xl); font-weight: 400; line-height: 1.6; }
+.text-body-lg { font-size: var(--font-body-lg); font-weight: 400; line-height: 1.6; }
+.text-body-md { font-size: var(--font-body-md); font-weight: 400; line-height: 1.6; }
+.text-body-sm { font-size: var(--font-body-sm); font-weight: 400; line-height: 1.5; }
+.text-body-xs { font-size: var(--font-body-xs); font-weight: 400; line-height: 1.4; }
+
+/* Component-specific Typography - Professional styling */
+.text-button-lg { font-size: var(--font-button-lg); font-weight: 600; letter-spacing: 0.25px; text-transform: uppercase; }
+.text-button-md { font-size: var(--font-button-md); font-weight: 600; letter-spacing: 0.25px; text-transform: uppercase; }
+.text-button-sm { font-size: var(--font-button-sm); font-weight: 600; letter-spacing: 0.25px; text-transform: uppercase; }
+
+.text-menu-item { font-size: var(--font-menu-item); font-weight: 500; letter-spacing: 0.15px; }
+.text-menu-label { font-size: var(--font-menu-label); font-weight: 600; color: var(--ion-color-medium); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.text-form-label { font-size: var(--font-form-label); font-weight: 500; color: var(--ion-color-medium); letter-spacing: 0.15px; }
+.text-form-input { font-size: var(--font-form-input); font-weight: 400; letter-spacing: 0.15px; }
+.text-form-help { font-size: var(--font-form-help); font-weight: 400; color: var(--ion-color-medium); line-height: 1.5; }
+
+/* Special semantic classes for professional medical app */
+.text-patient-name { font-size: var(--font-heading-md); font-weight: 600; color: var(--ion-color-dark); letter-spacing: 0.15px; line-height: 1.4; }
+.text-hospital-name { font-size: var(--font-heading-sm); font-weight: 600; color: var(--ion-color-dark); letter-spacing: 0.15px; line-height: 1.4; }
+.text-medical-detail { font-size: var(--font-body-md); font-weight: 400; color: var(--ion-color-medium); line-height: 1.6; letter-spacing: 0.15px; }
+.text-appointment-time { font-size: var(--font-body-lg); font-weight: 600; color: var(--ion-color-primary); letter-spacing: 0.15px; }
+.text-bill-amount { font-size: var(--font-heading-lg); font-weight: 700; color: var(--ion-color-dark); font-variant-numeric: tabular-nums; letter-spacing: 0.25px; }
+.text-status-paid { font-size: var(--font-body-sm); font-weight: 600; color: var(--ion-color-success); text-transform: uppercase; letter-spacing: 0.5px; }
+.text-status-pending { font-size: var(--font-body-sm); font-weight: 600; color: var(--ion-color-warning); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Professional typography utilities */
+.text-professional-title {
+  font-size: var(--font-heading-xl);
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  letter-spacing: 0.25px;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.text-professional-subtitle {
+  font-size: var(--font-heading-sm);
+  font-weight: 500;
+  color: var(--ion-color-medium);
+  letter-spacing: 0.15px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.text-card-header {
+  font-size: var(--font-heading-md);
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  letter-spacing: 0.15px;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.text-professional-body {
+  font-size: var(--font-body-lg);
+  font-weight: 400;
+  color: var(--ion-color-step-800);
+  line-height: 1.6;
+  letter-spacing: 0.15px;
+}
+
+.text-metadata {
+  font-size: var(--font-body-sm);
+  font-weight: 500;
+  color: var(--ion-color-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+ion-content {
+  --background: var(--mc-bg-primary);
+  overflow: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.custom-dialog-container .mat-dialog-container {
+  padding: 0px !important;
+  height: min-content;
+  overflow: hidden;
+}
+
+.custom-dialog-container .mat-dialog-actions {
+  margin-bottom: 1%;
+  @media (max-width: 1000px) {
+    margin-bottom: 3%;
+  }
+}
+
+.attachment-list-layout {
+  margin-left: 6%;
+  margin-right: 6%;
+}
+
+.appointment-confirmation-layout {
+  margin-top: 10%;
+  margin-left: 6%;
+  margin-right: 6%;
+}
+
+// for the material date picker
+// @media (min-width: 800px) {
+//   .mat-datepicker-content {
+//     width: 300px;
+//     height: 350px;
+//     margin-left: 200px;
+//   }
+
+//   .mat-calendar {
+//     padding-right: 200px;
+//   }
+// }
+
+// alert controller
+.error-alert {
+  --width: calc(100% - 32px);
+  --max-width: 320px;
+  --border-radius: 12px;
+  --backdrop-opacity: 0.3;
+
+  .alert-wrapper {
+    background-color: #D9E8F6;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(170, 169, 169, 0.12);
+  }
+
+  .alert-head {
+    padding: 16px 16px 8px;
+
+    h2 {
+      color: #dc3545;
+      font-size: var(--font-heading-sm);
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
+  .alert-message {
+    padding: 8px 16px 16px;
+    color: var(--ion-color-step-850);
+    font-size: var(--font-body-lg);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .alert-button-group {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .alert-button {
+    margin: 0;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: var(--font-button-md);
+    padding: 10px 16px;
+    min-width: 80px;
+  }
+
+  .alert-primary-dark-text {
+    --color: #0066cc;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    &:active::after {
+      opacity: 0.1;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .error-alert .alert-wrapper {
+    min-width: 200px;
+  }
+
+  .error-alert .alert-message {
+    font-size: var(--font-body-sm);
+  }
+}
+
+/* Exit confirmation styling */
+.exit-confirmation-alert {
+  --backdrop-opacity: 0.7;
+
+  .alert-wrapper {
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .alert-head {
+    padding: 24px 20px 8px;
+
+    h2 {
+      color: var(--ion-color-danger);
+      font-weight: 600;
+      font-size: var(--font-heading-xs);
+    }
+  }
+
+  .alert-message {
+    padding: 8px 20px 24px;
+    color: #000000 !important;
+    font-size: var(--font-body-md);
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .alert-button-group {
+    padding: 0;
+
+    .alert-button-cancel {
+      color: var(--ion-color-medium);
+      font-weight: 500;
+
+      &:hover {
+        background-color: var(--ion-color-light);
+      }
+    }
+
+    .alert-button-confirm {
+      color: var(--ion-color-danger);
+      font-weight: 600;
+
+      &:hover {
+        background-color: var(--ion-color-danger-tint);
+      }
+    }
+  }
+}
+
+/* Toast styling for exit warning */
+ion-toast.exit-warning-toast {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+  .toast-wrapper {
+    margin: 16px;
+  }
+
+  .toast-message {
+    font-weight: 500;
+  }
+}
+
+/* Prevent accidental swipe gestures on critical elements */
+.no-swipe {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ===== ENTERPRISE UTILITY CLASSES ===== */
+
+/* Button Styles - Enterprise Grade */
+.btn-enterprise {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: var(--font-button-md);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px; // Accessibility: minimum touch target
+
+  &:focus {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: var(--color-primary-500);
+  color: var(--color-white);
+
+  &:hover:not(:disabled) {
+    background: var(--color-primary-600);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.btn-secondary {
+  background: var(--color-white);
+  color: var(--color-gray-700);
+  border-color: var(--color-gray-300);
+
+  &:hover:not(:disabled) {
+    background: var(--color-gray-50);
+    border-color: var(--color-gray-400);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-gray-600);
+
+  &:hover:not(:disabled) {
+    background: var(--color-gray-100);
+    color: var(--color-gray-700);
+  }
+}
+
+/* Card Styles - Professional */
+.card-enterprise {
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+}
+
+/* Form Styles - Consistent with enterprise theme */
+.form-group-enterprise {
+  margin-bottom: var(--spacing-4);
+
+  label {
+    display: block;
+    font-size: var(--font-form-label);
+    font-weight: 500;
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-2);
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: var(--mc-input-padding-y) var(--mc-input-padding-x);
+    border: var(--mc-input-border-width) solid var(--mc-input-border);
+    border-radius: var(--mc-input-radius);
+    font-size: var(--font-form-input);
+    background: var(--mc-input-bg);
+    color: var(--mc-input-text);
+    transition: border-color var(--mc-transition-base), background-color var(--mc-transition-base), color var(--mc-transition-base);
+
+    &:focus {
+      outline: none;
+      border-color: var(--mc-input-focus-border);
+    }
+
+    &::placeholder {
+      color: var(--mc-input-placeholder);
+    }
+  }
+}
+
+/* Spacing Utilities */
+.m-0 { margin: var(--spacing-0); }
+.m-1 { margin: var(--spacing-1); }
+.m-2 { margin: var(--spacing-2); }
+.m-3 { margin: var(--spacing-3); }
+.m-4 { margin: var(--spacing-4); }
+.m-5 { margin: var(--spacing-5); }
+.m-6 { margin: var(--spacing-6); }
+
+.p-0 { padding: var(--spacing-0); }
+.p-1 { padding: var(--spacing-1); }
+.p-2 { padding: var(--spacing-2); }
+.p-3 { padding: var(--spacing-3); }
+.p-4 { padding: var(--spacing-4); }
+.p-5 { padding: var(--spacing-5); }
+.p-6 { padding: var(--spacing-6); }
+
+/* Border Radius Utilities */
+.rounded-none { border-radius: var(--radius-none); }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded { border-radius: var(--radius-base); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-2xl { border-radius: var(--radius-2xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* Shadow Utilities */
+.shadow-none { box-shadow: none; }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow { box-shadow: var(--shadow-base); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
+/* Color Utilities */
+.text-gray-500 { color: var(--color-gray-500); }
+.text-gray-600 { color: var(--color-gray-600); }
+.text-gray-700 { color: var(--color-gray-700); }
+.text-gray-800 { color: var(--color-gray-800); }
+.text-primary { color: var(--color-primary-500); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-error { color: var(--color-error); }
+
+.bg-white { background-color: var(--color-white); }
+.bg-gray-50 { background-color: var(--color-gray-50); }
+.bg-gray-100 { background-color: var(--color-gray-100); }
+.bg-primary { background-color: var(--color-primary-500); }
+
+/* Layout Utilities */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: var(--spacing-2); }
+.gap-3 { gap: var(--spacing-3); }
+.gap-4 { gap: var(--spacing-4); }
+
+/* Accessibility Focus Indicators */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn-enterprise {
+    border-width: 2px;
+  }
+
+  .card-enterprise {
+    border-width: 2px;
+  }
+
+  .form-group-enterprise input,
+  .form-group-enterprise textarea,
+  .form-group-enterprise select {
+    border-width: 2px;
+  }
+}
+
+/* ===== IONIC COMPONENT RESPONSIVE OVERRIDES ===== */
+/* Ensures all Ionic components scale properly across screen sizes */
+
+/* Ion Buttons - Responsive sizing with proper touch targets */
+ion-button {
+  --padding-top: clamp(0.5rem, 1.5vw, 0.75rem);
+  --padding-bottom: clamp(0.5rem, 1.5vw, 0.75rem);
+  --padding-start: clamp(1rem, 3vw, 1.5rem);
+  --padding-end: clamp(1rem, 3vw, 1.5rem);
+
+  font-size: var(--font-button-md);
+  min-height: 44px; /* Accessibility: minimum touch target */
+
+  &.button-small {
+    --padding-top: clamp(0.375rem, 1vw, 0.5rem);
+    --padding-bottom: clamp(0.375rem, 1vw, 0.5rem);
+    --padding-start: clamp(0.75rem, 2vw, 1rem);
+    --padding-end: clamp(0.75rem, 2vw, 1rem);
+    font-size: var(--font-button-sm);
+    min-height: 36px;
+  }
+
+  &.button-large {
+    --padding-top: clamp(0.75rem, 2vw, 1rem);
+    --padding-bottom: clamp(0.75rem, 2vw, 1rem);
+    --padding-start: clamp(1.5rem, 4vw, 2rem);
+    --padding-end: clamp(1.5rem, 4vw, 2rem);
+    font-size: var(--font-button-lg);
+    min-height: 48px;
+  }
+}
+
+/* Ion Cards - Responsive padding and spacing */
+ion-card {
+  --ion-card-padding: var(--spacing-4);
+  margin: var(--spacing-3) var(--spacing-2);
+  border-radius: clamp(0.5rem, 2vw, 1rem);
+
+  @media (max-width: 374px) {
+    --ion-card-padding: var(--spacing-3);
+    margin: var(--spacing-2) var(--spacing-1);
+  }
+}
+
+ion-card-header {
+  padding: var(--spacing-3) var(--spacing-4);
+
+  @media (max-width: 374px) {
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+}
+
+ion-card-content {
+  padding: var(--spacing-4);
+  font-size: var(--font-body-lg);
+  line-height: 1.6;
+
+  @media (max-width: 374px) {
+    padding: var(--spacing-3);
+    font-size: var(--font-body-md);
+  }
+}
+
+ion-card-title {
+  font-size: var(--font-heading-md);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+ion-card-subtitle {
+  font-size: var(--font-body-md);
+  line-height: 1.4;
+}
+
+/* Ion List - Responsive spacing */
+ion-list {
+  padding: var(--spacing-2) 0;
+}
+
+ion-item {
+  --padding-start: var(--spacing-4);
+  --padding-end: var(--spacing-4);
+  --inner-padding-end: var(--spacing-3);
+  --min-height: 48px;
+  font-size: var(--font-body-lg);
+
+  @media (max-width: 374px) {
+    --padding-start: var(--spacing-3);
+    --padding-end: var(--spacing-3);
+    --inner-padding-end: var(--spacing-2);
+    --min-height: 44px;
+    font-size: var(--font-body-md);
+  }
+}
+
+ion-item-divider {
+  --padding-start: var(--spacing-4);
+  --padding-end: var(--spacing-4);
+  font-size: var(--font-heading-sm);
+
+  @media (max-width: 374px) {
+    --padding-start: var(--spacing-3);
+    --padding-end: var(--spacing-3);
+  }
+}
+
+/* Ion Input & Textarea - Responsive with accessibility */
+ion-input,
+ion-textarea {
+  --padding-start: var(--spacing-3);
+  --padding-end: var(--spacing-3);
+  --padding-top: var(--spacing-3);
+  --padding-bottom: var(--spacing-3);
+  font-size: var(--font-form-input);
+
+  @media (max-width: 374px) {
+    --padding-start: var(--spacing-2);
+    --padding-end: var(--spacing-2);
+    --padding-top: var(--spacing-2);
+    --padding-bottom: var(--spacing-2);
+  }
+}
+
+/* Ion Select - Responsive sizing */
+ion-select {
+  --padding-start: var(--spacing-3);
+  --padding-end: var(--spacing-3);
+  font-size: var(--font-form-input);
+  min-height: 44px;
+
+  @media (max-width: 374px) {
+    --padding-start: var(--spacing-2);
+    --padding-end: var(--spacing-2);
+  }
+}
+
+/* Ion Label - Responsive typography */
+ion-label {
+  font-size: var(--font-body-lg);
+
+  &.label-stacked,
+  &.label-floating {
+    font-size: var(--font-form-label);
+    margin-bottom: var(--spacing-2);
+  }
+
+  @media (max-width: 374px) {
+    font-size: var(--font-body-md);
+  }
+}
+
+/* Ion Header & Toolbar - Responsive sizing */
+ion-header {
+  ion-toolbar {
+    --padding-start: var(--spacing-3);
+    --padding-end: var(--spacing-3);
+    --min-height: 56px;
+
+    @media (max-width: 374px) {
+      --padding-start: var(--spacing-2);
+      --padding-end: var(--spacing-2);
+      --min-height: 52px;
+    }
+  }
+
+  ion-title {
+    font-size: var(--font-heading-lg);
+    font-weight: 600;
+
+    @media (max-width: 374px) {
+      font-size: var(--font-heading-md);
+    }
+  }
+}
+
+/* Ion Footer - Responsive sizing */
+ion-footer {
+  ion-toolbar {
+    --padding-start: var(--spacing-3);
+    --padding-end: var(--spacing-3);
+    --padding-top: var(--spacing-2);
+    --padding-bottom: var(--spacing-2);
+
+    @media (max-width: 374px) {
+      --padding-start: var(--spacing-2);
+      --padding-end: var(--spacing-2);
+    }
+  }
+}
+
+/* Ion Segment - Responsive sizing */
+ion-segment {
+  --padding-start: var(--spacing-2);
+  --padding-end: var(--spacing-2);
+
+  ion-segment-button {
+    font-size: var(--font-body-md);
+    min-height: 40px;
+    padding: var(--spacing-2) var(--spacing-3);
+
+    @media (max-width: 374px) {
+      font-size: var(--font-body-sm);
+      padding: var(--spacing-1) var(--spacing-2);
+      min-height: 36px;
+    }
+  }
+}
+
+/* Ion Chip - Responsive sizing */
+ion-chip {
+  font-size: var(--font-body-sm);
+  height: clamp(28px, 6vw, 32px);
+  padding: 0 clamp(0.5rem, 2vw, 0.75rem);
+
+  @media (max-width: 374px) {
+    font-size: var(--font-body-xs);
+    height: 26px;
+  }
+}
+
+/* Ion Badge - Responsive sizing */
+ion-badge {
+  font-size: var(--font-body-xs);
+  padding: clamp(0.25rem, 0.5vw, 0.375rem) clamp(0.375rem, 1vw, 0.5rem);
+  min-width: clamp(1.25rem, 3vw, 1.5rem);
+
+  @media (max-width: 374px) {
+    font-size: 0.625rem; /* 10px */
+    padding: 0.1875rem 0.3125rem;
+  }
+}
+
+/* Ion FAB - Fixed size with proper touch target */
+ion-fab-button {
+  --ion-fab-button-size: clamp(48px, 12vw, 56px);
+
+  &[size="small"] {
+    --ion-fab-button-size: clamp(40px, 10vw, 44px);
+  }
+}
+
+/* Ion Modal - Responsive sizing */
+ion-modal {
+  --border-radius: clamp(0.75rem, 2vw, 1rem);
+
+  &.modal-card,
+  &.modal-sheet {
+    --height: auto;
+    --max-height: 90vh;
+    --max-height: 90dvh; /* Use dynamic viewport on iOS */
+  }
+
+  @media (orientation: landscape) {
+    &.modal-card,
+    &.modal-sheet {
+      --max-height: 95vh;
+      --max-height: 95dvh; /* Use dynamic viewport on iOS landscape */
+    }
+  }
+}
+
+/* Ion Popover - Responsive sizing */
+ion-popover {
+  --width: clamp(250px, 80vw, 320px);
+  --max-width: 90vw;
+
+  .popover-content {
+    padding: var(--spacing-3);
+
+    @media (max-width: 374px) {
+      padding: var(--spacing-2);
+    }
+  }
+}
+
+/* Ion Toast - Responsive sizing */
+ion-toast {
+  --min-width: clamp(250px, 80vw, 320px);
+  --max-width: 90vw;
+  font-size: var(--font-body-md);
+
+  @media (max-width: 374px) {
+    font-size: var(--font-body-sm);
+  }
+}
+
+/* Ion Alert - Responsive sizing */
+.alert-wrapper {
+  max-width: clamp(280px, 90vw, 320px) !important;
+
+  .alert-head h2 {
+    font-size: var(--font-heading-md) !important;
+  }
+
+  .alert-message {
+    font-size: var(--font-body-lg) !important;
+  }
+
+  .alert-button {
+    font-size: var(--font-button-md) !important;
+  }
+
+  @media (max-width: 374px) {
+    .alert-head h2 {
+      font-size: var(--font-heading-sm) !important;
+    }
+
+    .alert-message {
+      font-size: var(--font-body-md) !important;
+    }
+  }
+}
+
+/* Ion Grid - Responsive padding */
+ion-grid {
+  --ion-grid-padding: var(--spacing-3);
+
+  @media (max-width: 374px) {
+    --ion-grid-padding: var(--spacing-2);
+  }
+}
+
+ion-col {
+  padding: var(--spacing-2);
+
+  @media (max-width: 374px) {
+    padding: var(--spacing-1);
+  }
+}
+
+/* Ion Searchbar - Responsive sizing */
+ion-searchbar {
+  --padding-start: var(--spacing-3);
+  --padding-end: var(--spacing-3);
+  font-size: var(--font-form-input);
+
+  @media (max-width: 374px) {
+    --padding-start: var(--spacing-2);
+    --padding-end: var(--spacing-2);
+  }
+}
+
+/* Ion Range - Responsive sizing */
+ion-range {
+  --padding-start: var(--spacing-2);
+  --padding-end: var(--spacing-2);
+
+  @media (max-width: 374px) {
+    --padding-start: var(--spacing-1);
+    --padding-end: var(--spacing-1);
+  }
+}
+
+/* Ion Checkbox & Radio - Minimum touch target */
+ion-checkbox,
+ion-radio {
+  --size: clamp(20px, 5vw, 24px);
+  margin: var(--spacing-2);
+
+  @media (max-width: 374px) {
+    --size: 20px;
+    margin: var(--spacing-1);
+  }
+}
+
+/* Ion Toggle - Responsive sizing */
+ion-toggle {
+  --handle-width: clamp(24px, 6vw, 28px);
+  --handle-height: clamp(24px, 6vw, 28px);
+
+  @media (max-width: 374px) {
+    --handle-width: 22px;
+    --handle-height: 22px;
+  }
+}
+
+/* ===== RESPONSIVE LAYOUT UTILITIES ===== */
+
+/* Container with responsive padding */
+.container-responsive {
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+
+  @media (max-width: 374px) {
+    padding-left: var(--spacing-2);
+    padding-right: var(--spacing-2);
+  }
+}
+
+/* Section spacing */
+.section-spacing {
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+
+  @media (max-width: 374px) {
+    margin-top: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+  }
+}
+
+/* Content max-width for readability */
+.content-max-width {
+  max-width: min(100%, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+
+  @media (max-width: 374px) {
+    padding-left: var(--spacing-2);
+    padding-right: var(--spacing-2);
+  }
+}
+
+/* ===== USER PREFERENCE SUPPORT ===== */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Increased contrast support */
+@media (prefers-contrast: more) {
+  ion-button,
+  ion-card,
+  ion-item,
+  ion-input,
+  ion-textarea,
+  ion-select {
+    border-width: 2px;
+  }
+
+  ion-label,
+  ion-text {
+    font-weight: 500;
+  }
+}
+
+/* Dark mode adjustments (if needed in future) */
+@media (prefers-color-scheme: dark) {
+  /* Placeholder for future dark mode support */
+  /* Currently handled by MedicsCare theme system */
+}
+
+/* ===== VIEWPORT HEIGHT FIX FOR MOBILE BROWSERS ===== */
+
+/* Fix for mobile browser address bar causing layout issues */
+.full-viewport-height {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height */
+
+  /* Fallback for browsers that don't support dvh */
+  @supports not (height: 100dvh) {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Responsive viewport height for landscape mode */
+@media (orientation: landscape) and (max-height: 500px) {
+  .full-viewport-height {
+    min-height: auto;
+    height: auto;
+  }
+}
+
+/* Page-level height management */
+.page-full-height {
+  display: flex;
+  flex-direction: column;
+  height: var(--app-height);
+  min-height: var(--app-height);
+}
+
+.page-content-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.page-footer-fixed {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* ===== RESPONSIVE IMAGES ===== */
+
+/* Ensure images scale properly */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ion-img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== TEXT OVERFLOW HANDLING ===== */
+
+/* Truncate text with ellipsis */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Multi-line truncation */
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-truncate-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== SAFE SPACING FOR SMALL SCREENS ===== */
+
+/* Ensure minimum margins on very small screens */
+@media (max-width: 360px) {
+  ion-content {
+    --padding-start: var(--spacing-2);
+    --padding-end: var(--spacing-2);
+  }
+
+  .page-content {
+    padding: var(--spacing-2);
+  }
+
+  /* Reduce font size slightly for better fit */
+  h1, .h1 {
+    font-size: var(--font-heading-xl);
+  }
+
+  h2, .h2 {
+    font-size: var(--font-heading-lg);
+  }
+
+  h3, .h3 {
+    font-size: var(--font-heading-md);
+  }
+
+  /* Stack buttons vertically on very small screens */
+  .button-group {
+    flex-direction: column;
+    gap: var(--spacing-2);
+
+    ion-button {
+      width: 100%;
+    }
+  }
+
+  /* Tighter spacing on 360px screens */
+  ion-card {
+    --ion-card-padding: var(--spacing-2);
+    margin: var(--spacing-1);
+  }
+
+  ion-item {
+    --min-height: 44px;
+  }
+
+  /* Prevent text from wrapping too much */
+  .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Reduce gap in flex containers */
+  .gap-4 {
+    gap: var(--spacing-2) !important;
+  }
+
+  .gap-3 {
+    gap: var(--spacing-1) !important;
+  }
+
+  /* Stack two-column layouts on ultra-small screens */
+  .grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: var(--spacing-2);
+  }
+
+  /* Make inputs take full width */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  select {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Reduce padding in lists */
+  ion-list {
+    padding: var(--spacing-1) 0;
+  }
+
+  ion-item {
+    --padding-start: var(--spacing-2);
+    --padding-end: var(--spacing-2);
+  }
+
+  /* Reduce FAB size on tiny screens */
+  ion-fab-button {
+    --ion-fab-button-size: 44px;
+  }
+
+  /* Make modals adaptive */
+  ion-modal {
+    --height: 100%;
+    --width: 100%;
+    --border-radius: 0;
+  }
+}
+
+/* ===== LANDSCAPE MODE OPTIMIZATIONS ===== */
+
+/* Landscape mode on small screens - reduce vertical spacing */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Reduce header height */
+  ion-header {
+    ion-toolbar {
+      --min-height: 48px;
+
+      ion-title {
+        font-size: var(--font-heading-md);
+      }
+    }
+  }
+
+  /* Reduce footer height */
+  ion-footer {
+    ion-toolbar {
+      --padding-top: var(--spacing-1);
+      --padding-bottom: var(--spacing-1);
+      --min-height: auto;
+    }
+  }
+
+  /* Reduce card padding in landscape */
+  ion-card {
+    --ion-card-padding: var(--spacing-2);
+    margin: var(--spacing-1);
+  }
+
+  /* Adjust modal height for landscape */
+  ion-modal {
+    &.modal-card,
+    &.modal-sheet {
+      --max-height: 100vh;
+      --max-height: 100dvh;
+    }
+  }
+
+  /* Stack sections horizontally if possible */
+  .flex-col-mobile {
+    flex-direction: row;
+    gap: var(--spacing-2);
+  }
+
+  /* Reduce margins for dense layout */
+  .section-spacing {
+    margin-top: var(--spacing-2);
+    margin-bottom: var(--spacing-2);
+  }
+
+  /* Make buttons smaller in landscape */
+  ion-button {
+    --padding-top: clamp(0.25rem, 1vw, 0.5rem);
+    --padding-bottom: clamp(0.25rem, 1vw, 0.5rem);
+    min-height: 40px;
+  }
+}
+
+/* Landscape on medium-size screens (e.g., iPad, tablets in landscape) */
+@media (orientation: landscape) and (min-width: 1024px) {
+  /* Use more space on larger landscape screens */
+  ion-header {
+    ion-toolbar {
+      --min-height: 60px;
+    }
+  }
+
+  /* Allow more content width */
+  .container-responsive {
+    max-width: 90%;
+  }
+}
+
+/* Extra-small landscape (e.g., iPhone SE in landscape) */
+@media (orientation: landscape) and (max-width: 812px) and (max-height: 375px) {
+  /* Minimize all spacing for extreme constraints */
+  ion-card {
+    --ion-card-padding: var(--spacing-1);
+    margin: 0;
+  }
+
+  ion-item {
+    --min-height: 40px;
+    --padding-start: var(--spacing-2);
+    --padding-end: var(--spacing-2);
+  }
+
+  .section-spacing {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

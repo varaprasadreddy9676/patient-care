@@ -1,0 +1,91 @@
+<ion-content>
+
+  <div class="labelCenter" id="noReports" [hidden]="true">
+    <ion-label class="labelCenter header greyText">No reports attached</ion-label>
+  </div>
+
+  <div *ngFor="let date of attachmentDates" class="bodyText ion-padding-top">
+    <ion-grid class="ion-no-padding" style="margin-top: 5%;margin-left: 6%;margin-right: 6%;">
+      <ion-row class="ion-no-padding">
+        <ion-col size="3" class="ion-no-padding"
+          style="display: flex!important; align-content: center!important; align-items: center!important; justify-content: center;">
+          <strong>
+            {{ stringToDate(date) | date:"dd MMM yyyy"}}
+          </strong>
+        </ion-col>
+        <ion-col size="9" class="ion-no-padding"
+          style="display: flex!important; align-content: center!important; align-items: center!important;">
+          <div style="width: 100%; height: 1px; background-color: var(--ion-color-secondary);"></div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let attachment of attachments[date]" size="4" size-lg="3" size-md="4" size-sm="4"
+              style="margin-top: 2%;">
+
+              <ion-checkbox [hidden]="hideCheckBox" (ionChange)="fileChecked($event, attachment)"
+                [(ngModel)]="attachment.isSelected" color="secondary" id="notifications-badge" mode="ios">
+              </ion-checkbox>
+
+              <ion-button fill="clear" class="ion-no-padding attachment-button" [disabled]="disableThumbnailClick">
+
+                <ion-thumbnail [hidden]="!(attachment.contentType.split('/')[0]=='image')"
+                  [ngClass]="currentUpload ? currentUpload.fileName==attachment.fileName ? 'thumbnailSize gray-border' : 'thumbnailSize' : 'thumbnailSize'">
+
+                  <img [src]="sanitizeURI(attachment.thumbnailBase64DataURI)" (click)="openFile(attachment)">
+
+
+
+                </ion-thumbnail>
+
+                <div [hidden]="attachment.contentType.split('/')[0]=='image'" (click)="openFile(attachment)"
+                  style="width: 100%; height: 150px; background-color: #cccccc;" align="center">
+                  <span
+                    class="text-body-md" style="position: relative; top: 50%; padding: 10px; border-radius: 6px; right: 0;">
+                    {{ attachment.contentType.split("/")[1] }}
+                  </span>
+                </div>
+              </ion-button>
+
+              <div style="height: 17px; overflow: hidden; margin-top: 10px;" class="textShade">
+                <strong>
+                  {{ attachment.fileName }}
+                </strong>
+              </div>
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-padding" *ngIf="selectedAttachments.length > 0">
+
+  <ion-toolbar>
+
+    <!-- <ion-grid *ngIf="selectedAttachments.length > 0"> -->
+    <ion-grid>
+      <ion-row>
+        <ion-col class="bodyText">
+          {{ selectedAttachments.length }} items selected
+        </ion-col>
+
+        <ion-col class="primaryText" align="center">
+          <ion-label *ngIf="appointment" (click)="shareAttachmentToVisit()">
+            SHARE
+          </ion-label>
+        </ion-col>
+
+        <ion-col class="greyText" align="center">
+
+          <ion-label (click)="unmarkAttachments()">
+            CANCEL
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,66 @@
+<div class="header-container" [style.background]="backgroundColor">
+  <ion-header class="header-main">
+    <ion-toolbar class="header-toolbar">
+
+      <!-- Left Section: Back Button -->
+      <ion-buttons slot="start" class="header-left">
+        <ion-button
+          *ngIf="showBackButton"
+          fill="clear"
+          color="dark"
+          class="back-button"
+          (click)="onBackClick()">
+          <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+      <!-- Center Section: Profile Chip (optional) and Title -->
+      <div class="header-center">
+        <!-- Profile Chip (shown when enabled) -->
+        <div *ngIf="showProfileChip" class="profile-chip" (click)="onProfileClick()">
+          <ion-avatar class="profile-avatar">
+            <img *ngIf="profileImage" [src]="profileImage" [alt]="profileName" />
+            <div *ngIf="!profileImage" class="profile-avatar-placeholder">
+              <ion-icon name="person-outline"></ion-icon>
+            </div>
+          </ion-avatar>
+          <span *ngIf="profileName" class="profile-name">{{ profileName }}</span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="header-title" [style.color]="textColor">{{ title }}</h1>
+      </div>
+
+      <!-- Right Section: AI Chat and Notifications -->
+      <ion-buttons slot="end" class="header-right">
+        <!-- Notifications Button -->
+        <ion-button
+          *ngIf="showNotifications"
+          fill="clear"
+          color="dark"
+          class="notification-button"
+          (click)="onNotificationsClick()">
+          <ion-icon name="notifications-outline" slot="icon-only"></ion-icon>
+          <ion-badge
+            *ngIf="hasNotifications"
+            color="danger"
+            class="notification-badge">
+            {{ notificationCount > 99 ? '99+' : notificationCount }}
+          </ion-badge>
+        </ion-button>
+
+        <!-- AI Chat Button -->
+        <ion-button
+          *ngIf="showAIChat"
+          fill="clear"
+          color="primary"
+          class="ai-chat-button"
+          (click)="onAIChatClick()">
+          <ion-icon name="chatbubble-ellipses" slot="icon-only"></ion-icon>
+        </ion-button>
+
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+</div>

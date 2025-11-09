@@ -1,0 +1,25 @@
+<mat-dialog-content>
+  <div *ngIf="phoneNumberSignUp" class="dialog-container">
+    <img src="assets/new_icons_list/unregistered_user.gif" />
+    <p class="dialog-message">
+      The number <strong>{{ phoneNumberSignUp }}</strong> is not registered.
+    </p>
+    <p class="dialog-prompt">Would you like to create an account?</p>
+    <div class="dialog-actions">
+      <button mat-stroked-button color="warn" class="highlight-button" [mat-dialog-close]>Cancel</button>
+      <button mat-flat-button color="primary" class="highlight-button" (click)="goToRegister()">Sign Up</button>
+    </div>
+  </div>
+
+  <div *ngIf="phoneNumberSignIn" class="dialog-container">
+    <img src="assets/new_icons_list/registered_user.gif" />
+    <p class="dialog-message">
+      The number <strong>{{ phoneNumberSignIn }}</strong> is already registered.
+    </p>
+    <p class="dialog-prompt">Would you like to Sign In?</p>
+    <div class="dialog-actions">
+      <button mat-stroked-button color="warn" class="highlight-button" [mat-dialog-close]>Cancel</button>
+      <button mat-flat-button color="primary" class="highlight-button" (click)="goToSignIn()">Sign In</button>
+    </div>
+  </div>
+</mat-dialog-content>

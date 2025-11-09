@@ -1,0 +1,223 @@
+<ion-content class="appointment-list-page">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Appointments</h1>
+      <p class="subtitle">Manage your upcoming and past appointments</p>
+    </header>
+
+    <!-- Main Card -->
+    <div class="main-card">
+      <mat-tab-group mat-align-tabs="center" [selectedIndex]="activeTab" (selectedTabChange)="tabClick($event)">
+
+        <!-- Tab 1: Past Appointments -->
+        <mat-tab [label]="isMobile ? 'Past' : 'Past Appointments'">
+          <!-- Loading State -->
+          <div class="loading-container" *ngIf="!noAppointments && appointmentPast.length === 0">
+            <ion-spinner name="crescent"></ion-spinner>
+            <p class="loading-text">Loading appointments...</p>
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-state" *ngIf="noAppointments">
+            <ion-icon name="calendar-clear-outline" class="empty-icon"></ion-icon>
+            <h2>No Past Appointments</h2>
+            <p>Your past appointments will appear here</p>
+          </div>
+
+          <!-- Appointments List -->
+          <div class="appointments-list" *ngIf="appointmentPast.length > 0">
+            <div class="appointment-card"
+                 *ngFor="let appointment of appointmentPast; let i = index"
+                 (click)="openConference(appointment)"
+                 [style.animation-delay.s]="i * 0.05">
+
+              <div class="card-main">
+                <div class="card-left">
+                  <ion-icon *ngIf="appointment.videoConsultation"
+                            name="videocam"
+                            class="consultation-icon video">
+                  </ion-icon>
+                  <ion-icon *ngIf="!appointment.videoConsultation"
+                            name="medical"
+                            class="consultation-icon in-person">
+                  </ion-icon>
+
+                  <div class="card-content">
+                    <div class="doctor-info">
+                      <div class="doctor-name-row">
+                        <span class="doctor-name">{{ formatDoctorName(appointment.doctorName) }}</span>
+                        <span class="status-badge {{getStatusBadgeClass(appointment.status)}}">
+                          {{ getStatus(appointment.status) }}
+                        </span>
+                      </div>
+                      <span class="specialty">{{ appointment.specialityName }}</span>
+                    </div>
+                    <div class="appointment-info">
+                      <span class="date-time">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                        {{ appointment.appointmentDate | date: 'MMM dd, yyyy' }}
+                        <span *ngIf="appointment.appointmentTime"> • {{ appointment.appointmentTime }}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-right">
+                  <ion-button *ngIf="appointment.receiptId"
+                              fill="clear"
+                              size="small"
+                              class="receipt-button"
+                              (click)="viewReceipt(appointment); $event.stopPropagation()"
+                              [attr.aria-label]="'View receipt'">
+                    <ion-icon name="receipt-outline" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Tab 2: Upcoming Appointments -->
+        <mat-tab [label]="isMobile ? 'Upcoming' : 'Upcoming Appointments'">
+          <!-- Loading State -->
+          <div class="loading-container" *ngIf="!noUpcomingAppointments && (appointmentToday.length === 0 && appointmentUpcoming.length === 0)">
+            <ion-spinner name="crescent"></ion-spinner>
+            <p class="loading-text">Loading appointments...</p>
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-state" *ngIf="noUpcomingAppointments">
+            <ion-icon name="calendar-outline" class="empty-icon"></ion-icon>
+            <h2>No Upcoming Appointments</h2>
+            <p>Book your next appointment to get started</p>
+            <ion-button expand="block" class="book-button" (click)="goToBookAppointment()">
+              <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+              Book Appointment
+            </ion-button>
+          </div>
+
+          <!-- Today's Appointments -->
+          <div class="appointments-list" *ngIf="appointmentToday.length > 0">
+            <div class="section-header">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>Today</span>
+            </div>
+
+            <div class="appointment-card today-highlight"
+                 *ngFor="let appointment of appointmentToday; let i = index"
+                 (click)="openConference(appointment)"
+                 [style.animation-delay.s]="i * 0.05">
+
+              <div class="card-main">
+                <div class="card-left">
+                  <ion-icon *ngIf="appointment.videoConsultation"
+                            name="videocam"
+                            class="consultation-icon video">
+                  </ion-icon>
+                  <ion-icon *ngIf="!appointment.videoConsultation"
+                            name="medical"
+                            class="consultation-icon in-person">
+                  </ion-icon>
+
+                  <div class="card-content">
+                    <div class="doctor-info">
+                      <div class="doctor-name-row">
+                        <span class="doctor-name">{{ formatDoctorName(appointment.doctorName) }}</span>
+                        <span class="status-badge {{getStatusBadgeClass(appointment.status)}}">
+                          {{ getStatus(appointment.status) }}
+                        </span>
+                      </div>
+                      <span class="specialty">{{ appointment.specialityName }}</span>
+                    </div>
+                    <div class="appointment-info">
+                      <span class="date-time">
+                        <ion-icon name="time-outline"></ion-icon>
+                        Today<span *ngIf="appointment.appointmentTime"> • {{ appointment.appointmentTime }}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-right">
+                  <ion-button *ngIf="appointment.receiptId"
+                              fill="clear"
+                              size="small"
+                              class="receipt-button"
+                              (click)="viewReceipt(appointment); $event.stopPropagation()"
+                              [attr.aria-label]="'View receipt'">
+                    <ion-icon name="receipt-outline" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Appointments -->
+          <div class="appointments-list" *ngIf="appointmentUpcoming.length > 0">
+            <div class="section-header" *ngIf="appointmentToday.length > 0">
+              <ion-icon name="calendar-number-outline"></ion-icon>
+              <span>Upcoming</span>
+            </div>
+
+            <div class="appointment-card"
+                 *ngFor="let appointment of appointmentUpcoming; let i = index"
+                 (click)="openConference(appointment)"
+                 [style.animation-delay.s]="(i + appointmentToday.length) * 0.05">
+
+              <div class="card-main">
+                <div class="card-left">
+                  <ion-icon *ngIf="appointment.videoConsultation"
+                            name="videocam"
+                            class="consultation-icon video">
+                  </ion-icon>
+                  <ion-icon *ngIf="!appointment.videoConsultation"
+                            name="medical"
+                            class="consultation-icon in-person">
+                  </ion-icon>
+
+                  <div class="card-content">
+                    <div class="doctor-info">
+                      <div class="doctor-name-row">
+                        <span class="doctor-name">{{ formatDoctorName(appointment.doctorName) }}</span>
+                        <span class="status-badge {{getStatusBadgeClass(appointment.status)}}">
+                          {{ getStatus(appointment.status) }}
+                        </span>
+                      </div>
+                      <span class="specialty">{{ appointment.specialityName }}</span>
+                    </div>
+                    <div class="appointment-info">
+                      <span class="date-time">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                        {{ appointment.appointmentDate | date: 'MMM dd, yyyy' }}
+                        <span *ngIf="appointment.appointmentTime"> • {{ appointment.appointmentTime }}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-right">
+                  <ion-button *ngIf="appointment.receiptId"
+                              fill="clear"
+                              size="small"
+                              class="receipt-button"
+                              (click)="viewReceipt(appointment); $event.stopPropagation()"
+                              [attr.aria-label]="'View receipt'">
+                    <ion-icon name="receipt-outline" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+
+  <!-- Floating Action Button - Fixed Position -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="fab-new-appointment">
+    <ion-fab-button (click)="goToBookAppointment()" aria-label="Book new appointment">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

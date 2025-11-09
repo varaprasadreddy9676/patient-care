@@ -1,0 +1,78 @@
+<!-- Simple Overlay Modal (No ion-modal) -->
+<div 
+  class="modal-overlay" 
+  *ngIf="isOpen"
+  (click)="onBackdropClick($event)">
+  
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="modal-header">
+      <h2>{{ isFirstTimeSelectionRequired() ? 'Select family member' : 'Select family member' }}</h2>
+      <p class="subtitle">{{ isFirstTimeSelectionRequired() ? 'Please select a family member to continue using the app' : 'Choose who you\'d like to view information for' }}</p>
+    </div>
+
+    <!-- Family Members Grid -->
+    <div class="members-container" *ngIf="familyMembers.length > 0">
+      <div 
+        class="member-card" 
+        *ngFor="let member of familyMembers; trackBy: trackByMemberId"
+        (click)="member && selectMember(member)"
+        [class.disabled]="selectedMemberId && member && selectedMemberId !== getMemberId(member)"
+        [class.selected]="selectedMemberId && member && selectedMemberId === getMemberId(member)">
+        
+        <!-- Avatar -->
+        <div class="member-avatar" *ngIf="member">
+          <div class="avatar-circle">
+            <ng-container *ngIf="hasPhoto(member); else initialsTemplate">
+              <img
+                [src]="getPhoto(member)"
+                [alt]="member.fullName || 'Family member avatar'"
+                class="avatar-img"
+              />
+            </ng-container>
+            <ng-template #initialsTemplate>
+              <span class="initials">
+                {{ getInitials(member?.fullName || '') }}
+              </span>
+            </ng-template>
+          </div>
+          
+          <!-- Selection indicator -->
+          <div class="selection-ring" [class.visible]="selectedMemberId && member && selectedMemberId === getMemberId(member)">
+            <ion-icon name="checkmark-outline" class="check-icon"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Member Info -->
+        <div class="member-info" *ngIf="member">
+          <h3 class="member-name">{{ member?.fullName }}</h3>
+          <p class="member-relationship">{{ member?.relation || member?.relationshipToUser || 'Family Member' }}</p>
+        </div>
+
+        <!-- Hover effect overlay -->
+        <div class="card-overlay"></div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="familyMembers.length === 0">
+      <ion-icon name="people-outline" class="empty-icon"></ion-icon>
+      <h3>No Family Members</h3>
+      <p>Add family members to get started</p>
+      <ion-button fill="outline" size="small" (click)="closeModal()">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        Add family member
+      </ion-button>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <ion-button
+        fill="outline"
+        (click)="closeModal()"
+        [disabled]="!!selectedMemberId || isFirstTimeSelectionRequired()">
+        Cancel
+      </ion-button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<ion-content class="visit-summary-page">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <div class="header-content">
+        <div>
+          <h1>Visit Documents</h1>
+          <p class="subtitle" *ngIf="allDocuments.length && !isLoading">{{ allDocuments.length }} document{{ allDocuments.length !== 1 ? 's' : '' }}</p>
+        </div>
+        <ion-button
+          *ngIf="allDocuments.length && !isLoading"
+          fill="clear"
+          size="small"
+          class="view-toggle-btn"
+          (click)="toggleViewMode()">
+          <ion-icon
+            [name]="viewMode === 'list' ? 'grid-outline' : 'list-outline'"
+            slot="icon-only">
+          </ion-icon>
+        </ion-button>
+      </div>
+    </header>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p class="loading-text">Loading documents...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!allDocuments.length && !prescriptionDocuments.length && !isLoading">
+      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+      <p>No documents available for this visit</p>
+      <p class="help-text">Check back later or contact your healthcare provider</p>
+    </div>
+
+    <!-- Documents List (Compact) -->
+    <div class="documents-list" *ngIf="allDocuments.length && !isLoading && viewMode === 'list'">
+      <div class="document-item" *ngFor="let doc of allDocuments" (click)="viewPDF(doc)">
+        <div class="document-icon-compact" [class]="'category-' + getCategoryClass(doc)">
+          <ion-icon name="document-text"></ion-icon>
+          <span class="pdf-badge-compact">PDF</span>
+        </div>
+
+        <div class="document-content">
+          <h3 class="document-title">{{ doc.displayName }}</h3>
+          <div class="document-meta">
+            <span class="category-pill" [class]="'pill-' + getCategoryClass(doc)">
+              {{ getCategoryLabel(doc) }}
+            </span>
+          </div>
+        </div>
+
+        <div class="document-actions-compact">
+          <ion-button
+            fill="clear"
+            size="small"
+            class="icon-btn primary-action"
+            (click)="viewPDF(doc); $event.stopPropagation()">
+            <ion-icon name="eye-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button
+            fill="clear"
+            size="small"
+            class="icon-btn secondary-action"
+            (click)="downloadPDF(doc); $event.stopPropagation()">
+            <ion-icon name="download-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Documents Grid (Thumbnail View) -->
+    <div class="documents-grid" *ngIf="allDocuments.length && !isLoading && viewMode === 'grid'">
+      <div class="document-tile" *ngFor="let doc of allDocuments">
+        <div class="document-icon" [class]="'category-' + getCategoryClass(doc)">
+          <ion-icon name="document-text"></ion-icon>
+          <div class="pdf-badge">PDF</div>
+        </div>
+
+        <div class="document-info">
+          <h3 class="document-name">{{ doc.displayName }}</h3>
+          <div class="document-category-badge" [class]="'badge-' + getCategoryClass(doc)">
+            {{ getCategoryLabel(doc) }}
+          </div>
+        </div>
+
+        <div class="document-actions">
+          <ion-button fill="clear" size="small" class="action-btn view-btn" (click)="viewPDF(doc)">
+            <ion-icon name="eye-outline" slot="start"></ion-icon>
+            View
+          </ion-button>
+          <ion-button fill="clear" size="small" class="action-btn download-btn" (click)="downloadPDF(doc)">
+            <ion-icon name="download-outline" slot="start"></ion-icon>
+            Download
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

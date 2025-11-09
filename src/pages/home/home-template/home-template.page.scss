@@ -1,0 +1,19 @@
+.main-container {
+  // iOS-safe height: uses 100dvh on iOS, 100vh on Android
+  min-height: var(--app-height, 100vh);
+  padding-bottom: 85px; // Account for footer
+
+  // Add safe-area padding on iOS
+  .ios & {
+    padding-bottom: calc(85px + var(--safe-area-bottom));
+  }
+}
+
+// Use the header's self-defined height - no hardcoded values!
+// The header component defines --total-header-height which includes safe area
+ion-router-outlet {
+  margin-top: var(--total-header-height, calc(64px + env(safe-area-inset-top)));
+}
+
+// No need for responsive overrides - header component handles this
+// The CSS variable automatically adjusts based on the header's responsive rules

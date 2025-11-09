@@ -1,0 +1,110 @@
+<ion-content class="profile-edition-page">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Edit Profile</h1>
+      <p class="subtitle">Update your personal information</p>
+    </header>
+
+    <!-- Form Card -->
+    <div class="form-card">
+      <!-- Profile Picture Section -->
+      <div class="profile-picture-section">
+        <div class="profile-picture-container" (click)="triggerFileInput()">
+          <img [src]="profilePictureUrl || 'assets/icon/person_icon.svg'" alt="Profile Picture" class="profile-picture">
+          <div class="upload-overlay">
+            <ion-icon name="camera-outline"></ion-icon>
+            <span class="upload-text">Change Photo</span>
+          </div>
+        </div>
+        <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+      </div>
+
+      <form>
+        <!-- Full Name Field -->
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <ion-input
+            class="form-input"
+            name="firstName"
+            placeholder="Enter your full name"
+            required
+            [(ngModel)]="firstName"
+            (keyup)="firstNameValidate($event)"
+            autocomplete="off">
+          </ion-input>
+        </div>
+
+        <!-- Gender Selection -->
+        <div class="form-group">
+          <label class="form-label">Gender</label>
+          <mat-radio-group name="gender" [(ngModel)]="gender" class="radio-group" required>
+            <mat-radio-button
+              *ngFor="let gender of genders"
+              [value]="gender"
+              class="radio-button"
+              required>
+              {{ gender.name }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <!-- Date of Birth Field -->
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <mat-form-field class="date-field" appearance="outline">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Select your date of birth"
+              name="dob"
+              [(ngModel)]="dateOfBirth"
+              autocomplete="off"
+              [max]="maxDate"
+              required>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <ion-input
+            class="form-input"
+            type="email"
+            placeholder="Enter your email address"
+            [(ngModel)]="email"
+            name="email">
+          </ion-input>
+        </div>
+
+        <!-- Phone Number Field -->
+        <div class="form-group">
+          <label class="form-label">Mobile Number</label>
+          <ion-input
+            class="form-input"
+            type="tel"
+            maxlength="10"
+            name="phoneNumber"
+            placeholder="Enter your 10-digit mobile number"
+            required
+            [(ngModel)]="phoneNumber"
+            autocomplete="off">
+          </ion-input>
+        </div>
+
+        <!-- Save Button -->
+        <div class="action-buttons">
+          <ion-button
+            expand="block"
+            (click)="validateUser()"
+            class="save-button">
+            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+            Save Changes
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,55 @@
+<div class="rx-card" [ngClass]="'status-' + item.status">
+  <!-- Status Indicator Pill -->
+  <div class="status-pill" [ngClass]="item.status"></div>
+
+  <!-- Main Content -->
+  <div class="rx-content">
+    <!-- Header Row: Medicine Name + Status Badge -->
+    <div class="rx-header">
+      <h3 class="rx-name">{{ item.name }}</h3>
+      <span class="status-badge" [ngClass]="item.status">
+        {{ item.status === 'active' ? 'Active' : 'Expired' }}
+      </span>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="rx-details">
+      <div class="detail-item">
+        <span class="detail-label">Dosage</span>
+        <span class="detail-value">{{ item.dose }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">How to take</span>
+        <span class="detail-value">{{ item.frequency }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Duration</span>
+        <span class="detail-value">{{ item.durationText }}</span>
+      </div>
+      <div class="detail-item" *ngIf="item.qty">
+        <span class="detail-label">Quantity</span>
+        <span class="detail-value">{{ item.qty }}</span>
+      </div>
+      <div class="detail-item" *ngIf="item.route">
+        <span class="detail-label">Route</span>
+        <span class="detail-value route-value">
+          <ion-icon name="medical-outline"></ion-icon>
+          {{ item.route }}
+        </span>
+      </div>
+      <div class="detail-item" *ngIf="item.timeOfDay">
+        <span class="detail-label">Time</span>
+        <span class="detail-value time-value">
+          <ion-icon name="time-outline"></ion-icon>
+          {{ item.timeOfDay }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Special Instructions / Remarks -->
+    <div class="rx-remarks" *ngIf="item.remarks">
+      <ion-icon name="information-circle-outline" class="remarks-icon"></ion-icon>
+      <span class="remarks-text">{{ item.remarks }}</span>
+    </div>
+  </div>
+</div>

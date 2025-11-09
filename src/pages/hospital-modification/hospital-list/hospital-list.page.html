@@ -1,0 +1,109 @@
+<ion-header no-border>
+  <ion-toolbar class="primaryDark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home" icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="titleHeader">
+      <ion-text class="titleText">Hospitals</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar slot="fixed" class="ion-no-padding" placeholder="Search hospital by code or name"
+    (ionInput)="filterHospitals($event)"></ion-searchbar>
+
+  <div class="extra-padding mat-elevation-z0" *ngIf="isPlatFormBrowser && hospitalList.length > 0" padding-horizontal
+    padding-vertical>
+    <table mat-table [dataSource]="hospitalList">
+
+      <ng-container matColumnDef="Code">
+        <th mat-header-cell *matHeaderCellDef class="header"> Code </th>
+        <td mat-cell *matCellDef="let hospitalList"> {{ hospitalList.code }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef class="header"> Name </th>
+        <td mat-cell *matCellDef="let hospitalList"> {{ hospitalList.name }} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Phone">
+        <th mat-header-cell *matHeaderCellDef class="header"> Phone </th>
+        <td mat-cell *matCellDef="let hospitalList"> {{ hospitalList.contactDetails.phone }} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Address">
+        <th mat-header-cell *matHeaderCellDef class="header"> Address </th>
+        <td mat-cell *matCellDef="let hospitalList"> {{ hospitalList.address }} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Active">
+        <th mat-header-cell *matHeaderCellDef class="header"> Active </th>
+        <td mat-cell *matCellDef="let hospitalList">
+          <ion-icon [hidden]="!hospitalList.active" name="checkmark-outline" style="zoom: 2.0"></ion-icon>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row class="primaryLight" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="modifyHospital(row)"></tr>
+    </table>
+  </div>
+
+  <div *ngIf="!isPlatFormBrowser" padding-vertical class="extra-padding">
+
+
+    <ion-card class="ion-no-padding" *ngFor="let hospitalList of hospitalList" (click)="modifyHospital(hospitalList)">
+      <ion-card-header class="ion-no-padding" [ngClass]="hospitalList.active ? 'primaryLight' : 'dark-background'">
+        <ion-grid class="header">
+          <ion-row class="ion-no-padding">
+            <ion-col size="9">
+              <strong class="cardTitle">
+                {{ hospitalList.shortName }}
+              </strong>
+            </ion-col>
+
+            <ion-col align="end" size="3">
+              {{ hospitalList.code }}
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </ion-card-header>
+      <ion-card-content class="ion-no-padding bodyText" padding-start padding-bottom>
+
+        <ion-row class="row-spacing">
+          <ion-col class="ion-no-padding" size="3">
+            Name
+          </ion-col>
+          <ion-col class="ion-no-padding" size="9">
+            {{ hospitalList.name }}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="row-spacing">
+          <ion-col class="ion-no-padding" size="3">
+            Address
+          </ion-col>
+          <ion-col class="ion-no-padding" size="9">
+            {{ hospitalList.address }}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="row-spacing">
+          <ion-col class="ion-no-padding" size="3">
+            Contact no.
+          </ion-col>
+          <ion-col class="ion-no-padding" size="9">
+            {{ hospitalList.contactDetails.phone }}
+          </ion-col>
+        </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>

@@ -1,0 +1,72 @@
+<ion-content class="appointment-confirmation">
+  <div class="container">
+    <header class="header">
+      <h1>Appointment Summary</h1>
+      <p class="subtitle">Review and confirm your details below</p>
+    </header>
+
+    <div class="appointment-details">
+      <div class="detail-item">
+        <ion-icon name="person-outline" class="detail-icon"></ion-icon>
+        <div class="detail-content">
+          {{ appointment.patientName }}
+        </div>
+      </div>
+
+      <div class="detail-item">
+        <ion-icon name="calendar-outline" class="detail-icon"></ion-icon>
+        <div class="detail-content">
+          {{ appointment.appointmentDate | date:"MMM d, yyyy" }} at
+          {{ timeFormatTo12hour(appointment.appointmentTime) }}
+        </div>
+      </div>
+
+      <div class="detail-item">
+        <ion-icon name="medical-outline" class="detail-icon"></ion-icon>
+        <div class="detail-content">
+          <div class="doctor-name">{{ sanitizeDoctorName(appointment.doctorName) }}</div>
+          <div class="specialty">{{ appointment.specialityName }}</div>
+        </div>
+      </div>
+
+      <div class="detail-item">
+        <ion-icon name="videocam-outline" class="detail-icon" *ngIf="appointment.videoConsultation"></ion-icon>
+        <ion-icon name="medkit-outline" class="detail-icon" *ngIf="!appointment.videoConsultation"></ion-icon>
+        <div class="detail-content consultation-type">
+          <span *ngIf="appointment.videoConsultation">Video Consultation</span>
+          <span *ngIf="!appointment.videoConsultation">Consultation at Hospital</span>
+          <ng-container *ngIf="appointment.consultationCharge?.price > 0">
+            <div class="price-info">
+              <span class="price-label">Amount to be paid</span>
+              <span class="price-amount">₹{{ appointment.consultationCharge?.price }}.00</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="free-consultation-notice" *ngIf="appointment.consultationCharge.price === 0">
+      No payment required
+    </div>
+
+    <div class="action-buttons">
+      <ion-button
+        *ngIf="appointment.consultationCharge.price > 0"
+        [disabled]="disableButtons"
+        (click)="bookAppointment(null)"
+        class="primary-button"
+        expand="block">
+        Proceed to Pay
+      </ion-button>
+
+      <ion-button
+        *ngIf="appointment.consultationCharge.price === 0"
+        [disabled]="disableButtons"
+        (click)="bookAppointment(true)"
+        class="primary-button"
+        expand="block">
+        Confirm Booking
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

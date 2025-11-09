@@ -1,0 +1,438 @@
+/**
+ * MedicsCare Appointment Details Page
+ * Professional appointment details using the MedicsCare Theme System
+ */
+
+.appointment-details-page {
+  --padding-top: var(--mc-spacing-2xl);
+  --padding-bottom: var(--mc-spacing-2xl);
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-xl);
+    padding-bottom: 100px; // Extra bottom padding to prevent buttons from going behind the footer
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: var(--mc-spacing-2xl);
+
+    h1 {
+      font-size: var(--mc-font-heading-lg);
+      font-weight: 600;
+      color: var(--mc-text-primary);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--mc-font-body-md);
+      color: var(--mc-text-secondary);
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+
+  // ===================================
+  // 📋 APPOINTMENT CARD
+  // ===================================
+
+  .appointment-card {
+    background: var(--mc-bg-primary);
+    border-radius: var(--mc-radius-lg);
+    padding: var(--mc-spacing-4) var(--mc-spacing-5);
+    box-shadow: var(--mc-shadow-sm);
+    animation: fadeInUp 0.4s ease-out;
+  }
+
+  // ===================================
+  // 🏷️ STATUS SECTION
+  // ===================================
+
+  .status-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--mc-spacing-4);
+    margin-bottom: var(--mc-spacing-4);
+    border-bottom: 1px solid var(--mc-border-primary);
+    flex-wrap: wrap;
+    gap: var(--mc-spacing-3);
+
+    .appointment-id {
+      display: flex;
+      align-items: center;
+      gap: var(--mc-spacing-2);
+
+      .id-label {
+        color: var(--mc-text-secondary);
+        font-size: var(--mc-font-body-md);
+      }
+
+      .id-value {
+        color: var(--mc-text-primary);
+        font-size: var(--mc-font-body-md);
+        font-weight: 600;
+      }
+    }
+
+    .status-badge {
+      padding: var(--mc-spacing-1) var(--mc-spacing-3);
+      border-radius: var(--mc-radius-full);
+      font-size: var(--mc-font-body-sm);
+      font-weight: 600;
+      background: var(--mc-color-gray-100);
+      color: var(--mc-color-gray-700);
+
+      &.status-scheduled {
+        background: var(--mc-color-primary-100);
+        color: var(--mc-color-primary-700);
+      }
+    }
+  }
+
+  // ===================================
+  // 📋 APPOINTMENT DETAILS
+  // ===================================
+
+  .appointment-details {
+    margin-bottom: var(--mc-spacing-4);
+  }
+
+  // Detail items now use the global pattern from _detail-item-pattern.scss
+  // Specialized medical variants are applied via HTML classes
+
+  .appointment-details {
+    // Add staggered animations to detail items
+    .detail-item {
+      @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.05}s;
+        }
+      }
+    }
+  }
+
+  // ===================================
+  // 💳 PAYMENT SECTION
+  // ===================================
+
+  .payment-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--mc-spacing-4) 0;
+    padding: var(--mc-spacing-3);
+    background: var(--mc-color-gray-50);
+    border-radius: var(--mc-radius-md);
+    gap: var(--mc-spacing-3);
+    flex-wrap: wrap;
+
+    .payment-info {
+      display: flex;
+      align-items: center;
+      gap: var(--mc-spacing-2);
+
+      .payment-label {
+        color: var(--mc-text-secondary);
+        font-size: var(--mc-font-body-sm);
+        font-weight: 500;
+      }
+
+      .payment-amount {
+        color: var(--mc-text-primary);
+        font-size: var(--mc-font-body-md);
+        font-weight: 600;
+      }
+    }
+
+    .receipt-button {
+      --color: var(--mc-color-primary-500);
+      font-weight: 500;
+
+      ion-icon {
+        color: var(--mc-color-primary-500);
+      }
+    }
+  }
+
+  // ===================================
+  // 📎 ATTACHMENTS SECTION
+  // ===================================
+
+  .attachments-section {
+    margin: var(--mc-spacing-6) 0 var(--mc-spacing-4) 0;
+    padding-top: var(--mc-spacing-4);
+    border-top: 1px solid var(--mc-border-primary);
+
+    .section-title {
+      font-size: var(--mc-font-heading-sm);
+      font-weight: 600;
+      color: var(--mc-text-primary);
+      margin: 0 0 var(--mc-spacing-3) 0;
+    }
+
+    ion-segment {
+      --background: transparent;
+      display: flex;
+      overflow-x: auto;
+      padding: var(--mc-spacing-2) 0;
+
+      &::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--mc-color-gray-100);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--mc-color-gray-300);
+        border-radius: var(--mc-radius-sm);
+      }
+    }
+
+    ion-thumbnail {
+      margin: 0 auto;
+      border-radius: var(--mc-radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    ion-checkbox {
+      position: absolute;
+      top: var(--mc-spacing-1);
+      left: var(--mc-spacing-1);
+      z-index: 1;
+      --size: 18px;
+      --checkbox-background: var(--mc-bg-primary);
+      --checkbox-background-checked: var(--mc-color-primary-500);
+      --border-radius: var(--mc-radius-sm);
+    }
+
+    .attachment-button {
+      width: 100%;
+      height: auto;
+      margin: 0;
+      --padding-start: 0;
+      --padding-end: 0;
+      transition: opacity 0.2s;
+
+      &:hover:not(.button-disabled) {
+        opacity: 0.8;
+      }
+    }
+
+    .bodyText {
+      font-size: var(--mc-font-body-xs);
+      line-height: 1.3;
+      text-align: center;
+      color: var(--mc-text-secondary);
+      margin-top: var(--mc-spacing-1);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  // ===================================
+  // 📁 ADD FILES SECTION
+  // ===================================
+
+  .add-files-section {
+    display: flex;
+    justify-content: flex-end;
+    margin: var(--mc-spacing-3) 0;
+
+    .add-files-button {
+      --color: var(--mc-color-primary-500);
+      font-weight: 500;
+
+      ion-icon {
+        color: var(--mc-color-primary-500);
+      }
+    }
+  }
+
+  // ===================================
+  // 🔘 ACTION BUTTONS
+  // ===================================
+
+  .action-buttons {
+    margin-top: var(--mc-spacing-6);
+    padding-top: var(--mc-spacing-4);
+    border-top: 2px solid var(--mc-border-primary);
+    display: flex;
+    flex-direction: column;
+    gap: var(--mc-spacing-3);
+
+    ion-button {
+      --border-radius: var(--mc-radius-md);
+      --padding-top: var(--mc-spacing-3);
+      --padding-bottom: var(--mc-spacing-3);
+      --box-shadow: var(--mc-shadow-sm);
+      font-weight: 600;
+      text-transform: capitalize;
+
+      // Primary button
+      &:not([color]) {
+        --background: linear-gradient(90deg, var(--mc-color-primary-500), var(--mc-color-primary-700));
+        --color: var(--mc-text-inverse);
+
+        &:hover {
+          --background: linear-gradient(90deg, var(--mc-color-primary-700), var(--mc-color-primary-800));
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+
+      // Danger button
+      &[color="danger"] {
+        --background: var(--mc-color-error-500);
+        --color: var(--mc-text-inverse);
+
+        &:hover {
+          --background: var(--mc-color-error-600);
+        }
+      }
+
+      // Warning button
+      &[color="warning"] {
+        --background: var(--mc-color-warning-500);
+        --color: var(--mc-text-inverse);
+
+        &:hover {
+          --background: var(--mc-color-warning-600);
+        }
+      }
+
+      // Success button
+      &[color="success"] {
+        --background: var(--mc-color-success-500);
+        --color: var(--mc-text-inverse);
+
+        &:hover {
+          --background: var(--mc-color-success-600);
+        }
+      }
+
+      // Dark button
+      &[color="dark"] {
+        --background: var(--mc-color-gray-700);
+        --color: var(--mc-text-inverse);
+
+        &:hover {
+          --background: var(--mc-color-gray-800);
+        }
+      }
+
+      ion-icon {
+        margin-right: var(--mc-spacing-1);
+      }
+    }
+  }
+}
+
+// ===================================
+// 🔻 FOOTER STYLES
+// ===================================
+
+ion-footer {
+  ion-toolbar {
+    --background: var(--mc-bg-primary);
+    --border-color: var(--mc-border-primary);
+    --padding-top: var(--mc-spacing-2);
+    --padding-bottom: var(--mc-spacing-2);
+
+    ion-text {
+      color: var(--mc-text-primary);
+      font-weight: 500;
+    }
+
+    ion-button {
+      margin: 0;
+      font-weight: 600;
+
+      &[color="danger"] {
+        --color: var(--mc-color-error-500);
+      }
+    }
+  }
+}
+
+// ===================================
+// 🎬 ANIMATIONS
+// ===================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 600px) {
+  .appointment-details-page {
+    .container {
+      padding: 0 var(--mc-spacing-md);
+      padding-bottom: 120px; // Extra bottom padding for smaller screens to prevent buttons from going behind the footer
+    }
+
+    .header h1 {
+      font-size: var(--mc-font-heading-md);
+    }
+
+    .header .subtitle {
+      font-size: var(--mc-font-body-sm);
+    }
+
+    .appointment-card {
+      padding: var(--mc-spacing-3) var(--mc-spacing-4);
+    }
+
+    .detail-item {
+      padding: var(--mc-spacing-2) 0;
+    }
+
+    .status-section {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .payment-section {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .action-buttons {
+      gap: var(--mc-spacing-2);
+
+      ion-button {
+        --padding-top: var(--mc-spacing-2);
+        --padding-bottom: var(--mc-spacing-2);
+      }
+    }
+  }
+}

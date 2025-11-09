@@ -1,0 +1,18 @@
+::ng-deep .custom-dialog-container .mat-dialog-container {
+  padding: 0 !important;
+  width: 800px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+mat-dialog-content {
+  color: var(--ion-color-dark);
+}
+::ng-deep .vertical-scroll-bar .mat-dialog-content {
+  margin-right: 0.5px;
+  margin-left: 0.5px;
+}
+
+.secondaryText {
+  font-size: var(--font-body-sm);
+}

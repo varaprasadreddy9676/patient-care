@@ -1,0 +1,55 @@
+<ion-content class="visits-page">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Prescription History</h1>
+      <p class="subtitle" *ngIf="!visits.length || isLoading">Select a visit to view prescriptions</p>
+      <p class="subtitle" *ngIf="visits.length && !isLoading">{{ visits.length }} visit{{ visits.length !== 1 ? 's' : '' }} found</p>
+    </header>
+
+    <!-- Skeleton Loading State -->
+    <div class="visits-list skeleton-container" *ngIf="isLoading">
+      <div class="visit-card-simple skeleton-card" *ngFor="let item of [1,2,3]">
+        <div class="visit-info">
+          <div class="skeleton-datetime"></div>
+          <div class="skeleton-doctor"></div>
+        </div>
+        <div class="visit-actions">
+          <div class="skeleton-badge"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!visits.length && !isLoading">
+      <ion-icon name="calendar-clear-outline" class="empty-icon"></ion-icon>
+      <p>No visit history found for <strong>{{ familyMember?.fullName || 'selected family member' }}</strong></p>
+      <p class="help-text">Try selecting a different family member from the top</p>
+    </div>
+
+    <!-- Visits List -->
+    <div class="visits-list" *ngIf="visits.length && !isLoading">
+      <!-- Simplified Visit Card -->
+      <div class="visit-card-simple" *ngFor="let visit of visits" (click)="navigateToVisitDetail(visit)">
+        <div class="visit-info">
+          <div class="visit-datetime">
+            <ion-icon name="calendar-outline" class="visit-icon"></ion-icon>
+            <span class="date">{{ visit.visitDateTime | date: 'MMM dd, yyyy' }}</span>
+            <span class="time">{{ visit.visitDateTime | date: 'shortTime' }}</span>
+          </div>
+          <div class="visit-doctor">
+            <ion-icon name="person-outline" class="visit-icon"></ion-icon>
+            <span>{{ sanitizeDoctorName(visit.consultingDoctor) }}</span>
+            <span class="speciality">({{ visit.speciality }})</span>
+          </div>
+        </div>
+        <div class="visit-actions">
+          <div class="visit-type-badge" [class]="'type-' + visit.type?.toLowerCase()">
+            {{ visit.type }}
+          </div>
+          <ion-icon name="chevron-forward-outline" class="forward-icon"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

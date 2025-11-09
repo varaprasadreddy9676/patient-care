@@ -1,0 +1,114 @@
+<ion-content class="bills-content">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Bills & Payments</h1>
+      <p class="subtitle">View and manage your financial records</p>
+    </header>
+
+    <!-- Date range UI component (emits filterChange event) -->
+    <app-date-range-filter (filterChange)="onDateFilterChange($event)"></app-date-range-filter>
+
+  <!-- Material tabs - only Paid / Pending -->
+<mat-tab-group mat-align-tabs="center"
+               [(selectedIndex)]="activeTabIndex"
+               class="bills-tab-group"
+               role="tablist"
+               aria-label="Bills categories">
+
+    <!-- Paid Tab -->
+    <mat-tab label="Paid Bills" role="tab">
+
+      <div *ngIf="bill.paidBills.length === 0" class="empty-state">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <h2>No Paid Bills</h2>
+        <p>Your paid bills will appear here</p>
+      </div>
+
+      <div class="bills-container" *ngIf="bill.paidBills.length > 0">
+        <div class="bill-item" *ngFor="let paidBill of bill.paidBills; trackBy: trackByBillId" (click)="viewReceipt(paidBill)">
+          <div class="bill-date">
+            <div class="day">{{ formatDay(paidBill.billdate, paidBill.tranDate) }}</div>
+            <div class="month">{{ formatMonth(paidBill.billdate, paidBill.tranDate) }}</div>
+            <div class="year">{{ formatYear(paidBill.billdate, paidBill.tranDate) }}</div>
+          </div>
+
+          <div class="bill-info">
+            <h3 class="hospital-name">{{ paidBill.hospitalName }}</h3>
+            <p class="patient-service">{{ paidBill.familyMemberName }} • {{ getServiceType(paidBill) }}</p>
+            <p class="bill-number" *ngIf="paidBill.billNumber">Bill #{{ paidBill.billNumber }}</p>
+          </div>
+
+          <div class="bill-amount">
+            <div class="amount">
+              {{ paidBill.displayAmount }}
+              <ion-icon name="checkmark-circle-outline" class="status-icon paid"></ion-icon>
+            </div>
+          </div>
+
+          <div class="bill-status">
+            <div class="status-badge paid">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+              <span>Paid</span>
+            </div>
+          </div>
+
+          <div class="bill-action">
+            <ion-button fill="clear" (click)="viewReceipt(paidBill)" class="view-receipt-btn" [attr.aria-label]="'View receipt for ' + paidBill.displayAmount" title="View Receipt">
+              <ion-icon name="receipt-outline"></ion-icon>
+              <span>Receipt</span>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Pending Tab -->
+    <mat-tab label="Pending Bills" role="tab">
+
+      <div *ngIf="bill.pendingBills.length === 0" class="empty-state">
+        <ion-icon name="time-outline"></ion-icon>
+        <h2>No Pending Bills</h2>
+        <p>You're all caught up!</p>
+      </div>
+
+      <div class="bills-container" *ngIf="bill.pendingBills.length > 0">
+        <div class="bill-item" *ngFor="let pendingBill of bill.pendingBills; trackBy: trackByBillId">
+          <div class="bill-date">
+            <div class="day">{{ formatDay(pendingBill.billdate, pendingBill.tranDate) }}</div>
+            <div class="month">{{ formatMonth(pendingBill.billdate, pendingBill.tranDate) }}</div>
+            <div class="year">{{ formatYear(pendingBill.billdate, pendingBill.tranDate) }}</div>
+          </div>
+
+          <div class="bill-info">
+            <h3 class="hospital-name">{{ pendingBill.hospitalName }}</h3>
+            <p class="patient-service">{{ pendingBill.familyMemberName }} • {{ getServiceType(pendingBill) }}</p>
+            <p class="bill-number" *ngIf="pendingBill.billNumber">Bill #{{ pendingBill.billNumber }}</p>
+          </div>
+
+          <div class="bill-amount">
+            <div class="amount">
+              {{ pendingBill.displayAmount }}
+              <ion-icon name="time-outline" class="status-icon pending"></ion-icon>
+            </div>
+          </div>
+
+          <div class="bill-status">
+            <div class="status-badge pending">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>Pending</span>
+            </div>
+          </div>
+
+          <div class="bill-action">
+            <ion-button fill="clear" (click)="viewReceipt(pendingBill)" class="view-receipt-btn" [attr.aria-label]="'Pay now for ' + pendingBill.displayAmount" title="Pay Now">
+              <ion-icon name="card-outline"></ion-icon>
+              <span>Pay Now</span>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  </div>
+</ion-content>

@@ -1,0 +1,486 @@
+<ion-content class="appointment-booking-page">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Book Appointment</h1>
+      <p class="subtitle">Schedule your consultation with our specialists</p>
+    </header>
+
+    <!-- Patient Info Banner (shows after step 1) -->
+    <div class="patient-info-banner" *ngIf="currentStep > 1 && (selectedGlobalFamilyMember || familyMemberName)" [@fadeInUp]>
+      <div class="banner-content">
+        <div class="banner-avatar">
+          <span>{{ getInitials(selectedGlobalFamilyMember?.fullName || familyMemberName) }}</span>
+        </div>
+        <div class="banner-text">
+          <span class="banner-label">Booking for</span>
+          <span class="banner-name">{{ selectedGlobalFamilyMember?.fullName || familyMemberName }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-steps" *ngIf="currentStep > 0">
+      <div class="step"
+           [class.active]="currentStep === 1"
+           [class.completed]="highestStepReached > 1"
+           [class.clickable]="highestStepReached >= 1 && currentStep !== 1"
+           (click)="goToStep(1)">
+        <div class="step-circle">
+          <ion-icon *ngIf="highestStepReached > 1" name="checkmark" class="check-icon"></ion-icon>
+          <span *ngIf="highestStepReached <= 1 || currentStep === 1">1</span>
+        </div>
+        <span class="step-label">Patient</span>
+      </div>
+      <div class="step-line" [class.completed]="highestStepReached > 1"></div>
+      <div class="step"
+           [class.active]="currentStep === 2"
+           [class.completed]="highestStepReached > 2"
+           [class.clickable]="(highestStepReached >= 2 && currentStep !== 2) || (currentStep === 1 && canProceedToNextStep())"
+           [class.next-available]="currentStep === 1 && canProceedToNextStep()"
+           (click)="currentStep === 1 && canProceedToNextStep() ? nextStep() : goToStep(2)">
+        <div class="step-circle">
+          <ion-icon *ngIf="highestStepReached > 2" name="checkmark" class="check-icon"></ion-icon>
+          <span *ngIf="highestStepReached <= 2 || currentStep === 2">2</span>
+        </div>
+        <span class="step-label">Type</span>
+      </div>
+      <div class="step-line" [class.completed]="highestStepReached > 2"></div>
+      <div class="step"
+           [class.active]="currentStep === 3"
+           [class.completed]="highestStepReached > 3"
+           [class.clickable]="(highestStepReached >= 3 && currentStep !== 3) || (currentStep === 2 && canProceedToNextStep())"
+           [class.next-available]="currentStep === 2 && canProceedToNextStep()"
+           (click)="currentStep === 2 && canProceedToNextStep() ? nextStep() : goToStep(3)">
+        <div class="step-circle">
+          <ion-icon *ngIf="highestStepReached > 3" name="checkmark" class="check-icon"></ion-icon>
+          <span *ngIf="highestStepReached <= 3 || currentStep === 3">3</span>
+        </div>
+        <span class="step-label">Doctor</span>
+      </div>
+      <div class="step-line" [class.completed]="highestStepReached > 3"></div>
+      <div class="step"
+           [class.active]="currentStep === 4"
+           [class.completed]="highestStepReached > 4"
+           [class.clickable]="(highestStepReached >= 4 && currentStep !== 4) || (currentStep === 3 && canProceedToNextStep())"
+           [class.next-available]="currentStep === 3 && canProceedToNextStep()"
+           (click)="currentStep === 3 && canProceedToNextStep() ? nextStep() : goToStep(4)">
+        <div class="step-circle">
+          <ion-icon *ngIf="highestStepReached > 4" name="checkmark" class="check-icon"></ion-icon>
+          <span *ngIf="highestStepReached <= 4 || currentStep === 4">4</span>
+        </div>
+        <span class="step-label">Time</span>
+      </div>
+    </div>
+
+    <!-- Main Booking Card -->
+    <div class="main-card">
+
+      <!-- Step 1: Patient Selection -->
+      <div class="step-content" *ngIf="currentStep === 1" [@fadeInUp]>
+        <h2 class="step-title">
+          <ion-icon name="person-outline" class="title-icon"></ion-icon>
+          Who is this appointment for?
+        </h2>
+
+        <!-- Selected Global Family Member Display -->
+        <div class="selected-patient-card" *ngIf="selectedGlobalFamilyMember" [@fadeInUp]>
+          <div class="patient-avatar-large">
+            <span>{{ getInitials(selectedGlobalFamilyMember.fullName) }}</span>
+          </div>
+          <div class="patient-info">
+            <div class="patient-label">Appointment for</div>
+            <div class="patient-name">{{ selectedGlobalFamilyMember.fullName }}</div>
+          </div>
+          <ion-icon name="checkmark-circle" class="selected-icon"></ion-icon>
+        </div>
+
+        <!-- Family Member Selection (fallback) -->
+        <div class="form-group" *ngIf="!selectedGlobalFamilyMember && familyMembers.length > 0">
+          <label class="form-label">Select Family Member</label>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-select
+              name="familyMemberId"
+              [(ngModel)]="familyMember"
+              placeholder="Choose family member"
+              (selectionChange)="onFamilyMemberSelect($event.value)">
+              <mat-option *ngFor="let fm of familyMembers" [value]="fm">
+                {{ fm.fullName }}
+              </mat-option>
+              <mat-option class="add-member-option" (click)="openFamilyMemberPopUp()">
+                + Add New Family Member
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Add Family Member Button (when no members) -->
+        <button class="add-member-btn" *ngIf="!selectedGlobalFamilyMember && familyMembers.length === 0"
+                (click)="openFamilyMemberPopUp()">
+          <ion-icon name="person-add-outline"></ion-icon>
+          Add Family Member
+        </button>
+
+        <!-- Hospital ID Display -->
+        <div class="info-badge" *ngIf="mrn">
+          <ion-icon name="card-outline"></ion-icon>
+          <span>Hospital ID: {{ mrn }}</span>
+          <button class="change-btn" (click)="openLinkPatient()">Change</button>
+        </div>
+
+        <div class="info-badge success" *ngIf="isNewPatient && !mrn">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>New Patient</span>
+          <button class="change-btn" (click)="openLinkPatient()">Change</button>
+        </div>
+
+        <!-- Step Navigation -->
+        <div class="step-navigation">
+          <button
+            class="btn-continue"
+            [disabled]="!canProceedToNextStep()"
+            (click)="nextStep()">
+            <span>Continue</span>
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Consultation Type Selection -->
+      <div class="step-content" *ngIf="currentStep === 2" [@fadeInUp]>
+        <h2 class="step-title">
+          <ion-icon name="medkit-outline" class="title-icon"></ion-icon>
+          Select Consultation Type
+        </h2>
+
+        <div class="consultation-cards">
+          <div class="consultation-card"
+               [class.selected]="isVideo === 'atTheHospital'"
+               (click)="selectConsultationType('atTheHospital')">
+            <div class="card-icon hospital">
+              <ion-icon name="business-outline"></ion-icon>
+            </div>
+            <h3>Hospital Visit</h3>
+            <p>In-person consultation at hospital</p>
+            <!-- Show fee if available (after doctor selection) -->
+            <div class="consultation-fee" *ngIf="consultation?.price">
+              <span class="fee-label">Consultation Fee:</span>
+              <span class="fee-value">₹{{ consultation.price }}</span>
+            </div>
+            <div class="consultation-fee-placeholder" *ngIf="!consultation?.price">
+              <span class="placeholder-text">Fee shown after doctor selection</span>
+            </div>
+            <div class="selection-indicator" *ngIf="isVideo === 'atTheHospital'">
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
+          </div>
+          
+          <div class="consultation-card"
+               [class.selected]="isVideo === 'videoConsultation'"
+               (click)="selectConsultationType('videoConsultation')">
+            <div class="card-icon video">
+              <ion-icon name="videocam-outline"></ion-icon>
+            </div>
+            <h3>Video Consultation</h3>
+            <p>Consult from anywhere via video call</p>
+            <!-- Show fee if available (after doctor selection) -->
+            <div class="consultation-fee" *ngIf="videoConsultation?.price">
+              <span class="fee-label">Consultation Fee:</span>
+              <span class="fee-value">₹{{ videoConsultation.price }}</span>
+            </div>
+            <div class="consultation-fee-placeholder" *ngIf="!videoConsultation?.price">
+              <span class="placeholder-text">Fee shown after doctor selection</span>
+            </div>
+            <div class="selection-indicator" *ngIf="isVideo === 'videoConsultation'">
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step Navigation -->
+        <div class="step-navigation">
+          <button class="btn-back" (click)="previousStep()">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            <span>Previous</span>
+          </button>
+          <button
+            class="btn-continue"
+            [disabled]="!canProceedToNextStep()"
+            (click)="nextStep()">
+            <span>Continue</span>
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Hospital & Doctor Selection -->
+      <div class="step-content" *ngIf="currentStep === 3" [@fadeInUp]>
+        <h2 class="step-title">
+          <ion-icon name="business-outline" class="title-icon"></ion-icon>
+          Select Hospital & Doctor
+        </h2>
+
+        <!-- Hospital Selection -->
+        <div class="form-group">
+          <label class="form-label">
+            <ion-icon name="location-outline"></ion-icon>
+            Hospital
+          </label>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-select
+              name="hospital"
+              [(ngModel)]="hospital"
+              placeholder="Select Hospital"
+              (selectionChange)="onHospitalSelect($event.value)">
+              <mat-option *ngFor="let selectHospital of hospitals" [value]="selectHospital">
+                {{ selectHospital.name }} - {{ selectHospital.cityName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Specialty Selection -->
+        <div class="form-group" *ngIf="hospital && doctors.length > 0 && !isSingleDoctor">
+          <label class="form-label">
+            <ion-icon name="medical-outline"></ion-icon>
+            Medical Specialty
+          </label>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-select
+              name="specialist"
+              [(ngModel)]="specialist"
+              [disabled]="isOptionGroup"
+              placeholder="Select Specialty"
+              (selectionChange)="onSpecialtySelect($event.value)">
+              <mat-option *ngFor="let speciality of doctors | filter" [value]="speciality">
+                {{ speciality.specialityName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Doctor Selection -->
+        <div class="form-group" *ngIf="hospital && (specialist || isOptionGroup || isSingleDoctor)">
+          <label class="form-label">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            Doctor
+          </label>
+
+          <!-- Option Group for Multiple Specialties -->
+          <mat-form-field class="full-width" appearance="outline" *ngIf="isOptionGroup">
+            <mat-select name="doctor" [(ngModel)]="doctor" placeholder="Select Doctor">
+              <mat-optgroup *ngFor="let speciality of doctorGroups" [label]="speciality.name">
+                <mat-option *ngFor="let doc of speciality.doctors" [value]="doc"
+                            (click)="onDoctorSelect(doc)">
+                  {{ utilityService.formatDoctorName(doc.doctorName) }}
+                </mat-option>
+              </mat-optgroup>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Regular Doctor Selection -->
+          <mat-form-field class="full-width" appearance="outline" *ngIf="!isOptionGroup">
+            <mat-select name="doctor" [(ngModel)]="doctor" placeholder="Select Doctor"
+                        [disabled]="isSingleDoctor">
+              <mat-option *ngFor="let doc of doctorArray" [value]="doc"
+                          (click)="onDoctorSelect(doc)">
+                {{ utilityService.formatDoctorName(doc.doctorName) }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Doctor Info Card -->
+        <div class="doctor-info-card" *ngIf="doctor" [@fadeInUp]>
+          <div class="doctor-header">
+            <div class="doctor-avatar">
+              <ion-icon name="person"></ion-icon>
+            </div>
+            <div class="doctor-details">
+              <h3>{{ utilityService.formatDoctorName(selectedDoctorData.doctorName) }}</h3>
+              <p class="specialty">{{ specialityName }}</p>
+              <p class="reg-number">
+                <ion-icon name="document-text-outline"></ion-icon>
+                Reg. No: {{ doctor.doctorRegistrationNo }}
+              </p>
+            </div>
+          </div>
+
+          <div class="fee-display" *ngIf="isVideo === 'videoConsultation' && videoConsultation">
+            <span class="fee-label">Consultation Fee</span>
+            <span class="fee-amount">₹{{ videoConsultation.price }}</span>
+          </div>
+          <div class="fee-display" *ngIf="isVideo === 'atTheHospital' && consultation">
+            <span class="fee-label">Consultation Fee</span>
+            <span class="fee-amount">₹{{ consultation.price }}</span>
+          </div>
+
+          <!-- Warning should rarely appear due to improved filtering -->
+          <div class="warning-message" *ngIf="!selectedDoctorData.canDoVideoConsultation && isVideo === 'videoConsultation'">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>This doctor is not available for video consultation. Please select "Hospital Visit" or choose a different doctor.</span>
+          </div>
+        </div>
+
+        <!-- Step Navigation -->
+        <div class="step-navigation">
+          <button class="btn-back" (click)="previousStep()">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            <span>Previous</span>
+          </button>
+          <button
+            class="btn-continue"
+            [disabled]="!canProceedToNextStep()"
+            (click)="nextStep()">
+            <span>Continue</span>
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 4: Date & Time Selection -->
+      <div class="step-content" *ngIf="currentStep === 4" [@fadeInUp]>
+        <h2 class="step-title">
+          <ion-icon name="calendar-outline" class="title-icon"></ion-icon>
+          Select Date & Time
+        </h2>
+
+        <!-- Date Selection -->
+        <div class="form-group">
+          <label class="form-label">
+            <ion-icon name="calendar"></ion-icon>
+            Appointment Date
+          </label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [min]="minAppointmentDate"
+              placeholder="Choose a date"
+              name="doa"
+              [(ngModel)]="dateOfAppointment"
+              (ngModelChange)="onDateSelect()"
+              autocomplete="off"
+              required>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <!-- Loading Slots -->
+        <div class="loading-slots" *ngIf="showSpinnerForSlotLoading">
+          <ion-spinner name="crescent"></ion-spinner>
+          <p>Loading available slots...</p>
+        </div>
+
+        <!-- No Slots Available -->
+        <div class="empty-state" *ngIf="!timeSlotAvailable && !showSpinnerForSlotLoading && dateOfAppointment">
+          <ion-icon name="calendar-clear-outline" class="empty-icon"></ion-icon>
+          <p>No slots available for this date</p>
+          <small>Please try a different date</small>
+        </div>
+
+        <!-- Time Slot Selection -->
+        <div class="time-slot-section" *ngIf="timeSlotAvailable && !showSpinnerForSlotLoading">
+          <label class="form-label">
+            <ion-icon name="time-outline"></ion-icon>
+            Select Time Slot
+          </label>
+
+          <!-- Session Selection -->
+          <div class="session-tabs">
+            <button
+              class="session-tab"
+              [class.active]="slots === 'Morning'"
+              [disabled]="timeSlotMorning.length === 0"
+              (click)="onSessionSelect('Morning')">
+              <ion-icon name="sunny-outline"></ion-icon>
+              <span>Morning</span>
+              <span class="slot-count" *ngIf="timeSlotMorning.length > 0">({{ timeSlotMorning.length }})</span>
+            </button>
+            <button
+              class="session-tab"
+              [class.active]="slots === 'Afternoon'"
+              [disabled]="timeSlotAfternoon.length === 0"
+              (click)="onSessionSelect('Afternoon')">
+              <ion-icon name="partly-sunny-outline"></ion-icon>
+              <span>Afternoon</span>
+              <span class="slot-count" *ngIf="timeSlotAfternoon.length > 0">({{ timeSlotAfternoon.length }})</span>
+            </button>
+            <button
+              class="session-tab"
+              [class.active]="slots === 'Evening'"
+              [disabled]="timeSlotEvening.length === 0"
+              (click)="onSessionSelect('Evening')">
+              <ion-icon name="moon-outline"></ion-icon>
+              <span>Evening</span>
+              <span class="slot-count" *ngIf="timeSlotEvening.length > 0">({{ timeSlotEvening.length }})</span>
+            </button>
+          </div>
+
+          <!-- Time Slot Grid -->
+          <div class="time-slots-grid" *ngIf="slots && timeSlotArray.length > 0">
+            <button
+              *ngFor="let slot of getVisibleSlots()"
+              class="time-slot-btn"
+              [class.selected]="timeOfAppointment === slot"
+              (click)="onTimeSlotSelect(slot)">
+              {{ slot.time }}
+            </button>
+          </div>
+
+          <!-- Show More / Show Less Button -->
+          <div class="show-more-container" *ngIf="slots && hasMoreSlots()">
+            <button class="show-more-btn" (click)="toggleShowAllSlots()">
+              <span>{{ showAllSlots ? 'Show Less' : 'Show More Slots' }}</span>
+              <ion-icon [name]="showAllSlots ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+            </button>
+          </div>
+
+          <!-- Compact Appointment Summary -->
+          <div class="appointment-summary-compact" *ngIf="timeOfAppointment" [@fadeInUp]>
+            <div class="summary-header">
+              <ion-icon name="checkmark-circle"></ion-icon>
+              <span>Time Slot Selected</span>
+            </div>
+            <div class="summary-grid">
+              <div class="summary-col">
+                <div class="summary-item-compact">
+                  <ion-icon name="person-outline"></ion-icon>
+                  <span>{{ familyMemberName || selectedGlobalFamilyMember?.fullName }}</span>
+                </div>
+                <div class="summary-item-compact">
+                  <ion-icon name="medkit-outline"></ion-icon>
+                  <span>{{ utilityService.formatDoctorName(selectedDoctorData.doctorName) }}</span>
+                </div>
+              </div>
+              <div class="summary-col">
+                <div class="summary-item-compact">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  <span>{{ dateOfAppointment | date: 'MMM d' }} at {{ timeOfAppointment.time }}</span>
+                </div>
+                <div class="summary-item-compact">
+                  <ion-icon name="cash-outline"></ion-icon>
+                  <span class="fee">₹{{ isVideo === 'videoConsultation' ? videoConsultation?.price : consultation?.price }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Booking Action -->
+            <div class="book-appointment-action">
+              <button
+                class="btn-book-appointment"
+                (click)="getConsentForm()">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+                Book Appointment
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</ion-content>
+

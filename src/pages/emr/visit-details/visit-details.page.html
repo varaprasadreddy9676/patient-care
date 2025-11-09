@@ -1,0 +1,113 @@
+<ion-content class="visit-details-page">
+  <div class="container">
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p class="loading-text">Loading visit details...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && (!emrData || !emrData.length)">
+      <ion-icon name="document-text-outline" class="empty-icon"></ion-icon>
+      <p>No EMR documents available for this visit.</p>
+    </div>
+
+
+      <!-- EMR Data Display -->
+      <div *ngFor="let dayRec of emrData" class="day-record">
+
+
+        <div class="date-header" >
+          <div class="date-info">
+            <div class="date-content">
+              <span class="date">{{ dayRec.date }} {{ dayRec.month }} ({{ dayRec.day }})</span>
+              <span class="record-status" [class.no-data]="!dayRec.documents?.length">
+                {{ dayRec.documents?.length ? dayRec.documents.length + ' records' : 'No data recorded' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documents Column -->
+        <div class="documents-column">
+
+          <!-- Documents List -->
+          <ng-container *ngIf="dayRec.documents?.length > 0">
+            <div *ngFor="let document of dayRec.documents" class="document-container">
+              <!-- Document Header -->
+              <div class="document-header">
+                <span class="document-title">
+                  {{ document.templateData.title }}
+                  <span class="help-text" *ngIf="document.state === 1">
+                    Last modified by {{ document.modifiedUserName }} on {{ document.modifiedDateTime | date : "dd/MM/y HH:mm" : 'UTC' }}
+                  </span>
+                  <span class="help-text" *ngIf="document.state === 2">
+                    Signed by {{ document.signedByName }} on {{ document.signedDateTime | date : "dd/MM/y HH:mm" : 'UTC' }}
+                  </span>
+                </span>
+              </div>
+
+              <!-- Document Sections -->
+              <div *ngFor="let frame of document.templateData.frames">
+                <div *ngFor="let section of frame.sections" class="section-container">
+                  <!-- Custom Section with Inline Body -->
+                  <div *ngIf="section.type === 'custom' && section.inlineBody"
+                       class="section-inline"
+                       [style.color]="section.textColour"
+                       [style.background-color]="section.bgColour">
+                    <div *ngIf="section.header && section.displayText" class="section-header">{{ section.header }} :</div>
+                    <div *ngIf="section.displayText" class="section-content"
+                         [innerHTML]="trustedHtml(decodeHTMLString(section.displayText))"></div>
+                  </div>
+
+                  <!-- Custom Section without Inline Body -->
+                  <div *ngIf="section.type === 'custom' && !section.inlineBody"
+                       class="section-block"
+                       [style.color]="section.textColour"
+                       [style.background-color]="section.bgColour">
+                    <div *ngIf="section.header && !section.suppressHeader && section.displayText" class="section-header">
+                      {{ section.header }}
+                    </div>
+                    <div *ngIf="section.displayText" class="section-content"
+                         [innerHTML]="trustedHtml(decodeHTMLString(section.displayText))">
+                    </div>
+                  </div>
+
+                  <!-- Built-in Section -->
+                  <div *ngIf="section.type === 'builtin'"
+                       class="section-block"
+                       [style.color]="section.textColour"
+                       [style.background-color]="section.bgColour">
+                    <div *ngIf="section.sectionDataStr && !section.suppressHeader" class="section-header">
+                      {{ section.header }}
+                    </div>
+                    <div class="section-content"
+                         [innerHTML]="trustedHtml(section.sectionDataStr)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+  <!-- Enhanced Floating Action Button for Download -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="visitType == 'IP'" >
+    <ion-fab-button (click)="downloadDischargeReport()"
+                    [disabled]="isDownloading"
+                    class="custom-fab"
+                    [class.downloading]="isDownloading">
+      <div class="fab-content">
+        <ion-icon name="cloud-download-outline" class="download-icon"></ion-icon>
+        <ion-spinner name="crescent" *ngIf="isDownloading"></ion-spinner>
+      </div>
+      <div class="fab-label">
+        <span>Download Summary</span>
+      </div>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Pulsing Background Effect -->
+  <div class="pulse-ring" *ngIf="visitType == 'IP' && !isDownloading"></div>
+</ion-content>

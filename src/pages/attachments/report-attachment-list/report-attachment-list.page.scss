@@ -1,0 +1,97 @@
+.display-full-width {
+  width: 100%;
+  padding-top: 3%;
+}
+
+.button-size {
+  width: 180px;
+  margin-bottom: 22px;
+}
+
+.profile-icon {
+  height: 45px;
+  width: 45px;
+}
+
+.add-attachment-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.file-icon {
+  zoom: 1.3;
+}
+
+.secondaryDarkText {
+  color: var(--ion-color-secondary-dark);
+}
+
+u:hover {
+  color: var(--ion-color-secondary-dark);
+}
+
+.time-icon {
+  zoom: 2.5;
+  color: var(--ion-color-primary-dark);
+}
+
+.align-vertical-center {
+  vertical-align: -webkit-baseline-middle;
+}
+
+ion-content {
+  padding-bottom: 20px;
+}
+
+ion-card {
+  width: auto;
+}
+
+.labelCenter {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45%;
+  transform: translateY(-50%);
+  font-size: var(--font-body-md);
+}
+
+.actionButton {
+  color: var(--ion-color-primary-dark);
+  zoom: 1.5;
+}
+
+.textShade {
+  background: -webkit-linear-gradient(left, #333333, #c0bebe);
+  -webkit-text-fill-color: transparent;
+}
+
+.thumbnailSize {
+  width: 100%;
+  height: 150px;
+}
+
+ion-thumbnail {
+  box-shadow: 0 0 5px;
+}
+
+#notifications-badge {
+  position: absolute;
+  right: 1%;
+  top: -4px;
+}
+
+.gray-border {
+  border: 3px solid gray;
+}
+
+.headerIcon {
+  zoom: 1.1;
+  vertical-align: sub;
+}
+
+.attachment-button {
+  height: initial;
+  width: 100%;
+}

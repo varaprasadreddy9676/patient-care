@@ -1,0 +1,326 @@
+/**
+ * MedicsCare Medical Theme System
+ * Healthcare-specific semantic colors and contexts
+ *
+ * This file contains medical domain-specific color tokens
+ * that are semantically meaningful in healthcare contexts
+ */
+
+// ===================================
+// 🏥 PATIENT STATUS SYSTEM
+// ===================================
+
+:root {
+  // Patient Status Colors
+  --mc-patient-active-bg: var(--mc-color-success-50);
+  --mc-patient-active-text: var(--mc-color-success-600);
+  --mc-patient-active-border: var(--mc-color-success-500);
+
+  --mc-patient-inactive-bg: var(--mc-color-neutral-100);
+  --mc-patient-inactive-text: var(--mc-color-neutral-600);
+  --mc-patient-inactive-border: var(--mc-color-neutral-400);
+
+  --mc-patient-pending-bg: var(--mc-color-warning-50);
+  --mc-patient-pending-text: var(--mc-color-warning-600);
+  --mc-patient-pending-border: var(--mc-color-warning-500);
+
+  --mc-patient-critical-bg: var(--mc-color-error-50);
+  --mc-patient-critical-text: var(--mc-color-error-600);
+  --mc-patient-critical-border: var(--mc-color-error-500);
+}
+
+// ===================================
+// 📅 APPOINTMENT SYSTEM
+// ===================================
+
+:root {
+  // Appointment Status Colors
+  --mc-appointment-booked-bg: rgba(59, 130, 246, 0.1);
+  --mc-appointment-booked-text: var(--mc-color-info-600);
+  --mc-appointment-booked-border: var(--mc-color-info-500);
+
+  --mc-appointment-confirmed-bg: rgba(0, 37, 130, 0.1);
+  --mc-appointment-confirmed-text: var(--mc-color-primary-600);
+  --mc-appointment-confirmed-border: var(--mc-color-primary-500);
+
+  --mc-appointment-in-progress-bg: var(--mc-color-warning-50);
+  --mc-appointment-in-progress-text: var(--mc-color-warning-600);
+  --mc-appointment-in-progress-border: var(--mc-color-warning-500);
+
+  --mc-appointment-completed-bg: var(--mc-color-success-50);
+  --mc-appointment-completed-text: var(--mc-color-success-600);
+  --mc-appointment-completed-border: var(--mc-color-success-500);
+
+  --mc-appointment-cancelled-bg: var(--mc-color-error-50);
+  --mc-appointment-cancelled-text: var(--mc-color-error-600);
+  --mc-appointment-cancelled-border: var(--mc-color-error-500);
+
+  --mc-appointment-no-show-bg: var(--mc-color-neutral-100);
+  --mc-appointment-no-show-text: var(--mc-color-neutral-600);
+  --mc-appointment-no-show-border: var(--mc-color-neutral-400);
+}
+
+// ===================================
+// 💳 BILLING & PAYMENTS
+// ===================================
+
+:root {
+  // Bill Status Colors
+  --mc-bill-paid-bg: var(--mc-color-success-50);
+  --mc-bill-paid-text: var(--mc-color-success-600);
+  --mc-bill-paid-border: var(--mc-color-success-500);
+
+  --mc-bill-pending-bg: var(--mc-color-warning-50);
+  --mc-bill-pending-text: var(--mc-color-warning-600);
+  --mc-bill-pending-border: var(--mc-color-warning-500);
+
+  --mc-bill-overdue-bg: var(--mc-color-error-50);
+  --mc-bill-overdue-text: var(--mc-color-error-600);
+  --mc-bill-overdue-border: var(--mc-color-error-500);
+
+  --mc-bill-partial-bg: var(--mc-color-info-50);
+  --mc-bill-partial-text: var(--mc-color-info-600);
+  --mc-bill-partial-border: var(--mc-color-info-500);
+
+  --mc-bill-refunded-bg: var(--mc-color-neutral-100);
+  --mc-bill-refunded-text: var(--mc-color-neutral-600);
+  --mc-bill-refunded-border: var(--mc-color-neutral-400);
+
+  // Payment Method Colors
+  --mc-payment-cash-bg: var(--mc-color-neutral-50);
+  --mc-payment-cash-text: var(--mc-color-neutral-700);
+  --mc-payment-cash-border: var(--mc-color-neutral-300);
+
+  --mc-payment-card-bg: var(--mc-color-primary-50);
+  --mc-payment-card-text: var(--mc-color-primary-700);
+  --mc-payment-card-border: var(--mc-color-primary-300);
+
+  --mc-payment-insurance-bg: var(--mc-color-info-50);
+  --mc-payment-insurance-text: var(--mc-color-info-700);
+  --mc-payment-insurance-border: var(--mc-color-info-300);
+}
+
+// ===================================
+// 📋 MEDICAL RECORDS
+// ===================================
+
+:root {
+  // Record Status Colors
+  --mc-record-draft-bg: var(--mc-color-neutral-100);
+  --mc-record-draft-text: var(--mc-color-neutral-600);
+  --mc-record-draft-border: var(--mc-color-neutral-400);
+
+  --mc-record-finalized-bg: var(--mc-color-success-50);
+  --mc-record-finalized-text: var(--mc-color-success-600);
+  --mc-record-finalized-border: var(--mc-color-success-500);
+
+  --mc-record-amended-bg: var(--mc-color-warning-50);
+  --mc-record-amended-text: var(--mc-color-warning-600);
+  --mc-record-amended-border: var(--mc-color-warning-500);
+
+  --mc-record-archived-bg: var(--mc-color-neutral-50);
+  --mc-record-archived-text: var(--mc-color-neutral-500);
+  --mc-record-archived-border: var(--mc-color-neutral-300);
+
+  // Document Type Colors
+  --mc-document-prescription-bg: rgba(37, 99, 235, 0.1);
+  --mc-document-prescription-text: var(--mc-color-primary-700);
+  --mc-document-prescription-border: var(--mc-color-primary-400);
+
+  --mc-document-lab-result-bg: rgba(16, 185, 129, 0.1);
+  --mc-document-lab-result-text: var(--mc-color-success-700);
+  --mc-document-lab-result-border: var(--mc-color-success-400);
+
+  --mc-document-imaging-bg: rgba(139, 92, 246, 0.1);
+  --mc-document-imaging-text: #6d28d9;
+  --mc-document-imaging-border: #a78bfa;
+
+  --mc-document-discharge-summary-bg: rgba(245, 158, 11, 0.1);
+  --mc-document-discharge-summary-text: #b45309;
+  --mc-document-discharge-summary-border: #fbbf24;
+}
+
+// ===================================
+// 🚨 EMERGENCY & URGENCY
+// ===================================
+
+:root {
+  // Urgency Levels
+  --mc-urgency-low-bg: var(--mc-color-success-50);
+  --mc-urgency-low-text: var(--mc-color-success-600);
+  --mc-urgency-low-border: var(--mc-color-success-500);
+
+  --mc-urgency-medium-bg: var(--mc-color-warning-50);
+  --mc-urgency-medium-text: var(--mc-color-warning-600);
+  --mc-urgency-medium-border: var(--mc-color-warning-500);
+
+  --mc-urgency-high-bg: #fef3c7;
+  --mc-urgency-high-text: #d97706;
+  --mc-urgency-high-border: #f59e0b;
+
+  --mc-urgency-critical-bg: var(--mc-color-error-50);
+  --mc-urgency-critical-text: var(--mc-color-error-600);
+  --mc-urgency-critical-border: var(--mc-color-error-500);
+
+  // Emergency Department Specific
+  --mc-emergency-bg: linear-gradient(135deg, var(--mc-color-error-50) 0%, #fef2f2 100%);
+  --mc-emergency-text: var(--mc-color-error-700);
+  --mc-emergency-accent: var(--mc-color-error-500);
+}
+
+// ===================================
+// 🏢 DEPARTMENT COLOR CODING
+// ===================================
+
+:root {
+  // Medical Department Colors for Visual Organization
+  --mc-dept-general-bg: rgba(0, 37, 130, 0.1);
+  --mc-dept-general-text: var(--mc-color-primary-700);
+  --mc-dept-general-border: var(--mc-color-primary-400);
+
+  --mc-dept-emergency-bg: var(--mc-color-error-50);
+  --mc-dept-emergency-text: var(--mc-color-error-700);
+  --mc-dept-emergency-border: var(--mc-color-error-400);
+
+  --mc-dept-cardiology-bg: rgba(225, 29, 72, 0.1);
+  --mc-dept-cardiology-text: #be123c;
+  --mc-dept-cardiology-border: #f87171;
+
+  --mc-dept-pediatrics-bg: rgba(8, 145, 178, 0.1);
+  --mc-dept-pediatrics-text: #0e7490;
+  --mc-dept-pediatrics-border: #06b6d4;
+
+  --mc-dept-orthopedics-bg: rgba(234, 88, 12, 0.1);
+  --mc-dept-orthopedics-text: #c2410c;
+  --mc-dept-orthopedics-border: #fb923c;
+
+  --mc-dept-neurology-bg: rgba(124, 58, 237, 0.1);
+  --mc-dept-neurology-text: #6d28d9;
+  --mc-dept-neurology-border: #a78bfa;
+
+  --mc-dept-obgyn-bg: rgba(236, 72, 153, 0.1);
+  --mc-dept-obgyn-text: #be185d;
+  --mc-dept-obgyn-border: #f472b6;
+
+  --mc-dept-oncology-bg: rgba(5, 150, 105, 0.1);
+  --mc-dept-oncology-text: #047857;
+  --mc-dept-oncology-border: #10b981;
+}
+
+// ===================================
+// 💊 MEDICATION & PRESCRIPTION
+// ===================================
+
+:root {
+  // Medication Status Colors
+  --mc-medication-active-bg: var(--mc-color-success-50);
+  --mc-medication-active-text: var(--mc-color-success-600);
+  --mc-medication-active-border: var(--mc-color-success-500);
+
+  --mc-medication-discontinued-bg: var(--mc-color-neutral-100);
+  --mc-medication-discontinued-text: var(--mc-color-neutral-600);
+  --mc-medication-discontinued-border: var(--mc-color-neutral-400);
+
+  --mc-medication-on-hold-bg: var(--mc-color-warning-50);
+  --mc-medication-on-hold-text: var(--mc-color-warning-600);
+  --mc-medication-on-hold-border: var(--mc-color-warning-500);
+
+  // Prescription Priority
+  --mc-prescription-routine-bg: var(--mc-color-neutral-50);
+  --mc-prescription-routine-text: var(--mc-color-neutral-700);
+  --mc-prescription-routine-border: var(--mc-color-neutral-300);
+
+  --mc-prescription-urgent-bg: var(--mc-color-warning-50);
+  --mc-prescription-urgent-text: var(--mc-color-warning-600);
+  --mc-prescription-urgent-border: var(--mc-color-warning-500);
+
+  --mc-prescription-stat-bg: var(--mc-color-error-50);
+  --mc-prescription-stat-text: var(--mc-color-error-600);
+  --mc-prescription-stat-border: var(--mc-color-error-500);
+}
+
+// ===================================
+// 🔬 LABORATORY & DIAGNOSTICS
+// ===================================
+
+:root {
+  // Lab Result Status
+  --mc-lab-normal-bg: var(--mc-color-success-50);
+  --mc-lab-normal-text: var(--mc-color-success-600);
+  --mc-lab-normal-border: var(--mc-color-success-500);
+
+  --mc-lab-abnormal-bg: var(--mc-color-warning-50);
+  --mc-lab-abnormal-text: var(--mc-color-warning-600);
+  --mc-lab-abnormal-border: var(--mc-color-warning-500);
+
+  --mc-lab-critical-bg: var(--mc-color-error-50);
+  --mc-lab-critical-text: var(--mc-color-error-600);
+  --mc-lab-critical-border: var(--mc-color-error-500);
+
+  --mc-lab-pending-bg: var(--mc-color-neutral-100);
+  --mc-lab-pending-text: var(--mc-color-neutral-600);
+  --mc-lab-pending-border: var(--mc-color-neutral-400);
+}
+
+// ===================================
+// 🏥 VISIT TYPES
+// ===================================
+
+:root {
+  // Visit Type Colors
+  --mc-visit-outpatient-bg: rgba(37, 99, 235, 0.1);
+  --mc-visit-outpatient-text: var(--mc-color-primary-700);
+  --mc-visit-outpatient-border: var(--mc-color-primary-400);
+
+  --mc-visit-inpatient-bg: rgba(139, 92, 246, 0.1);
+  --mc-visit-inpatient-text: #6d28d9;
+  --mc-visit-inpatient-border: #a78bfa;
+
+  --mc-visit-emergency-bg: var(--mc-color-error-50);
+  --mc-visit-emergency-text: var(--mc-color-error-700);
+  --mc-visit-emergency-border: var(--mc-color-error-400);
+
+  --mc-visit-telehealth-bg: rgba(16, 185, 129, 0.1);
+  --mc-visit-telehealth-text: var(--mc-color-success-700);
+  --mc-visit-telehealth-border: var(--mc-color-success-400);
+
+  --mc-visit-follow-up-bg: rgba(245, 158, 11, 0.1);
+  --mc-visit-follow-up-text: #b45309;
+  --mc-visit-follow-up-border: #fbbf24;
+}
+
+// ===================================
+// 🔍 MEDICAL UI COMPONENTS
+// ===================================
+
+:root {
+  // Vital Signs Colors
+  --mc-vital-normal-bg: var(--mc-color-success-50);
+  --mc-vital-normal-text: var(--mc-color-success-600);
+  --mc-vital-caution-bg: var(--mc-color-warning-50);
+  --mc-vital-caution-text: var(--mc-color-warning-600);
+  --mc-vital-critical-bg: var(--mc-color-error-50);
+  --mc-vital-critical-text: var(--mc-color-error-600);
+
+  // Allergy Alerts
+  --mc-allergy-mild-bg: var(--mc-color-warning-50);
+  --mc-allergy-mild-text: var(--mc-color-warning-600);
+  --mc-allergy-mild-border: var(--mc-color-warning-500);
+
+  --mc-allergy-severe-bg: var(--mc-color-error-50);
+  --mc-allergy-severe-text: var(--mc-color-error-600);
+  --mc-allergy-severe-border: var(--mc-color-error-500);
+
+  // Insurance Coverage
+  --mc-insurance-covered-bg: var(--mc-color-success-50);
+  --mc-insurance-covered-text: var(--mc-color-success-600);
+  --mc-insurance-covered-border: var(--mc-color-success-500);
+
+  --mc-insurance-partial-bg: var(--mc-color-warning-50);
+  --mc-insurance-partial-text: var(--mc-color-warning-600);
+  --mc-insurance-partial-border: var(--mc-color-warning-500);
+
+  --mc-insurance-not-covered-bg: var(--mc-color-error-50);
+  --mc-insurance-not-covered-text: var(--mc-color-error-600);
+  --mc-insurance-not-covered-border: var(--mc-color-error-500);
+}

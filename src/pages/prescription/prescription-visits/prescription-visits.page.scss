@@ -1,0 +1,189 @@
+// Import base visits page styles
+@import '../../emr/visits/visits.page.scss';
+
+// Override and add styles for the simplified prescription visit card
+.visit-card-simple {
+  background: var(--mc-bg-card);
+  border-radius: var(--mc-radius-lg);
+  box-shadow: var(--mc-card-shadow);
+  border: 1px solid var(--mc-card-border);
+  padding: var(--mc-spacing-3) var(--mc-spacing-4);
+  margin-bottom: var(--mc-spacing-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--mc-card-shadow-hover);
+    border-color: var(--mc-color-primary-500);
+  }
+}
+
+.visit-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mc-spacing-2);
+  flex-grow: 1;
+}
+
+.visit-datetime,
+.visit-doctor {
+  display: flex;
+  align-items: center;
+  gap: var(--mc-spacing-2);
+  color: var(--mc-text-secondary);
+  font-size: var(--mc-font-body-md);
+}
+
+.visit-icon {
+  font-size: 16px;
+  color: var(--mc-color-primary-500);
+}
+
+.date {
+  font-weight: 600;
+  color: var(--mc-text-primary);
+}
+
+.time {
+  color: var(--mc-text-secondary);
+  font-size: var(--mc-font-body-sm);
+}
+
+.speciality {
+  color: var(--mc-text-secondary);
+  font-size: var(--mc-font-body-sm);
+}
+
+.visit-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--mc-spacing-3);
+  flex-shrink: 0;
+  margin-left: var(--mc-spacing-4);
+}
+
+.forward-icon {
+  font-size: 20px;
+  color: var(--mc-text-tertiary);
+}
+
+// Keep badge styles from the imported file, they are good.
+
+// ===================================
+// 💀 SKELETON LOADERS (Override for simplified card)
+// ===================================
+
+.skeleton-container {
+  .skeleton-card {
+    background: var(--mc-bg-card);
+    border-radius: var(--mc-radius-lg);
+    box-shadow: var(--mc-card-shadow);
+    border: 1px solid var(--mc-card-border);
+    padding: var(--mc-spacing-3) var(--mc-spacing-4);
+    margin-bottom: var(--mc-spacing-3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+
+    .visit-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--mc-spacing-2);
+      flex-grow: 1;
+    }
+
+    .skeleton-datetime {
+      height: 18px;
+      width: 200px;
+      border-radius: var(--mc-radius-sm);
+      background: linear-gradient(
+        90deg,
+        #e0e0e0 0%,
+        #f0f0f0 50%,
+        #e0e0e0 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      display: block;
+
+      @media (max-width: 600px) {
+        width: 160px;
+        height: 16px;
+      }
+    }
+
+    .skeleton-doctor {
+      height: 16px;
+      width: 180px;
+      border-radius: var(--mc-radius-sm);
+      background: linear-gradient(
+        90deg,
+        #e0e0e0 0%,
+        #f0f0f0 50%,
+        #e0e0e0 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      display: block;
+
+      @media (max-width: 600px) {
+        width: 150px;
+        height: 14px;
+      }
+    }
+
+    .visit-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--mc-spacing-3);
+      flex-shrink: 0;
+      margin-left: var(--mc-spacing-4);
+    }
+
+    .skeleton-badge {
+      height: 20px;
+      width: 50px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(
+        90deg,
+        #e0e0e0 0%,
+        #f0f0f0 50%,
+        #e0e0e0 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      display: block;
+
+      @media (max-width: 600px) {
+        height: 18px;
+        width: 40px;
+      }
+    }
+  }
+}
+
+// Dark mode skeleton support
+[data-theme="dark"] {
+  .skeleton-container .skeleton-card {
+    background: var(--mc-card-bg);
+    border-color: var(--mc-card-border);
+
+    .skeleton-datetime,
+    .skeleton-doctor,
+    .skeleton-badge {
+      background: linear-gradient(
+        90deg,
+        #2a2a2a 0%,
+        #3a3a3a 50%,
+        #2a2a2a 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+  }
+}

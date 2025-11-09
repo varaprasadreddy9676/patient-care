@@ -1,0 +1,119 @@
+/**
+ * MedicsCare Appointment Reschedule Page
+ * Professional appointment rescheduling using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 PAGE LAYOUT
+// ===================================
+
+:host {
+  display: block;
+}
+
+.dialog-container {
+  min-width: 360px;
+  max-width: 480px;
+}
+
+.dialog-header {
+  padding: var(--mc-spacing-xl) var(--mc-spacing-xl) var(--mc-spacing-md);
+  border-bottom: 1px solid var(--mc-border-primary);
+
+  .header-text {
+    margin: 0;
+    color: var(--mc-text-primary);
+    font-size: var(--mc-font-heading-lg);
+    font-weight: var(--font-weight-medium);
+  }
+}
+
+// ===================================
+// 📝 FORM ELEMENTS
+// ===================================
+
+mat-dialog-content {
+  padding: var(--mc-spacing-xl);
+}
+
+.appointment-form {
+  .form-field {
+    margin-bottom: var(--mc-spacing-xl);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+// ===================================
+// ⏰ TIME SLOTS
+// ===================================
+
+.time-slots {
+  .time-slot-label {
+    display: block;
+    margin-bottom: var(--mc-spacing-md);
+    color: var(--mc-text-primary);
+    font-size: var(--mc-font-form-label);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .time-slot-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--mc-spacing-md);
+
+    mat-radio-button {
+      min-width: 120px;
+
+      ion-icon {
+        margin-right: var(--mc-spacing-sm);
+        font-size: var(--mc-font-heading-md);
+        vertical-align: text-bottom;
+      }
+    }
+  }
+}
+
+// ===================================
+// 🔘 ACTION BUTTONS
+// ===================================
+
+mat-dialog-actions {
+  padding: var(--mc-spacing-md) var(--mc-spacing-xl);
+  border-top: 1px solid var(--mc-border-primary);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mc-spacing-md);
+
+  ion-button {
+    min-width: 120px;
+    --padding-start: var(--mc-spacing-md);
+    --padding-end: var(--mc-spacing-md);
+    text-transform: none;
+    font-weight: var(--font-weight-medium);
+  }
+}
+
+// ===================================
+// 🔧 MATERIAL COMPONENT STYLES
+// ===================================
+
+::ng-deep {
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: var(--mc-text-secondary);
+  }
+
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: var(--mc-color-primary-500);
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: var(--mc-color-primary-500);
+  }
+}

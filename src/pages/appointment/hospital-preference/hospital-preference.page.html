@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar class="primaryDark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="appointment-booking" icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="titleHeader">
+      <ion-text class="titleText">Preferred Hospital</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-no-padding">
+
+  <ion-list lines="none">
+
+    <ion-item class="ion-no-padding">
+      <ion-grid class="ion-no-padding">
+
+        <ion-row *ngFor="let hospitals of hospitals" class="rowEqualDistribution">
+
+          <ion-row class="ion-no-padding">
+            <ion-col class="ion-no-padding">
+              <mat-checkbox [checked]="hospitals.preferred" (change)="onChange($event, hospitals)">
+                <span> {{ hospitals.name }}
+                </span>
+              </mat-checkbox>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-no-padding">
+            <ion-col class="ion-no-padding">
+              <div> {{ hospitals.address }}
+              </div>
+            </ion-col>
+          </ion-row>
+
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar class="footer" align="center" (click)="savePreference()">
+    SAVE PREFERENCES
+  </ion-toolbar>
+
+</ion-footer>

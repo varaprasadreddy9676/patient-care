@@ -1,0 +1,103 @@
+<!-- Use Ionic Header Structure -->
+<ion-header class="enterprise-header-wrapper" [translucent]="false">
+  <ion-toolbar class="enterprise-header">
+    <!-- Left Section: Back button + Member Selector Pill -->
+    <div slot="start" class="header-left">
+      <!-- Back Button (only on non-home pages) -->
+      <button
+        *ngIf="!isHomePage"
+        class="back-button"
+        (click)="goBack()"
+        aria-label="Go back">
+        <ion-icon name="arrow-back" class="back-icon"></ion-icon>
+      </button>
+
+      <!-- Loading Skeleton (while family members are being loaded) -->
+      <div
+        class="member-selector-pill loading-skeleton"
+        *ngIf="(globalFamilyMemberService.isLoading$ | async) && shouldShowFamilySelector">
+        <div class="pill-avatar skeleton-avatar">
+          <div class="skeleton-shimmer"></div>
+        </div>
+        <span class="member-name skeleton-text">
+          <div class="skeleton-shimmer"></div>
+        </span>
+      </div>
+
+      <!-- Member Selector Pill (only show on list/dashboard pages) -->
+      <div
+        class="member-selector-pill"
+        *ngIf="selectedFamilyMember && shouldShowFamilySelector && !(globalFamilyMemberService.isLoading$ | async)"
+        (click)="onFamilyMemberChipClick()"
+        role="button"
+        tabindex="0"
+        [attr.aria-label]="'Selected member: ' + selectedFamilyMember.fullName + '. Click to change.'">
+
+        <!-- Avatar -->
+        <div class="pill-avatar">
+          <div class="avatar-image">
+            <ng-container *ngIf="hasPhoto(selectedFamilyMember); else initials">
+              <img
+                [src]="getFamilyMemberPhoto(selectedFamilyMember)"
+                [alt]="(selectedFamilyMember.fullName || 'Family member') + ' avatar'"
+                class="avatar-img"
+              />
+            </ng-container>
+            <ng-template #initials>
+              <span class="avatar-initials">
+                {{ getInitials(selectedFamilyMember.fullName) }}
+              </span>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Member Name -->
+        <span class="member-name">{{ selectedFamilyMember.fullName }}</span>
+
+        <!-- Dropdown Arrow -->
+        <ion-icon name="chevron-down" class="dropdown-chevron"></ion-icon>
+      </div>
+
+      <!-- Select Member Button (when no family member selected and on appropriate pages) -->
+      <button
+        *ngIf="!selectedFamilyMember && shouldShowFamilySelector && !(globalFamilyMemberService.isLoading$ | async)"
+        class="select-member-button"
+        (click)="openFamilyMemberSelector()"
+        aria-label="Select family member">
+        <ion-icon name="people-outline" class="select-icon"></ion-icon>
+        <span>Select Member</span>
+      </button>
+    </div>
+
+    <!-- Center Section: Logo/Brand Space (optional) -->
+    <div slot="secondary" class="header-center">
+      <!-- Can add logo or brand name here if needed -->
+    </div>
+
+    <!-- Right Section: Notifications + AI Chat + Profile -->
+    <div slot="end" class="header-right">
+      <!-- Notification Bell -->
+      <button
+        class="notification-button"
+        routerLink="/home/reminder"
+        aria-label="View notifications">
+        <ion-icon name="notifications-outline" class="notification-icon"></ion-icon>
+        <div *ngIf="reminderCount > 0" class="notification-badge">
+          {{ reminderCount > 99 ? '99+' : reminderCount }}
+        </div>
+      </button>
+
+      <!-- AI Chat Button -->
+      <button
+        class="ai-chat-button"
+        (click)="onAIChatClick()"
+        aria-label="Open AI Chat">
+        <ion-icon name="chatbubble-ellipses-outline" class="ai-chat-icon"></ion-icon>
+      </button>
+
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Family Member Selector Modal Component -->
+<app-family-member-selector></app-family-member-selector>

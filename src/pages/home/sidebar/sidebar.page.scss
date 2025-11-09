@@ -1,0 +1,77 @@
+.med_Records {
+  cursor: pointer;
+}
+
+.active-item {
+  --background: #E0F3FF;
+}
+
+ion-item[routerLink]:hover,
+ion-item.hover-effect:hover {
+  --ion-item-background: rgba(0, 0, 0, 0.2);
+}
+
+.Account {
+  font-family: Poppins;
+  font-weight: 700;
+  font-size: var(--mc-font-heading-lg);
+  line-height: 18px;
+  padding-top: 23px;
+}
+
+ion-icon {
+  padding: 0px 10px;
+  height: 19px;
+  width: 19px;
+  cursor: pointer;
+}
+
+.menu-text {
+  color: #343434;
+  font-size: var(--mc-font-menu-item);
+  font-family: Poppins;
+}
+
+#logout {
+  color: #1a6291;
+  font-size: var(--mc-font-heading-lg);
+  font-family: Poppins;
+}
+
+#notifications-badge {
+  background-color: #f6f9ff;
+  color: #000;
+  position: absolute;
+  right: 10px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.logo {
+  border-bottom: 1px groove black;
+}
+
+.label {
+  color: #343434;
+  font-family: Poppins;
+  font-size: var(--mc-font-menu-item);
+}
+
+//Responsive
+@media (max-width: 600px) {
+  .label,
+  .menu-text,
+  #logout {
+    font-family: Poppins;
+    font-size: var(--mc-font-body-lg);
+  }
+
+  ion-icon {
+    padding: 0px 20px;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+  }
+}

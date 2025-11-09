@@ -1,0 +1,160 @@
+<ion-content class="auth-page">
+  <div class="container">
+    <img src="assets/new_icons_list/main_logo_dark.png" alt="MedicsCare Logo" class="logo" />
+
+    <ion-chip class="stage-chip" color="primary">
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+      <span>{{ stageChipLabel }}</span>
+    </ion-chip>
+
+    <div class="step-indicator" role="list" aria-label="Authentication steps">
+      <div class="step-dot current" role="listitem" aria-current="step">
+        <span class="dot"></span>
+        <span class="step-text">{{ showSignUpForm ? 'Complete details' : 'Verify number' }}</span>
+      </div>
+      <div class="step-connector" aria-hidden="true"></div>
+      <div class="step-dot upcoming" role="listitem">
+        <span class="dot"></span>
+        <span class="step-text">Enter OTP</span>
+      </div>
+    </div>
+
+    <div class="auth-card">
+      <header class="auth-header">
+        <h1>{{ showSignUpForm ? 'Create Account' : 'Welcome Back' }}</h1>
+        <p class="subtitle">
+          {{ showSignUpForm ? 'Join MedicsCare to manage your health digitally' : 'Sign in to access your health records' }}
+        </p>
+      </header>
+
+      <form autocomplete="off" class="auth-form">
+        <div
+          class="form-group"
+          [ngClass]="{ 'has-error': phoneMeta.touched && !phoneMeta.valid, 'is-valid': phoneMeta.touched && phoneMeta.valid }">
+          <label class="form-label" for="mobileNumber">
+            <ion-icon name="call-outline"></ion-icon>
+            Mobile Number
+          </label>
+          <ion-input
+            id="mobileNumber"
+            (ionInput)="handlePhoneInput($event)"
+            (ionBlur)="handlePhoneBlur()"
+            (ionFocus)="handlePhoneFocus()"
+            (keyup.enter)="validateNumber()"
+            autocomplete="tel"
+            name="phoneNumber"
+            type="tel"
+            maxlength="10"
+            minlength="10"
+            [(ngModel)]="phoneNumber"
+            placeholder="Enter 10-digit mobile number"
+            class="custom-input"
+            [attr.aria-invalid]="phoneMeta.touched && !phoneMeta.valid"
+            required>
+          </ion-input>
+          <ion-note
+            class="field-feedback"
+            [ngClass]="{ 'error': phoneMeta.touched && !phoneMeta.valid, 'success': phoneMeta.touched && phoneMeta.valid }"
+            aria-live="polite">
+            {{ phoneMeta.message }}
+          </ion-note>
+        </div>
+
+        <div class="signup-form" *ngIf="showSignUpForm">
+          <div class="form-group">
+            <label class="form-label">
+              <ion-icon name="person-outline"></ion-icon>
+              Full Name
+            </label>
+            <ion-input
+              class="custom-input"
+              type="text"
+              placeholder="Enter your full name"
+              [(ngModel)]="name"
+              name="name"
+              autocomplete="off">
+            </ion-input>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">
+                <ion-icon name="male-female-outline"></ion-icon>
+                Gender
+              </label>
+              <select class="custom-select" [(ngModel)]="gender" name="gender">
+                <option [ngValue]="null" disabled>Select Gender</option>
+                <option *ngFor="let g of genders" [ngValue]="g">{{ g.name }}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <ion-icon name="calendar-outline"></ion-icon>
+                Date of Birth
+              </label>
+              <ion-input
+                class="custom-input"
+                type="date"
+                placeholder="dd/mm/yyyy"
+                [(ngModel)]="dateOfBirth"
+                name="dateOfBirth">
+              </ion-input>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <ion-icon name="mail-outline"></ion-icon>
+              Email Address
+            </label>
+            <ion-input
+              class="custom-input"
+              type="email"
+              placeholder="your.email@example.com"
+              [(ngModel)]="email"
+              name="email">
+            </ion-input>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <ion-button
+            *ngIf="!showSignUpForm"
+            (click)="validateNumber()"
+            [disabled]="disableSignIn"
+            expand="block"
+            class="primary-button">
+            <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+            Continue
+          </ion-button>
+
+          <ion-button
+            *ngIf="showSignUpForm"
+            (click)="validateUser()"
+            [disabled]="disableSignIn"
+            expand="block"
+            class="primary-button">
+            <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+            Create Account
+          </ion-button>
+
+          <div class="toggle-section">
+            <p class="toggle-text" *ngIf="!showSignUpForm">
+              Don't have an account?
+              <span class="toggle-link" (click)="toggleSignUpForm()">Create one in minutes</span>
+            </p>
+            <p class="toggle-text" *ngIf="showSignUpForm">
+              Already registered?
+              <span class="toggle-link" (click)="toggleSignUpForm()">Use sign in instead</span>
+            </p>
+          </div>
+        </div>
+      </form>
+      <div class="support-hint">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <p>Your data stays encrypted and follows HIPAA-grade security.</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

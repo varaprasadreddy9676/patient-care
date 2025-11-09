@@ -1,0 +1,21 @@
+<ion-footer class="footer-navigation">
+  <ion-toolbar>
+    <div class="tab-container">
+      <div 
+        *ngFor="let tab of tabs" 
+        class="tab-item"
+        [class.active]="isActive(tab.id)"
+        (click)="onTabClick(tab)">
+        <div class="tab-icon">
+          <ion-icon [name]="tab.icon"></ion-icon>
+          <ion-badge 
+            *ngIf="tab.badge && tab.badge > 0" 
+            class="tab-badge">
+            {{ tab.badge }}
+          </ion-badge>
+        </div>
+        <span class="tab-label">{{ tab.label }}</span>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>

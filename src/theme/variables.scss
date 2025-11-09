@@ -1,0 +1,70 @@
+:root {
+  /* Primary Colors */
+  --primary-main: #002582;
+    --primary-light: #4D94FF;
+  --primary-dark: #ff6700;
+
+  /* Secondary Colors */
+  --secondary-blue: #E6F0FF;
+  --accent-green: #00B383;
+
+  /* Neutral Colors */
+  --neutral-white: #FFFFFF;
+  --neutral-gray-50: #F8FAFC;
+  --neutral-gray-100: #EEF2F6;
+  --neutral-gray-700: #334155;
+
+  /* Semantic Colors */
+  --success: #00B383;
+  --warning: #FFA500;
+  --error: #DC2626;
+  --info: #0EA5E9;
+
+  /* ===================================
+   * Prescription Design Tokens
+   * Used in: prescription-visit-detail page
+   * =================================== */
+
+  /* Brand */
+  --brand: #2457f5;
+  --brand-600: #1f46c6;
+  --brand-50: #eef2ff;
+
+  /* Surfaces */
+  --bg: #f7f8fb;
+  --card: #ffffff;
+  --border: #e6e8ee;
+
+  /* Text */
+  --ink: #0f172a;
+  --muted: #64748b;
+
+  /* Status */
+  --success-green: #16a34a;
+  --warning-orange: #f59e0b;
+  --danger-red: #e11d48;
+
+  /* Effects + radius */
+  --shadow: 0 4px 14px rgba(17, 24, 39, 0.06);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 10px;
+}
+
+.titleHeader {
+  text-align: center;
+}
+
+.titleText {
+  font-size: var(--font-heading-lg);
+  font-weight: bold;
+}
+
+.bodyText {
+  font-size: var(--font-body-xs);
+  font-weight: normal;
+}
+
+.actionText {
+  font-size: var(--font-body-md);
+}

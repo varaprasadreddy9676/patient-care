@@ -1,0 +1,47 @@
+/**
+ * MedicsCare Hospital Preference Page
+ * Professional hospital selection using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 PAGE LAYOUT
+// ===================================
+
+.display-full-width {
+  width: 100%;
+}
+
+.rowEqualDistribution {
+  margin-top: var(--mc-spacing-md);
+}
+
+// ===================================
+// 📝 FORM ELEMENTS
+// ===================================
+
+div {
+  font-size: var(--mc-font-body-sm);
+  margin-left: var(--mc-spacing-xl);
+  color: var(--mc-text-tertiary);
+}
+
+span {
+  font-size: var(--mc-font-body-md);
+  color: var(--mc-text-primary);
+}
+
+ion-grid {
+  color: var(--mc-text-primary);
+  font-size: var(--mc-font-body-sm);
+  margin-left: var(--mc-spacing-md);
+  width: 100%;
+}
+
+// ===================================
+// 🔧 MATERIAL COMPONENT STYLES
+// ===================================
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: var(--mc-color-primary-500);
+}

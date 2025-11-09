@@ -1,0 +1,107 @@
+<ion-content class="prescriptions-content">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Prescriptions</h1>
+    </header>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="noPrescriptions">
+      <ion-icon name="medical-outline" class="empty-icon"></ion-icon>
+      <p>No prescriptions available</p>
+    </div>
+
+    <!-- Prescriptions List -->
+    <div class="prescription-list" *ngIf="!noPrescriptions">
+      <div class="prescription-card" *ngFor="let prescription of prescriptionDetails; let i = index">
+        <!-- Card Header - Always Visible -->
+        <div class="card-header" (click)="toggleExpansion(prescription)">
+          <div class="patient-info">
+            <div class="avatar">{{ getInitials(prescription.familyMemberName) }}</div>
+            <div class="patient-details">
+              <div class="patient-name">{{ prescription.familyMemberName }}</div>
+              <div class="patient-meta">
+                <span class="gender-badge">{{ prescription.familyMemberGender }}</span>
+                <span class="medication-count">{{ prescription.prescription.prescription.length }} medication{{ prescription.prescription.prescription.length > 1 ? 's' : '' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="prescription-summary" *ngIf="prescription.prescription.prescription.length > 0">
+            <div class="detail-row">
+              <ion-icon name="person-outline" class="icon"></ion-icon>
+              <span class="doctor-name">{{ prescription.prescription.prescription[0].doctorName }}</span>
+            </div>
+            <div class="detail-row">
+              <ion-icon name="calendar-outline" class="icon"></ion-icon>
+              <span class="date">{{ prescription.prescription.prescription[0].startDate }}</span>
+            </div>
+          </div>
+
+          <div class="expand-icon">
+            <ion-icon name="chevron-down-outline" [class.expanded]="prescription.expanded"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Card Body - Expandable -->
+        <div class="card-body" *ngIf="prescription.expanded">
+          <div class="medications-section">
+            <h3 class="section-title">Medications</h3>
+
+            <div class="medication-item" *ngFor="let medicine of prescription.prescription.prescription; let idx = index">
+              <div class="medication-header">
+                <span class="med-number">{{ idx + 1 }}</span>
+                <div class="drug-name">{{ medicine.drugName }}</div>
+              </div>
+
+              <div class="medication-details">
+                <div class="detail-item">
+                  <ion-icon name="time-outline" class="detail-icon"></ion-icon>
+                  <div class="detail-content">
+                    <span class="label">Dosage:</span>
+                    <span class="value">{{ medicine.dosageText || medicine.dosageDesc }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-item" *ngIf="medicine.duration && medicine.duration.trim() !== 'null'">
+                  <ion-icon name="calendar-outline" class="detail-icon"></ion-icon>
+                  <div class="detail-content">
+                    <span class="label">Duration:</span>
+                    <span class="value">{{ medicine.duration }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-item">
+                  <ion-icon name="flask-outline" class="detail-icon"></ion-icon>
+                  <div class="detail-content">
+                    <span class="label">Form:</span>
+                    <span class="value">{{ medicine.UOM }} ({{ medicine.routeOfIntake }})</span>
+                  </div>
+                </div>
+
+                <div class="detail-item" *ngIf="medicine.totalQty">
+                  <ion-icon name="cube-outline" class="detail-icon"></ion-icon>
+                  <div class="detail-content">
+                    <span class="label">Quantity:</span>
+                    <span class="value">{{ medicine.totalQty }} {{ medicine.UOM }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <ion-button
+              size="small"
+              fill="outline"
+              (click)="showPDF(prescription); $event.stopPropagation()">
+              <ion-icon slot="start" name="download-outline"></ion-icon>
+              Download PDF
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,597 @@
+/**
+ * iOS Safe Layout Utilities
+ * ===========================
+ * Comprehensive utilities for iOS-safe layouts that work around:
+ * - Notch/Dynamic Island (safe-area-inset-top)
+ * - Home Indicator (safe-area-inset-bottom)
+ * - Dynamic viewport height (100dvh vs 100vh)
+ * - Keyboard handling
+ *
+ * IMPORTANT: These utilities are iOS-specific and designed NOT to affect Android.
+ */
+
+// ============================================================================
+// CSS Custom Properties (iOS-specific values, fallback to 0 on other platforms)
+// ============================================================================
+
+:root {
+  // Safe area insets (iOS only, 0 on Android)
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+
+  // Dynamic viewport (100dvh on supported browsers, 100vh fallback)
+  // dvh = dynamic viewport height (adjusts for browser chrome)
+  // lvh = large viewport height (browser chrome hidden)
+  // svh = small viewport height (browser chrome visible)
+  --full-height: 100vh; // Fallback
+  --app-height: 100vh; // Default, will be overridden for iOS
+
+  // Keyboard offset (for form pages)
+  --keyboard-offset: 0px;
+
+  // Common spacing with safe-area
+  --safe-padding-top: var(--safe-area-top);
+  --safe-padding-bottom: var(--safe-area-bottom);
+  --safe-padding-left: var(--safe-area-left);
+  --safe-padding-right: var(--safe-area-right);
+}
+
+// iOS-specific overrides
+.ios {
+  --app-height: 100dvh; // Use dynamic viewport on iOS
+  --full-height: 100dvh;
+}
+
+// ============================================================================
+// Mixins for Safe Area Spacing
+// ============================================================================
+
+// Add top safe-area padding (for headers, content under notch)
+@mixin safe-area-top($additional: 0px) {
+  padding-top: calc(var(--safe-area-top) + #{$additional});
+}
+
+// Add bottom safe-area padding (for footers, buttons, content above home indicator)
+@mixin safe-area-bottom($additional: 0px) {
+  padding-bottom: calc(var(--safe-area-bottom) + #{$additional});
+}
+
+// Add safe-area to all sides
+@mixin safe-area-all($additional: 0px) {
+  padding-top: calc(var(--safe-area-top) + #{$additional});
+  padding-bottom: calc(var(--safe-area-bottom) + #{$additional});
+  padding-left: calc(var(--safe-area-left) + #{$additional});
+  padding-right: calc(var(--safe-area-right) + #{$additional});
+}
+
+// Add left/right safe-area padding (for landscape notches)
+@mixin safe-area-horizontal($additional: 0px) {
+  padding-left: calc(var(--safe-area-left) + #{$additional});
+  padding-right: calc(var(--safe-area-right) + #{$additional});
+}
+
+// Add safe-area to left side (landscape notch handling)
+@mixin safe-area-left($additional: 0px) {
+  padding-left: calc(var(--safe-area-left) + #{$additional});
+}
+
+// Add safe-area to right side (landscape notch handling)
+@mixin safe-area-right($additional: 0px) {
+  padding-right: calc(var(--safe-area-right) + #{$additional});
+}
+
+// Add safe-area using margin instead of padding
+@mixin safe-area-margin-top($additional: 0px) {
+  margin-top: calc(var(--safe-area-top) + #{$additional});
+}
+
+@mixin safe-area-margin-bottom($additional: 0px) {
+  margin-bottom: calc(var(--safe-area-bottom) + #{$additional});
+}
+
+// For fixed position elements (headers)
+@mixin fixed-header-safe() {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding-top: var(--safe-area-top);
+}
+
+// For fixed position elements (footers, bottom action bars)
+@mixin fixed-footer-safe() {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding-bottom: var(--safe-area-bottom);
+}
+
+// For fixed position elements with full safe-area (landscape + portrait)
+@mixin fixed-full-safe() {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  padding: var(--safe-area-top) var(--safe-area-right) var(--safe-area-bottom) var(--safe-area-left);
+}
+
+// For full-width fixed headers in landscape with side notches
+@mixin fixed-header-landscape-safe() {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding-top: var(--safe-area-top);
+
+  @media (orientation: landscape) {
+    padding-left: var(--safe-area-left);
+    padding-right: var(--safe-area-right);
+  }
+}
+
+// For full-width fixed footers in landscape with side notches
+@mixin fixed-footer-landscape-safe() {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding-bottom: var(--safe-area-bottom);
+
+  @media (orientation: landscape) {
+    padding-left: var(--safe-area-left);
+    padding-right: var(--safe-area-right);
+  }
+}
+
+// ============================================================================
+// Utility Classes (Apply directly in templates)
+// ============================================================================
+
+// Dynamic viewport height (iOS-safe, 100vh on Android)
+.full-height {
+  height: var(--app-height);
+  min-height: var(--app-height);
+}
+
+.min-full-height {
+  min-height: var(--app-height);
+}
+
+// Safe area padding utilities (iOS only)
+.ios {
+  .safe-top {
+    padding-top: var(--safe-area-top) !important;
+  }
+
+  .safe-bottom {
+    padding-bottom: var(--safe-area-bottom) !important;
+  }
+
+  .safe-left {
+    padding-left: var(--safe-area-left) !important;
+  }
+
+  .safe-right {
+    padding-right: var(--safe-area-right) !important;
+  }
+
+  .safe-horizontal {
+    padding-left: var(--safe-area-left) !important;
+    padding-right: var(--safe-area-right) !important;
+  }
+
+  .safe-all {
+    padding-top: var(--safe-area-top) !important;
+    padding-bottom: var(--safe-area-bottom) !important;
+    padding-left: var(--safe-area-left) !important;
+    padding-right: var(--safe-area-right) !important;
+  }
+
+  // Margin variants
+  .safe-margin-top {
+    margin-top: var(--safe-area-top) !important;
+  }
+
+  .safe-margin-bottom {
+    margin-bottom: var(--safe-area-bottom) !important;
+  }
+
+  .safe-margin-left {
+    margin-left: var(--safe-area-left) !important;
+  }
+
+  .safe-margin-right {
+    margin-right: var(--safe-area-right) !important;
+  }
+
+  // Landscape-specific utilities
+  @media (orientation: landscape) {
+    .safe-landscape-left {
+      padding-left: var(--safe-area-left) !important;
+    }
+
+    .safe-landscape-right {
+      padding-right: var(--safe-area-right) !important;
+    }
+
+    .safe-landscape-horizontal {
+      padding-left: var(--safe-area-left) !important;
+      padding-right: var(--safe-area-right) !important;
+    }
+  }
+}
+
+// ============================================================================
+// Fixed Position Helpers (iOS-safe)
+// ============================================================================
+
+// Fixed header that respects safe-area
+.fixed-header-safe {
+  @include fixed-header-safe();
+}
+
+// Fixed footer that respects safe-area
+.fixed-footer-safe {
+  @include fixed-footer-safe();
+}
+
+// Fixed header with landscape notch support
+.fixed-header-landscape-safe {
+  @include fixed-header-landscape-safe();
+}
+
+// Fixed footer with landscape notch support
+.fixed-footer-landscape-safe {
+  @include fixed-footer-landscape-safe();
+}
+
+// Fixed full-screen overlay with safe-area
+.fixed-full-safe {
+  @include fixed-full-safe();
+}
+
+// Fixed action bar at bottom (common pattern)
+.fixed-action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+  padding: 16px;
+
+  .ios & {
+    padding-bottom: calc(16px + var(--safe-area-bottom));
+
+    @media (orientation: landscape) {
+      padding-left: calc(16px + var(--safe-area-left));
+      padding-right: calc(16px + var(--safe-area-right));
+    }
+  }
+}
+
+// Fixed side panel (for landscape notch)
+.fixed-side-panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 998;
+
+  &.side-panel-left {
+    left: 0;
+
+    .ios & {
+      left: var(--safe-area-left);
+      padding-left: 16px;
+    }
+  }
+
+  &.side-panel-right {
+    right: 0;
+
+    .ios & {
+      right: var(--safe-area-right);
+      padding-right: 16px;
+    }
+  }
+}
+
+// ============================================================================
+// Page Container Utilities
+// ============================================================================
+
+// Standard page wrapper (replaces 100vh patterns)
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: var(--app-height);
+  min-height: var(--app-height);
+}
+
+// Content area that accounts for safe-area
+.safe-content-area {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+
+  .ios & {
+    padding-top: var(--safe-area-top);
+    padding-bottom: var(--safe-area-bottom);
+  }
+}
+
+// ============================================================================
+// Keyboard-Aware Layout (for forms)
+// ============================================================================
+
+// Form container that adjusts when keyboard opens
+.keyboard-aware-form {
+  min-height: var(--app-height);
+  display: flex;
+  flex-direction: column;
+
+  .ios & {
+    // iOS keyboards are handled by ion-content automatically
+    // This is for custom layouts without ion-content
+    padding-bottom: calc(var(--safe-area-bottom) + var(--keyboard-offset));
+  }
+}
+
+// Input fields that should remain visible above keyboard
+.keyboard-safe-input {
+  margin-bottom: 16px;
+
+  .ios & {
+    // Additional bottom margin to ensure visibility
+    margin-bottom: calc(16px + var(--safe-area-bottom));
+  }
+}
+
+// Bottom buttons that should stay visible when keyboard opens
+.keyboard-safe-button {
+  margin-top: auto;
+
+  .ios & {
+    margin-bottom: var(--safe-area-bottom);
+  }
+}
+
+// ============================================================================
+// Modal/Overlay Utilities
+// ============================================================================
+
+// Modal content wrapper (respects safe-area)
+.modal-content-safe {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .ios & {
+    padding-top: var(--safe-area-top);
+    padding-bottom: var(--safe-area-bottom);
+  }
+}
+
+// Bottom sheet wrapper (respects home indicator)
+.bottom-sheet-safe {
+  .ios & {
+    padding-bottom: calc(16px + var(--safe-area-bottom));
+  }
+}
+
+// Popover wrapper (respects notch in landscape)
+.popover-content-safe {
+  .ios & {
+    padding: var(--safe-area-top) var(--safe-area-right) var(--safe-area-bottom) var(--safe-area-left);
+  }
+}
+
+// ============================================================================
+// Typography & Flex Utilities (iOS Safari fixes)
+// ============================================================================
+
+// Fix for flex items with text that gets clipped (Safari-specific issue)
+.flex-text-fix {
+  min-width: 0; // Allow flex item to shrink below content size
+  overflow: hidden; // Prevent overflow
+  text-overflow: ellipsis; // Show ellipsis
+}
+
+// Flex row with proper text handling
+.flex-row-text-safe {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  > * {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+}
+
+// ============================================================================
+// Animation & Transform Safety (for overlay ancestors)
+// ============================================================================
+
+// Wrapper for animations that won't affect child overlays
+.animation-wrapper-safe {
+  // Use transform only for animations, not for layout
+  // Ensure child overlays use Ionic portal (ModalController, etc.)
+  will-change: transform;
+
+  // NOTE: If this element or its ancestors have overlays,
+  // ensure overlays are created via ModalController/PopoverController
+  // which automatically render in a portal outside the transform context
+}
+
+// ============================================================================
+// iOS-Specific Scroll Behavior
+// ============================================================================
+
+// Smooth momentum scrolling (iOS)
+.smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+// Prevent scroll chaining (iOS)
+.no-scroll-chain {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+// ============================================================================
+// Debugging Utilities (Remove in production)
+// ============================================================================
+
+// Visualize safe-area boundaries (for development)
+.debug-safe-area {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--safe-area-top);
+    background: rgba(255, 0, 0, 0.3);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--safe-area-bottom);
+    background: rgba(0, 0, 255, 0.3);
+    pointer-events: none;
+    z-index: 9999;
+  }
+}
+
+// Show current platform in dev mode
+.debug-platform {
+  &::before {
+    content: 'Platform: Unknown';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 99999;
+    pointer-events: none;
+  }
+
+  .ios &::before {
+    content: 'Platform: iOS';
+  }
+
+  .md &::before {
+    content: 'Platform: Android';
+  }
+}
+
+// ============================================================================
+// USAGE EXAMPLES
+// ============================================================================
+
+/*
+
+// Example 1: Replace 100vh with dynamic viewport
+// BEFORE:
+.my-page {
+  height: 100vh;
+}
+
+// AFTER:
+.my-page {
+  height: var(--app-height); // 100dvh on iOS, 100vh on Android
+}
+
+// OR use utility class:
+<div class="full-height">...</div>
+
+
+// Example 2: Add safe-area to fixed header
+// BEFORE:
+.my-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+// AFTER (using mixin):
+.my-header {
+  @include fixed-header-safe();
+}
+
+// OR using utility class:
+<header class="fixed-header-safe">...</header>
+
+
+// Example 3: Safe-area aware content padding
+// BEFORE:
+.my-content {
+  padding: 16px;
+}
+
+// AFTER (iOS-specific):
+.my-content {
+  padding: 16px;
+
+  .ios & {
+    @include safe-area-top(16px);
+    @include safe-area-bottom(16px);
+  }
+}
+
+
+// Example 4: Fixed bottom action button
+// BEFORE:
+.action-button {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+}
+
+// AFTER:
+.action-button {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+
+  .ios & {
+    bottom: calc(16px + var(--safe-area-bottom));
+  }
+}
+
+
+// Example 5: Full-height modal with safe-area
+<ion-modal>
+  <div class="modal-content-safe">
+    <ion-header>...</ion-header>
+    <ion-content>...</ion-content>
+    <ion-footer>...</ion-footer>
+  </div>
+</ion-modal>
+
+*/

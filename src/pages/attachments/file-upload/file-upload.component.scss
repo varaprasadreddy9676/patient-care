@@ -1,0 +1,53 @@
+.file-drop-area {
+  border: 2px dashed var(--ion-color-medium);
+  border-radius: 4px;
+  padding: 5% 3%;
+  text-align: center;
+  margin-bottom: 5vh;
+  max-width: 100%;
+}
+
+.file-drop-area p {
+  margin-bottom: 2vh;
+  font-size: var(--mc-font-body-lg);
+}
+
+ion-list {
+  margin-bottom: 5vh;
+  width: 100%;
+}
+
+ion-item {
+  --padding-start: 0;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .file-drop-area {
+    padding: 3% 2%;
+  }
+
+  .file-drop-area p {
+    font-size: var(--mc-font-body-xl);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .file-drop-area {
+    padding: 2% 1.5%;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .file-drop-area p {
+    font-size: var(--mc-font-heading-xs);
+  }
+
+  ion-list,
+  ion-item {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

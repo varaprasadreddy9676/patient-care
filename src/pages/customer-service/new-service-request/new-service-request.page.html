@@ -1,0 +1,28 @@
+<ion-content class="new-service-request">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>New Service Request</h1>
+      <p class="subtitle">How can we help you today?</p>
+    </header>
+
+    <!-- Issue Selection Card -->
+    <div class="issues-card">
+      <div class="issues-list">
+        <div
+          class="issue-item"
+          [class.issue-selected]="issues._id == issueSelected"
+          *ngFor="let issues of issueList"
+          (click)="addRequest(issues)">
+          <div class="issue-content">
+            <ion-icon name="help-circle-outline" class="issue-icon"></ion-icon>
+            <div class="issue-text">
+              <span class="issue-description">{{ issues.description }}</span>
+            </div>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="arrow-icon"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

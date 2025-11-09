@@ -1,0 +1,249 @@
+<!--
+  MedicsCare Theme Demo Component
+
+  This component showcases the complete theme system functionality.
+  Use it during development to verify theme integration and test features.
+-->
+
+<div class="theme-demo-container">
+  <!-- Header -->
+  <div class="demo-header">
+    <h2 class="text-heading-xl text-primary">🎨 MedicsCare Theme System Demo</h2>
+    <p class="text-body-md text-secondary">{{ getThemeInfo() }}</p>
+  </div>
+
+  <!-- Theme Controls -->
+  <div class="demo-section card">
+    <h3 class="text-heading-md mb-md">Theme Controls</h3>
+
+    <div class="controls-grid">
+      <!-- Theme Selection -->
+      <div class="control-group">
+        <label class="text-form-label">Theme</label>
+        <div class="button-group">
+          <button
+            *ngFor="let theme of availableThemes"
+            class="btn btn-sm"
+            [class.btn-primary]="currentTheme === theme"
+            [class.btn-secondary]="currentTheme !== theme"
+            (click)="setTheme(theme)">
+            {{ theme.replace('medicscare-', '').toUpperCase() }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Mode Selection -->
+      <div class="control-group">
+        <label class="text-form-label">Mode</label>
+        <div class="button-group">
+          <button
+            *ngFor="let mode of availableModes"
+            class="btn btn-sm"
+            [class.btn-primary]="currentMode === mode"
+            [class.btn-secondary]="currentMode !== mode"
+            (click)="setMode(mode)">
+            {{ mode.toUpperCase() }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Toggle Controls -->
+      <div class="control-group">
+        <label class="text-form-label">Quick Actions</label>
+        <div class="button-group">
+          <button
+            class="btn btn-sm"
+            [class.btn-success]="isDarkMode"
+            [class.btn-secondary]="!isDarkMode"
+            (click)="toggleDarkMode()">
+            {{ isDarkMode ? '☀️ Light' : '🌙 Dark' }}
+          </button>
+          <button
+            class="btn btn-sm"
+            [class.btn-warning]="isHighContrast"
+            [class.btn-secondary]="!isHighContrast"
+            (click)="toggleHighContrast()">
+            {{ isHighContrast ? '♿ Normal' : '♿ High Contrast' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Medical Context Demo -->
+  <div class="demo-section card">
+    <h3 class="text-heading-md mb-md">🏥 Medical Context Styling</h3>
+    <p class="text-body-sm text-muted mb-lg">Current: {{ getCurrentMedicalContext() }}</p>
+
+    <div class="medical-controls-grid">
+      <!-- Patient Status -->
+      <div class="control-group">
+        <label class="text-form-label">Patient Status</label>
+        <div class="button-group">
+          <button
+            *ngFor="let status of patientStatuses"
+            class="btn btn-sm btn-medical"
+            [ngClass]="'btn-patient-' + status.value"
+            (click)="setPatientContext(status.value)">
+            {{ status.label }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Appointment Status -->
+      <div class="control-group">
+        <label class="text-form-label">Appointment Status</label>
+        <div class="button-group">
+          <button
+            *ngFor="let status of appointmentStatuses"
+            class="btn btn-sm btn-medical"
+            [ngClass]="'btn-appointment-' + status.value.toLowerCase().replace(/([A-Z])/g, '-$1')"
+            (click)="setAppointmentContext(status.value)">
+            {{ status.label }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Bill Status -->
+      <div class="control-group">
+        <label class="text-form-label">Bill Status</label>
+        <div class="button-group">
+          <button
+            *ngFor="let status of billStatuses"
+            class="btn btn-sm btn-medical"
+            [ngClass]="'btn-bill-' + status.value.toLowerCase().replace(/([A-Z])/g, '-$1')"
+            (click)="setBillContext(status.value)">
+            {{ status.label }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Urgency Level -->
+      <div class="control-group">
+        <label class="text-form-label">Urgency Level</label>
+        <div class="button-group">
+          <button
+            *ngFor="let level of urgencyLevels"
+            class="btn btn-sm btn-medical"
+            [ngClass]="'btn-urgency-' + level.value"
+            (click)="setUrgencyContext(level.value)">
+            {{ level.label }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-ghost btn-sm mt-md" (click)="clearMedicalContext()">
+      Clear Medical Context
+    </button>
+  </div>
+
+  <!-- Color Palette Showcase -->
+  <div class="demo-section card">
+    <h3 class="text-heading-md mb-md">🎨 Color Palette</h3>
+
+    <div class="color-grid">
+      <!-- Brand Colors -->
+      <div class="color-section">
+        <h4 class="text-heading-sm mb-sm">Brand Colors</h4>
+        <div class="color-samples">
+          <div *ngFor="let color of colorPalette" class="color-sample" [class]="color.class">
+            <span class="color-name">{{ color.name }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Medical Context Colors -->
+      <div class="color-section">
+        <h4 class="text-heading-sm mb-sm">Medical Context Colors</h4>
+        <div class="color-samples">
+          <div *ngFor="let color of medicalColors" class="color-sample status-badge" [class]="'badge-' + color.class.split('-').join('-')">
+            <span class="color-name">{{ color.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typography Showcase -->
+  <div class="demo-section card">
+    <h3 class="text-heading-md mb-md">📝 Typography System</h3>
+
+    <div class="typography-samples">
+      <div *ngFor="let sample of typographySamples" class="typography-sample">
+        <div [class]="sample.class">{{ sample.text }}</div>
+        <div class="typography-info">
+          <span class="text-body-sm text-muted">{{ sample.description }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Utility Classes Demo -->
+  <div class="demo-section card">
+    <h3 class="text-heading-md mb-md">🔧 Utility Classes</h3>
+
+    <div class="utility-demo">
+      <div class="utility-row">
+        <span class="text-form-label">Spacing:</span>
+        <div class="spacing-demo">
+          <div class="p-xs bg-primary-50 rounded">XS</div>
+          <div class="p-sm bg-success-50 rounded">SM</div>
+          <div class="p-md bg-warning-50 rounded">MD</div>
+          <div class="p-lg bg-error-50 rounded">LG</div>
+          <div class="p-xl bg-info-50 rounded">XL</div>
+        </div>
+      </div>
+
+      <div class="utility-row">
+        <span class="text-form-label">Border Radius:</span>
+        <div class="radius-demo">
+          <div class="rounded-none bg-primary-50 p-sm">None</div>
+          <div class="rounded bg-success-50 p-sm">Base</div>
+          <div class="rounded-md bg-warning-50 p-sm">MD</div>
+          <div class="rounded-lg bg-error-50 p-sm">LG</div>
+          <div class="rounded-full bg-info-50 p-sm">Full</div>
+        </div>
+      </div>
+
+      <div class="utility-row">
+        <span class="text-form-label">Shadows:</span>
+        <div class="shadow-demo">
+          <div class="shadow-none bg-primary-50 p-sm rounded">None</div>
+          <div class="shadow-sm bg-success-50 p-sm rounded">SM</div>
+          <div class="shadow bg-warning-50 p-sm rounded">Base</div>
+          <div class="shadow-md bg-error-50 p-sm rounded">MD</div>
+          <div class="shadow-lg bg-info-50 p-sm rounded">LG</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSS Variable Inspector -->
+  <div class="demo-section card">
+    <h3 class="text-heading-md mb-md">🔍 CSS Variables Inspector</h3>
+
+    <div class="variable-inspector">
+      <div class="variable-row">
+        <span class="text-form-label">Primary Color:</span>
+        <code class="variable-value">{{ getCSSVariable('mc-color-primary-500') }}</code>
+      </div>
+      <div class="variable-row">
+        <span class="text-form-label">Text Primary:</span>
+        <code class="variable-value">{{ getCSSVariable('mc-text-primary') }}</code>
+      </div>
+      <div class="variable-row">
+        <span class="text-form-label">Background:</span>
+        <code class="variable-value">{{ getCSSVariable('mc-bg-primary') }}</code>
+      </div>
+      <div class="variable-row">
+        <span class="text-form-label">Border:</span>
+        <code class="variable-value">{{ getCSSVariable('mc-border-primary') }}</code>
+      </div>
+      <div class="variable-row">
+        <span class="text-form-label">Spacing MD:</span>
+        <code class="variable-value">{{ getCSSVariable('mc-spacing-md') }}</code>
+      </div>
+    </div>
+  </div>
+</div>

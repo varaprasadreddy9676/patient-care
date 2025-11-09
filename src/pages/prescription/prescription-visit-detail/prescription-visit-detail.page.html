@@ -1,0 +1,67 @@
+<ion-content class="prescription-detail-page">
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p class="loading-text">Loading prescriptions...</p>
+  </div>
+
+  <!-- Main Content -->
+  <main class="container" *ngIf="!isLoading">
+    <!-- Summary Card - only show if we have prescription data -->
+    <rx-summary-card *ngIf="prescriptionDocuments.length > 0 || prescriptionPrintDocuments.length > 0" [summary]="summary"></rx-summary-card>
+
+    <!-- Active Prescriptions Section (Collapsible) -->
+    <section
+      class="section section-collapsible"
+      *ngIf="active.length > 0"
+      (click)="toggleActiveSection()"
+      [class.section-open]="isActiveSectionOpen"
+      aria-expanded="isActiveSectionOpen"
+      aria-controls="active-items-container">
+      <h2>Active Prescriptions</h2>
+      <div class="header-right">
+        <span class="count">{{ active.length }}</span>
+        <ion-icon name="chevron-down-outline" class="chevron-icon"></ion-icon>
+      </div>
+    </section>
+    <div id="active-items-container" class="collapsible-content" *ngIf="isActiveSectionOpen">
+      <rx-item-card *ngFor="let item of active" [item]="item"></rx-item-card>
+    </div>
+
+    <!-- Expired Prescriptions Section (Collapsible) -->
+    <section
+      class="section section-collapsible mt20"
+      *ngIf="expired.length > 0"
+      (click)="toggleExpiredSection()"
+      [class.section-open]="isExpiredSectionOpen"
+      aria-expanded="isExpiredSectionOpen"
+      aria-controls="expired-items-container">
+      <h2>Expired</h2>
+      <div class="header-right">
+        <ion-icon name="chevron-down-outline" class="chevron-icon"></ion-icon>
+      </div>
+    </section>
+    <div id="expired-items-container" class="collapsible-content" *ngIf="isExpiredSectionOpen">
+      <rx-item-card *ngFor="let item of expired" [item]="item"></rx-item-card>
+    </div>
+
+    <!-- Prescription Documents Section -->
+    <section class="section mt26" *ngIf="prescriptionPrintDocuments.length > 0">
+      <h2>Prescription Documents</h2>
+      <span class="count">{{ prescriptionPrintDocuments.length }}</span>
+    </section>
+    <rx-document-card
+      *ngFor="let doc of prescriptionPrintDocuments"
+      [doc]="doc"
+      (view)="viewPDF($event)"
+      (download)="downloadPDF($event)">
+    </rx-document-card>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="active.length === 0 && expired.length === 0 && prescriptionPrintDocuments.length === 0">
+      <ion-icon name="medkit-outline" class="empty-icon"></ion-icon>
+      <p>No prescriptions available for this visit</p>
+      <p class="help-text">Check back later or contact your healthcare provider</p>
+    </div>
+  </main>
+</ion-content>

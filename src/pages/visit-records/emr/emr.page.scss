@@ -1,0 +1,391 @@
+/**
+ * MedicsCare EMR Page
+ * Professional medical records display using the MedicsCare Theme System
+ */
+
+.emr-page {
+  --padding-top: var(--mc-spacing-2xl);
+  --padding-bottom: var(--mc-spacing-2xl);
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-xl);
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: var(--mc-spacing-2xl);
+
+    h1 {
+      font-size: var(--font-heading-lg);
+      font-weight: 600;
+      color: var(--color-gray-900);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--font-body-md);
+      color: var(--color-gray-600);
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+
+  // ===================================
+  // 📋 VISIT CARD
+  // ===================================
+
+  .visit-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4) var(--spacing-5);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-5);
+    animation: fadeInUp 0.4s ease-out;
+  }
+
+  .section-title {
+    font-size: var(--font-heading-sm);
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin: 0 0 var(--spacing-3) 0;
+  }
+
+  .visit-details {
+    margin-bottom: var(--spacing-2);
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--spacing-3) 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+
+    &:first-child .detail-content {
+      font-weight: 600;
+      color: var(--mc-text-primary);
+    }
+  }
+
+  .detail-icon {
+    font-size: var(--font-heading-md);
+    color: var(--mc-color-primary-500);
+    margin-right: var(--mc-spacing-lg);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .detail-content {
+    flex: 1;
+    line-height: 1.5;
+    font-size: var(--font-body-md);
+    color: var(--mc-text-primary);
+
+    .doctor-name {
+      font-weight: 600;
+      margin-bottom: var(--spacing-1);
+      color: var(--mc-text-primary);
+    }
+
+    .specialty {
+      color: var(--color-gray-600);
+      font-size: var(--font-body-sm);
+    }
+  }
+
+  // ===================================
+  // 📄 RECORD SECTIONS
+  // ===================================
+
+  .record-section {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4) var(--spacing-5);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-4);
+    animation: fadeInUp 0.4s ease-out;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-3);
+
+    .download-button {
+      --color: var(--mc-color-primary-500);
+      margin: 0;
+      font-size: var(--font-heading-md);
+    }
+  }
+
+  .section-content {
+    color: var(--mc-text-primary);
+    font-size: var(--font-body-md);
+    line-height: 1.6;
+  }
+
+  .record-list {
+    list-style-type: disc;
+    padding-left: var(--spacing-5);
+    margin: 0;
+
+    li {
+      padding: var(--spacing-1) 0;
+      color: var(--mc-text-primary);
+      font-size: var(--font-body-md);
+      line-height: 1.5;
+    }
+  }
+
+  // ===================================
+  // 💊 PRESCRIPTION STYLING
+  // ===================================
+
+  .prescription-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  .prescription-item {
+    display: flex;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--mc-color-primary-500);
+  }
+
+  .prescription-number {
+    font-weight: 700;
+    color: var(--mc-color-primary-500);
+    font-size: var(--font-body-md);
+    flex-shrink: 0;
+  }
+
+  .prescription-details {
+    flex: 1;
+
+    .drug-name {
+      font-weight: 600;
+      color: var(--mc-text-primary);
+      font-size: var(--font-body-md);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .dosage-info {
+      color: var(--color-gray-600);
+      font-size: var(--font-body-sm);
+    }
+  }
+
+  // ===================================
+  // 🔬 INVESTIGATION REPORTS
+  // ===================================
+
+  .solid-border {
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-top: var(--spacing-3);
+  }
+
+  .whiteSmoke-background {
+    background: var(--color-gray-100);
+    padding: var(--spacing-2);
+  }
+
+  .top-border {
+    border-top: 1px solid var(--color-gray-200);
+    padding: var(--spacing-2);
+  }
+
+  // ===================================
+  // 🖼️ ATTACHMENTS
+  // ===================================
+
+  .attachment-button {
+    margin: 0;
+    width: 100%;
+    --padding-start: 0;
+    --padding-end: 0;
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-md);
+    }
+  }
+
+  .file-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+    background: var(--color-gray-50);
+    border: 2px dashed var(--color-gray-300);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: var(--color-gray-100);
+      border-color: var(--mc-color-primary-500);
+    }
+
+    ion-icon {
+      font-size: 48px;
+      color: var(--color-gray-400);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .file-type {
+      font-size: var(--font-body-sm);
+      font-weight: 600;
+      color: var(--color-gray-600);
+      text-transform: uppercase;
+    }
+  }
+
+  // ===================================
+  // 📥 FLOATING ACTION BUTTON
+  // ===================================
+
+  ion-fab {
+    // Use transform to move FAB up from bottom
+    // Footer is 60px + 25px spacing = 85px
+    transform: translateY(-85px);
+    margin-right: var(--spacing-4);
+    z-index: 1001;
+
+    // Additional safe area support for devices with notches
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      transform: translateY(calc(-85px - env(safe-area-inset-bottom)));
+    }
+  }
+
+  .emr-download-ion {
+    width: 56px;
+    height: 56px;
+    background: var(--mc-color-primary-500);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: var(--mc-color-primary-600);
+      transform: scale(1.05);
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  // ===================================
+  // 📋 EMPTY STATE
+  // ===================================
+
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-6) var(--spacing-4);
+    color: var(--color-gray-500);
+    animation: fadeInUp 0.5s ease-out;
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: var(--spacing-4);
+      color: var(--color-gray-400);
+    }
+
+    p {
+      font-size: var(--font-body-md);
+      margin: 0;
+    }
+  }
+
+  // ===================================
+  // 🎬 ANIMATIONS
+  // ===================================
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // ===================================
+  // 📱 RESPONSIVE DESIGN
+  // ===================================
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 0 var(--mc-spacing-md);
+    }
+
+    .header h1 {
+      font-size: var(--font-heading-md);
+    }
+
+    .header .subtitle {
+      font-size: var(--font-body-sm);
+    }
+
+    .visit-card,
+    .record-section {
+      padding: var(--spacing-3) var(--spacing-4);
+    }
+
+    .detail-item {
+      padding: var(--spacing-2) 0;
+    }
+
+    .prescription-item {
+      padding: var(--spacing-2);
+    }
+  }
+}
+
+// ===================================
+// 🔧 UTILITIES
+// ===================================
+
+.align-column-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bodyText {
+  color: var(--mc-text-primary);
+  font-size: var(--font-body-md);
+  line-height: 1.6;
+}
+
+.extraRowSpacing {
+  padding-top: var(--spacing-2);
+}

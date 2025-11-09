@@ -1,0 +1,610 @@
+/**
+ * MedicsCare Family Member List Page
+ * Professional family member management using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 PAGE LAYOUT
+// ===================================
+
+.family-member-content {
+  --padding-top: var(--mc-spacing-2xl);
+  --padding-bottom: var(--mc-spacing-2xl);
+  --background: var(--mc-bg-primary);
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-xl);
+
+    @media (max-width: 600px) {
+      padding: 0 var(--mc-spacing-md);
+    }
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: var(--mc-spacing-2xl);
+    animation: fadeInUp 0.4s ease-out;
+
+    h1 {
+      font-size: var(--font-heading-lg);
+      font-weight: 600;
+      color: var(--color-gray-900);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--font-body-md);
+      color: var(--color-gray-600);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: var(--font-heading-md);
+      }
+
+      .subtitle {
+        font-size: var(--font-body-sm);
+      }
+    }
+  }
+
+  // ===================================
+  // 🔘 ACTION BUTTONS
+  // ===================================
+
+  .action-buttons {
+    margin-bottom: var(--mc-spacing-xl);
+    animation: fadeInUp 0.4s ease-out;
+
+    ion-button {
+      --border-radius: var(--mc-radius-md);
+      --padding-top: var(--mc-spacing-md);
+      --padding-bottom: var(--mc-spacing-md);
+      --box-shadow: var(--mc-shadow-sm);
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0.3px;
+
+      &:not([color]) {
+        --background: var(--mc-color-primary-500);
+        --background-hover: var(--mc-color-primary-600);
+        --color: var(--color-white);
+      }
+
+      ion-icon {
+        margin-right: var(--mc-spacing-xs);
+        font-size: var(--mc-icon-size-md);
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+        --box-shadow: var(--mc-shadow-md);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      ion-button {
+        --padding-top: var(--mc-spacing-sm);
+        --padding-bottom: var(--mc-spacing-sm);
+        font-size: var(--mc-font-body-sm);
+      }
+    }
+  }
+
+  // ===================================
+  // 📱 PROFILES CONTAINER
+  // ===================================
+
+  .profiles-container {
+    animation: fadeInUp 0.4s ease-out;
+  }
+
+  .header-row {
+    display: none; // Hide the header row for cleaner card design
+  }
+
+  // ===================================
+  // 👤 PROFILE CARDS
+  // ===================================
+
+  .profile-card {
+    background: var(--mc-bg-inverse);
+    border-radius: var(--mc-radius-md);
+    margin-bottom: var(--mc-spacing-sm);
+    box-shadow: var(--mc-shadow-xs);
+    border: 1px solid var(--mc-border-primary);
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      box-shadow: var(--mc-shadow-sm);
+      transform: translateY(-1px);
+      background: var(--mc-bg-secondary);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: var(--mc-shadow-xs);
+    }
+
+    &:last-child {
+      margin-bottom: var(--mc-spacing-lg);
+    }
+  }
+
+  // ===================================
+  // 📋 PROFILE CONTENT
+  // ===================================
+
+  .profile-content {
+    display: flex;
+    align-items: center;
+    padding: var(--mc-spacing-md) var(--mc-spacing-lg);
+    gap: var(--mc-spacing-md);
+
+    @media (max-width: 767px) {
+      gap: var(--mc-spacing-sm);
+      padding: var(--mc-spacing-md) var(--mc-spacing-sm);
+    }
+  }
+
+  // ===================================
+  // 👤 AVATAR SECTION
+  // ===================================
+
+  .avatar-section {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: var(--mc-spacing-md);
+  }
+
+  .avatar-container {
+    flex-shrink: 0;
+  }
+
+  .avatar-circle {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: var(--mc-shadow-sm);
+    transition: var(--transition);
+    background: var(--color-gray-100);
+    border: 2px solid var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 767px) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar-initials {
+    font-size: var(--mc-font-body-lg);
+    font-weight: var(--mc-font-weight-bold);
+    color: var(--mc-text-inverse);
+    letter-spacing: 0.5px;
+
+    @media (max-width: 767px) {
+      font-size: var(--mc-font-body-md);
+    }
+  }
+
+  // ===================================
+  // 📋 PROFILE INFO
+  // ===================================
+
+  .profile-info {
+    flex: 1;
+    min-width: 0; // Allows text truncation
+  }
+
+  .name-text {
+    font-size: var(--mc-font-body-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--mc-text-primary);
+    margin-bottom: var(--mc-spacing-xs);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+
+    @media (max-width: 767px) {
+      font-size: var(--mc-font-body-md);
+    }
+  }
+
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-xs);
+    flex-wrap: wrap;
+    margin-bottom: var(--mc-spacing-xs);
+  }
+
+  .dob-text {
+    font-size: var(--mc-font-body-sm);
+    color: var(--mc-text-secondary);
+    font-weight: var(--font-weight-regular);
+
+    @media (max-width: 767px) {
+      font-size: var(--mc-font-body-xs);
+    }
+  }
+
+  .relation-text {
+    font-size: var(--mc-font-body-sm);
+    color: var(--mc-color-primary-600);
+    font-weight: var(--mc-font-weight-semibold);
+
+    @media (max-width: 767px) {
+      font-size: var(--mc-font-body-xs);
+    }
+  }
+
+  // ===================================
+  // ⚥ GENDER SECTION
+  // ===================================
+
+  .gender-section {
+    flex-shrink: 0;
+
+    @media (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  .gender-badge {
+    // Standard 24px height gender chips with semantic colors
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    padding: var(--mc-spacing-xs) var(--mc-spacing-sm);
+    border-radius: var(--mc-radius-sm);
+    font-size: var(--mc-font-body-xs);
+    font-weight: var(--mc-font-weight-semibold);
+    text-transform: capitalize;
+    letter-spacing: 0.2px;
+    transition: var(--mc-transition-base);
+    border: 1px solid transparent;
+    white-space: nowrap;
+    line-height: 1.2;
+
+    // Gender-specific color coding - enhanced visibility with darker backgrounds
+    &.gender-male {
+      background-color: var(--mc-color-info-100);
+      color: var(--mc-color-info-800);
+      border-color: var(--mc-color-info-300);
+    }
+
+    &.gender-female {
+      background-color: var(--mc-color-secondary-100);
+      color: var(--mc-color-secondary-800);
+      border-color: var(--mc-color-secondary-300);
+    }
+
+    &.gender-others {
+      background-color: var(--mc-color-warning-100);
+      color: var(--mc-color-warning-800);
+      border-color: var(--mc-color-warning-300);
+    }
+
+    &.gender-default {
+      background-color: var(--mc-color-gray-100);
+      color: var(--mc-color-gray-800);
+      border-color: var(--mc-color-gray-300);
+    }
+
+    &.hide-md-up {
+      margin-top: var(--mc-spacing-xs);
+      min-height: 20px;
+      padding: 2px var(--mc-spacing-xs);
+      font-size: 10px;
+    }
+  }
+
+  // ===================================
+  // 🔧 ACTION BUTTONS
+  // ===================================
+
+  .action-section {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-xs);
+    padding-right: var(--mc-spacing-md);
+    flex-shrink: 0;
+
+    @media (max-width: 767px) {
+      padding-right: var(--mc-spacing-sm);
+      gap: 2px;
+    }
+  }
+
+  .action-button {
+    --background: transparent;
+    --color: var(--mc-text-secondary);
+    --border-radius: var(--mc-radius-sm);
+    --padding-start: var(--mc-spacing-xs);
+    --padding-end: var(--mc-spacing-xs);
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    transition: var(--mc-transition-base);
+    border: 1px solid var(--mc-border-primary);
+
+    @media (max-width: 767px) {
+      width: 28px;
+      height: 28px;
+    }
+
+    &:hover {
+      --background: var(--mc-bg-secondary);
+      border-color: var(--mc-border-hover);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &.edit-icon {
+      &:hover {
+        --background: var(--mc-color-primary-50);
+        --color: var(--mc-color-primary-600);
+        border-color: var(--mc-color-primary-200);
+      }
+    }
+
+    &.delete-icon {
+      &:hover {
+        --background: var(--mc-color-error-50);
+        --color: var(--mc-color-error-600);
+        border-color: var(--mc-color-error-200);
+      }
+    }
+  }
+
+  .action-icon {
+    font-size: var(--mc-icon-size-md);
+
+    @media (max-width: 767px) {
+      font-size: var(--mc-icon-size-sm);
+    }
+  }
+
+  // ===================================
+  // 📱 RESPONSIVE UTILITIES
+  // ===================================
+
+  @media (max-width: 767px) {
+    .hide-sm-down {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hide-md-up {
+      display: none !important;
+    }
+  }
+
+  // ===================================
+  // 📊 LOADING & EMPTY STATES
+  // ===================================
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: var(--mc-spacing-md);
+    animation: fadeIn 0.5s ease-out;
+
+    ion-spinner {
+      width: 40px;
+      height: 40px;
+      --color: var(--mc-color-primary-500);
+    }
+
+    .loading-text {
+      color: var(--mc-text-secondary);
+      font-size: var(--mc-font-body-md);
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--mc-spacing-2xl) var(--mc-spacing-lg);
+    min-height: 300px;
+    animation: fadeInUp 0.5s ease-out;
+
+    .empty-icon {
+      font-size: 80px;
+      margin-bottom: var(--mc-spacing-lg);
+      color: var(--mc-color-gray-300);
+    }
+
+    .empty-message {
+      font-size: var(--mc-font-body-lg);
+      font-weight: 600;
+      color: var(--mc-text-primary);
+      margin: 0 0 var(--mc-spacing-sm) 0;
+    }
+
+    .empty-description {
+      font-size: var(--mc-font-body-md);
+      color: var(--mc-text-secondary);
+      margin: 0;
+      max-width: 400px;
+    }
+
+    @media (max-width: 600px) {
+      padding: var(--mc-spacing-xl) var(--mc-spacing-md);
+
+      .empty-icon {
+        font-size: 64px;
+      }
+
+      .empty-message {
+        font-size: var(--mc-font-body-md);
+      }
+
+      .empty-description {
+        font-size: var(--mc-font-body-sm);
+      }
+    }
+  }
+
+  // ===================================
+  // 🌙 DARK MODE SUPPORT
+  // ===================================
+
+  [data-theme="dark"] {
+    .profile-card {
+      background: var(--mc-card-bg);
+      border-color: var(--mc-card-border);
+
+      &:hover {
+        background: var(--mc-card-bg-hover);
+        border-color: var(--mc-border-focus);
+      }
+    }
+
+    .gender-badge {
+      // Enhanced contrast for dark mode
+      &.gender-male {
+        background-color: var(--mc-color-info-900);
+        color: var(--mc-color-info-200);
+        border-color: var(--mc-color-info-700);
+      }
+
+      &.gender-female {
+        background-color: var(--mc-color-secondary-900);
+        color: var(--mc-color-secondary-200);
+        border-color: var(--mc-color-secondary-700);
+      }
+
+      &.gender-others {
+        background-color: var(--mc-color-warning-900);
+        color: var(--mc-color-warning-200);
+        border-color: var(--mc-color-warning-700);
+      }
+
+      &.gender-default {
+        background-color: var(--mc-color-gray-700);
+        color: var(--mc-text-tertiary);
+        border-color: var(--mc-color-gray-600);
+      }
+    }
+
+    .action-button {
+      --color: var(--mc-text-secondary);
+      border-color: var(--mc-border-secondary);
+
+      &:hover {
+        --background: var(--mc-bg-secondary);
+        border-color: var(--mc-border-hover);
+        --color: var(--mc-text-primary);
+      }
+
+      &.edit-icon {
+        &:hover {
+          --background: var(--mc-color-primary-900);
+          --color: var(--mc-color-primary-300);
+          border-color: var(--mc-color-primary-700);
+        }
+      }
+
+      &.delete-icon {
+        &:hover {
+          --background: var(--mc-color-error-900);
+          --color: var(--mc-color-error-300);
+          border-color: var(--mc-color-error-700);
+        }
+      }
+    }
+  }
+
+  // ===================================
+  // ♿ HIGH CONTRAST MODE
+  // ===================================
+
+  [data-contrast="high"] {
+    .profile-card {
+      border-width: 2px;
+
+      &:hover {
+        border-width: 3px;
+      }
+    }
+
+    .gender-badge {
+      border-width: 2px;
+      font-weight: var(--mc-font-weight-bold);
+    }
+
+    .action-button {
+      border-width: 2px;
+
+      &:hover {
+        border-width: 3px;
+      }
+    }
+  }
+
+  // ===================================
+  // 🎬 ANIMATIONS
+  // ===================================
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}

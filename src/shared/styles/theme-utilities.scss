@@ -1,0 +1,397 @@
+/**
+ * MedicsCare Theme Utilities
+ * Utility classes for rapid development and consistency
+ *
+ * These utilities provide a semantic layer on top of the core tokens
+ * for common UI patterns in medical applications
+ */
+
+// ===================================
+// 🎨 COLOR UTILITIES
+// ===================================
+
+// Background Colors
+.bg-primary { background-color: var(--mc-bg-primary) !important; }
+.bg-secondary { background-color: var(--mc-bg-secondary) !important; }
+.bg-tertiary { background-color: var(--mc-bg-tertiary) !important; }
+.bg-inverse { background-color: var(--mc-bg-inverse) !important; }
+.bg-overlay { background-color: var(--mc-bg-overlay) !important; }
+.bg-disabled { background-color: var(--mc-bg-disabled) !important; }
+
+// Brand Backgrounds
+.bg-primary-50 { background-color: var(--mc-color-primary-50) !important; }
+.bg-primary-100 { background-color: var(--mc-color-primary-100) !important; }
+.bg-primary-500 { background-color: var(--mc-color-primary-500) !important; }
+.bg-primary-600 { background-color: var(--mc-color-primary-600) !important; }
+
+// Semantic Backgrounds
+.bg-success { background-color: var(--mc-color-success-500) !important; }
+.bg-success-50 { background-color: var(--mc-color-success-50) !important; }
+.bg-warning { background-color: var(--mc-color-warning-500) !important; }
+.bg-warning-50 { background-color: var(--mc-color-warning-50) !important; }
+.bg-error { background-color: var(--mc-color-error-500) !important; }
+.bg-error-50 { background-color: var(--mc-color-error-50) !important; }
+.bg-info { background-color: var(--mc-color-info-500) !important; }
+.bg-info-50 { background-color: var(--mc-color-info-50) !important; }
+
+// Text Colors
+.text-primary { color: var(--mc-text-primary) !important; }
+.text-secondary { color: var(--mc-text-secondary) !important; }
+.text-tertiary { color: var(--mc-text-tertiary) !important; }
+.text-inverse { color: var(--mc-text-inverse) !important; }
+.text-disabled { color: var(--mc-text-disabled) !important; }
+
+// Semantic Text Colors
+.text-success { color: var(--mc-color-success-600) !important; }
+.text-warning { color: var(--mc-color-warning-600) !important; }
+.text-error { color: var(--mc-color-error-600) !important; }
+.text-info { color: var(--mc-color-info-600) !important; }
+
+// Border Colors
+.border-primary { border-color: var(--mc-border-primary) !important; }
+.border-secondary { border-color: var(--mc-border-secondary) !important; }
+.border-focus { border-color: var(--mc-border-focus) !important; }
+.border-success { border-color: var(--mc-border-success) !important; }
+.border-warning { border-color: var(--mc-border-warning) !important; }
+.border-error { border-color: var(--mc-border-error) !important; }
+
+// ===================================
+// 🏥 MEDICAL CONTEXT UTILITIES
+// ===================================
+
+// Patient Status Utilities
+.patient-active {
+  background-color: var(--mc-patient-active-bg) !important;
+  color: var(--mc-patient-active-text) !important;
+  border-color: var(--mc-patient-active-border) !important;
+}
+
+.patient-inactive {
+  background-color: var(--mc-patient-inactive-bg) !important;
+  color: var(--mc-patient-inactive-text) !important;
+  border-color: var(--mc-patient-inactive-border) !important;
+}
+
+.patient-pending {
+  background-color: var(--mc-patient-pending-bg) !important;
+  color: var(--mc-patient-pending-text) !important;
+  border-color: var(--mc-patient-pending-border) !important;
+}
+
+.patient-critical {
+  background-color: var(--mc-patient-critical-bg) !important;
+  color: var(--mc-patient-critical-text) !important;
+  border-color: var(--mc-patient-critical-border) !important;
+}
+
+// Appointment Status Utilities
+.appointment-booked {
+  background-color: var(--mc-appointment-booked-bg) !important;
+  color: var(--mc-appointment-booked-text) !important;
+  border-color: var(--mc-appointment-booked-border) !important;
+}
+
+.appointment-confirmed {
+  background-color: var(--mc-appointment-confirmed-bg) !important;
+  color: var(--mc-appointment-confirmed-text) !important;
+  border-color: var(--mc-appointment-confirmed-border) !important;
+}
+
+.appointment-in-progress {
+  background-color: var(--mc-appointment-in-progress-bg) !important;
+  color: var(--mc-appointment-in-progress-text) !important;
+  border-color: var(--mc-appointment-in-progress-border) !important;
+}
+
+.appointment-completed {
+  background-color: var(--mc-appointment-completed-bg) !important;
+  color: var(--mc-appointment-completed-text) !important;
+  border-color: var(--mc-appointment-completed-border) !important;
+}
+
+.appointment-cancelled {
+  background-color: var(--mc-appointment-cancelled-bg) !important;
+  color: var(--mc-appointment-cancelled-text) !important;
+  border-color: var(--mc-appointment-cancelled-border) !important;
+}
+
+.appointment-no-show {
+  background-color: var(--mc-appointment-no-show-bg) !important;
+  color: var(--mc-appointment-no-show-text) !important;
+  border-color: var(--mc-appointment-no-show-border) !important;
+}
+
+// Bill Status Utilities
+.bill-paid {
+  background-color: var(--mc-bill-paid-bg) !important;
+  color: var(--mc-bill-paid-text) !important;
+  border-color: var(--mc-bill-paid-border) !important;
+}
+
+.bill-pending {
+  background-color: var(--mc-bill-pending-bg) !important;
+  color: var(--mc-bill-pending-text) !important;
+  border-color: var(--mc-bill-pending-border) !important;
+}
+
+.bill-overdue {
+  background-color: var(--mc-bill-overdue-bg) !important;
+  color: var(--mc-bill-overdue-text) !important;
+  border-color: var(--mc-bill-overdue-border) !important;
+}
+
+.bill-partial {
+  background-color: var(--mc-bill-partial-bg) !important;
+  color: var(--mc-bill-partial-text) !important;
+  border-color: var(--mc-bill-partial-border) !important;
+}
+
+.bill-refunded {
+  background-color: var(--mc-bill-refunded-bg) !important;
+  color: var(--mc-bill-refunded-text) !important;
+  border-color: var(--mc-bill-refunded-border) !important;
+}
+
+// ===================================
+// 📏 SPACING UTILITIES
+// ===================================
+
+// Padding Utilities
+.p-xs { padding: var(--mc-spacing-xs) !important; }
+.p-sm { padding: var(--mc-spacing-sm) !important; }
+.p-md { padding: var(--mc-spacing-md) !important; }
+.p-lg { padding: var(--mc-spacing-lg) !important; }
+.p-xl { padding: var(--mc-spacing-xl) !important; }
+.p-2xl { padding: var(--mc-spacing-2xl) !important; }
+
+// Padding X
+.px-xs { padding-left: var(--mc-spacing-xs) !important; padding-right: var(--mc-spacing-xs) !important; }
+.px-sm { padding-left: var(--mc-spacing-sm) !important; padding-right: var(--mc-spacing-sm) !important; }
+.px-md { padding-left: var(--mc-spacing-md) !important; padding-right: var(--mc-spacing-md) !important; }
+.px-lg { padding-left: var(--mc-spacing-lg) !important; padding-right: var(--mc-spacing-lg) !important; }
+.px-xl { padding-left: var(--mc-spacing-xl) !important; padding-right: var(--mc-spacing-xl) !important; }
+
+// Padding Y
+.py-xs { padding-top: var(--mc-spacing-xs) !important; padding-bottom: var(--mc-spacing-xs) !important; }
+.py-sm { padding-top: var(--mc-spacing-sm) !important; padding-bottom: var(--mc-spacing-sm) !important; }
+.py-md { padding-top: var(--mc-spacing-md) !important; padding-bottom: var(--mc-spacing-md) !important; }
+.py-lg { padding-top: var(--mc-spacing-lg) !important; padding-bottom: var(--mc-spacing-lg) !important; }
+.py-xl { padding-top: var(--mc-spacing-xl) !important; padding-bottom: var(--mc-spacing-xl) !important; }
+
+// Margin Utilities
+.m-xs { margin: var(--mc-spacing-xs) !important; }
+.m-sm { margin: var(--mc-spacing-sm) !important; }
+.m-md { margin: var(--mc-spacing-md) !important; }
+.m-lg { margin: var(--mc-spacing-lg) !important; }
+.m-xl { margin: var(--mc-spacing-xl) !important; }
+.m-2xl { margin: var(--mc-spacing-2xl) !important; }
+
+// Margin X
+.mx-xs { margin-left: var(--mc-spacing-xs) !important; margin-right: var(--mc-spacing-xs) !important; }
+.mx-sm { margin-left: var(--mc-spacing-sm) !important; margin-right: var(--mc-spacing-sm) !important; }
+.mx-md { margin-left: var(--mc-spacing-md) !important; margin-right: var(--mc-spacing-md) !important; }
+.mx-lg { margin-left: var(--mc-spacing-lg) !important; margin-right: var(--mc-spacing-lg) !important; }
+.mx-xl { margin-left: var(--mc-spacing-xl) !important; margin-right: var(--mc-spacing-xl) !important; }
+
+// Margin Y
+.my-xs { margin-top: var(--mc-spacing-xs) !important; margin-bottom: var(--mc-spacing-xs) !important; }
+.my-sm { margin-top: var(--mc-spacing-sm) !important; margin-bottom: var(--mc-spacing-sm) !important; }
+.my-md { margin-top: var(--mc-spacing-md) !important; margin-bottom: var(--mc-spacing-md) !important; }
+.my-lg { margin-top: var(--mc-spacing-lg) !important; margin-bottom: var(--mc-spacing-lg) !important; }
+.my-xl { margin-top: var(--mc-spacing-xl) !important; margin-bottom: var(--mc-spacing-xl) !important; }
+
+// ===================================
+// 🔺 BORDER RADIUS UTILITIES
+// ===================================
+
+.rounded-none { border-radius: var(--mc-radius-none) !important; }
+.rounded-sm { border-radius: var(--mc-radius-sm) !important; }
+.rounded { border-radius: var(--mc-radius-base) !important; }
+.rounded-md { border-radius: var(--mc-radius-md) !important; }
+.rounded-lg { border-radius: var(--mc-radius-lg) !important; }
+.rounded-xl { border-radius: var(--mc-radius-xl) !important; }
+.rounded-full { border-radius: var(--mc-radius-full) !important; }
+
+// ===================================
+// 🌟 SHADOW UTILITIES
+// ===================================
+
+.shadow-none { box-shadow: none !important; }
+.shadow-sm { box-shadow: var(--mc-shadow-sm) !important; }
+.shadow { box-shadow: var(--mc-shadow-base) !important; }
+.shadow-md { box-shadow: var(--mc-shadow-md) !important; }
+.shadow-lg { box-shadow: var(--mc-shadow-lg) !important; }
+.shadow-xl { box-shadow: var(--mc-shadow-xl) !important; }
+
+// ===================================
+// 📱 RESPONSIVE UTILITIES
+// ===================================
+
+// Display utilities
+@media (max-width: calc(var(--mc-breakpoint-sm) - 1px)) {
+  .hidden-mobile { display: none !important; }
+}
+
+@media (min-width: var(--mc-breakpoint-sm)) and (max-width: calc(var(--mc-breakpoint-md) - 1px)) {
+  .hidden-tablet { display: none !important; }
+}
+
+@media (min-width: var(--mc-breakpoint-md)) {
+  .hidden-desktop { display: none !important; }
+}
+
+// ===================================
+// 🎯 INTERACTIVE STATES
+// ===================================
+
+// Hover states
+.hover\:bg-primary:hover { background-color: var(--mc-bg-primary) !important; }
+.hover\:bg-primary-500:hover { background-color: var(--mc-color-primary-500) !important; }
+.hover\:bg-success:hover { background-color: var(--mc-color-success-500) !important; }
+.hover\:bg-warning:hover { background-color: var(--mc-color-warning-500) !important; }
+.hover\:bg-error:hover { background-color: var(--mc-color-error-500) !important; }
+
+// Focus states
+.focus\:border-primary:focus { border-color: var(--mc-border-focus) !important; }
+.focus\:shadow-md:focus {
+  outline: var(--mc-focus-width) solid var(--mc-focus-color) !important;
+  outline-offset: var(--mc-focus-offset) !important;
+}
+
+// ===================================
+// 🏥 MEDICAL STATUS BADGES
+// ===================================
+
+// Status badge base class
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--mc-radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+// Medical context badges
+.badge-patient-active { @extend .status-badge; @extend .patient-active; }
+.badge-patient-inactive { @extend .status-badge; @extend .patient-inactive; }
+.badge-patient-pending { @extend .status-badge; @extend .patient-pending; }
+.badge-patient-critical { @extend .status-badge; @extend .patient-critical; }
+
+.badge-appointment-booked { @extend .status-badge; @extend .appointment-booked; }
+.badge-appointment-confirmed { @extend .status-badge; @extend .appointment-confirmed; }
+.badge-appointment-in-progress { @extend .status-badge; @extend .appointment-in-progress; }
+.badge-appointment-completed { @extend .status-badge; @extend .appointment-completed; }
+.badge-appointment-cancelled { @extend .status-badge; @extend .appointment-cancelled; }
+.badge-appointment-no-show { @extend .status-badge; @extend .appointment-no-show; }
+
+.badge-bill-paid { @extend .status-badge; @extend .bill-paid; }
+.badge-bill-pending { @extend .status-badge; @extend .bill-pending; }
+.badge-bill-overdue { @extend .status-badge; @extend .bill-overdue; }
+.badge-bill-partial { @extend .status-badge; @extend .bill-partial; }
+.badge-bill-refunded { @extend .status-badge; @extend .bill-refunded; }
+
+// ===================================
+// 🎨 GRADIENT UTILITIES
+// ===================================
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--mc-color-primary-500) 0%, var(--mc-color-primary-600) 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, var(--mc-color-success-500) 0%, var(--mc-color-success-600) 100%);
+}
+
+.gradient-warning {
+  background: linear-gradient(135deg, var(--mc-color-warning-500) 0%, var(--mc-color-warning-600) 100%);
+}
+
+.gradient-error {
+  background: linear-gradient(135deg, var(--mc-color-error-500) 0%, var(--mc-color-error-600) 100%);
+}
+
+// ===================================
+// 📊 CARD COMPONENT UTILITIES
+// ===================================
+
+.card {
+  background-color: var(--mc-bg-primary);
+  border: 1px solid var(--mc-border-primary);
+  border-radius: var(--mc-radius-lg);
+  box-shadow: var(--mc-shadow-base);
+  padding: var(--mc-card-padding);
+  margin-bottom: var(--mc-spacing-md);
+  transition: box-shadow var(--mc-transition-base), border-color var(--mc-transition-base);
+}
+
+.card-hover:hover {
+  box-shadow: var(--mc-shadow-lg);
+  border-color: var(--mc-border-focus);
+}
+
+.card-header {
+  border-bottom: 1px solid var(--mc-border-primary);
+  padding-bottom: var(--mc-spacing-md);
+  margin-bottom: var(--mc-spacing-md);
+}
+
+.card-footer {
+  border-top: 1px solid var(--mc-border-primary);
+  padding-top: var(--mc-spacing-md);
+  margin-top: var(--mc-spacing-md);
+}
+
+// ===================================
+// 🎯 UTILITY FOR THEMED COMPONENTS
+// ===================================
+
+// Theme-aware components
+.themed-component {
+  background-color: var(--mc-bg-primary);
+  color: var(--mc-text-primary);
+  border-color: var(--mc-border-primary);
+}
+
+.themed-component:hover,
+.themed-component:focus {
+  background-color: var(--mc-bg-secondary);
+  border-color: var(--mc-border-focus);
+}
+
+.themed-component:disabled {
+  background-color: var(--mc-bg-disabled);
+  color: var(--mc-text-disabled);
+  border-color: var(--mc-border-disabled);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+// ===================================
+// ♿ ACCESSIBILITY UTILITIES
+// ===================================
+
+// Focus visible for better keyboard navigation
+.focus-visible\:ring {
+  outline: none;
+  box-shadow: 0 0 0 var(--mc-focus-width) var(--mc-focus-color);
+}
+
+.focus-visible\:ring-offset {
+  outline: none;
+  box-shadow: 0 0 0 var(--mc-focus-width) var(--mc-focus-color),
+              0 0 0 calc(var(--mc-focus-width) + var(--mc-focus-offset)) transparent;
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

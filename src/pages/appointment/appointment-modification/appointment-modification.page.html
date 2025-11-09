@@ -1,0 +1,115 @@
+<ion-toolbar>
+  <h5>Edit Appointment</h5>
+</ion-toolbar>
+
+<mat-dialog-content>
+  <form>
+    <ion-grid>
+      <ion-row class="rowEqualDistribution">
+        <ion-col>
+          <mat-form-field class="display-full-width">
+            <mat-label>Select Hospital</mat-label>
+            <mat-select name="hospital" [(ngModel)]="hospital">
+              <!-- <mat-optgroup> -->
+              <mat-option *ngFor="let hospital of hospitals" [value]="hospital" (click)="getDoctors(hospital)">
+                {{hospital.name}}
+              </mat-option>
+              <!-- </mat-optgroup> -->
+            </mat-select>
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="rowEqualDistribution">
+        <ion-col>
+          <mat-form-field class="display-full-width">
+            <mat-label>Select Speciality</mat-label>
+            <mat-select name="specialist" [(ngModel)]="specialist">
+              <mat-option *ngFor="let speciality of doctors | filter" [value]="speciality"
+                (click)="getDoctorsArray(speciality.specialityCode, speciality.specialityName)">
+                {{speciality.specialityName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="rowEqualDistribution">
+        <ion-col>
+          <mat-form-field class="display-full-width">
+            <mat-label>Select Doctor</mat-label>
+            <mat-select name="doctor" [(ngModel)]="doctor">
+              <mat-option *ngFor="let doctor of doctorArray" [value]="doctor" (click)="getCurrentDoctor(doctor)">
+                {{doctor.doctorName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="rowEqualDistribution">
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput [matDatepicker]="picker" [min]="minAppointmentDate" placeholder="Date of Appointment"
+                  name="dob" [(ngModel)]="dateOfAppointment" (ngModelChange)="getTimeSlot()" autocomplete="off" 
+                 required readonly="true">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+      <ion-row class="rowEqualDistribution">
+        <ion-col>
+          <mat-label>Time Slot Session</mat-label><br />
+          <mat-radio-group name="gender" class="radio-group" [(ngModel)]="slots" required>
+            <mat-radio-button class="radio-button" (change)="onRadioSelected($event.value)" value="Morning" required>
+              <span>Morning</span></mat-radio-button>
+            <mat-radio-button class="radio-button" (change)="onRadioSelected($event.value)" value="Afternoon" required>
+              <span>Afternoon</span></mat-radio-button>
+            <mat-radio-button class="radio-button" (change)="onRadioSelected($event.value)" value="Evening" required>
+              <span>Evening</span></mat-radio-button>
+          </mat-radio-group>
+        </ion-col>
+      </ion-row>
+      <ion-row class="rowEqualDistribution">
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <mat-label>Select Time</mat-label>
+            <mat-select name="timeOfAppointment" [(ngModel)]="timeOfAppointment">
+              <mat-option *ngFor="let timeSlotArray of timeSlotArray" (click)="getTime(timeSlotArray.time)"
+                [value]="timeSlotArray">
+                {{timeSlotArray.time}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+      <ion-row class="rowEqualDistribution">
+        <ion-col>
+          <mat-checkbox name="isVideo" (change)="onChange($event.checked)" color="primary" [(ngModel)]="isVideo">
+            Request Video Consultation</mat-checkbox>
+          <br>
+          <span> Charge: <i class="fa fa-inr"></i>{{ fee }}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
+
+</mat-dialog-content>
+<ion-footer class="ion-no-padding" no-border>
+  <ion-row>
+    <ion-col size="6">
+      <ion-button class="button-secondary" expand="block" (click)="editAppointment()">
+        Save
+      </ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button expand="block" class="button-cancel" translucent [mat-dialog-close]>
+        Close
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

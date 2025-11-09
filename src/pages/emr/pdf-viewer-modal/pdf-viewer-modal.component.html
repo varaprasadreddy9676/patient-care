@@ -1,0 +1,27 @@
+<ion-header class="pdf-viewer-header">
+  <ion-toolbar>
+    <ion-title class="document-title">{{ documentName }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()" class="close-btn">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="pdf-viewer-content">
+  <div class="pdf-container">
+    <iframe
+      *ngIf="safePdfUrl"
+      [src]="safePdfUrl"
+      type="application/pdf"
+      class="pdf-iframe"
+      allow="fullscreen"
+      allowfullscreen>
+    </iframe>
+    <div class="loading-state" *ngIf="!safePdfUrl">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Loading PDF...</p>
+    </div>
+  </div>
+</ion-content>

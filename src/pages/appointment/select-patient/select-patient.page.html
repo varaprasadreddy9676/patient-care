@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-toolbar class="primaryDark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" (click)="goToAppointment(selectedPatientMrn, 'fromLinkPatient')"
+        icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="titleHeader">
+      <ion-text class="titleText">Link Patient</ion-text></ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-row margin-top class="ion-no-padding">
+    <ion-col size="2" class="ion-no-padding">
+      <ion-avatar margin-start class="hospital-icon">
+        <img src="assets/icon/hospitalIconOutline.png" />
+      </ion-avatar>
+    </ion-col>
+
+    <ion-col size="10">
+      <span style="vertical-align: -webkit-baseline-middle;" class="bodyText">{{ hospitalName }}</span>
+    </ion-col>
+  </ion-row>
+
+
+
+  <p class="bodyText">Patients registered with ph. no: {{ phone }}</p>
+  <span class="text-alignment" class="bodyText greyText">Select and Confirm</span>
+  <ion-list lines="none" class="ion-no-padding">
+    <ion-item *ngFor="let member of accountInfo" class="ion-no-padding">
+      <!-- <ion-card class="feature">
+        <ion-card-content
+          class="ion-no-padding"
+          (click)="mapToHospital(member)"
+        >
+          <ion-grid class="ion-no-padding"> -->
+      <!-- <ion-row class="ion-no-padding">
+              <ion-col> -->
+      <ion-grid class="ion-no-padding bodyText"
+        [ngClass]="getPatientDisplayClass(member)"
+        (click)="checkMapping(member, 'modify')"
+        [style.border]="isPatientAutoSelected(member) ? '2px solid var(--primary-main)' : 'none'"
+        [style.border-radius]="isPatientAutoSelected(member) ? '8px' : '0'"
+        [style.background-color]="isPatientAutoSelected(member) ? 'rgba(var(--primary-main-rgb), 0.1)' : 'transparent'">
+
+        <ion-row>
+          <ion-col size="3" align="center">
+            <ion-avatar>
+              <img class="profile-icon" src="assets/icon/maleProfileIcon.png" />
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="9">
+
+            <ion-row>
+              <ion-col class="ion-no-padding">
+                <strong>
+                  {{ member.patientName }}
+                </strong>
+              </ion-col>
+            </ion-row>
+
+            <!-- <ion-row class="ion-no-padding row-spacing">
+                        <ion-col class="ion-no-padding">
+                          <strong> MRN: {{ member.mrn }} </strong>
+                        </ion-col>
+                      </ion-row>  -->
+
+            <ion-row class="ion-no-padding row-spacing">
+              <ion-col class="ion-no-padding">
+                <strong> DOB:
+                  {{ member.dob | date: 'dd MMM yyyy' }}
+                </strong>
+                <div *ngIf="isPatientAutoSelected(member)" style="margin-top: 4px;">
+                  <ion-badge color="primary" style="font-size: 10px;">
+                    Auto-selected from global family member
+                  </ion-badge>
+                </div>
+              </ion-col>
+            </ion-row>
+
+          </ion-col>
+        </ion-row>
+
+
+      </ion-grid>
+
+    </ion-item>
+  </ion-list><br>
+
+  <!-- <p class="bodyText">If none of the above, then search by Hospital ID</p> -->
+
+  <!-- <mat-form-field class="display-full-width">
+ <input type="text" matInput placeholder="Hospital ID"  name="searchMRN" [(ngModel)]="searchMRN"
+            (input)="getPatientByMRN()">
+            <mat-icon matSuffix class="secondaryText">search</mat-icon> -->
+  <!-- <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let patient of patient" [value]="patient.mrn">
+              {{ patient.mrn }}
+              
+            </mat-option>
+            
+          </mat-autocomplete>   -->
+
+  <!-- </mat-form-field>
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-row class="ion-no-padding" *ngFor="let patient of patient">
+                <ion-col class="ion-no-padding" size="12"></ion-col>
+              </ion-row>
+            </ion-item>
+          </ion-list>  -->
+
+</ion-content>
+
+<ion-footer padding-top no-border align="center">
+
+  <ion-button (click)="checkMapping(null, 'delete')" margin-bottom translucent style="color : var(--primary-main)">
+    <span style="color: #fff;">New Patient</span>
+  </ion-button>
+
+</ion-footer>

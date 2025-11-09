@@ -1,0 +1,550 @@
+/**
+ * MedicsCare Chat History Page
+ * Professional AI chat management using the MedicsCare Theme System
+ */
+
+.chat-history-page {
+  --padding-top: var(--mc-spacing-2xl);
+  --padding-bottom: var(--mc-spacing-2xl);
+  --background: var(--color-gray-50);
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-xl);
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: var(--mc-spacing-2xl);
+    animation: slideDown 0.4s ease-out;
+
+    h1 {
+      font-size: var(--font-heading-lg);
+      font-weight: 600;
+      color: var(--color-gray-900);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--font-body-md);
+      color: var(--color-gray-600);
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+
+  // ===================================
+  // 🔄 LOADING STATE
+  // ===================================
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: var(--spacing-3);
+    animation: fadeIn 0.5s ease-out;
+
+    ion-spinner {
+      width: 40px;
+      height: 40px;
+      --color: var(--mc-color-primary-500);
+    }
+
+    .loading-text {
+      color: var(--color-gray-600);
+      font-size: var(--font-body-md);
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  // ===================================
+  // ⚡ QUICK ACTIONS SECTION
+  // ===================================
+
+  .quick-actions-section {
+    margin-bottom: var(--mc-spacing-2xl);
+
+    .section-title {
+      font-size: var(--font-heading-sm);
+      font-weight: 600;
+      color: var(--color-gray-700);
+      margin: 0 0 var(--spacing-4) 0;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--spacing-4);
+    }
+
+    .action-card {
+      display: flex;
+      align-items: center;
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-4);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      animation: fadeInUp 0.4s ease-out;
+      gap: var(--spacing-3);
+      border: 1px solid transparent;
+
+      &:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+        border-color: var(--mc-color-primary-200);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .action-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      ion-icon {
+        font-size: 24px;
+        color: var(--color-white);
+      }
+
+      &.general-icon {
+        background: linear-gradient(135deg, var(--mc-color-primary-500), var(--mc-color-primary-700));
+      }
+
+      &.visit-icon {
+        background: linear-gradient(135deg, var(--mc-color-success-500), var(--mc-color-success-600));
+      }
+
+      &.appointment-icon {
+        background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+      }
+
+      &.prescription-icon {
+        background: linear-gradient(135deg, #F59E0B, #D97706);
+      }
+    }
+
+    .action-content {
+      flex: 1;
+
+      .action-title {
+        font-size: var(--font-body-md);
+        font-weight: 600;
+        color: var(--mc-text-primary);
+        margin-bottom: var(--spacing-1);
+      }
+
+      .action-subtitle {
+        font-size: var(--font-body-sm);
+        color: var(--color-gray-600);
+      }
+    }
+
+    .action-arrow {
+      font-size: 20px;
+      color: var(--color-gray-400);
+      flex-shrink: 0;
+    }
+  }
+
+  // ===================================
+  // 💬 RECENT CHATS SECTION
+  // ===================================
+
+  .recent-chats-section {
+    margin-bottom: var(--mc-spacing-2xl);
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-4);
+
+      .section-title {
+        font-size: var(--font-heading-sm);
+        font-weight: 600;
+        color: var(--color-gray-700);
+        margin: 0;
+      }
+
+      ion-button {
+        --color: var(--mc-color-primary-500);
+        font-weight: 500;
+        text-transform: none;
+      }
+    }
+
+    .chats-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
+
+    .chat-card {
+      display: flex;
+      align-items: center;
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-4);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      animation: fadeInUp 0.4s ease-out;
+      gap: var(--spacing-3);
+      border: 1px solid transparent;
+
+      &:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateX(4px);
+        border-color: var(--mc-color-primary-200);
+      }
+
+      &.archived {
+        opacity: 0.7;
+        background: var(--color-gray-50);
+      }
+    }
+
+    .chat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      ion-icon {
+        font-size: 22px;
+        color: var(--color-white);
+      }
+
+      &.GENERAL {
+        background: linear-gradient(135deg, var(--mc-color-primary-500), var(--mc-color-primary-700));
+      }
+
+      &.VISIT {
+        background: linear-gradient(135deg, var(--mc-color-success-500), var(--mc-color-success-600));
+      }
+
+      &.APPOINTMENT {
+        background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+      }
+
+      &.PRESCRIPTION {
+        background: linear-gradient(135deg, #F59E0B, #D97706);
+      }
+
+      &.LAB_REPORT {
+        background: linear-gradient(135deg, #EF4444, #DC2626);
+      }
+
+      &.archived-icon {
+        background: var(--color-gray-400);
+      }
+    }
+
+    .chat-content {
+      flex: 1;
+      min-width: 0;
+
+      .chat-title {
+        font-size: var(--font-body-md);
+        font-weight: 600;
+        color: var(--mc-text-primary);
+        margin-bottom: var(--spacing-1);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .chat-meta {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+        font-size: var(--font-body-xs);
+        color: var(--color-gray-600);
+
+        .chat-type {
+          font-weight: 500;
+        }
+
+        .chat-dot {
+          color: var(--color-gray-400);
+        }
+
+        .chat-count,
+        .chat-time {
+          color: var(--color-gray-500);
+        }
+      }
+    }
+
+    .chat-menu-button {
+      --padding-start: var(--spacing-2);
+      --padding-end: var(--spacing-2);
+      --color: var(--color-gray-500);
+      flex-shrink: 0;
+
+      &:hover {
+        --color: var(--mc-color-primary-500);
+      }
+    }
+  }
+
+  // ===================================
+  // 📭 EMPTY STATE
+  // ===================================
+
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-6) var(--spacing-4);
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    animation: fadeInUp 0.5s ease-out;
+    margin-bottom: var(--mc-spacing-2xl);
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: var(--spacing-4);
+      color: var(--mc-color-primary-300);
+    }
+
+    .empty-title {
+      font-size: var(--font-heading-md);
+      font-weight: 600;
+      color: var(--color-gray-900);
+      margin: 0 0 var(--spacing-2) 0;
+    }
+
+    .empty-text {
+      font-size: var(--font-body-md);
+      color: var(--color-gray-600);
+      margin: 0 0 var(--spacing-5) 0;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .empty-cta {
+      --border-radius: var(--radius-md);
+      --padding-top: var(--spacing-3);
+      --padding-bottom: var(--spacing-3);
+      --box-shadow: var(--shadow-sm);
+      font-weight: 600;
+      text-transform: capitalize;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  }
+
+  // ===================================
+  // ℹ️ INFO CARD
+  // ===================================
+
+  .info-card {
+    display: flex;
+    gap: var(--spacing-3);
+    background: var(--mc-color-primary-50);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4);
+    border-left: 4px solid var(--mc-color-primary-500);
+    animation: fadeInUp 0.4s ease-out;
+
+    .info-icon {
+      flex-shrink: 0;
+
+      ion-icon {
+        font-size: 24px;
+        color: var(--mc-color-primary-500);
+      }
+    }
+
+    .info-content {
+      .info-title {
+        font-size: var(--font-body-md);
+        font-weight: 600;
+        color: var(--mc-color-primary-700);
+        margin-bottom: var(--spacing-2);
+      }
+
+      .info-text {
+        font-size: var(--font-body-sm);
+        color: var(--mc-color-primary-600);
+        margin: 0;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  // ===================================
+  // 🎬 ANIMATIONS
+  // ===================================
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // ===================================
+  // 📱 RESPONSIVE DESIGN
+  // ===================================
+
+  @media (max-width: 768px) {
+    .quick-actions-section {
+      .actions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 0 var(--mc-spacing-md);
+    }
+
+    .header {
+      h1 {
+        font-size: var(--font-heading-md);
+      }
+
+      .subtitle {
+        font-size: var(--font-body-sm);
+      }
+    }
+
+    .quick-actions-section {
+      .action-card {
+        padding: var(--spacing-3);
+      }
+
+      .action-icon {
+        width: 40px;
+        height: 40px;
+
+        ion-icon {
+          font-size: 20px;
+        }
+      }
+
+      .action-content {
+        .action-title {
+          font-size: var(--font-body-sm);
+        }
+
+        .action-subtitle {
+          font-size: var(--font-body-xs);
+        }
+      }
+    }
+
+    .recent-chats-section {
+      .chat-card {
+        padding: var(--spacing-3);
+      }
+
+      .chat-icon {
+        width: 36px;
+        height: 36px;
+
+        ion-icon {
+          font-size: 18px;
+        }
+      }
+
+      .chat-content {
+        .chat-title {
+          font-size: var(--font-body-sm);
+        }
+
+        .chat-meta {
+          flex-wrap: wrap;
+
+          .chat-time {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .info-card {
+      padding: var(--spacing-3);
+
+      .info-icon ion-icon {
+        font-size: 20px;
+      }
+
+      .info-content {
+        .info-title {
+          font-size: var(--font-body-sm);
+        }
+
+        .info-text {
+          font-size: var(--font-body-xs);
+        }
+      }
+    }
+
+    .empty-state {
+      padding: var(--spacing-5) var(--spacing-3);
+
+      .empty-icon {
+        font-size: 48px;
+      }
+
+      .empty-title {
+        font-size: var(--font-heading-sm);
+      }
+
+      .empty-text {
+        font-size: var(--font-body-sm);
+      }
+    }
+  }
+}

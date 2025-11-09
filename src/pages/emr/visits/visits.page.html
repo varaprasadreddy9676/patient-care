@@ -1,0 +1,69 @@
+<ion-content class="visits-page">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Visit History</h1>
+      <p class="subtitle" *ngIf="!visits.length || isLoading">View and manage your medical visit records</p>
+      <p class="subtitle" *ngIf="visits.length && !isLoading">{{ visits.length }} visit{{ visits.length !== 1 ? 's' : '' }} found</p>
+    </header>
+
+    <!-- Skeleton Loading State -->
+    <div class="visits-list skeleton-container" *ngIf="isLoading">
+      <div class="visit-card skeleton-card" *ngFor="let item of [1,2,3]">
+        <div class="visit-summary">
+          <div class="visit-header-row">
+            <div class="skeleton-date-row">
+              <div class="skeleton-date"></div>
+              <div class="skeleton-badge"></div>
+            </div>
+          </div>
+          <div class="skeleton-doctor-info"></div>
+          <div class="skeleton-summary-info"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!visits.length && !isLoading">
+      <ion-icon name="calendar-clear-outline" class="empty-icon"></ion-icon>
+      <p>No visit history found for <strong>{{ familyMember?.fullName || 'selected family member' }}</strong></p>
+      <p class="help-text">Try selecting a different family member from the top</p>
+    </div>
+
+    <!-- Visits List -->
+    <div class="visits-list" *ngIf="visits.length && !isLoading">
+      <div class="visit-card" *ngFor="let visit of visits; let i = index" (click)="navigateToVisitDetail(visit)">
+        <!-- Compact Visit Summary -->
+        <div class="visit-summary">
+          <div class="visit-header-row">
+            <div class="visit-datetime">
+              <ion-icon name="calendar-outline" class="inline-icon"></ion-icon>
+              <span class="visit-date-time">{{ visit.visitDateTime | date: 'MMM dd, yyyy' }} • {{ visit.visitDateTime | date: 'shortTime' }}</span>
+              <div class="visit-type-badge" [class]="'type-' + visit.type?.toLowerCase()">
+                {{ visit.type }}
+              </div>
+            </div>
+            <div class="navigate-icon">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </div>
+          </div>
+
+          <div class="visit-doctor-info" *ngIf="visit.consultingDoctor">
+            <ion-icon name="person-outline" class="inline-icon"></ion-icon>
+            <span class="doctor-name">{{ sanitizeDoctorName(visit.consultingDoctor) }} ({{ visit.speciality }})</span>
+          </div>
+
+          <div class="visit-summary-info" *ngIf="visit.reason || visit.complaints">
+            <ion-icon name="chatbox-ellipses-outline" class="inline-icon"></ion-icon>
+            <span class="summary-text">
+              <span class="reason-text" *ngIf="visit.reason">{{ visit.reason }}</span>
+              <span class="complaint-text" *ngIf="visit.complaints">
+                {{ visit.reason ? ' • ' : '' }}{{ visit.complaints }}
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

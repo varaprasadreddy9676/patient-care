@@ -1,0 +1,137 @@
+<ion-content>
+  <!-- Loading Skeletons - shown while family members are being loaded -->
+  <ng-container *ngIf="globalFamilyMemberService.isLoading$ | async; else contentLoaded">
+    <!-- Skeleton: Home Header -->
+    <div class="home-header skeleton-header">
+      <div class="greeting-section">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-subtitle"></div>
+      </div>
+    </div>
+
+    <!-- Skeleton: Advertisement -->
+    <div class="skeleton-advertisement"></div>
+
+    <!-- Skeleton: Quick Actions Section -->
+    <div class="quick-actions-section">
+      <div class="skeleton-section-title"></div>
+      <div class="skeleton-button"></div>
+      <div class="actions-grid">
+        <div class="skeleton-action-tile" *ngFor="let item of [1,2,3,4]"></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Actual Content - shown after loading -->
+  <ng-template #contentLoaded>
+    <!-- Enhanced Greeting Section -->
+    <div class="home-header">
+      <div class="greeting-section">
+        <h1 class="greeting-text text-display-md">
+          Hi, {{ getDisplayName() }} 👋
+        </h1>
+        <p class="greeting-subtitle text-body-lg">
+          {{ getGreetingSubtitle() }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Advertisement Component (placed right under header) -->
+    <app-advertisement
+      [customAds]="advertisements"
+      [autoRotate]="true"
+      [rotationInterval]="4000"
+      [showDots]="true">
+    </app-advertisement>
+
+    <!-- Upcoming Appointment Banner (only show if there are appointments, remove redundant promo) -->
+    <div class="health-banner-section" *ngIf="hasScheduledAppointments()">
+    <div class="health-banner appointment-banner">
+      <div class="banner-icon">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </div>
+      <div class="banner-content">
+        <h3 class="text-heading-md">Upcoming Appointment</h3>
+        <p class="text-body-md" *ngIf="appointmentToday.length > 0">
+          Today at {{ appointmentToday[0]?.appointmentTime }} - {{ appointmentToday[0]?.doctorName }}
+        </p>
+        <p class="text-body-md" *ngIf="appointmentToday.length === 0 && appointmentUpcoming.length > 0">
+          {{ appointmentUpcoming[0]?.appointmentDate | date:'MMM dd' }} at {{ appointmentUpcoming[0]?.appointmentTime }} - {{ appointmentUpcoming[0]?.doctorName }}
+        </p>
+      </div>
+      <ion-button fill="clear" class="banner-button"
+        (click)="appointmentToday.length > 0 ? openConference(appointmentToday[0]) : openConference(appointmentUpcoming[0])">
+        <span class="text-button-sm">View</span>
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Quick Actions Grid -->
+  <div class="quick-actions-section">
+    <h2 class="section-title text-heading-lg">Quick Actions</h2>
+
+    <!-- Primary Book Appointment Button -->
+    <ion-button class="book-appointment-btn" expand="block" size="large" (click)="goToNewAppointment()">
+      <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+      <span class="text-button-lg">Book Appointment</span>
+    </ion-button>
+
+    <div class="actions-grid">
+      <div class="action-tile" (click)="goToMyAppointments()">
+        <div class="tile-icon appointment">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+        <span class="tile-label text-body-md">My Appointments</span>
+      </div>
+
+      <div class="action-tile" (click)="goToMedicalRecords()">
+        <div class="tile-icon records">
+          <ion-icon name="folder-open-outline"></ion-icon>
+        </div>
+        <span class="tile-label text-body-md">Medical records</span>
+      </div>
+
+      <div class="action-tile" (click)="goToPrescription()">
+        <div class="tile-icon prescription">
+          <ion-icon name="medical-outline"></ion-icon>
+        </div>
+        <span class="tile-label text-body-md">Prescriptions</span>
+      </div>
+
+      <div class="action-tile" (click)="goToBills()">
+        <div class="tile-icon bills">
+          <ion-icon name="receipt-outline"></ion-icon>
+        </div>
+        <span class="tile-label text-body-md">Bills</span>
+      </div>
+
+      <div class="action-tile" (click)="goToAttachments()">
+        <div class="tile-icon attachments">
+          <ion-icon name="attach-outline"></ion-icon>
+        </div>
+        <span class="tile-label text-body-md">Attachments</span>
+      </div>
+
+      <!-- <div class="action-tile ai-assessment" (click)="goToAIAssessment()">
+        <div class="tile-icon ai">
+          <ion-icon name="sparkles-outline"></ion-icon>
+        </div>
+        <span class="tile-label text-body-md">AI Assessment</span>
+      </div> -->
+    </div>
+  </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!hasScheduledAppointments()">
+      <div class="empty-icon">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </div>
+      <h3 class="text-professional-title">No upcoming appointments</h3>
+      <p class="text-professional-body">Book your next appointment to stay on top of your health</p>
+      <ion-button (click)="goToNewAppointment()" size="default" fill="solid">
+        <span class="text-button-md">Book appointment</span>
+      </ion-button>
+    </div>
+  </ng-template>
+
+</ion-content>

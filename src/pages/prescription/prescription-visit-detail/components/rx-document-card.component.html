@@ -1,0 +1,17 @@
+<article class="card">
+  <ion-icon name="document-text" class="doc-icon" aria-hidden="true"></ion-icon>
+  <div class="card-content">
+    <h3 class="title">{{ doc.displayName }}</h3>
+    <div class="meta">Prescription Document</div>
+  </div>
+  <div class="actions">
+    <ion-button size="small" fill="solid" class="btn-primary" (click)="onView($event)">
+      <ion-icon name="eye-outline" slot="start"></ion-icon>
+      View
+    </ion-button>
+    <ion-button size="small" fill="outline" (click)="onDownload($event)">
+      <ion-icon name="download-outline" slot="start"></ion-icon>
+      Download
+    </ion-button>
+  </div>
+</article>

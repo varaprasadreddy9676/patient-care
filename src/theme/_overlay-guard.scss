@@ -1,0 +1,545 @@
+/**
+ * Overlay Guard Utilities
+ * ==========================
+ * Protection and best practices for modals, popovers, and overlays on iOS.
+ *
+ * KEY CONCEPTS:
+ * 1. Ionic overlays (ModalController, PopoverController, ActionSheetController)
+ *    automatically render in a portal, avoiding transform stacking issues.
+ * 2. Custom overlays (position: fixed) need careful handling.
+ * 3. Transform on ancestors can break overlay positioning on iOS.
+ */
+
+// ============================================================================
+// Modal Overlay Styles (for Ionic modals)
+// ============================================================================
+
+// Standard modal backdrop (iOS-safe)
+.modal-backdrop-safe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  .ios & {
+    // iOS-specific backdrop adjustments
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+}
+
+// Modal container (respects safe-area)
+.modal-container-safe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  pointer-events: none; // Allow clicks through to backdrop
+
+  > * {
+    pointer-events: auto; // Re-enable clicks on modal content
+  }
+
+  .ios & {
+    // Respect safe-area on iOS
+    padding: var(--safe-area-top) var(--safe-area-right) var(--safe-area-bottom) var(--safe-area-left);
+  }
+
+  // Landscape notch support
+  @media (orientation: landscape) {
+    .ios & {
+      padding-left: var(--safe-area-left);
+      padding-right: var(--safe-area-right);
+    }
+  }
+}
+
+// Full-screen modal (like ion-modal with fullscreen)
+.modal-fullscreen-safe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1001;
+  background: var(--ion-background-color, #fff);
+  display: flex;
+  flex-direction: column;
+
+  .ios & {
+    // Add safe-area padding to content
+    padding-top: var(--safe-area-top);
+    padding-bottom: var(--safe-area-bottom);
+  }
+}
+
+// ============================================================================
+// Bottom Sheet Styles (iOS-safe)
+// ============================================================================
+
+.bottom-sheet-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: var(--ion-background-color, #fff);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+
+  .ios & {
+    // Respect home indicator
+    padding-bottom: var(--safe-area-bottom);
+    max-height: calc(90vh - var(--safe-area-bottom));
+  }
+}
+
+// Bottom sheet handle (drag indicator)
+.bottom-sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  margin: 12px auto 8px;
+  flex-shrink: 0;
+}
+
+// Bottom sheet content (scrollable area)
+.bottom-sheet-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+
+  .ios & {
+    // Prevent overscroll bounce from dismissing sheet
+    overscroll-behavior: contain;
+  }
+}
+
+// Bottom sheet actions (buttons at bottom)
+.bottom-sheet-actions {
+  padding: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+
+  .ios & {
+    // Already accounted for in container padding
+  }
+}
+
+// ============================================================================
+// Popover Styles (iOS-safe)
+// ============================================================================
+
+.popover-container-safe {
+  position: fixed;
+  z-index: 1001;
+  background: var(--ion-background-color, #fff);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  .ios & {
+    // iOS-specific styling
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+  }
+}
+
+// Popover arrow (triangle pointer)
+.popover-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+
+  &.arrow-top {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent var(--ion-background-color, #fff) transparent;
+  }
+
+  &.arrow-bottom {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0 8px;
+    border-color: var(--ion-background-color, #fff) transparent transparent transparent;
+  }
+
+  &.arrow-left {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 8px 8px 8px 0;
+    border-color: transparent var(--ion-background-color, #fff) transparent transparent;
+  }
+
+  &.arrow-right {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 8px 0 8px 8px;
+    border-color: transparent transparent transparent var(--ion-background-color, #fff);
+  }
+}
+
+// ============================================================================
+// Action Sheet Styles (iOS-native style)
+// ============================================================================
+
+.action-sheet-ios {
+  position: fixed;
+  bottom: 0;
+  left: 8px;
+  right: 8px;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .ios & {
+    bottom: calc(8px + var(--safe-area-bottom));
+  }
+
+  // Landscape support - account for side notches
+  @media (orientation: landscape) {
+    .ios & {
+      left: calc(8px + var(--safe-area-left));
+      right: calc(8px + var(--safe-area-right));
+    }
+  }
+}
+
+.action-sheet-button-group {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.action-sheet-button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ion-color-primary);
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  &.destructive {
+    color: var(--ion-color-danger, #d32f2f);
+    font-weight: 600;
+  }
+
+  &.cancel {
+    font-weight: 600;
+  }
+}
+
+// ============================================================================
+// Toast Styles (iOS-safe)
+// ============================================================================
+
+.toast-container {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  z-index: 1002;
+  pointer-events: none;
+
+  &.toast-top {
+    top: 16px;
+
+    .ios & {
+      top: calc(16px + var(--safe-area-top));
+    }
+  }
+
+  &.toast-bottom {
+    bottom: 16px;
+
+    .ios & {
+      bottom: calc(16px + var(--safe-area-bottom));
+    }
+  }
+
+  &.toast-center {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.toast-content {
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  line-height: 1.4;
+  pointer-events: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  .ios & {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+// ============================================================================
+// Transform Safety Guards
+// ============================================================================
+
+// For containers that need animation but might contain overlay triggers
+.overlay-parent-safe {
+  // Use opacity/scale instead of translate when possible
+  // Or ensure child overlays use ModalController (portal-based)
+
+  // ✓ SAFE: These don't create new stacking context for fixed children
+  transition: opacity 0.3s, box-shadow 0.3s;
+
+  // ⚠️ AVOID: These create stacking context
+  // transform: translateY(10px);
+  // will-change: transform;
+
+  // If animation is needed, apply transform to a child wrapper instead:
+  .animation-content {
+    transition: transform 0.3s;
+  }
+}
+
+// Wrapper for animations that isolate transform effects
+.transform-isolate {
+  // This element can be transformed without affecting overlays
+  // IF overlays are triggered from outside this element
+  // or use Ionic portal-based overlays
+  isolation: isolate; // Create new stacking context intentionally
+}
+
+// ============================================================================
+// Z-index Management
+// ============================================================================
+
+// Z-index scale for overlays (iOS-safe)
+:root {
+  --z-page-content: 0;
+  --z-fixed-header: 999;
+  --z-fixed-footer: 999;
+  --z-modal-backdrop: 1000;
+  --z-modal-content: 1001;
+  --z-toast: 1002;
+  --z-debug: 9999;
+}
+
+// Apply z-index scale
+.page-content {
+  z-index: var(--z-page-content);
+}
+
+.fixed-header {
+  z-index: var(--z-fixed-header);
+}
+
+.fixed-footer {
+  z-index: var(--z-fixed-footer);
+}
+
+.modal-backdrop {
+  z-index: var(--z-modal-backdrop);
+}
+
+.modal-content {
+  z-index: var(--z-modal-content);
+}
+
+.toast {
+  z-index: var(--z-toast);
+}
+
+// ============================================================================
+// Ionic Modal Customization (iOS-optimized)
+// ============================================================================
+
+// Customize Ionic modal for iOS
+ion-modal {
+  .ios & {
+    // Ensure modal respects safe-area
+    &.modal-card {
+      --height: auto;
+      --border-radius: 14px;
+      --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    &.modal-sheet {
+      --height: auto;
+      --max-height: 90%;
+      --border-radius: 14px 14px 0 0;
+    }
+  }
+}
+
+// Modal content wrapper
+ion-modal ion-content {
+  .ios & {
+    --padding-top: var(--safe-area-top);
+    --padding-bottom: var(--safe-area-bottom);
+  }
+}
+
+// ============================================================================
+// Debugging Utilities
+// ============================================================================
+
+// Highlight overlay trigger elements (for debugging transform issues)
+.debug-overlay-trigger {
+  outline: 2px dashed orange !important;
+  position: relative;
+
+  &::before {
+    content: 'Overlay Trigger';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background: orange;
+    color: white;
+    padding: 2px 6px;
+    font-size: 10px;
+    z-index: 9999;
+    pointer-events: none;
+  }
+}
+
+// Check if element has transform (for debugging stacking context issues)
+.debug-transform {
+  &[style*="transform"] {
+    outline: 3px solid red !important;
+
+    &::after {
+      content: '⚠️ Transform detected';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: red;
+      color: white;
+      padding: 4px 8px;
+      font-size: 11px;
+      z-index: 9999;
+      pointer-events: none;
+    }
+  }
+}
+
+// ============================================================================
+// USAGE EXAMPLES & BEST PRACTICES
+// ============================================================================
+
+/*
+
+// ✅ CORRECT: Using Ionic ModalController (automatically portal-based)
+import { ModalController } from '@ionic/angular';
+
+async presentModal() {
+  const modal = await this.modalController.create({
+    component: MyModalComponent,
+    cssClass: 'my-modal-class',
+    // Modal automatically renders in portal, safe from transform issues
+  });
+  return await modal.present();
+}
+
+
+// ✅ CORRECT: Custom modal with proper structure
+<div class="modal-backdrop-safe" (click)="dismiss()">
+  <div class="modal-container-safe">
+    <div class="modal-fullscreen-safe" (click)="$event.stopPropagation()">
+      <ion-header>...</ion-header>
+      <ion-content>...</ion-content>
+      <ion-footer class="safe-bottom">...</ion-footer>
+    </div>
+  </div>
+</div>
+
+
+// ✅ CORRECT: Bottom sheet with safe-area
+<div class="bottom-sheet-container">
+  <div class="bottom-sheet-handle"></div>
+  <div class="bottom-sheet-content">
+    <!-- Content here -->
+  </div>
+  <div class="bottom-sheet-actions">
+    <ion-button>Action</ion-button>
+  </div>
+</div>
+
+
+// ❌ INCORRECT: Transform on overlay parent
+<div style="transform: translateY(10px)">
+  <button (click)="openModal()">Open Modal</button>
+  <!-- Modal might be mispositioned! -->
+</div>
+
+// ✅ CORRECT: Use ModalController OR isolate transform
+<div>
+  <div class="animation-content" style="transform: translateY(10px)">
+    <button (click)="openModalViaController()">Open Modal</button>
+  </div>
+</div>
+
+
+// ✅ CORRECT: Toast with safe-area
+<div class="toast-container toast-bottom">
+  <div class="toast-content">
+    {{ message }}
+  </div>
+</div>
+
+
+// ✅ CORRECT: iOS-style action sheet
+<div class="action-sheet-ios">
+  <div class="action-sheet-button-group">
+    <button class="action-sheet-button">Option 1</button>
+    <button class="action-sheet-button">Option 2</button>
+    <button class="action-sheet-button destructive">Delete</button>
+  </div>
+  <div class="action-sheet-button-group">
+    <button class="action-sheet-button cancel">Cancel</button>
+  </div>
+</div>
+
+*/

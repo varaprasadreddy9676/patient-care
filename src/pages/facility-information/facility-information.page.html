@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar class="primaryDark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="facility-information-template" icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="titleHeader">
+      <ion-text class="titleText">{{pageTitle}}</ion-text>
+    </ion-title>
+    <ion-icon [hidden]="!showAdd" name="add-circle-outline" slot="end" (click)="addFacility()"
+      style="margin-right: 8px; zoom: 2; color: white">
+    </ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding" padding-bottom>
+  <ion-searchbar slot="fixed" class="ion-no-padding" placeholder="Search by name / area / city / pincode"
+    (ionInput)="filterFacilities($event)"></ion-searchbar>
+
+  <ion-grid class="ion-no-padding" style="margin-top: 50px">
+    <ion-row class="ion-no-padding">
+      <ion-col class="ion-no-padding" size="12" size-lg="4" size-md="6" size-sm="6" *ngFor="let facility of facilities">
+        <ion-card class="feature" class="ion-no-padding" (click)="editFacility(facility)">
+          <ion-card-content>
+            <ion-grid class="ion-no-padding header">
+              <ion-row class="ion-no-padding">
+                <ion-col size="1" class="ion-no-padding">
+                  <ion-icon name="location" class="locationIcon"></ion-icon>
+                </ion-col>
+                <ion-col size="10" offset="1">
+                  <ion-grid class="ion-no-padding header">
+                    <ion-row>
+                      <ion-col class="ion-no-padding">
+                        <strong style="font-weight: 400; color: #a9c145">
+                          {{ facility.name }}
+                        </strong>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row class="row-spacing">
+                      <ion-col class="ion-no-padding">
+                        <!-- (click)="callFacility(facility.phone)"
+                        Ph.No: {{ facility.phone }} -->
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

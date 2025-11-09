@@ -1,0 +1,303 @@
+/**
+ * MedicsCare Appointment Confirmed Page
+ * Professional appointment confirmation using the MedicsCare Theme System
+ */
+
+.appointment-confirmed {
+  --padding-top: var(--mc-spacing-2xl);
+  --padding-bottom: var(--mc-spacing-2xl);
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-xl);
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: var(--mc-spacing-2xl);
+
+    h1 {
+      font-size: var(--mc-font-heading-lg);
+      font-weight: 600;
+      color: var(--color-gray-900);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--mc-font-body-md);
+      color: var(--color-gray-600);
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+
+  // ===================================
+  // 📋 APPOINTMENT CARD
+  // ===================================
+
+  .appointment-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4) var(--spacing-5);
+    box-shadow: var(--shadow-sm);
+    animation: fadeInUp 0.4s ease-out;
+  }
+
+  // ===================================
+  // ✅ SUCCESS BANNER
+  // ===================================
+
+  .success-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-4) 0;
+    margin-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--color-gray-100);
+
+    .success-icon {
+      font-size: var(--mc-icon-size-2xl);
+      color: var(--mc-color-success-500);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--mc-color-success-600);
+      font-size: var(--mc-font-heading-md);
+      font-weight: 600;
+    }
+  }
+
+  // ===================================
+  // 📋 DETAIL ROW (Appointment ID)
+  // ===================================
+
+  .detail-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3) 0;
+    margin-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--color-gray-100);
+
+    .detail-label {
+      color: var(--color-gray-600);
+      font-size: var(--mc-font-body-md);
+    }
+
+    .detail-value {
+      color: var(--mc-text-primary);
+      font-size: var(--mc-font-body-md);
+      font-weight: 600;
+    }
+  }
+
+  // ===================================
+  // 📋 APPOINTMENT DETAILS
+  // ===================================
+
+  .appointment-details {
+    margin-bottom: var(--spacing-4);
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--spacing-3) 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+
+    &:first-child .detail-content {
+      font-weight: 600;
+      color: var(--mc-text-primary);
+    }
+  }
+
+  .detail-icon {
+    font-size: var(--mc-font-heading-md);
+    color: var(--mc-color-primary-500);
+    margin-right: var(--mc-spacing-lg);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .detail-content {
+    flex: 1;
+    line-height: 1.5;
+
+    .doctor-name {
+      font-weight: 600;
+      margin-bottom: var(--spacing-1);
+      color: var(--mc-text-primary);
+    }
+
+    .specialty {
+      color: var(--color-gray-600);
+      font-size: var(--mc-font-body-sm);
+    }
+  }
+
+  // ===================================
+  // 💳 PAYMENT SECTION
+  // ===================================
+
+  .payment-section {
+    margin-top: var(--spacing-6);
+    padding-top: var(--spacing-4);
+    border-top: 2px solid var(--color-gray-100);
+  }
+
+  .section-title {
+    font-size: var(--font-heading-sm);
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin: 0 0 var(--spacing-4) 0;
+  }
+
+  .payment-details {
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-3);
+  }
+
+  .payment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-2) 0;
+    gap: var(--spacing-4);
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+  }
+
+  .payment-label {
+    color: var(--color-gray-600);
+    font-size: var(--mc-font-body-sm);
+    flex-shrink: 0;
+  }
+
+  .payment-value {
+    color: var(--mc-text-primary);
+    font-size: var(--mc-font-body-sm);
+    text-align: right;
+    word-break: break-word;
+  }
+
+  .payment-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-3);
+    padding: var(--spacing-3);
+    background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-700));
+    border-radius: var(--radius-md);
+
+    .total-label {
+      color: var(--color-white);
+      font-size: var(--mc-font-body-md);
+      font-weight: 600;
+    }
+
+    .total-amount {
+      color: var(--color-white);
+      font-size: var(--mc-font-heading-md);
+      font-weight: 700;
+    }
+  }
+
+  // ===================================
+  // 📥 DOWNLOAD SECTION
+  // ===================================
+
+  .download-section {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: var(--spacing-3);
+
+    .download-button {
+      --color: var(--mc-color-primary-500);
+      font-weight: 500;
+
+      ion-icon {
+        color: var(--mc-color-primary-500);
+      }
+    }
+  }
+}
+
+// ===================================
+// 🎬 ANIMATIONS
+// ===================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 600px) {
+  .appointment-confirmed {
+    .container {
+      padding: 0 var(--mc-spacing-md);
+    }
+
+    .header h1 {
+      font-size: var(--mc-font-heading-md);
+    }
+
+    .header .subtitle {
+      font-size: var(--mc-font-body-sm);
+    }
+
+    .appointment-card {
+      padding: var(--spacing-3) var(--spacing-4);
+    }
+
+    .detail-item {
+      padding: var(--spacing-2) 0;
+    }
+
+    .success-banner .success-icon {
+      font-size: var(--mc-icon-size-xl);
+    }
+
+    .payment-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-1);
+    }
+
+    .payment-value {
+      text-align: left;
+    }
+
+    .payment-total {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-2);
+    }
+  }
+}

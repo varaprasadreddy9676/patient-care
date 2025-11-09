@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "273126110063",
+    "project_id": "medics-care",
+    "storage_bucket": "medics-care.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273126110063:android:b17dd08c7896f6e9deae9a",
+        "android_client_info": {
+          "package_name": "com.ubq.medicscare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273126110063-0oo4mvq5ohon43o9jdbdfakn5581qu7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB36swSwzNXOgfdrVhyEGVMkUfPMI1npQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273126110063-0oo4mvq5ohon43o9jdbdfakn5581qu7a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

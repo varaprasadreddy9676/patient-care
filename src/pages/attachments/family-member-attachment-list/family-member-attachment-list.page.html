@@ -1,0 +1,42 @@
+<ion-content class="ion-no-padding">
+
+  <ion-grid class="ion-no-padding" style="margin-right: 6%;
+  margin-left: 6%; margin-top: 1%;">
+    <ion-row class="text">
+      <ion-col>
+        <ion-text class="header-text">Select family member whose attachments you wish to see</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-no-padding" style="
+  border-bottom: 1px solid #C4C4C4;
+  cursor: pointer;
+  padding-bottom: 6px;
+  margin-top: 1.5%;
+    " *ngFor="let patient of familyMembers" (click)="navigateToPage(patient)">
+      <ion-col class="ion-no-padding" size-lg="0.5" size-xs="1">
+        <ion-icon name="person-circle-outline" class="member-icon"></ion-icon>
+      </ion-col>
+      <ion-col class="ion-no-padding" size-lg="5" size-xs="11" style="margin-top: 1%;padding-left: 5px;">
+        <ion-text class="body-text">
+          {{ patient.fullName }}</ion-text>
+      </ion-col>
+
+      <ion-col class="ion-no-padding" size-lg="2.5" size-xs="4" style="margin-top: 1%;padding-left: 5px;">
+        <ion-text class="body-text"> {{patient.dob}}</ion-text>
+      </ion-col>
+      <ion-col class="ion-no-padding" size-lg="2" size-xs="4" style="margin-top: 1%;padding-left: 5px;">
+        <ion-text class="body-text"> {{patient.gender}}</ion-text>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+  <ion-grid class="ion-no-padding" style="margin-top: 3%;">
+    <ion-row class="ion-no-padding">
+      <ion-col size="8">
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

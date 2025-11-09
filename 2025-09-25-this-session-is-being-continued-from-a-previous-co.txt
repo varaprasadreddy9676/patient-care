@@ -1,0 +1,23 @@
+╭──────────────────────────────────────────────────────────────╮
+│ ✻ Welcome to Claude Code!                                    │
+│                                                              │
+│   /help for help, /status for your current setup             │
+│                                                              │
+│   cwd: /Users/sai/Documents/ubq/medics-care/medics-care-app  │
+╰──────────────────────────────────────────────────────────────╯
+
+ Tips for getting started:
+
+  Use Claude to help with file analysis, editing, bash commands and git
+  Be as specific as you would with another engineer for the best results
+  ✔ Run /init to create a CLAUDE.md file with instructions for Claude
+⏺ Compact summary (ctrl+r to expand)
+  ⎿  Referenced file CLIENT-SIDE-LOGIC-ANALYSIS.md
+  ⎿  Referenced file src/pages/appointment/appointment-booking/appointment-booking.page.ts
+  ⎿  Read src/pages/visit-records/medical-record/medical-record.page.ts (310 lines)
+  ⎿  Read src/services/date/date.service.ts (115 lines)
+  ⎿  Read src/app/app.component.ts (216 lines)
+
+> /compact 
+  ⎿  Compacted. ctrl+r to see full summary
+

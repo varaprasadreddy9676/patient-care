@@ -1,0 +1,219 @@
+/**
+ * MedicsCare Unified Outlined Input Skin
+ * Provides a single source of truth for Ionic and native form controls.
+ */
+
+// Ionic form controls
+ion-input,
+ion-textarea,
+ion-select {
+  --background: var(--mc-input-bg);
+  --color: var(--mc-input-text);
+  --placeholder-color: var(--mc-input-placeholder);
+  --placeholder-opacity: 1;
+  --padding-start: var(--mc-input-padding-x);
+  --padding-end: var(--mc-input-padding-x);
+  --padding-top: var(--mc-input-padding-y);
+  --padding-bottom: var(--mc-input-padding-y);
+  --border-color: var(--mc-input-border);
+  --border-width: var(--mc-input-border-width);
+  --border-style: solid;
+  --border-radius: var(--mc-input-radius);
+  --highlight-color: transparent;
+  --highlight-color-focused: transparent;
+  --highlight-color-valid: transparent;
+  --highlight-color-invalid: transparent;
+  --highlight-height: 0;
+  --inner-padding-top: 0;
+  --inner-padding-bottom: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --background-focused: var(--mc-input-bg);
+
+  min-height: var(--mc-input-height);
+  min-width: 0;
+  width: 100%;
+  display: block;
+  font-size: var(--mc-font-form-input);
+  color: var(--mc-input-text);
+  background: var(--mc-input-bg);
+  border-radius: var(--mc-input-radius);
+  border: var(--mc-input-border-width) solid var(--mc-input-border);
+  background-clip: padding-box;
+  box-shadow: none;
+  transition: border-color var(--mc-transition-base),
+              box-shadow var(--mc-transition-base),
+              background-color var(--mc-transition-base),
+              color var(--mc-transition-base);
+}
+
+ion-input::part(container),
+ion-textarea::part(container),
+ion-select::part(container) {
+  background: var(--mc-input-bg);
+  border: var(--mc-input-border-width) solid var(--mc-input-border);
+  border-radius: var(--mc-input-radius);
+  padding: 0;
+  box-shadow: none;
+}
+
+ion-input::part(native),
+ion-textarea::part(native) {
+  color: var(--mc-input-text);
+  caret-color: var(--mc-input-caret-color);
+  line-height: 1.45;
+  outline: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: none;
+}
+
+ion-select::part(text),
+ion-select::part(placeholder) {
+  color: var(--mc-input-text);
+  line-height: 1.4;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+}
+
+ion-select::part(icon) {
+  color: var(--mc-input-placeholder);
+  opacity: 0.8;
+  transition: color var(--mc-transition-base);
+}
+
+ion-select.ion-focused::part(icon) {
+  color: var(--mc-input-focus-border);
+}
+
+ion-input.ion-focused,
+ion-input:focus-within,
+ion-textarea.ion-focused,
+ion-textarea:focus-within,
+ion-select.ion-focused {
+  --border-color: var(--mc-input-focus-border);
+  border-color: var(--mc-input-focus-border);
+  box-shadow: 0 0 0 var(--mc-input-focus-ring-size) var(--mc-input-focus-ring-color);
+}
+
+ion-input.ion-invalid,
+ion-textarea.ion-invalid,
+ion-select.ion-invalid {
+  --border-color: var(--mc-input-invalid-border);
+  border-color: var(--mc-input-invalid-border);
+}
+
+ion-input.ion-invalid.ion-focused,
+ion-input.ion-invalid:focus-within,
+ion-textarea.ion-invalid.ion-focused,
+ion-textarea.ion-invalid:focus-within,
+ion-select.ion-invalid.ion-focused {
+  box-shadow: 0 0 0 var(--mc-input-focus-ring-size) var(--mc-input-invalid-ring-color);
+}
+
+ion-input[disabled],
+ion-input.ion-disabled,
+ion-textarea[disabled],
+ion-textarea.ion-disabled,
+ion-select[disabled],
+ion-select.ion-disabled {
+  --color: var(--mc-input-text);
+  --placeholder-opacity: 0.6;
+  --border-color: var(--mc-input-border);
+  --background: var(--mc-input-bg);
+  border-color: var(--mc-input-border);
+  opacity: var(--mc-input-disabled-opacity);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+// Native form controls (exclude Ionic's shadow-native inputs)
+:where(input):is([type="text"],
+                 [type="email"],
+                 [type="password"],
+                 [type="number"],
+                 [type="tel"],
+                 [type="url"],
+                 [type="search"],
+                 [type="date"],
+                 [type="time"],
+                 [type="month"],
+                 [type="week"],
+                 [type="datetime-local"]):not(.native-input):not(.sc-ion-input-ios):not(.sc-ion-input-md),
+:where(textarea):not(.native-textarea):not(.sc-ion-textarea-ios):not(.sc-ion-textarea-md),
+:where(select):not(.native-input):not(.sc-ion-select-ios):not(.sc-ion-select-md) {
+  background: var(--mc-input-bg);
+  color: var(--mc-input-text);
+  border: var(--mc-input-border-width) solid var(--mc-input-border);
+  border-radius: var(--mc-input-radius);
+  padding: var(--mc-input-padding-y) var(--mc-input-padding-x);
+  min-height: var(--mc-input-height);
+  font-size: var(--mc-font-form-input);
+  font-weight: 500;
+  line-height: 1.4;
+  caret-color: var(--mc-input-caret-color);
+  box-shadow: none;
+  transition: border-color var(--mc-transition-base),
+              box-shadow var(--mc-transition-base),
+              background-color var(--mc-transition-base),
+              color var(--mc-transition-base);
+}
+
+:where(textarea):not(.native-textarea):not(.sc-ion-textarea-ios):not(.sc-ion-textarea-md) {
+  min-height: calc(var(--mc-input-height) + 32px);
+  resize: vertical;
+}
+
+:where(select):not(.native-input):not(.sc-ion-select-ios):not(.sc-ion-select-md) {
+  padding-right: calc(var(--mc-input-padding-x) + 1.5rem);
+  background-image: none;
+  appearance: none;
+}
+
+:where(input):not(.native-input):not(.sc-ion-input-ios):not(.sc-ion-input-md)::placeholder,
+:where(textarea):not(.native-textarea):not(.sc-ion-textarea-ios):not(.sc-ion-textarea-md)::placeholder {
+  color: var(--mc-input-placeholder);
+  opacity: 1;
+}
+
+:where(input):not(.native-input):not(.sc-ion-input-ios):not(.sc-ion-input-md):focus,
+:where(textarea):not(.native-textarea):not(.sc-ion-textarea-ios):not(.sc-ion-textarea-md):focus,
+:where(select):not(.native-input):not(.sc-ion-select-ios):not(.sc-ion-select-md):focus {
+  border-color: var(--mc-input-focus-border);
+  box-shadow: none;
+  outline: none;
+}
+
+:where(input):not(.native-input):not(.sc-ion-input-ios):not(.sc-ion-input-md):disabled,
+:where(textarea):not(.native-textarea):not(.sc-ion-textarea-ios):not(.sc-ion-textarea-md):disabled,
+:where(select):not(.native-input):not(.sc-ion-select-ios):not(.sc-ion-select-md):disabled {
+  opacity: var(--mc-input-disabled-opacity);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+:where(input):not(.native-input):not(.sc-ion-input-ios):not(.sc-ion-input-md):invalid,
+:where(textarea):not(.native-textarea):not(.sc-ion-textarea-ios):not(.sc-ion-textarea-md):invalid,
+:where(select):not(.native-input):not(.sc-ion-select-ios):not(.sc-ion-select-md):invalid {
+  border-color: var(--mc-input-invalid-border);
+}
+
+:where(input):not(.native-input):not(.sc-ion-input-ios):not(.sc-ion-input-md):focus:invalid,
+:where(textarea):not(.native-textarea):not(.sc-ion-textarea-ios):not(.sc-ion-textarea-md):focus:invalid,
+:where(select):not(.native-input):not(.sc-ion-select-ios):not(.sc-ion-select-md):focus:invalid {
+  box-shadow: none;
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --mc-input-focus-ring-size: 4px;
+    --mc-input-focus-ring-color: var(--mc-color-primary-400);
+    --mc-input-invalid-ring-color: var(--mc-color-error-400);
+  }
+}

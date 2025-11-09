@@ -1,0 +1,43 @@
+.display-full-width {
+  width: 100%;
+  padding-top: 3%;
+}
+
+small {
+  position: relative;
+  margin: auto;
+}
+
+.button-size {
+  width: 180px;
+  margin-bottom: 22px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+.radio-button {
+  padding: 0.5%;
+
+  padding-top: 5%;
+  margin-right: 3%;
+}
+ion-avatar {
+  width: 120px;
+  height: 120px;
+  margin: auto;
+}
+.profile-icon {
+  color: #cccccc;
+  width: 120px;
+  height: 120px;
+}
+
+.delete-facility-alert {
+  .alert-message {
+    color: #000000 !important;
+    font-weight: 500;
+  }
+}

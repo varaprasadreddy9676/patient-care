@@ -1,0 +1,232 @@
+// Loading Container
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--ion-color-medium);
+
+  p {
+    margin-top: 16px;
+  }
+}
+
+// Messages Container
+.messages-container {
+  padding: 16px;
+  padding-bottom: 80px; // Space for input
+}
+
+// Load More Container
+.load-more-container {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+// Message Wrapper
+.message-wrapper {
+  margin-bottom: 16px;
+}
+
+// System Message
+.system-message {
+  text-align: center;
+  margin: 8px 0;
+
+  ion-chip {
+    font-size: 12px;
+  }
+}
+
+// Base Message Styles
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+  margin-bottom: 8px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+// User Message (Right-aligned, blue)
+.user-message {
+  align-self: flex-end;
+  margin-left: auto;
+
+  .message-content {
+    background-color: var(--ion-color-primary);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 18px 18px 4px 18px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  .message-time {
+    font-size: 11px;
+    color: var(--ion-color-medium);
+    text-align: right;
+    margin-top: 4px;
+    padding-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+
+    ion-icon {
+      font-size: 14px;
+    }
+  }
+
+  &.pending {
+    opacity: 0.7;
+  }
+
+  &.error {
+    .message-content {
+      background-color: var(--ion-color-danger);
+    }
+  }
+}
+
+// AI Message (Left-aligned, gray)
+.ai-message {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  max-width: 85%;
+
+  .ai-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--ion-color-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 20px;
+      color: var(--ion-color-primary);
+    }
+  }
+
+  .message-bubble {
+    flex: 1;
+
+    .message-content {
+      background-color: var(--ion-color-light);
+      color: var(--ion-text-color);
+      padding: 12px 16px;
+      border-radius: 18px 18px 18px 4px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .message-time {
+      font-size: 11px;
+      color: var(--ion-color-medium);
+      margin-top: 4px;
+      padding-left: 4px;
+    }
+
+    &.typing {
+      .message-content {
+        padding: 16px 20px;
+      }
+    }
+  }
+}
+
+// Typing Indicator Animation
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--ion-color-medium);
+    animation: typing 1.4s infinite;
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+}
+
+// Fade In Animation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Input Footer Styling
+ion-footer {
+  ion-toolbar {
+    --background: var(--ion-background-color);
+    --border-color: var(--ion-color-light);
+
+    ion-item {
+      --background: transparent;
+      --padding-start: 8px;
+      --padding-end: 8px;
+      --inner-padding-end: 0;
+
+      ion-textarea {
+        --padding-start: 12px;
+        --padding-end: 8px;
+        --padding-top: 8px;
+        --padding-bottom: 8px;
+        font-size: 15px;
+      }
+
+      ion-button {
+        --padding-start: 8px;
+        --padding-end: 8px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// Dark Mode Support
+@media (prefers-color-scheme: dark) {
+  .ai-message {
+    .message-bubble {
+      .message-content {
+        background-color: var(--ion-color-step-150);
+      }
+    }
+  }
+}

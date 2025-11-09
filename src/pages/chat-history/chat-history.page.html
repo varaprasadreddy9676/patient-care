@@ -1,0 +1,169 @@
+<ion-content class="chat-history-page">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>AI Health Assistant</h1>
+      <p class="subtitle">View your conversations and start new chats</p>
+    </header>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p class="loading-text">Loading your chats...</p>
+    </div>
+
+    <!-- Main Content (when not loading) -->
+    <div *ngIf="!isLoading">
+      <!-- Quick Actions Section -->
+      <div class="quick-actions-section">
+        <h3 class="section-title">Start New Chat</h3>
+        <div class="actions-grid">
+          <!-- General Chat -->
+          <div class="action-card" (click)="startNewChat('GENERAL')">
+            <div class="action-icon general-icon">
+              <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+            </div>
+            <div class="action-content">
+              <div class="action-title">General Health</div>
+              <div class="action-subtitle">Ask any health question</div>
+            </div>
+            <ion-icon name="chevron-forward-outline" class="action-arrow"></ion-icon>
+          </div>
+
+          <!-- Visit Chat -->
+          <div class="action-card" (click)="navigateToContext('VISIT')">
+            <div class="action-icon visit-icon">
+              <ion-icon name="medical-outline"></ion-icon>
+            </div>
+            <div class="action-content">
+              <div class="action-title">Visit Chat</div>
+              <div class="action-subtitle">Ask about a visit</div>
+            </div>
+            <ion-icon name="chevron-forward-outline" class="action-arrow"></ion-icon>
+          </div>
+
+          <!-- Appointment Chat -->
+          <div class="action-card" (click)="navigateToContext('APPOINTMENT')">
+            <div class="action-icon appointment-icon">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+            <div class="action-content">
+              <div class="action-title">Appointment Chat</div>
+              <div class="action-subtitle">Ask about appointments</div>
+            </div>
+            <ion-icon name="chevron-forward-outline" class="action-arrow"></ion-icon>
+          </div>
+
+          <!-- Prescription Chat -->
+          <div class="action-card" (click)="navigateToContext('PRESCRIPTION')">
+            <div class="action-icon prescription-icon">
+              <ion-icon name="medkit-outline"></ion-icon>
+            </div>
+            <div class="action-content">
+              <div class="action-title">Prescription Chat</div>
+              <div class="action-subtitle">Ask about medications</div>
+            </div>
+            <ion-icon name="chevron-forward-outline" class="action-arrow"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Chats Section -->
+      <div class="recent-chats-section" *ngIf="activeSessions.length > 0">
+        <div class="section-header">
+          <h3 class="section-title">Recent Conversations</h3>
+          <ion-button fill="clear" size="small" (click)="toggleViewMode()">
+            <span class="text-button-sm">
+              {{ showArchived ? 'Show Active' : 'Show Archived' }}
+            </span>
+          </ion-button>
+        </div>
+
+        <!-- Active Chats List -->
+        <div class="chats-list" *ngIf="!showArchived">
+          <div
+            class="chat-card"
+            *ngFor="let session of activeSessions"
+            (click)="openChat(session)">
+            <div class="chat-icon" [class]="getContextClass(session.contextType)">
+              <ion-icon [name]="getContextIcon(session.contextType)"></ion-icon>
+            </div>
+            <div class="chat-content">
+              <div class="chat-title">{{ session.title }}</div>
+              <div class="chat-meta">
+                <span class="chat-type">{{ getContextLabel(session.contextType) }}</span>
+                <span class="chat-dot">•</span>
+                <span class="chat-count">{{ session.messageCount }} messages</span>
+                <span class="chat-dot">•</span>
+                <span class="chat-time">{{ getRelativeTime(session.lastMessageAt) }}</span>
+              </div>
+            </div>
+            <ion-button
+              fill="clear"
+              size="small"
+              class="chat-menu-button"
+              (click)="openChatMenu($event, session)">
+              <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+
+        <!-- Archived Chats List -->
+        <div class="chats-list" *ngIf="showArchived">
+          <div
+            class="chat-card archived"
+            *ngFor="let session of archivedSessions"
+            (click)="openChat(session)">
+            <div class="chat-icon archived-icon">
+              <ion-icon [name]="getContextIcon(session.contextType)"></ion-icon>
+            </div>
+            <div class="chat-content">
+              <div class="chat-title">{{ session.title }}</div>
+              <div class="chat-meta">
+                <span class="chat-type">{{ getContextLabel(session.contextType) }}</span>
+                <span class="chat-dot">•</span>
+                <span class="chat-count">{{ session.messageCount }} messages</span>
+                <span class="chat-dot">•</span>
+                <span class="chat-time">Archived</span>
+              </div>
+            </div>
+            <ion-button
+              fill="clear"
+              size="small"
+              class="chat-menu-button"
+              (click)="openChatMenu($event, session)">
+              <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="activeSessions.length === 0 && !isLoading">
+        <ion-icon name="chatbubble-ellipses-outline" class="empty-icon"></ion-icon>
+        <h3 class="empty-title">No conversations yet</h3>
+        <p class="empty-text">
+          Start a chat by selecting one of the options above or ask a general health question.
+        </p>
+        <ion-button expand="block" (click)="startNewChat('GENERAL')" class="empty-cta">
+          <ion-icon slot="start" name="add-outline"></ion-icon>
+          Start General Chat
+        </ion-button>
+      </div>
+
+      <!-- Info Card -->
+      <div class="info-card">
+        <div class="info-icon">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </div>
+        <div class="info-content">
+          <div class="info-title">About AI Assistant</div>
+          <p class="info-text">
+            Your conversations are encrypted and secure. The AI assistant can help you understand
+            your medical records, prepare for appointments, and answer general health questions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

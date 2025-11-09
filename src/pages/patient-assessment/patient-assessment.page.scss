@@ -1,0 +1,628 @@
+ion-content {
+  --background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+}
+
+// Patient Info Container
+.patient-info-container {
+  padding: 0 12px;
+  margin-bottom: 16px;
+}
+
+.patient-card {
+  margin: 0;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+
+  ion-card-content {
+    padding: 20px;
+  }
+}
+
+.patient-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.patient-avatar {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+
+  ion-icon {
+    font-size: 36px;
+    color: white;
+  }
+}
+
+.patient-details {
+  flex: 1;
+  min-width: 0;
+
+  .patient-name {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.3;
+  }
+
+  .patient-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 8px;
+
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 500;
+
+      ion-icon {
+        font-size: 16px;
+        color: #667eea;
+      }
+    }
+  }
+
+  .hospital-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-size: 14px;
+    color: #475569;
+    font-weight: 500;
+
+    ion-icon {
+      font-size: 18px;
+      color: #764ba2;
+    }
+  }
+}
+
+// Loading Card
+.loading-card {
+  margin: 0;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+}
+
+.loading-patient-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  gap: 12px;
+
+  ion-spinner {
+    width: 32px;
+    height: 32px;
+    --color: #667eea;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+  }
+}
+
+// Section Titles
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+
+  ion-icon {
+    font-size: 22px;
+    color: #6366f1;
+  }
+}
+
+// Conversation History (Modern Conversational Style)
+.conversation-history {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 100px; // Space for fixed input
+  padding: 20px 12px;
+}
+
+.conversation-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  display: flex;
+  animation: messageSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom;
+
+  .message-content {
+    max-width: 80%;
+    position: relative;
+  }
+
+  .message-text {
+    padding: 14px 18px;
+    border-radius: 20px;
+    line-height: 1.6;
+    font-size: 15px;
+    word-wrap: break-word;
+    position: relative;
+    backdrop-filter: blur(10px);
+  }
+}
+
+// User message (question) - Modern gradient style
+.user-message {
+  justify-content: flex-end;
+
+  .message-content {
+    margin-left: auto;
+  }
+
+  .message-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    border-radius: 20px 20px 4px 20px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.35);
+    font-weight: 500;
+    letter-spacing: 0.2px;
+
+  }
+}
+
+// AI message (response) - Modern glass morphism style
+.ai-message {
+  justify-content: flex-start;
+
+  .message-content {
+    margin-right: auto;
+  }
+
+  .message-text {
+    background: rgba(255, 255, 255, 0.95);
+    color: #2d3748;
+    border-radius: 20px 20px 20px 4px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    position: relative;
+
+    // Styling for AI response content
+    ::ng-deep {
+      p {
+        margin: 10px 0;
+        color: #374151;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      h1, h2, h3, h4 {
+        margin: 14px 0 10px 0;
+        color: #1f2937;
+        font-weight: 700;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      h1 { font-size: 18px; }
+      h2 { font-size: 16px; }
+      h3 { font-size: 15px; }
+      h4 { font-size: 14px; }
+
+      ul, ol {
+        margin: 10px 0;
+        padding-left: 24px;
+      }
+
+      li {
+        margin: 6px 0;
+        color: #4b5563;
+      }
+
+      strong {
+        font-weight: 700;
+        color: #1f2937;
+      }
+
+      code {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        padding: 3px 8px;
+        border-radius: 6px;
+        font-size: 0.9em;
+        color: #6366f1;
+        border: 1px solid #e5e7eb;
+      }
+    }
+  }
+}
+
+@keyframes messageSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Questions Section
+.questions-section {
+  margin-bottom: 24px;
+}
+
+.question-chips {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.question-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: white;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  ion-icon {
+    font-size: 20px;
+    color: #6366f1;
+    flex-shrink: 0;
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    line-height: 1.4;
+  }
+
+  &:hover {
+    border-color: #6366f1;
+    background: #f9fafb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.selected {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    border-color: #6366f1;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+
+    ion-icon {
+      color: white;
+    }
+
+    span {
+      color: white;
+      font-weight: 600;
+    }
+  }
+}
+
+// Modern Input Container (Fixed at bottom)
+.input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 16px 20px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+
+  .chat-input {
+    flex: 1;
+    --mc-input-border-width: 2px;
+    --mc-input-border: #e5e7eb;
+    --mc-input-radius: 24px;
+    --mc-input-padding-y: 10px;
+    --mc-input-padding-x: 18px;
+    --mc-input-bg: #f9fafb;
+    --mc-input-text: #1f2937;
+    --mc-input-placeholder: #9ca3af;
+    --mc-input-focus-border: #667eea;
+    --mc-input-focus-ring-color: rgba(102, 126, 234, 0.24);
+    font-size: 15px;
+    min-height: 44px;
+    max-height: 120px;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &::part(native) {
+      padding: 0;
+    }
+
+    &[disabled] {
+      opacity: 0.5;
+      background: #f3f4f6;
+    }
+  }
+
+  .send-button {
+    --border-radius: 50%;
+    --padding-start: 0;
+    --padding-end: 0;
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    flex-shrink: 0;
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --background-hover: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+    --background-activated: linear-gradient(135deg, #4a5bbd 0%, #5e377d 100%);
+    --box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      --box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.95);
+    }
+
+    &[disabled] {
+      --background: #d1d5db;
+      --box-shadow: none;
+      opacity: 0.6;
+      transform: none;
+    }
+
+    ion-icon {
+      font-size: 24px;
+      color: white;
+    }
+
+    ion-spinner {
+      width: 22px;
+      height: 22px;
+      --color: white;
+    }
+  }
+}
+
+
+// Response Card
+.response-card {
+  margin: 16px 0;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background: white;
+  border: 1px solid #e5e7eb;
+
+  ion-card-header {
+    padding: 20px 20px 12px 20px;
+    border-bottom: 2px solid #f1f5f9;
+
+    ion-card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e293b;
+
+      ion-icon {
+        font-size: 28px;
+        color: #6366f1;
+      }
+    }
+  }
+
+  ion-card-content {
+    padding: 20px;
+  }
+
+  .assessment-response {
+    line-height: 1.7;
+    color: #334155;
+    font-size: 15px;
+
+    ::ng-deep {
+      p {
+        margin: 12px 0;
+      }
+
+      h1, h2, h3, h4 {
+        margin: 20px 0 12px 0;
+        color: #1e293b;
+        font-weight: 700;
+      }
+
+      h1 { font-size: 24px; }
+      h2 { font-size: 20px; }
+      h3 { font-size: 18px; }
+      h4 { font-size: 16px; }
+
+      ul, ol {
+        margin: 12px 0;
+        padding-left: 28px;
+      }
+
+      li {
+        margin: 6px 0;
+        line-height: 1.6;
+      }
+
+      strong {
+        font-weight: 700;
+        color: #1e293b;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+        th, td {
+          border: 1px solid #e2e8f0;
+          padding: 12px;
+          text-align: left;
+        }
+
+        th {
+          background: linear-gradient(135deg, #f8f9ff 0%, #f1f5f9 100%);
+          font-weight: 700;
+          color: #1e293b;
+        }
+
+        tr:hover {
+          background: #f8fafc;
+        }
+      }
+
+      code {
+        background: #f1f5f9;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: #6366f1;
+      }
+    }
+  }
+}
+
+// Info Note
+.info-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  margin: 16px 12px 120px 12px; // Extra bottom margin for fixed input
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4338ca;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+  backdrop-filter: blur(10px);
+
+  ion-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #6366f1;
+  }
+}
+
+// Responsive Design
+@media (min-width: 768px) {
+  .patient-info-container,
+  .conversation-history,
+  .info-note {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .input-container {
+    max-width: 900px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .patient-card {
+    ion-card-content {
+      padding: 28px;
+    }
+  }
+
+  .patient-avatar {
+    width: 80px;
+    height: 80px;
+
+    ion-icon {
+      font-size: 44px;
+    }
+  }
+
+  .patient-name {
+    font-size: 24px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .question-chip {
+    padding: 12px 14px;
+
+    span {
+      font-size: 13px;
+    }
+  }
+
+  .patient-avatar {
+    width: 56px;
+    height: 56px;
+
+    ion-icon {
+      font-size: 32px;
+    }
+  }
+}
+
+// Dark Mode Support - Disabled (Always use light mode)
+// @media (prefers-color-scheme: dark) {
+//   ... dark mode styles removed for consistent light theme
+// }

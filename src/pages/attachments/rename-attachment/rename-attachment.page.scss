@@ -1,0 +1,463 @@
+/**
+ * MedicsCare Rename Attachment Dialog
+ * Professional file renaming dialog using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 DIALOG CONTAINER
+// ===================================
+
+.rename-dialog-container {
+  min-width: 500px;
+  max-width: 600px;
+  border-radius: var(--mc-radius-lg);
+  overflow: hidden;
+  background: var(--mc-bg-primary);
+  box-shadow: var(--mc-shadow-xl);
+  animation: fadeInUp 0.3s ease-out;
+
+  @media (max-width: 768px) {
+    min-width: 90vw;
+    max-width: 95vw;
+  }
+
+  @media (max-width: 480px) {
+    min-width: 95vw;
+  }
+}
+
+// ===================================
+// 📋 DIALOG HEADER
+// ===================================
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: var(--mc-spacing-md);
+  padding: var(--mc-spacing-xl) var(--mc-spacing-2xl);
+  background: linear-gradient(135deg, var(--mc-color-primary-500) 0%, var(--mc-color-primary-600) 100%);
+  border-bottom: 1px solid var(--mc-border-primary);
+
+  .header-icon {
+    font-size: var(--mc-icon-size-xl);
+    color: var(--mc-text-inverse);
+    flex-shrink: 0;
+  }
+
+  .header-title {
+    margin: 0;
+    font-size: var(--font-heading-lg);
+    font-weight: 600;
+    color: var(--mc-text-inverse);
+    flex: 1;
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--mc-spacing-lg) var(--mc-spacing-xl);
+
+    .header-icon {
+      font-size: var(--mc-icon-size-lg);
+    }
+
+    .header-title {
+      font-size: var(--font-heading-md);
+    }
+  }
+}
+
+// ===================================
+// 📝 DIALOG CONTENT
+// ===================================
+
+.dialog-content {
+  padding: var(--mc-spacing-2xl);
+  max-height: 65vh;
+  overflow-y: auto;
+
+  @media (max-width: 480px) {
+    padding: var(--mc-spacing-xl) var(--mc-spacing-lg);
+    max-height: 60vh;
+  }
+}
+
+// ===================================
+// 🖼️ THUMBNAIL PREVIEW
+// ===================================
+
+.thumbnail-preview {
+  position: relative;
+  width: 100%;
+  max-height: 300px;
+  background: var(--mc-bg-secondary);
+  border-radius: var(--mc-radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--mc-spacing-xl);
+  box-shadow: var(--mc-shadow-md);
+  border: 2px solid var(--mc-border-secondary);
+
+  .preview-image {
+    width: 100%;
+    height: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .file-type-indicator {
+    position: absolute;
+    top: var(--mc-spacing-md);
+    right: var(--mc-spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-xs);
+    padding: var(--mc-spacing-sm) var(--mc-spacing-md);
+    background: rgba(220, 38, 38, 0.95);
+    color: var(--mc-text-inverse);
+    border-radius: var(--mc-radius-md);
+    font-size: var(--font-body-sm);
+    font-weight: 600;
+    box-shadow: var(--mc-shadow-md);
+
+    ion-icon {
+      font-size: var(--mc-icon-size-sm);
+    }
+
+    &.image-type {
+      background: rgba(16, 185, 129, 0.95);
+    }
+  }
+
+  @media (max-width: 480px) {
+    max-height: 200px;
+
+    .preview-image {
+      max-height: 200px;
+    }
+
+    .file-type-indicator {
+      font-size: var(--font-body-xs);
+      padding: var(--mc-spacing-xs) var(--mc-spacing-sm);
+
+      ion-icon {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// ===================================
+// ℹ️ CURRENT FILE INFO
+// ===================================
+
+.current-file-info {
+  padding: var(--mc-spacing-lg);
+  background: var(--mc-bg-secondary);
+  border-radius: var(--mc-radius-md);
+  margin-bottom: var(--mc-spacing-xl);
+  border: 1px solid var(--mc-border-secondary);
+
+  .info-label {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-xs);
+    margin-bottom: var(--mc-spacing-sm);
+    color: var(--mc-text-secondary);
+    font-size: var(--font-body-sm);
+    font-weight: 500;
+
+    .info-icon {
+      font-size: var(--mc-icon-size-sm);
+      color: var(--mc-color-primary-500);
+    }
+  }
+
+  .current-name {
+    font-size: var(--font-body-md);
+    font-weight: 600;
+    color: var(--mc-text-primary);
+    word-break: break-all;
+    padding-left: calc(var(--mc-icon-size-sm) + var(--mc-spacing-xs));
+  }
+}
+
+// ===================================
+// 📝 INPUT SECTION
+// ===================================
+
+.input-section {
+  margin-bottom: var(--mc-spacing-xl);
+
+  .input-label {
+    display: block;
+    margin-bottom: var(--mc-spacing-sm);
+    font-size: var(--font-body-md);
+    font-weight: 600;
+    color: var(--mc-text-primary);
+  }
+
+  .file-name-input {
+    width: 100%;
+    padding: var(--mc-spacing-md) var(--mc-spacing-lg);
+    font-size: var(--font-body-md);
+    color: var(--mc-text-primary);
+    background: var(--mc-bg-primary);
+    border: 2px solid var(--mc-border-primary);
+    border-radius: var(--mc-radius-md);
+    transition: all var(--mc-transition-base);
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border-color: var(--mc-color-primary-500);
+      box-shadow: 0 0 0 3px var(--mc-color-primary-100);
+    }
+
+    &::placeholder {
+      color: var(--mc-text-tertiary);
+    }
+
+    &:disabled {
+      background: var(--mc-bg-secondary);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  .input-hint {
+    margin-top: var(--mc-spacing-xs);
+    font-size: var(--font-body-sm);
+    color: var(--mc-text-secondary);
+    font-style: italic;
+  }
+}
+
+// ===================================
+// ⚠️ ERROR BANNER
+// ===================================
+
+.error-banner {
+  display: flex;
+  gap: var(--mc-spacing-md);
+  padding: var(--mc-spacing-lg);
+  background: var(--mc-color-error-50);
+  border: 2px solid var(--mc-color-error-200);
+  border-radius: var(--mc-radius-md);
+  margin-bottom: var(--mc-spacing-xl);
+  animation: shake 0.4s ease-out;
+
+  .error-icon {
+    font-size: var(--mc-icon-size-lg);
+    color: var(--mc-color-error-500);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .error-content {
+    flex: 1;
+
+    strong {
+      display: block;
+      margin-bottom: var(--mc-spacing-xs);
+      font-size: var(--font-body-md);
+      font-weight: 600;
+      color: var(--mc-color-error-700);
+    }
+
+    p {
+      margin: 0;
+      font-size: var(--font-body-sm);
+      color: var(--mc-color-error-600);
+      line-height: 1.5;
+
+      strong {
+        display: inline;
+        font-weight: 600;
+        color: var(--mc-color-error-700);
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--mc-spacing-md);
+    gap: var(--mc-spacing-sm);
+
+    .error-icon {
+      font-size: var(--mc-icon-size-md);
+    }
+
+    .error-content {
+      strong {
+        font-size: var(--font-body-sm);
+      }
+
+      p {
+        font-size: var(--font-body-xs);
+      }
+    }
+  }
+}
+
+// ===================================
+// 🔘 DIALOG ACTIONS
+// ===================================
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--mc-spacing-md);
+  padding: var(--mc-spacing-xl) var(--mc-spacing-2xl);
+  background: var(--mc-bg-secondary);
+  border-top: 1px solid var(--mc-border-primary);
+
+  ion-button {
+    --border-radius: var(--mc-radius-md);
+    --padding-start: var(--mc-spacing-xl);
+    --padding-end: var(--mc-spacing-xl);
+    font-weight: 600;
+    text-transform: none;
+    min-width: 120px;
+    transition: var(--mc-transition-base);
+
+    ion-icon {
+      font-size: var(--mc-icon-size-sm);
+    }
+  }
+
+  .cancel-button {
+    --border-color: var(--mc-border-primary);
+    --border-width: 2px;
+    --color: var(--mc-text-secondary);
+
+    &:hover {
+      --color: var(--mc-text-primary);
+      --border-color: var(--mc-border-focus);
+    }
+  }
+
+  .save-button {
+    --background: var(--mc-color-primary-500);
+    --background-hover: var(--mc-color-primary-600);
+    --color: var(--mc-text-inverse);
+    --box-shadow: var(--mc-shadow-sm);
+
+    &:disabled {
+      --background: var(--mc-bg-tertiary);
+      --color: var(--mc-text-tertiary);
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+    padding: var(--mc-spacing-lg) var(--mc-spacing-xl);
+
+    ion-button {
+      width: 100%;
+      --padding-start: var(--mc-spacing-lg);
+      --padding-end: var(--mc-spacing-lg);
+    }
+  }
+}
+
+// ===================================
+// 🎬 ANIMATIONS
+// ===================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+// ===================================
+// 🔧 MATERIAL DIALOG OVERRIDES
+// ===================================
+
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: var(--mc-radius-lg);
+  background: var(--mc-bg-primary);
+  box-shadow: var(--mc-shadow-xl);
+  max-height: 90vh;
+
+  // iOS-safe modal
+  .ios & {
+    max-height: calc(var(--app-height, 100vh) - 40px);
+  }
+}
+
+// ===================================
+// 🌙 DARK MODE SUPPORT
+// ===================================
+
+[data-theme="dark"] {
+  .rename-dialog-container {
+    background: var(--mc-bg-secondary);
+  }
+
+  .dialog-header {
+    background: linear-gradient(135deg, var(--mc-color-primary-700) 0%, var(--mc-color-primary-800) 100%);
+  }
+
+  .thumbnail-preview {
+    background: var(--mc-bg-tertiary);
+    border-color: var(--mc-border-primary);
+  }
+
+  .current-file-info {
+    background: var(--mc-bg-tertiary);
+    border-color: var(--mc-border-primary);
+  }
+
+  .file-name-input {
+    background: var(--mc-bg-secondary);
+    border-color: var(--mc-border-primary);
+
+    &:focus {
+      border-color: var(--mc-color-primary-400);
+      box-shadow: 0 0 0 3px var(--mc-color-primary-900);
+    }
+  }
+
+  .error-banner {
+    background: var(--mc-color-error-900);
+    border-color: var(--mc-color-error-700);
+
+    .error-content {
+      strong {
+        color: var(--mc-color-error-300);
+      }
+
+      p {
+        color: var(--mc-color-error-200);
+
+        strong {
+          color: var(--mc-color-error-100);
+        }
+      }
+    }
+  }
+
+  .dialog-actions {
+    background: var(--mc-bg-tertiary);
+  }
+}

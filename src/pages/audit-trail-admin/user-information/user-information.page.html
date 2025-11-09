@@ -1,0 +1,22 @@
+<ion-header no-border>
+  <ion-toolbar class="primaryDark">
+    <ion-title align="center">
+      <ion-text>Audit Trail Object Details</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<mat-dialog-content panelClass="custom-dialog-container vertical-scroll-bar">
+
+  <ion-row *ngFor="let userInfo of userInfo | keyvalue ">
+    <ion-col size="3"><strong>{{ toTitleCase(userInfo.key) }}</strong></ion-col>
+    <ion-col size="9">{{ userInfo.value ? userInfo.value : '-' }}</ion-col>
+  </ion-row>
+
+</mat-dialog-content>
+
+<ion-footer align="end">
+  <ion-button fill="clear" class="secondaryText" translucent [mat-dialog-close]>
+    Close
+  </ion-button>
+</ion-footer>

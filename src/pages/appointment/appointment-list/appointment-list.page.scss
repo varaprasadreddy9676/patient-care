@@ -1,0 +1,571 @@
+/**
+ * MedicsCare Appointments Page
+ * Compact professional appointment management using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 PAGE LAYOUT
+// ===================================
+
+.appointment-list-page {
+  --padding-top: var(--mc-spacing-xl);
+  --padding-bottom: 100px; // Space for FAB
+  --background: var(--mc-bg-primary);
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-lg);
+    padding-bottom: 80px; // Extra space for FAB
+
+    @media (max-width: 600px) {
+      padding: 0 var(--mc-spacing-md);
+      padding-bottom: 80px;
+    }
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: var(--mc-spacing-xl);
+    animation: fadeInUp 0.4s ease-out;
+
+    h1 {
+      font-size: var(--mc-font-heading-lg);
+      font-weight: 600;
+      color: var(--mc-text-primary);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--mc-font-body-md);
+      color: var(--mc-text-secondary);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    @media (max-width: 600px) {
+      margin-bottom: var(--mc-spacing-lg);
+
+      h1 {
+        font-size: var(--mc-font-heading-md);
+      }
+
+      .subtitle {
+        font-size: var(--mc-font-body-sm);
+      }
+    }
+  }
+
+  // ===================================
+  // 📋 MAIN CARD
+  // ===================================
+
+  .main-card {
+    background: var(--mc-bg-card);
+    border-radius: var(--mc-radius-lg);
+    padding: var(--mc-spacing-md) var(--mc-spacing-lg);
+    box-shadow: var(--mc-shadow-sm);
+    border: 1px solid var(--mc-card-border);
+    animation: fadeInUp 0.4s ease-out 0.1s both;
+
+    @media (max-width: 600px) {
+      padding: var(--mc-spacing-sm) var(--mc-spacing-md);
+    }
+  }
+
+  // ===================================
+  // 📅 APPOINTMENTS LIST
+  // ===================================
+
+  .appointments-list {
+    margin-top: var(--mc-spacing-sm);
+  }
+
+  // ===================================
+  // 📝 SECTION HEADERS
+  // ===================================
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-xs);
+    margin: var(--mc-spacing-lg) 0 var(--mc-spacing-sm) 0;
+    padding: var(--mc-spacing-xs) 0;
+    font-size: var(--mc-font-body-md);
+    font-weight: 600;
+    color: var(--mc-text-secondary);
+
+    ion-icon {
+      font-size: var(--mc-font-heading-sm);
+      color: var(--mc-color-primary-500);
+    }
+
+    &:first-child {
+      margin-top: var(--mc-spacing-sm);
+    }
+  }
+
+  // ===================================
+  // 📋 APPOINTMENT CARDS (COMPACT)
+  // ===================================
+
+  .appointment-card {
+    background: var(--mc-card-bg);
+    border: 1px solid var(--mc-card-border);
+    border-radius: var(--mc-radius-md);
+    padding: var(--mc-spacing-sm) var(--mc-spacing-md);
+    margin-bottom: var(--mc-spacing-sm);
+    cursor: pointer;
+    transition: all var(--mc-transition-base);
+    animation: fadeInUp 0.4s ease-out both;
+
+    &:hover {
+      box-shadow: var(--mc-shadow-md);
+      transform: translateY(-1px);
+      border-color: var(--mc-color-primary-300);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: var(--mc-shadow-sm);
+    }
+
+    // Today's appointments - subtle highlighting
+    &.today-highlight {
+      border-left: 3px solid var(--mc-color-primary-500);
+      background: var(--mc-color-primary-50);
+
+      .consultation-icon {
+        color: var(--mc-color-primary-600);
+      }
+    }
+
+    @media (max-width: 767px) {
+      padding: var(--mc-spacing-sm);
+    }
+  }
+
+  // ===================================
+  // 📋 CARD MAIN LAYOUT
+  // ===================================
+
+  .card-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--mc-spacing-md);
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--mc-spacing-sm);
+    }
+  }
+
+  .card-left {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-md);
+    flex: 1;
+    min-width: 0; // Prevent flex overflow
+
+    @media (max-width: 767px) {
+      gap: var(--mc-spacing-sm);
+    }
+  }
+
+  .card-right {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-sm);
+    flex-shrink: 0;
+
+    @media (max-width: 767px) {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  // ===================================
+  // 🏥 CONSULTATION ICONS
+  // ===================================
+
+  .consultation-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+
+    &.video {
+      color: var(--mc-color-primary-600);
+    }
+
+    &.in-person {
+      color: var(--mc-color-info-600);
+    }
+
+    @media (max-width: 767px) {
+      font-size: 28px;
+    }
+  }
+
+  // ===================================
+  // 📋 CARD CONTENT
+  // ===================================
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mc-spacing-xs);
+    flex: 1;
+    min-width: 0; // Prevent flex overflow
+  }
+
+  .doctor-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .doctor-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--mc-spacing-sm);
+      flex-wrap: nowrap;
+    }
+
+    .doctor-name {
+      font-size: var(--mc-font-body-md);
+      font-weight: 600;
+      color: var(--mc-text-primary);
+      line-height: 1.3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .specialty {
+      font-size: var(--mc-font-body-sm);
+      color: var(--mc-text-secondary);
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .appointment-info {
+    .date-time {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--mc-spacing-xs);
+      font-size: var(--mc-font-body-sm);
+      color: var(--mc-text-secondary);
+      font-weight: 500;
+
+      ion-icon {
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 767px) {
+        font-size: var(--mc-font-body-xs);
+      }
+    }
+  }
+
+  // ===================================
+  // 🏷️ STATUS BADGES (COMPACT)
+  // ===================================
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px var(--mc-spacing-sm);
+    border-radius: var(--mc-radius-sm);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    line-height: 1.2;
+    flex-shrink: 0;
+
+    &.status-closed,
+    &.status-completed {
+      background-color: var(--mc-color-success-100);
+      color: var(--mc-color-success-800);
+    }
+
+    &.status-scheduled,
+    &.status-upcoming {
+      background-color: var(--mc-color-primary-100);
+      color: var(--mc-color-primary-800);
+    }
+
+    &.status-started,
+    &.status-in-progress {
+      background-color: var(--mc-color-info-100);
+      color: var(--mc-color-info-800);
+    }
+
+    &.status-draft,
+    &.status-default {
+      background-color: var(--mc-color-gray-100);
+      color: var(--mc-color-gray-800);
+    }
+
+    &.status-payment-pending,
+    &.status-awaiting {
+      background-color: var(--mc-color-warning-100);
+      color: var(--mc-color-warning-800);
+    }
+
+    &.status-payment-failed,
+    &.status-cancelled {
+      background-color: var(--mc-color-error-100);
+      color: var(--mc-color-error-800);
+    }
+
+    &.status-rescheduled {
+      background-color: var(--mc-color-purple-100);
+      color: var(--mc-color-purple-800);
+    }
+
+    @media (max-width: 767px) {
+      padding: 3px var(--mc-spacing-xs);
+      font-size: 9px;
+      letter-spacing: 0.3px;
+    }
+  }
+
+  // ===================================
+  // 🎬 RECEIPT BUTTON (COMPACT)
+  // ===================================
+
+  .receipt-button {
+    --padding-start: var(--mc-spacing-xs);
+    --padding-end: var(--mc-spacing-xs);
+    --color: var(--mc-color-primary-600);
+    margin: 0;
+    width: 32px;
+    height: 32px;
+
+    ion-icon {
+      font-size: 20px;
+    }
+
+    &:hover {
+      --color: var(--mc-color-primary-700);
+    }
+
+    @media (max-width: 767px) {
+      width: 28px;
+      height: 28px;
+
+      ion-icon {
+        font-size: 18px;
+      }
+    }
+  }
+
+  // ===================================
+  // 📋 EMPTY STATE
+  // ===================================
+
+  .empty-state {
+    text-align: center;
+    padding: var(--mc-spacing-6) var(--mc-spacing-4);
+    color: var(--mc-text-tertiary);
+    animation: fadeInUp 0.5s ease-out;
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: var(--mc-spacing-lg);
+      color: var(--mc-color-gray-400);
+    }
+
+    h2 {
+      margin: 0 0 var(--mc-spacing-sm) 0;
+      font-size: var(--mc-font-heading-md);
+      color: var(--mc-text-primary);
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0 0 var(--mc-spacing-lg) 0;
+      font-size: var(--mc-font-body-md);
+      color: var(--mc-text-secondary);
+    }
+
+    .book-button {
+      max-width: 280px;
+      margin: var(--mc-spacing-lg) auto 0;
+      --border-radius: var(--mc-radius-md);
+      --padding-top: var(--mc-spacing-md);
+      --padding-bottom: var(--mc-spacing-md);
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0.3px;
+
+      ion-icon {
+        font-size: 20px;
+        margin-right: var(--mc-spacing-xs);
+      }
+    }
+  }
+
+  // ===================================
+  // ⏳ LOADING STATE
+  // ===================================
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    gap: var(--mc-spacing-md);
+    animation: fadeIn 0.5s ease-out;
+
+    ion-spinner {
+      width: 40px;
+      height: 40px;
+      --color: var(--mc-color-primary-500);
+    }
+
+    .loading-text {
+      color: var(--mc-text-secondary);
+      font-size: var(--mc-font-body-md);
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  // ===================================
+  // 📑 MATERIAL TABS STYLING
+  // ===================================
+
+  mat-tab-group {
+    --mat-tab-header-label-text-size: var(--mc-font-body-md);
+    --mat-tab-header-label-text-font-weight: var(--mc-font-weight-medium);
+    --mat-tab-header-label-text-color: var(--mc-text-secondary);
+    --mat-tab-header-active-label-text-color: var(--mc-color-primary-600);
+    --mat-tab-header-active-focus-indicator-color: var(--mc-color-primary-500);
+    --mat-tab-header-active-hover-indicator-color: var(--mc-color-primary-100);
+    --mat-tab-header-inactive-label-text-color: var(--mc-text-tertiary);
+    --mat-tab-header-inactive-hover-label-text-color: var(--mc-text-secondary);
+    --mat-tab-header-divider-color: var(--mc-border-primary);
+
+    margin: 0;
+    font-family: inherit;
+
+    .mat-mdc-tab {
+      text-transform: none;
+      letter-spacing: 0.3px;
+      min-width: 120px;
+
+      @media (max-width: 768px) {
+        min-width: 80px;
+        padding: 0 var(--mc-spacing-sm);
+      }
+    }
+
+    .mat-mdc-tab-label {
+      font-size: var(--mc-font-body-md);
+      font-weight: var(--mc-font-weight-medium);
+    }
+
+    .mat-mdc-tab-body-wrapper {
+      padding: 0;
+    }
+
+    .mat-mdc-tab-body-content {
+      padding: var(--mc-spacing-sm) 0 0;
+      overflow-x: hidden;
+    }
+  }
+
+  // ===================================
+  // ➕ FLOATING ACTION BUTTON (FIXED)
+  // ===================================
+
+  .fab-new-appointment {
+    // Use transform to move FAB up from bottom
+    // Footer is 60px + 25px spacing = 85px
+    transform: translateY(-85px);
+    z-index: 1001;
+
+    ion-fab-button {
+      --background: var(--mc-color-primary-500);
+      --background-activated: var(--mc-color-primary-700);
+      --background-hover: var(--mc-color-primary-600);
+      --background-focused: var(--mc-color-primary-600);
+      --color: white;
+      --box-shadow: 0 4px 12px rgba(0, 37, 130, 0.3);
+      width: 56px;
+      height: 56px;
+
+      ion-icon {
+        font-size: 28px;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+        transition: transform var(--mc-transition-base);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    @media (max-width: 767px) {
+      ion-fab-button {
+        width: 52px;
+        height: 52px;
+
+        ion-icon {
+          font-size: 24px;
+        }
+      }
+    }
+
+    // Additional safe area support for devices with notches
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      transform: translateY(calc(-85px - env(safe-area-inset-bottom)));
+    }
+  }
+
+  // ===================================
+  // 🎬 ANIMATIONS
+  // ===================================
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}

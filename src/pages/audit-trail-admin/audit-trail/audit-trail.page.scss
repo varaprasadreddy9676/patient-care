@@ -1,0 +1,31 @@
+.input {
+  width: 100%;
+}
+
+.button-size {
+  margin-bottom: 30px;
+}
+
+ion-content {
+  padding-bottom: 20px;
+}
+
+.mat-cell {
+  padding: 4px;
+}
+
+.mat-column-ObjectDetails {
+  width: 1% !important;
+}
+
+.mat-column-Event {
+  padding-left: 1% !important;
+}
+
+td.mat-cell:first-child {
+  border-left: 1px solid #dfdcdc;
+}
+
+td.mat-cell:last-child {
+  border-right: 1px solid #dfdcdc;
+}

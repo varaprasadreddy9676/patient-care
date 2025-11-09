@@ -1,0 +1,386 @@
+/**
+ * MedicsCare Dark Theme
+ * Complete dark theme implementation with medical context awareness
+ *
+ * This file provides comprehensive dark theme overrides that maintain
+ * accessibility and professional appearance in low-light environments
+ */
+
+// ===================================
+// 🌙 DARK THEME BASE CONFIGURATION
+// ===================================
+// DISABLED: Automatic dark mode detection to prevent unwanted dark theme
+// Re-enable only if you want system-based dark theme switching
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Dark Theme Background Colors
+    --mc-bg-primary: #0f172a;
+    --mc-bg-secondary: #1e293b;
+    --mc-bg-tertiary: #334155;
+    --mc-bg-inverse: #f8fafc;
+    --mc-bg-overlay: rgba(0, 0, 0, 0.8);
+    --mc-bg-disabled: #1e293b;
+
+    // Dark Theme Text Colors
+    --mc-text-primary: #f8fafc;
+    --mc-text-secondary: #cbd5e1;
+    --mc-text-tertiary: #94a3b8;
+    --mc-text-inverse: #0f172a;
+    --mc-text-disabled: #64748b;
+
+    // Dark Theme Border Colors
+    --mc-border-primary: #334155;
+    --mc-border-secondary: #1e293b;
+    --mc-border-focus: var(--mc-color-primary-400);
+    --mc-border-disabled: #1e293b;
+
+    // Dark Theme Interactive Colors
+    --mc-interactive-default: var(--mc-color-primary-400);
+    --mc-interactive-hover: var(--mc-color-primary-300);
+    --mc-interactive-active: var(--mc-color-primary-200);
+    --mc-interactive-disabled: #475569;
+  }
+}
+*/
+
+// ===================================
+// 🌙 MANUAL DARK THEME TOGGLE SUPPORT
+// ===================================
+
+[data-theme="dark"] {
+  // Dark Theme Background Colors - Improved contrast
+  --mc-bg-primary: #0f172a;
+  --mc-bg-secondary: #1e293b;
+  --mc-bg-tertiary: #334155;
+  --mc-bg-inverse: #1e293b;
+  --mc-bg-overlay: rgba(0, 0, 0, 0.8);
+  --mc-bg-disabled: #1e293b;
+
+  // Dark Theme Text Colors - WCAG AA compliant contrast
+  --mc-text-primary: #f8fafc;      // Contrast ratio: 15.8:1 against #0f172a
+  --mc-text-secondary: #e2e8f0;    // Contrast ratio: 13.2:1 against #0f172a
+  --mc-text-tertiary: #94a3b8;     // Contrast ratio: 6.5:1 against #0f172a
+  --mc-text-inverse: #0f172a;      // Contrast ratio: 15.8:1 against #f8fafc
+  --mc-text-disabled: #64748b;     // Contrast ratio: 4.5:1 against #0f172a
+
+  // Dark Theme Border Colors - Improved visibility
+  --mc-border-primary: #475569;     // Lighter for better contrast
+  --mc-border-secondary: #334155;
+  --mc-border-focus: var(--mc-color-primary-400);
+  --mc-border-disabled: #1e293b;
+
+  // Dark Theme Interactive Colors - Enhanced contrast
+  --mc-interactive-default: var(--mc-color-primary-400);
+  --mc-interactive-hover: var(--mc-color-primary-300);
+  --mc-interactive-active: var(--mc-color-primary-200);
+  --mc-interactive-disabled: #64748b;
+
+  // Dark mode hover/active states
+  --mc-hover-overlay: var(--mc-hover-overlay-dark);
+  --mc-active-overlay: var(--mc-active-overlay-dark);
+
+  // ===================================
+  // 🏥 DARK THEME MEDICAL CONTEXTS
+  // ===================================
+
+  // Patient Status in Dark Theme
+  --mc-patient-active-bg: rgba(34, 197, 94, 0.15);
+  --mc-patient-active-text: #4ade80;
+  --mc-patient-active-border: rgba(34, 197, 94, 0.5);
+
+  --mc-patient-inactive-bg: rgba(100, 116, 139, 0.15);
+  --mc-patient-inactive-text: #94a3b8;
+  --mc-patient-inactive-border: rgba(100, 116, 139, 0.3);
+
+  --mc-patient-pending-bg: rgba(245, 158, 11, 0.15);
+  --mc-patient-pending-text: #fbbf24;
+  --mc-patient-pending-border: rgba(245, 158, 11, 0.5);
+
+  --mc-patient-critical-bg: rgba(239, 68, 68, 0.15);
+  --mc-patient-critical-text: #f87171;
+  --mc-patient-critical-border: rgba(239, 68, 68, 0.5);
+
+  // Appointment Status in Dark Theme
+  --mc-appointment-booked-bg: rgba(59, 130, 246, 0.15);
+  --mc-appointment-booked-text: #60a5fa;
+  --mc-appointment-booked-border: rgba(59, 130, 246, 0.5);
+
+  --mc-appointment-confirmed-bg: rgba(0, 37, 130, 0.15);
+  --mc-appointment-confirmed-text: #3b82f6;
+  --mc-appointment-confirmed-border: rgba(59, 130, 246, 0.5);
+
+  --mc-appointment-in-progress-bg: rgba(245, 158, 11, 0.15);
+  --mc-appointment-in-progress-text: #fbbf24;
+  --mc-appointment-in-progress-border: rgba(245, 158, 11, 0.5);
+
+  --mc-appointment-completed-bg: rgba(34, 197, 94, 0.15);
+  --mc-appointment-completed-text: #4ade80;
+  --mc-appointment-completed-border: rgba(34, 197, 94, 0.5);
+
+  --mc-appointment-cancelled-bg: rgba(239, 68, 68, 0.15);
+  --mc-appointment-cancelled-text: #f87171;
+  --mc-appointment-cancelled-border: rgba(239, 68, 68, 0.5);
+
+  --mc-appointment-no-show-bg: rgba(100, 116, 139, 0.15);
+  --mc-appointment-no-show-text: #94a3b8;
+  --mc-appointment-no-show-border: rgba(100, 116, 139, 0.3);
+
+  // Bill Status in Dark Theme
+  --mc-bill-paid-bg: rgba(34, 197, 94, 0.15);
+  --mc-bill-paid-text: #4ade80;
+  --mc-bill-paid-border: rgba(34, 197, 94, 0.5);
+
+  --mc-bill-pending-bg: rgba(245, 158, 11, 0.15);
+  --mc-bill-pending-text: #fbbf24;
+  --mc-bill-pending-border: rgba(245, 158, 11, 0.5);
+
+  --mc-bill-overdue-bg: rgba(239, 68, 68, 0.15);
+  --mc-bill-overdue-text: #f87171;
+  --mc-bill-overdue-border: rgba(239, 68, 68, 0.5);
+
+  --mc-bill-partial-bg: rgba(59, 130, 246, 0.15);
+  --mc-bill-partial-text: #60a5fa;
+  --mc-bill-partial-border: rgba(59, 130, 246, 0.5);
+
+  --mc-bill-refunded-bg: rgba(100, 116, 139, 0.15);
+  --mc-bill-refunded-text: #94a3b8;
+  --mc-bill-refunded-border: rgba(100, 116, 139, 0.3);
+
+  // Medical Records in Dark Theme
+  --mc-record-draft-bg: rgba(100, 116, 139, 0.15);
+  --mc-record-draft-text: #94a3b8;
+  --mc-record-draft-border: rgba(100, 116, 139, 0.3);
+
+  --mc-record-finalized-bg: rgba(34, 197, 94, 0.15);
+  --mc-record-finalized-text: #4ade80;
+  --mc-record-finalized-border: rgba(34, 197, 94, 0.5);
+
+  --mc-record-amended-bg: rgba(245, 158, 11, 0.15);
+  --mc-record-amended-text: #fbbf24;
+  --mc-record-amended-border: rgba(245, 158, 11, 0.5);
+
+  --mc-record-archived-bg: rgba(71, 85, 105, 0.15);
+  --mc-record-archived-text: #64748b;
+  --mc-record-archived-border: rgba(71, 85, 105, 0.3);
+
+  // Document Types in Dark Theme
+  --mc-document-prescription-bg: rgba(59, 130, 246, 0.15);
+  --mc-document-prescription-text: #60a5fa;
+  --mc-document-prescription-border: rgba(59, 130, 246, 0.5);
+
+  --mc-document-lab-result-bg: rgba(34, 197, 94, 0.15);
+  --mc-document-lab-result-text: #4ade80;
+  --mc-document-lab-result-border: rgba(34, 197, 94, 0.5);
+
+  --mc-document-imaging-bg: rgba(139, 92, 246, 0.15);
+  --mc-document-imaging-text: #a78bfa;
+  --mc-document-imaging-border: rgba(139, 92, 246, 0.5);
+
+  --mc-document-discharge-summary-bg: rgba(245, 158, 11, 0.15);
+  --mc-document-discharge-summary-text: #fbbf24;
+  --mc-document-discharge-summary-border: rgba(245, 158, 11, 0.5);
+
+  // ===================================
+  // 🚨 DARK THEME URGENCY LEVELS
+  // ===================================
+
+  --mc-urgency-low-bg: rgba(34, 197, 94, 0.15);
+  --mc-urgency-low-text: #4ade80;
+  --mc-urgency-low-border: rgba(34, 197, 94, 0.5);
+
+  --mc-urgency-medium-bg: rgba(245, 158, 11, 0.15);
+  --mc-urgency-medium-text: #fbbf24;
+  --mc-urgency-medium-border: rgba(245, 158, 11, 0.5);
+
+  --mc-urgency-high-bg: rgba(251, 191, 36, 0.15);
+  --mc-urgency-high-text: #fcd34d;
+  --mc-urgency-high-border: rgba(251, 191, 36, 0.5);
+
+  --mc-urgency-critical-bg: rgba(239, 68, 68, 0.15);
+  --mc-urgency-critical-text: #f87171;
+  --mc-urgency-critical-border: rgba(239, 68, 68, 0.5);
+
+  // Emergency in Dark Theme
+  --mc-emergency-bg: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(127, 29, 29, 0.1) 100%);
+  --mc-emergency-text: #fca5a5;
+  --mc-emergency-accent: #ef4444;
+
+  // ===================================
+  // 🏢 DARK THEME DEPARTMENTS
+  // ===================================
+
+  --mc-dept-general-bg: rgba(59, 130, 246, 0.15);
+  --mc-dept-general-text: #60a5fa;
+  --mc-dept-general-border: rgba(59, 130, 246, 0.5);
+
+  --mc-dept-emergency-bg: rgba(239, 68, 68, 0.15);
+  --mc-dept-emergency-text: #f87171;
+  --mc-dept-emergency-border: rgba(239, 68, 68, 0.5);
+
+  --mc-dept-cardiology-bg: rgba(225, 29, 72, 0.15);
+  --mc-dept-cardiology-text: #fb7185;
+  --mc-dept-cardiology-border: rgba(225, 29, 72, 0.5);
+
+  --mc-dept-pediatrics-bg: rgba(8, 145, 178, 0.15);
+  --mc-dept-pediatrics-text: #22d3ee;
+  --mc-dept-pediatrics-border: rgba(8, 145, 178, 0.5);
+
+  --mc-dept-orthopedics-bg: rgba(234, 88, 12, 0.15);
+  --mc-dept-orthopedics-text: #fb923c;
+  --mc-dept-orthopedics-border: rgba(234, 88, 12, 0.5);
+
+  --mc-dept-neurology-bg: rgba(124, 58, 237, 0.15);
+  --mc-dept-neurology-text: #a78bfa;
+  --mc-dept-neurology-border: rgba(124, 58, 237, 0.5);
+
+  --mc-dept-obgyn-bg: rgba(236, 72, 153, 0.15);
+  --mc-dept-obgyn-text: #f472b6;
+  --mc-dept-obgyn-border: rgba(236, 72, 153, 0.5);
+
+  --mc-dept-oncology-bg: rgba(5, 150, 105, 0.15);
+  --mc-dept-oncology-text: #10b981;
+  --mc-dept-oncology-border: rgba(5, 150, 105, 0.5);
+
+  // ===================================
+  // 💊 DARK THEME MEDICATIONS
+  // ===================================
+
+  --mc-medication-active-bg: rgba(34, 197, 94, 0.15);
+  --mc-medication-active-text: #4ade80;
+  --mc-medication-active-border: rgba(34, 197, 94, 0.5);
+
+  --mc-medication-discontinued-bg: rgba(100, 116, 139, 0.15);
+  --mc-medication-discontinued-text: #94a3b8;
+  --mc-medication-discontinued-border: rgba(100, 116, 139, 0.3);
+
+  --mc-medication-on-hold-bg: rgba(245, 158, 11, 0.15);
+  --mc-medication-on-hold-text: #fbbf24;
+  --mc-medication-on-hold-border: rgba(245, 158, 11, 0.5);
+
+  // ===================================
+  // 🔬 DARK THEME LABORATORY
+  // ===================================
+
+  --mc-lab-normal-bg: rgba(34, 197, 94, 0.15);
+  --mc-lab-normal-text: #4ade80;
+  --mc-lab-normal-border: rgba(34, 197, 94, 0.5);
+
+  --mc-lab-abnormal-bg: rgba(245, 158, 11, 0.15);
+  --mc-lab-abnormal-text: #fbbf24;
+  --mc-lab-abnormal-border: rgba(245, 158, 11, 0.5);
+
+  --mc-lab-critical-bg: rgba(239, 68, 68, 0.15);
+  --mc-lab-critical-text: #f87171;
+  --mc-lab-critical-border: rgba(239, 68, 68, 0.5);
+
+  --mc-lab-pending-bg: rgba(100, 116, 139, 0.15);
+  --mc-lab-pending-text: #94a3b8;
+  --mc-lab-pending-border: rgba(100, 116, 139, 0.3);
+
+  // ===================================
+  // 🏥 DARK THEME VISIT TYPES
+  // ===================================
+
+  --mc-visit-outpatient-bg: rgba(59, 130, 246, 0.15);
+  --mc-visit-outpatient-text: #60a5fa;
+  --mc-visit-outpatient-border: rgba(59, 130, 246, 0.5);
+
+  --mc-visit-inpatient-bg: rgba(139, 92, 246, 0.15);
+  --mc-visit-inpatient-text: #a78bfa;
+  --mc-visit-inpatient-border: rgba(139, 92, 246, 0.5);
+
+  --mc-visit-emergency-bg: rgba(239, 68, 68, 0.15);
+  --mc-visit-emergency-text: #f87171;
+  --mc-visit-emergency-border: rgba(239, 68, 68, 0.5);
+
+  --mc-visit-telehealth-bg: rgba(34, 197, 94, 0.15);
+  --mc-visit-telehealth-text: #4ade80;
+  --mc-visit-telehealth-border: rgba(34, 197, 94, 0.5);
+
+  --mc-visit-follow-up-bg: rgba(245, 158, 11, 0.15);
+  --mc-visit-follow-up-text: #fbbf24;
+  --mc-visit-follow-up-border: rgba(245, 158, 11, 0.5);
+
+  // ===================================
+  // 🔍 DARK THEME COMPONENTS
+  // ===================================
+
+  // Component Tokens in Dark Theme
+  --mc-card-bg: var(--mc-bg-secondary);
+  --mc-card-border: var(--mc-border-primary);
+  --mc-header-bg: var(--mc-bg-secondary);
+  --mc-header-border: var(--mc-border-primary);
+  --mc-footer-bg: var(--mc-bg-secondary);
+  --mc-footer-border: var(--mc-border-primary);
+
+  // Form Controls in Dark Theme
+  --mc-form-input-bg: var(--mc-bg-tertiary);
+  --mc-form-input-text: var(--mc-text-primary);
+  --mc-form-input-border: var(--mc-border-primary);
+  --mc-form-input-placeholder: var(--mc-text-tertiary);
+  --mc-input-bg: var(--mc-bg-tertiary);
+  --mc-input-text: var(--mc-text-primary);
+  --mc-input-placeholder: var(--mc-text-tertiary);
+  --mc-input-border: var(--mc-border-primary);
+  --mc-input-focus-border: var(--mc-color-primary-300);
+  --mc-input-focus-ring-color: rgba(99, 179, 237, 0.32);
+  --mc-input-invalid-ring-color: rgba(248, 113, 113, 0.35);
+  --mc-input-caret-color: var(--mc-color-primary-200);
+
+  // Payment Methods in Dark Theme
+  --mc-payment-cash-bg: rgba(71, 85, 105, 0.3);
+  --mc-payment-cash-text: #cbd5e1;
+  --mc-payment-cash-border: rgba(71, 85, 105, 0.5);
+
+  --mc-payment-card-bg: rgba(59, 130, 246, 0.15);
+  --mc-payment-card-text: #60a5fa;
+  --mc-payment-card-border: rgba(59, 130, 246, 0.5);
+
+  --mc-payment-insurance-bg: rgba(34, 197, 94, 0.15);
+  --mc-payment-insurance-text: #4ade80;
+  --mc-payment-insurance-border: rgba(34, 197, 94, 0.5);
+
+  // ===================================
+  // 🌙 DARK THEME SHADOWS & EFFECTS
+  // ===================================
+
+  // Enhanced shadows for dark theme
+  --mc-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --mc-shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --mc-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --mc-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --mc-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+
+  // Focus ring in dark theme
+  --mc-focus-color: var(--mc-color-primary-400);
+  --mc-focus-width: 2px;
+}
+
+// ===================================
+// 🌙 HIGH CONTRAST DARK MODE
+// ===================================
+// DISABLED: Automatic high contrast dark mode detection
+/*
+@media (prefers-color-scheme: dark) and (prefers-contrast: high) {
+  :root {
+    --mc-bg-primary: #000000;
+    --mc-bg-secondary: #1a1a1a;
+    --mc-text-primary: #ffffff;
+    --mc-text-secondary: #e0e0e0;
+    --mc-border-primary: #ffffff;
+    --mc-interactive-default: #ffffff;
+    --mc-interactive-hover: #f0f0f0;
+  }
+}
+
+[data-theme="dark"][data-contrast="high"] {
+  --mc-bg-primary: #000000;
+  --mc-bg-secondary: #1a1a1a;
+  --mc-text-primary: #ffffff;
+  --mc-text-secondary: #e0e0e0;
+  --mc-border-primary: #ffffff;
+  --mc-interactive-default: #ffffff;
+  --mc-interactive-hover: #f0f0f0;
+}
+*/

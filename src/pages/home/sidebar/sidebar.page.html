@@ -1,0 +1,88 @@
+<ion-content>
+  <ion-img class="logo" routerLink="/home" src="assets/images/medics-care-logo.svg" alt="medics_care_logo"
+    style="cursor: pointer;">
+  </ion-img>
+
+  <ion-list lines="none">
+    <ion-menu-toggle auto-hide="false">
+      <ion-item routerLink="/home" routerLinkActive="active-item" [routerLinkActiveOptions]="{exact: true}">
+        <ion-icon src="assets/home-side_menu-icons/home.svg"></ion-icon>
+        <ion-label class="label">
+          Home
+        </ion-label>
+      </ion-item>
+
+      <ion-item routerLink="/home/appointment-list" routerLinkActive="active-item">
+        <ion-icon src="assets/home-side_menu-icons/appointments.svg"></ion-icon>
+        <ion-label class="menu-text">Appointments</ion-label>
+        <ion-badge id="notifications-badge" [hidden]="todayAppointmentsCount < 1">
+          {{ todayAppointmentsCount }}
+        </ion-badge>
+      </ion-item>
+
+      <ion-item (click)="goToAttachments()" class="clickable-item">
+        <ion-icon src="assets/home-side_menu-icons/attachment.svg"></ion-icon>
+        <ion-label class="menu-text">
+          Attachments
+        </ion-label>
+      </ion-item>
+
+      <ion-item routerLink="/home/prescription" routerLinkActive="active-item">
+        <ion-icon src="assets/home-side_menu-icons/prescriptions.svg"></ion-icon>
+        <ion-label class="menu-text">
+          Prescription
+        </ion-label>
+      </ion-item>
+
+      <ion-item 
+      (click)="goToMedicalRecords()" 
+      [class.active-item]="isRecordsActive" 
+      class="hover-effect" 
+      style="cursor: pointer;">
+      <ion-icon src="assets/home-side_menu-icons/medical_records.svg"></ion-icon>
+      <ion-label class="menu-text">
+        Medical Records
+      </ion-label>
+    </ion-item>
+
+      <ion-item routerLink="/home/bills" routerLinkActive="active-item">
+        <ion-icon src="assets/home-side_menu-icons/medical_records.svg"></ion-icon>
+        <ion-label class="menu-text">
+          Bills
+        </ion-label>
+      </ion-item>
+
+      <ion-item class="Account">
+        ACCOUNT
+      </ion-item>
+
+      <ion-item routerLink="/home/profile" routerLinkActive="active-item">
+        <ion-icon src="assets/home-side_menu-icons/profile.svg"></ion-icon>
+        <ion-label class="menu-text">
+          Profile
+        </ion-label>
+      </ion-item>
+
+      <ion-item routerLink="/home/profiles" routerLinkActive="active-item">
+        <ion-icon src="assets/home-side_menu-icons/users.svg"></ion-icon>
+        <ion-label class="menu-text">
+          Family Members
+        </ion-label>
+      </ion-item>
+
+      <ion-item routerLink="/home/service-requests" routerLinkActive="active-item">
+        <ion-icon src="assets/home-side_menu-icons/support.svg"></ion-icon>
+        <ion-label class="menu-text">
+          Support
+        </ion-label>
+      </ion-item>
+
+      <ion-item (click)="signOut()" style="cursor: pointer;">
+        <ion-icon src="assets/home-side_menu-icons/logout.svg"></ion-icon>
+        <ion-label id="logout">
+          Logout
+        </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-list>
+</ion-content>

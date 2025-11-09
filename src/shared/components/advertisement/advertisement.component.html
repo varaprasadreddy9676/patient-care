@@ -1,0 +1,41 @@
+<div
+  class="advertisement-section"
+  *ngIf="advertisements && advertisements.length > 0">
+
+  <!-- Navigation arrows for carousel (desktop) -->
+  <div class="carousel-nav nav-prev" *ngIf="advertisements.length > 1">
+    <ion-button fill="solid" (click)="previousSlide()">
+      <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="carousel-nav nav-next" *ngIf="advertisements.length > 1">
+    <ion-button fill="solid" (click)="nextSlide()">
+      <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Advertisement container -->
+  <div class="advertisement-container"
+       [style.transform]="getCarouselTransform()"
+       (mouseenter)="onMouseEnter()"
+       (mouseleave)="onMouseLeave()"
+       (touchstart)="onTouchStart($event)"
+       (touchend)="onTouchEnd($event)">
+    <div
+      class="advertisement-card"
+      *ngFor="let ad of advertisements; trackBy: trackByAdId"
+      (click)="onAdvertisementClick(ad)">
+      <img [src]="getImageSrc(ad)" [alt]="'Advertisement ' + ad.id" />
+    </div>
+  </div>
+
+  <!-- Carousel dots indicator -->
+  <div class="carousel-dots" *ngIf="advertisements.length > 1 && showDots">
+    <span
+      *ngFor="let ad of advertisements; let i = index"
+      class="dot"
+      [class.active]="i === currentAdIndex"
+      (click)="goToSlide(i)">
+    </span>
+  </div>
+</div>

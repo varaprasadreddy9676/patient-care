@@ -1,0 +1,72 @@
+/**
+ * MedicsCare Consent Form Page
+ * Professional consent form using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 PAGE LAYOUT
+// ===================================
+
+.gridd {
+  padding: var(--mc-spacing-lg) var(--mc-spacing-2xl) var(--mc-spacing-lg) var(--mc-spacing-2xl);
+  margin-top: var(--mc-spacing-xs);
+}
+
+// ===================================
+// 📝 FORM ELEMENTS
+// ===================================
+
+td {
+  padding: var(--mc-spacing-xs);
+}
+
+.bodyText {
+  font-size: var(--mc-font-body-xs);
+  padding: var(--mc-spacing-sm);
+  margin-top: 4%;
+  margin-left: var(--mc-spacing-lg);
+  margin-right: var(--mc-spacing-lg);
+}
+
+// ===================================
+// 🌐 LANGUAGE FIELD
+// ===================================
+
+.language-field {
+  margin-left: 65%;
+  margin-right: 5%;
+
+  @media (max-width: 1100px) {
+    margin-left: 0%;
+    margin-right: 0%;
+    width: 40%;
+  }
+
+  @media (max-width: 1000px) {
+    width: 30%;
+  }
+
+  @media (max-width: 850px) {
+    width: 50%;
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 1200px) {
+  .ag {
+    margin-left: 40%;
+  }
+}
+
+@media (max-width: 600px) {
+  .lang {
+    margin-left: 4%;
+  }
+}

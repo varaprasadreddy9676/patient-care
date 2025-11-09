@@ -1,0 +1,454 @@
+/**
+ * MedicsCare Theme Demo Component Styles
+ *
+ * This component uses the MedicsCare theme system to demonstrate
+ * all features and capabilities. All styles use theme variables.
+ */
+
+.theme-demo-container {
+  padding: var(--mc-spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--mc-bg-primary);
+  color: var(--mc-text-primary);
+}
+
+.demo-header {
+  text-align: center;
+  margin-bottom: var(--mc-spacing-2xl);
+  padding: var(--mc-spacing-lg);
+  background-color: var(--mc-bg-secondary);
+  border-radius: var(--mc-radius-lg);
+  border: 1px solid var(--mc-border-primary);
+
+  h2 {
+    margin-bottom: var(--mc-spacing-sm);
+    color: var(--mc-color-primary-500);
+  }
+
+  p {
+    margin: 0;
+    color: var(--mc-text-secondary);
+  }
+}
+
+.demo-section {
+  margin-bottom: var(--mc-spacing-xl);
+  padding: var(--mc-spacing-lg);
+  background-color: var(--mc-card-bg);
+  border: 1px solid var(--mc-card-border);
+  border-radius: var(--mc-card-radius);
+  box-shadow: var(--mc-card-shadow);
+
+  h3 {
+    margin: 0 0 var(--mc-spacing-md) 0;
+    color: var(--mc-text-primary);
+    border-bottom: 2px solid var(--mc-color-primary-500);
+    padding-bottom: var(--mc-spacing-sm);
+  }
+}
+
+// ===================================
+// 🎛️ CONTROL STYLES
+// ===================================
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--mc-spacing-lg);
+  margin-bottom: var(--mc-spacing-lg);
+}
+
+.medical-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--mc-spacing-lg);
+  margin-bottom: var(--mc-spacing-md);
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mc-spacing-sm);
+
+  label {
+    font-weight: 600;
+    color: var(--mc-text-secondary);
+    margin-bottom: var(--mc-spacing-xs);
+  }
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mc-spacing-sm);
+}
+
+// ===================================
+// 🔘 BUTTON STYLES (USING THEME SYSTEM)
+// ===================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mc-spacing-sm) var(--mc-spacing-md);
+  border: 1px solid transparent;
+  border-radius: var(--mc-button-radius);
+  font-size: var(--mc-font-button-sm);
+  font-weight: var(--mc-button-font-weight);
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--mc-button-transition);
+  min-height: 36px;
+  white-space: nowrap;
+
+  &:focus {
+    outline: var(--mc-focus-width) solid var(--mc-focus-color);
+    outline-offset: var(--mc-focus-offset);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.btn-sm {
+    padding: var(--mc-spacing-xs) var(--mc-spacing-sm);
+    font-size: 12px;
+    min-height: 32px;
+  }
+
+  // Primary button
+  &.btn-primary {
+    background-color: var(--mc-color-primary-500);
+    color: var(--mc-text-on-primary);
+    border-color: var(--mc-color-primary-500);
+
+    &:hover:not(:disabled) {
+      background-color: var(--mc-color-primary-600);
+      border-color: var(--mc-color-primary-600);
+      transform: translateY(-1px);
+      box-shadow: var(--mc-shadow-md);
+    }
+  }
+
+  // Secondary button
+  &.btn-secondary {
+    background-color: var(--mc-bg-primary);
+    color: var(--mc-text-primary);
+    border-color: var(--mc-border-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--mc-bg-secondary);
+      border-color: var(--mc-border-focus);
+      transform: translateY(-1px);
+      box-shadow: var(--mc-shadow-sm);
+    }
+  }
+
+  // Success button
+  &.btn-success {
+    background-color: var(--mc-color-success-500);
+    color: var(--mc-text-on-success);
+    border-color: var(--mc-color-success-500);
+
+    &:hover:not(:disabled) {
+      background-color: var(--mc-color-success-600);
+      transform: translateY(-1px);
+      box-shadow: var(--mc-shadow-md);
+    }
+  }
+
+  // Warning button
+  &.btn-warning {
+    background-color: var(--mc-color-warning-500);
+    color: var(--mc-text-on-warning);
+    border-color: var(--mc-color-warning-500);
+
+    &:hover:not(:disabled) {
+      background-color: var(--mc-color-warning-600);
+      transform: translateY(-1px);
+      box-shadow: var(--mc-shadow-md);
+    }
+  }
+
+  // Ghost button
+  &.btn-ghost {
+    background-color: transparent;
+    color: var(--mc-text-secondary);
+    border-color: var(--mc-border-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--mc-bg-secondary);
+      color: var(--mc-text-primary);
+      border-color: var(--mc-border-focus);
+    }
+  }
+
+  // Medical context buttons
+  &.btn-medical {
+    font-weight: 500;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      opacity: 0.1;
+      pointer-events: none;
+    }
+  }
+
+  // Patient status buttons
+  &.btn-patient-active::before { background-color: var(--mc-patient-active-text); }
+  &.btn-patient-inactive::before { background-color: var(--mc-patient-inactive-text); }
+  &.btn-patient-pending::before { background-color: var(--mc-patient-pending-text); }
+  &.btn-patient-critical::before { background-color: var(--mc-patient-critical-text); }
+
+  &.btn-patient-active { color: var(--mc-patient-active-text); border-color: var(--mc-patient-active-border); }
+  &.btn-patient-inactive { color: var(--mc-patient-inactive-text); border-color: var(--mc-patient-inactive-border); }
+  &.btn-patient-pending { color: var(--mc-patient-pending-text); border-color: var(--mc-patient-pending-border); }
+  &.btn-patient-critical { color: var(--mc-patient-critical-text); border-color: var(--mc-patient-critical-border); font-weight: 600; }
+
+  // Appointment status buttons
+  &.btn-appointment-booked { color: var(--mc-appointment-booked-text); border-color: var(--mc-appointment-booked-border); }
+  &.btn-appointment-confirmed { color: var(--mc-appointment-confirmed-text); border-color: var(--mc-appointment-confirmed-border); font-weight: 600; }
+  &.btn-appointment-in-progress { color: var(--mc-appointment-in-progress-text); border-color: var(--mc-appointment-in-progress-border); }
+  &.btn-appointment-completed { color: var(--mc-appointment-completed-text); border-color: var(--mc-appointment-completed-border); font-weight: 600; }
+  &.btn-appointment-cancelled { color: var(--mc-appointment-cancelled-text); border-color: var(--mc-appointment-cancelled-border); }
+  &.btn-appointment-no-show { color: var(--mc-appointment-no-show-text); border-color: var(--mc-appointment-no-show-border); }
+
+  // Bill status buttons
+  &.btn-bill-paid { color: var(--mc-bill-paid-text); border-color: var(--mc-bill-paid-border); font-weight: 600; }
+  &.btn-bill-pending { color: var(--mc-bill-pending-text); border-color: var(--mc-bill-pending-border); }
+  &.btn-bill-overdue { color: var(--mc-bill-overdue-text); border-color: var(--mc-bill-overdue-border); font-weight: 600; }
+  &.btn-bill-partial { color: var(--mc-bill-partial-text); border-color: var(--mc-bill-partial-border); }
+  &.btn-bill-refunded { color: var(--mc-bill-refunded-text); border-color: var(--mc-bill-refunded-border); }
+
+  // Urgency level buttons
+  &.btn-urgency-low { color: var(--mc-urgency-low-text); border-color: var(--mc-urgency-low-border); }
+  &.btn-urgency-medium { color: var(--mc-urgency-medium-text); border-color: var(--mc-urgency-medium-border); }
+  &.btn-urgency-high { color: var(--mc-urgency-high-text); border-color: var(--mc-urgency-high-border); font-weight: 600; }
+  &.btn-urgency-critical { color: var(--mc-urgency-critical-text); border-color: var(--mc-urgency-critical-border); font-weight: 600; }
+}
+
+// ===================================
+// 🎨 COLOR SHOWCASE
+// ===================================
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--mc-spacing-lg);
+}
+
+.color-section h4 {
+  margin: 0 0 var(--mc-spacing-md) 0;
+  color: var(--mc-text-secondary);
+}
+
+.color-samples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mc-spacing-sm);
+}
+
+.color-sample {
+  min-width: 100px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mc-radius-md);
+  border: 1px solid var(--mc-border-primary);
+  font-size: var(--mc-font-body-sm);
+  font-weight: 500;
+  color: var(--mc-text-inverse);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: transform var(--mc-transition-fast);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .color-name {
+    text-align: center;
+  }
+}
+
+// ===================================
+// 📝 TYPOGRAPHY SHOWCASE
+// ===================================
+
+.typography-samples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mc-spacing-md);
+}
+
+.typography-sample {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--mc-spacing-md);
+  border-left: 4px solid var(--mc-color-primary-500);
+  background-color: var(--mc-bg-secondary);
+  border-radius: var(--mc-radius-md);
+
+  .typography-info {
+    color: var(--mc-text-tertiary);
+    font-family: monospace;
+    font-size: var(--mc-font-body-sm);
+  }
+}
+
+// ===================================
+// 🔧 UTILITY CLASSES DEMO
+// ===================================
+
+.utility-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mc-spacing-lg);
+}
+
+.utility-row {
+  display: flex;
+  align-items: center;
+  gap: var(--mc-spacing-md);
+  flex-wrap: wrap;
+
+  > span:first-child {
+    min-width: 100px;
+    font-weight: 500;
+  }
+}
+
+.spacing-demo,
+.radius-demo,
+.shadow-demo {
+  display: flex;
+  align-items: center;
+  gap: var(--mc-spacing-sm);
+  flex-wrap: wrap;
+
+  > div {
+    text-align: center;
+    font-weight: 500;
+    font-size: var(--mc-font-body-sm);
+  }
+}
+
+// ===================================
+// 🔍 VARIABLE INSPECTOR
+// ===================================
+
+.variable-inspector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mc-spacing-sm);
+}
+
+.variable-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--mc-spacing-sm) var(--mc-spacing-md);
+  background-color: var(--mc-bg-secondary);
+  border-radius: var(--mc-radius-sm);
+  border: 1px solid var(--mc-border-primary);
+
+  > span:first-child {
+    font-weight: 500;
+    color: var(--mc-text-secondary);
+  }
+}
+
+.variable-value {
+  font-family: 'Courier New', monospace;
+  font-size: var(--mc-font-body-sm);
+  color: var(--mc-color-info-600);
+  background-color: var(--mc-color-info-50);
+  padding: 2px 6px;
+  border-radius: var(--mc-radius-sm);
+  border: 1px solid var(--mc-color-info-200);
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 768px) {
+  .theme-demo-container {
+    padding: var(--mc-spacing-md);
+  }
+
+  .controls-grid,
+  .medical-controls-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .color-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .button-group {
+    justify-content: center;
+  }
+
+  .utility-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--mc-spacing-sm);
+
+    > span:first-child {
+      min-width: auto;
+    }
+  }
+
+  .variable-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--mc-spacing-xs);
+  }
+}
+
+// ===================================
+// 🌙 DARK MODE ENHANCEMENTS
+// ===================================
+
+[data-theme="dark"] {
+  .demo-section {
+    box-shadow: var(--mc-shadow-lg);
+  }
+
+  .variable-value {
+    background-color: var(--mc-color-info-100);
+    border-color: var(--mc-color-info-300);
+  }
+}
+
+// ===================================
+// ♿ HIGH CONTRAST MODE
+// ===================================
+
+[data-contrast="high"] {
+  .btn {
+    border-width: 2px;
+    font-weight: 600;
+  }
+
+  .color-sample,
+  .typography-sample {
+    border-width: 2px;
+  }
+
+  .variable-row {
+    border-width: 2px;
+  }
+}

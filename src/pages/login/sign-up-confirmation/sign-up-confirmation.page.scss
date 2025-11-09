@@ -1,0 +1,80 @@
+mat-dialog-content {
+  padding: 24px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+
+  img {
+    height: 100px;
+  }
+
+  .dialog-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .dialog-icon {
+      margin-bottom: 16px;
+    }
+
+    .dialog-message {
+      font-size: var(--mc-font-heading-md);
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .dialog-prompt {
+      font-size: var(--mc-font-body-md);
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: center;
+      gap: 76px;
+      width: 100%;
+
+      .highlight-button {
+        min-width: 120px;
+        padding: 10px 16px;
+        font-size: var(--mc-font-button-md);
+        font-weight: 600;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: rgba(63, 81, 181, 0.1);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+      }
+
+      button[color="warn"] {
+        border: 1px solid #f44336;
+        color: #f44336;
+        border-radius: 8px;
+
+        &:hover {
+          background-color: rgba(244, 67, 54, 0.1);
+        }
+      }
+
+      button[color="primary"] {
+        background: var(--primary-main);
+        border-radius: 8px;
+        color : #fff;
+
+        &:hover {
+          background: #002582;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 520px) {
+  mat-dialog-content .dialog-container .dialog-message {
+    font-size: var(--mc-font-body-lg);
+  }
+  mat-dialog-content .dialog-container .dialog-actions .highlight-button {
+    min-width: 0;
+    font-size: var(--mc-font-button-sm);
+  }
+}

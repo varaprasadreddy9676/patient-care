@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ session?.title || 'AI Chat' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading chat...</p>
+  </div>
+
+  <!-- Messages Container -->
+  <div *ngIf="!loading" class="messages-container">
+
+    <!-- Load More Button (if has more messages) -->
+    <div *ngIf="hasMore" class="load-more-container">
+      <ion-button fill="clear" size="small" (click)="loadOlderMessages()" [disabled]="loadingOlder">
+        <ion-spinner *ngIf="loadingOlder" name="dots"></ion-spinner>
+        <span *ngIf="!loadingOlder">Load older messages</span>
+      </ion-button>
+    </div>
+
+    <!-- Messages List -->
+    <div *ngFor="let message of messages" class="message-wrapper">
+
+      <!-- System Message (Collapsed) -->
+      <div *ngIf="isSystemMessage(message)" class="system-message">
+        <ion-chip color="medium" outline="true">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <ion-label>System Context Loaded</ion-label>
+        </ion-chip>
+      </div>
+
+      <!-- User Message -->
+      <div *ngIf="isUserMessage(message)" class="message user-message" [class.pending]="message.isPending" [class.error]="message.hasError">
+        <div class="message-content">
+          {{ message.content }}
+        </div>
+        <div class="message-time">
+          {{ formatTime(message.createdAt) }}
+          <ion-icon *ngIf="message.isPending" name="time-outline"></ion-icon>
+          <ion-icon *ngIf="message.hasError" name="alert-circle" color="danger"></ion-icon>
+        </div>
+      </div>
+
+      <!-- AI Message -->
+      <div *ngIf="!isUserMessage(message) && !isSystemMessage(message)" class="message ai-message">
+        <div class="ai-avatar">
+          <ion-icon name="medical-outline"></ion-icon>
+        </div>
+        <div class="message-bubble">
+          <div class="message-content">
+            {{ message.content }}
+          </div>
+          <div class="message-time">
+            {{ formatTime(message.createdAt) }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Typing Indicator -->
+    <div *ngIf="sending" class="message ai-message">
+      <div class="ai-avatar">
+        <ion-icon name="medical-outline"></ion-icon>
+      </div>
+      <div class="message-bubble typing">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<!-- Message Input Footer -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-textarea
+        [(ngModel)]="messageText"
+        placeholder="Type your message..."
+        rows="1"
+        autoGrow="true"
+        maxlength="1000"
+        [disabled]="sending"
+        (keyup.enter)="sendMessage()"
+      ></ion-textarea>
+      <ion-button
+        slot="end"
+        fill="clear"
+        (click)="sendMessage()"
+        [disabled]="!messageText.trim() || sending"
+      >
+        <ion-icon slot="icon-only" name="send"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,683 @@
+/**
+ * MedicsCare Bill Details Page
+ * Professional bill information display using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 PAGE LAYOUT
+// ===================================
+
+.bill-details-page {
+  --padding-top: var(--mc-spacing-2xl);
+  --padding-bottom: var(--mc-spacing-2xl);
+  --offset-bottom: 0;
+  height: 100%;
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-xl) var(--mc-spacing-2xl) var(--mc-spacing-xl);
+
+    @media (max-width: 600px) {
+      padding: 0 var(--mc-spacing-md) var(--mc-spacing-2xl) var(--mc-spacing-md);
+    }
+
+    @media (max-width: 400px) {
+      padding: 0 12px var(--mc-spacing-2xl) 12px;
+    }
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: var(--mc-spacing-2xl);
+    animation: fadeInUp 0.4s ease-out;
+
+    h1 {
+      font-size: var(--font-heading-lg);
+      font-weight: 600;
+      color: var(--color-gray-900);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--font-body-md);
+      color: var(--color-gray-600);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    @media (max-width: 600px) {
+      margin-bottom: var(--mc-spacing-xl);
+
+      h1 {
+        font-size: var(--font-heading-md);
+      }
+
+      .subtitle {
+        font-size: var(--font-body-sm);
+      }
+    }
+  }
+
+  // ===================================
+  // 💳 MAIN BILL CARD
+  // ===================================
+
+  .bill-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4) var(--spacing-5);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-4);
+    animation: fadeInUp 0.4s ease-out 0.1s both;
+
+    // Status Section
+    .status-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--spacing-4);
+      margin-bottom: var(--spacing-4);
+      border-bottom: 2px solid var(--color-gray-100);
+
+      .bill-id {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+
+        .id-label {
+          color: var(--color-gray-600);
+          font-size: var(--font-body-sm);
+          font-weight: 500;
+        }
+
+        .id-value {
+          color: var(--mc-text-primary);
+          font-size: var(--font-body-md);
+          font-weight: 600;
+        }
+      }
+
+      .status-badge {
+        padding: var(--spacing-1) var(--spacing-3);
+        border-radius: var(--radius-full);
+        font-size: var(--font-body-sm);
+        font-weight: 600;
+        background: var(--color-gray-100);
+        color: var(--color-gray-700);
+
+        &.status-paid {
+          background: var(--mc-color-success-100);
+          color: var(--mc-color-success-700);
+        }
+
+        &.status-partial {
+          background: var(--mc-color-warning-100);
+          color: var(--mc-color-warning-700);
+        }
+      }
+
+      @media (max-width: 600px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-3);
+      }
+    }
+
+    // Bill Details
+    .bill-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: 600px) {
+      padding: var(--spacing-3) var(--spacing-4);
+    }
+  }
+
+  // ===================================
+  // 📋 DETAIL ITEM PATTERN
+  // ===================================
+
+  .detail-item {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--spacing-3) 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+
+    &:first-child .detail-content {
+      font-weight: 600;
+      color: var(--mc-text-primary);
+    }
+
+    @media (max-width: 600px) {
+      padding: var(--spacing-2) 0;
+    }
+  }
+
+  .detail-icon {
+    font-size: var(--font-heading-md);
+    color: var(--mc-color-primary-500);
+    margin-right: var(--mc-spacing-lg);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .detail-content {
+    flex: 1;
+    line-height: 1.5;
+    font-size: var(--font-body-md);
+    color: var(--mc-text-primary);
+
+    .doctor-name {
+      font-weight: 600;
+      margin-bottom: var(--spacing-1);
+      color: var(--mc-text-primary);
+    }
+
+    .detail-label {
+      color: var(--color-gray-600);
+      font-weight: 500;
+    }
+
+    .receipt-id {
+      font-family: monospace;
+      background: var(--color-gray-100);
+      padding: 2px var(--spacing-2);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-body-sm);
+      margin-left: var(--spacing-1);
+    }
+  }
+
+  // ===================================
+  // 💰 BILLING SUMMARY SECTION
+  // ===================================
+
+  .billing-section {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4) var(--spacing-5);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-4);
+    animation: fadeInUp 0.4s ease-out 0.2s both;
+
+    .section-title {
+      font-size: var(--font-heading-sm);
+      font-weight: 600;
+      color: var(--color-gray-700);
+      margin: 0 0 var(--spacing-4) 0;
+    }
+
+    @media (max-width: 400px) {
+      padding: var(--spacing-3) var(--spacing-3);
+      border-radius: var(--radius-md);
+
+      .section-title {
+        font-size: 16px;
+        margin-bottom: var(--spacing-3);
+      }
+    }
+
+    // Charges Table
+    .charges-table {
+      margin-bottom: var(--spacing-4);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+
+      @media (max-width: 400px) {
+        margin-bottom: var(--spacing-3);
+        border-radius: var(--radius-sm);
+      }
+    }
+
+    .table-header {
+      display: grid;
+      grid-template-columns: 60px 1fr 120px;
+      background: linear-gradient(135deg, var(--mc-color-primary-600), var(--mc-color-primary-500));
+      color: var(--color-white);
+      font-weight: 600;
+      font-size: var(--font-body-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      @media (max-width: 600px) {
+        grid-template-columns: 45px 1fr 95px;
+        font-size: 11px;
+        letter-spacing: 0.3px;
+      }
+
+      @media (max-width: 400px) {
+        grid-template-columns: 40px 1fr 85px;
+        font-size: 10px;
+        letter-spacing: 0.2px;
+      }
+    }
+
+    .table-body {
+      background: var(--color-white);
+    }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 120px;
+      transition: background-color 0.2s ease;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--color-gray-200);
+      }
+
+      &:hover {
+        background-color: var(--color-gray-50);
+      }
+
+      @media (max-width: 600px) {
+        grid-template-columns: 45px 1fr 95px;
+      }
+
+      @media (max-width: 400px) {
+        grid-template-columns: 40px 1fr 85px;
+      }
+    }
+
+    .table-cell {
+      padding: var(--spacing-3);
+      display: flex;
+      align-items: center;
+      font-size: var(--font-body-md);
+      color: var(--mc-text-primary);
+      min-height: 44px;
+
+      &.header-cell {
+        padding: var(--spacing-3) var(--spacing-3);
+        color: var(--color-white);
+        min-height: 40px;
+      }
+
+      &.sno-col {
+        justify-content: center;
+        font-weight: 600;
+        color: var(--mc-color-primary-600);
+
+        &.header-cell {
+          color: var(--color-white);
+        }
+      }
+
+      &.description-col {
+        padding-left: var(--spacing-4);
+        font-weight: 500;
+        word-break: break-word;
+        line-height: 1.4;
+      }
+
+      &.amount-col {
+        justify-content: flex-end;
+        font-weight: 600;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--mc-color-primary-700);
+
+        &.header-cell {
+          color: var(--color-white);
+        }
+      }
+
+      @media (max-width: 600px) {
+        padding: 10px 8px;
+        font-size: 13px;
+        min-height: 40px;
+
+        &.header-cell {
+          padding: 10px 6px;
+          min-height: 36px;
+        }
+
+        &.description-col {
+          padding-left: 8px;
+          padding-right: 6px;
+          line-height: 1.3;
+        }
+
+        &.sno-col {
+          font-size: 12px;
+        }
+
+        &.amount-col {
+          font-size: 13px;
+          padding-right: 8px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        padding: 8px 6px;
+        font-size: 12px;
+        min-height: 38px;
+
+        &.header-cell {
+          padding: 8px 4px;
+          min-height: 34px;
+        }
+
+        &.description-col {
+          padding-left: 6px;
+          padding-right: 4px;
+          line-height: 1.3;
+          font-size: 11.5px;
+        }
+
+        &.sno-col {
+          font-size: 11px;
+        }
+
+        &.amount-col {
+          font-size: 12px;
+          padding-right: 6px;
+        }
+      }
+    }
+
+    .empty-charges {
+      text-align: center;
+      padding: var(--spacing-4);
+      color: var(--color-gray-500);
+      font-size: var(--font-body-sm);
+      font-style: italic;
+      margin-bottom: var(--spacing-4);
+
+      p {
+        margin: 0;
+      }
+    }
+
+    // Divider
+    .divider {
+      height: 1px;
+      background-color: var(--color-gray-200);
+      margin: var(--spacing-4) 0;
+    }
+
+    // Amount Summary
+    .amount-summary {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-2);
+    }
+
+    .amount-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-2) var(--spacing-3);
+      border-radius: var(--radius-sm);
+
+      .amount-label {
+        color: var(--color-gray-600);
+        font-size: var(--font-body-sm);
+        font-weight: 500;
+      }
+
+      .amount-value {
+        color: var(--mc-text-primary);
+        font-size: var(--font-body-md);
+        font-weight: 600;
+
+        &.total {
+          color: var(--mc-color-primary-600);
+          font-size: var(--font-body-lg);
+          font-weight: 700;
+        }
+
+        &.paid {
+          color: var(--mc-color-success-700);
+        }
+
+        &.pending {
+          color: var(--mc-color-warning-700);
+          font-weight: 700;
+        }
+      }
+
+      &.total-row {
+        background: var(--color-gray-50);
+        border: 1px solid var(--color-gray-200);
+        padding: var(--spacing-3);
+        margin-top: var(--spacing-2);
+      }
+
+      &.paid-row {
+        background: var(--mc-color-success-50);
+        border: 1px solid var(--mc-color-success-200);
+        padding: var(--spacing-3);
+      }
+
+      &.pending-row {
+        background: var(--mc-color-warning-50);
+        border: 1px solid var(--mc-color-warning-200);
+        padding: var(--spacing-3);
+      }
+    }
+
+    @media (max-width: 600px) {
+      padding: var(--spacing-3) var(--spacing-4);
+    }
+  }
+
+  // ===================================
+  // 💳 PAYMENT DETAILS SECTION
+  // ===================================
+
+  .payment-section {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4) var(--spacing-5);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-6);
+    animation: fadeInUp 0.4s ease-out 0.3s both;
+
+    .section-title {
+      font-size: var(--font-heading-sm);
+      font-weight: 600;
+      color: var(--color-gray-700);
+      margin: 0 0 var(--spacing-4) 0;
+    }
+
+    .payment-info {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: var(--spacing-4);
+    }
+
+    .receipt-actions {
+      display: flex;
+      gap: var(--spacing-3);
+      margin-top: var(--spacing-3);
+      padding-bottom: var(--spacing-2);
+
+      @media (max-width: 600px) {
+        flex-direction: column;
+        gap: var(--spacing-2);
+        padding-bottom: var(--spacing-3);
+      }
+    }
+
+    .view-button {
+      --background: var(--mc-color-primary-600);
+      --color: var(--color-white);
+      --border-radius: var(--radius-md);
+      font-weight: 600;
+      flex: 1;
+      height: 44px;
+
+      ion-icon {
+        margin-right: var(--spacing-1);
+      }
+
+      &:hover {
+        --background: var(--mc-color-primary-700);
+      }
+    }
+
+    .download-button {
+      --color: var(--mc-color-primary-500);
+      --border-radius: var(--radius-md);
+      font-weight: 500;
+      flex: 1;
+      height: 44px;
+
+      ion-icon {
+        margin-right: var(--spacing-1);
+      }
+    }
+
+    @media (max-width: 600px) {
+      padding: var(--spacing-3) var(--spacing-4);
+    }
+  }
+
+  // ===================================
+  // 🔘 ACTION BUTTONS
+  // ===================================
+
+  .action-buttons {
+    margin-top: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+    padding-top: var(--spacing-4);
+    border-top: 2px solid var(--color-gray-100);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    animation: fadeInUp 0.4s ease-out 0.4s both;
+
+    ion-button {
+      --border-radius: var(--radius-md);
+      --padding-top: var(--spacing-3);
+      --padding-bottom: var(--spacing-3);
+      --box-shadow: var(--shadow-sm);
+      font-weight: 600;
+      text-transform: capitalize;
+      height: 48px;
+      transition: all 0.2s ease;
+
+      &:not([color]) {
+        --background: var(--mc-color-primary-600);
+        --color: var(--color-white);
+
+        &:hover {
+          --background: var(--mc-color-primary-700);
+          transform: translateY(-2px);
+          --box-shadow: var(--shadow-md);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+
+      ion-icon {
+        margin-right: var(--spacing-2);
+      }
+    }
+
+    @media (max-width: 600px) {
+      gap: var(--spacing-2);
+
+      ion-button {
+        --padding-top: var(--spacing-2);
+        --padding-bottom: var(--spacing-2);
+      }
+    }
+  }
+
+  // ===================================
+  // 📭 EMPTY STATE
+  // ===================================
+
+  .empty-state {
+    text-align: center;
+    padding: var(--spacing-6) var(--spacing-4);
+    color: var(--color-gray-500);
+    animation: fadeInUp 0.5s ease-out;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: var(--spacing-4);
+      color: var(--color-gray-400);
+    }
+
+    h2 {
+      font-size: var(--font-heading-md);
+      font-weight: 600;
+      color: var(--color-gray-700);
+      margin: 0 0 var(--spacing-2) 0;
+    }
+
+    p {
+      font-size: var(--font-body-md);
+      color: var(--color-gray-600);
+      margin: 0;
+    }
+  }
+
+  // ===================================
+  // 🎬 ANIMATIONS
+  // ===================================
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 600px) {
+  .bill-details-page {
+    --padding-top: var(--mc-spacing-xl);
+    --padding-bottom: var(--mc-spacing-xl);
+
+    .container {
+      padding-bottom: 120px; // Extra padding for mobile to account for footer
+    }
+
+    .payment-section {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .action-buttons {
+      margin-bottom: var(--spacing-6);
+    }
+  }
+}

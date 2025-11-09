@@ -1,0 +1,14 @@
+<div
+  class="status-badge-container"
+  [ngClass]="[statusClass, alignmentClass]">
+
+  <!-- Icon (if enabled) -->
+  <ion-icon
+    *ngIf="showIcon"
+    [name]="statusIcon"
+    class="status-badge__icon">
+  </ion-icon>
+
+  <!-- Text -->
+  <span class="status-badge__text">{{ statusText }}</span>
+</div>

@@ -1,0 +1,125 @@
+<ion-content class="otp-page">
+  <div class="container">
+    <div class="otp-shell">
+      <ion-chip class="stage-chip" color="primary">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <span>{{ stageChipLabel }}</span>
+      </ion-chip>
+
+      <div class="otp-card">
+        <div class="progress-track">
+          <div class="progress-step completed">
+            <span class="step-index">1</span>
+            <span class="step-label">Verify mobile number</span>
+          </div>
+          <div class="progress-divider"></div>
+          <div class="progress-step active">
+            <span class="step-index">2</span>
+            <span class="step-label">Enter OTP</span>
+          </div>
+        </div>
+
+        <div class="otp-header">
+          <div class="icon-wrapper">
+            <ion-icon name="shield-checkmark-outline" class="header-icon"></ion-icon>
+          </div>
+          <h1>Verify Your Number</h1>
+          <p class="subtitle">We sent a 4-digit code to your mobile number</p>
+        </div>
+
+        <form class="otp-form" (ngSubmit)="verifyOTP()">
+          <div class="form-group">
+            <label class="form-label">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+              Enter OTP
+            </label>
+
+            <div class="otp-input-wrapper">
+              <ion-input
+                [type]="hidePassword ? 'password' : 'tel'"
+                name="otp"
+                placeholder="••••"
+                required
+                pattern="[0-9]*"
+                maxlength="4"
+                inputmode="numeric"
+                [(ngModel)]="enteredOtp"
+                autocomplete="one-time-code"
+                class="custom-otp-input"
+                (paste)="onOtpPaste($event)"
+                (input)="onOtpInput($event)"
+                id="otp-input">
+              </ion-input>
+              <ion-icon
+                [name]="hidePassword ? 'eye-off-outline' : 'eye-outline'"
+                class="visibility-toggle"
+                (click)="hidePassword = !hidePassword">
+              </ion-icon>
+            </div>
+            <ion-note class="field-hint">
+              Auto-detecting SMS when available. Paste the code if you received it elsewhere.
+            </ion-note>
+          </div>
+
+          <div class="status-container">
+            <div class="status-message error" *ngIf="onSubmit">
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              <span>Invalid OTP. Please try again.</span>
+            </div>
+            <div class="status-message success" *ngIf="onResend">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+              <span>OTP sent successfully!</span>
+            </div>
+            <div class="status-message loading" *ngIf="showSpinner">
+              <ion-spinner name="crescent"></ion-spinner>
+              <span>Verifying...</span>
+            </div>
+          </div>
+
+          <div class="timer-row">
+            <div class="timer-pill" [class.ready]="resendAvailable">
+              <ion-icon name="time-outline"></ion-icon>
+              <span *ngIf="!resendAvailable">Resend available in {{ resendCountdownDisplay }}</span>
+              <span *ngIf="resendAvailable">You can request a new OTP now.</span>
+            </div>
+            <ion-button
+              fill="outline"
+              class="resend-button"
+              (click)="resendOTP()"
+              [disabled]="!resendAvailable || showSpinner">
+              <ion-icon name="refresh-outline" slot="start"></ion-icon>
+              Resend OTP
+            </ion-button>
+          </div>
+
+          <div class="action-buttons">
+            <ion-button
+              type="submit"
+              expand="block"
+              class="verify-button"
+              [disabled]="!enteredOtp || enteredOtp.length !== 4 || showSpinner">
+              <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+              Verify OTP
+            </ion-button>
+
+            <ion-button
+              fill="clear"
+              class="secondary-link"
+              (click)="goBackToSignIn()"
+              [disabled]="showSpinner">
+              <ion-icon name="swap-horizontal-outline" slot="start"></ion-icon>
+              Use a different number
+            </ion-button>
+          </div>
+        </form>
+      </div>
+
+      <div class="info-footer">
+        <p>
+          <ion-icon name="information-circle-outline"></ion-icon>
+          {{ otpExpiryHint }}
+        </p>
+      </div>
+    </div>
+  </div>
+</ion-content>

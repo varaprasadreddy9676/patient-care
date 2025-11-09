@@ -1,0 +1,109 @@
+<ion-content class="family-member-form-page">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Family Member</h1>
+      <p class="subtitle">Add a new family member to your account</p>
+    </header>
+
+    <!-- Form Card -->
+    <div class="form-card">
+      <div class="profile-picture-section">
+        <div class="profile-picture-container" (click)="triggerFileInput()">
+          <img
+            [src]="profilePicture || 'assets/icon/person_icon.svg'"
+            alt="Family member profile picture"
+            class="profile-picture"
+          />
+          <div class="upload-overlay">
+            <ion-icon name="camera-outline"></ion-icon>
+            <span class="upload-text">Change Photo</span>
+          </div>
+        </div>
+        <p class="photo-helper">Optional: tap to {{ profilePicture ? 'update' : 'add' }} a photo.</p>
+        <input
+          #fileInput
+          type="file"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          class="file-input"
+        />
+      </div>
+
+      <form>
+        <!-- Full Name Field -->
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <ion-input
+            name="fullName"
+            autocomplete="off"
+            placeholder="Enter full name"
+            required
+            [(ngModel)]="fullName"
+            class="form-input"
+            (keyup)="nameValidate($event)">
+          </ion-input>
+        </div>
+
+        <!-- Relation Selection -->
+        <div class="form-group" *ngIf="showRelation">
+          <label class="form-label">Relation <span class="required-indicator">*</span></label>
+          <ion-select
+            name="relation"
+            placeholder="Select relation"
+            interface="popover"
+            [(ngModel)]="relation"
+            [compareWith]="compareRelations"
+            required
+            class="relation-select">
+            <ion-select-option *ngFor="let rel of allRelations" [value]="rel">
+              {{ rel.name }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        <!-- Gender Selection -->
+        <div class="form-group">
+          <label class="form-label">Gender</label>
+          <mat-radio-group name="gender" class="radio-group" [(ngModel)]="gender" required>
+            <mat-radio-button
+              class="radio-button"
+              *ngFor="let gender of genders"
+              [value]="gender"
+              required>
+              {{ gender.name }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <!-- Date of Birth Field -->
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <mat-form-field class="date-field" appearance="outline">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Select date of birth"
+              name="dob"
+              [(ngModel)]="dateOfBirth"
+              [max]="maxDate"
+              autocomplete="off">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <!-- Save Button -->
+        <div class="action-buttons">
+          <ion-button
+            expand="block"
+            (click)="validatePatient()"
+            [disabled]="disableSaveButton"
+            class="save-button">
+            <ion-icon slot="start" name="person-add-outline"></ion-icon>
+            Save Family Member
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

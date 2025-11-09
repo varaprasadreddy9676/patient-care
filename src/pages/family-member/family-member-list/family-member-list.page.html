@@ -1,0 +1,91 @@
+<ion-content class="family-member-content">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Family Members</h1>
+      <p class="subtitle">Manage your family's health profiles</p>
+    </header>
+
+    <!-- Add Family Member Button -->
+    <div class="action-buttons">
+      <ion-button expand="block" (click)="addNewFamilyMember()">
+        <ion-icon slot="start" name="person-add-outline"></ion-icon>
+        Add Family Member
+      </ion-button>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p class="loading-text">Loading family members...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && (!familyMembers || familyMembers.length === 0)">
+      <ion-icon name="people-outline" class="empty-icon"></ion-icon>
+      <p class="empty-message">No family members added yet</p>
+      <p class="empty-description">Add family members to manage their health profiles and appointments</p>
+    </div>
+
+    <!-- Profile Cards Container -->
+    <div class="profiles-container" *ngIf="!isLoading && familyMembers && familyMembers.length > 0">
+      <div class="profile-card" *ngFor="let patient of familyMembers">
+        <div class="profile-content" (click)="navigateToPage(patient)">
+          <div class="avatar-section">
+            <div class="avatar-container">
+              <div
+                class="avatar-circle"
+                [style.background-color]="hasPhoto(patient) ? 'transparent' : getAvatarColor(patient.fullName)"
+              >
+                <img
+                  *ngIf="hasPhoto(patient)"
+                  [src]="getProfileImage(patient)"
+                  [alt]="patient.fullName || 'Family member avatar'"
+                  class="avatar-img"
+                />
+                <span *ngIf="!hasPhoto(patient)" class="avatar-initials">
+                  {{ getInitials(patient.fullName) }}
+                </span>
+              </div>
+            </div>
+            <div class="profile-info">
+              <div class="name-text">{{ patient.fullName }}</div>
+              <div class="info-row">
+                <div class="dob-text" *ngIf="getFormattedDateWithAge(patient.dob)">
+                  {{ getFormattedDateWithAge(patient.dob) }}
+                </div>
+                <div class="relation-text" *ngIf="patient.relation">
+                  • {{ patient.relation }}
+                </div>
+              </div>
+              <div class="gender-badge hide-md-up" [ngClass]="getGenderBadgeClass(patient.gender)">
+                {{ getGenderDisplayText(patient.gender) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="gender-section hide-sm-down">
+            <div class="gender-badge" [ngClass]="getGenderBadgeClass(patient.gender)">
+              {{ getGenderDisplayText(patient.gender) }}
+            </div>
+          </div>
+
+          <!-- Action Icons -->
+          <div class="action-section" (click)="$event.stopPropagation()">
+            <ion-button fill="clear" size="small" class="action-button"
+                        (click)="editFamilyMember(patient)"
+                        [attr.aria-label]="'Edit ' + patient.fullName">
+              <ion-icon name="create-outline" class="action-icon edit-icon"></ion-icon>
+            </ion-button>
+
+            <ion-button fill="clear" size="small" class="action-button"
+                        (click)="deleteFamilyMember(patient)"
+                        [attr.aria-label]="'Delete ' + patient.fullName">
+              <ion-icon name="trash-outline" class="action-icon delete-icon"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

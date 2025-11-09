@@ -1,0 +1,165 @@
+<ion-header>
+  <ion-toolbar class="primaryDark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home" icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="titleHeader">
+      <ion-text class="titleText">COVID Care</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="grid">
+    <ion-row class="row">
+      <ion-col size="12" class="ion-no-padding">
+        <ion-card>
+          <swiper-container pagination="true" [options]="slideOptions" #slideWithNav (slidechange)="onSlideChange()">
+
+
+            <swiper-slide *ngFor="let s of sliderOne.slidesItems">
+              <ion-grid class="ion-no-padding">
+                <ion-row class="ion-no-padding" class="text-body-sm">
+                  <ion-col size="12" class="ion-no-padding" style="padding-top: 15px; padding-bottom: 5px"
+                    align="start">
+                    {{s.header}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-no-padding" align="start" class="text-body-xs" *ngIf="s.subHeader.length>1">
+                  <ion-col size="12" class="ion-no-padding" style="padding-top: 0px; padding-bottom: 0px">
+                    {{s.subHeader}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-no-padding" align="start" class="text-body-xs">
+                  <ion-col size="12" class="ion-no-padding" style="padding-top: 0px; padding-bottom: 0px">
+                    <ul *ngFor="let list of s.list">
+                      <li>{{list.item}}</li>
+                    </ul>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </swiper-slide>
+          </swiper-container>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" size-xl="3" size-lg="3" size-md="4" size-sm="4" (click)="goToOnlineConsultation()">
+        <ion-card>
+          <ion-grid class="ion-no-padding" style="padding-top: 5px; padding-left: 5px; padding-right: 5px">
+            <ion-row class="ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                <p class="bodyText" style="margin: 0px">
+                  Online Consultation with Doctor
+                </p>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-no-padding" style="padding-top: 14px">
+              <ion-col size="8" class="ion-no-padding"> </ion-col>
+              <ion-col size="4" class="ion-no-padding">
+                <ion-icon name="medkit-outline" style="zoom: 3"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" size-xl="3" size-lg="3" size-md="4" size-sm="4" (click)="goToHospitals('HOSPITAL')">
+        <ion-card>
+          <ion-grid class="ion-no-padding" style="padding-top: 5px; padding-left: 5px; padding-right: 5px">
+            <ion-row class="ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                <p class="bodyText" style="margin: 0px">
+                  Find nearby COVID Care hospitals
+                </p>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-no-padding" style="padding-top: 14px">
+              <ion-col size="8" class="ion-no-padding"> </ion-col>
+              <ion-col size="4" class="ion-no-padding">
+                <ion-icon name="medkit-outline" style="zoom: 3"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" size-xl="3" size-lg="3" size-md="4" size-sm="4" (click)="goToPharmacyStore('PHARMACYSTORE')">
+        <ion-card>
+          <ion-grid class="ion-no-padding" style="padding-top: 5px; padding-left: 5px; padding-right: 5px">
+            <ion-row class="ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                <p class="bodyText" style="margin: 0px">
+                  Find nearby Pharmacy Stores
+                </p>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-no-padding" style="padding-top: 14px">
+              <ion-col size="8" class="ion-no-padding"> </ion-col>
+              <ion-col size="4" class="ion-no-padding">
+                <ion-icon name="medkit-outline" style="zoom: 3"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" size-xl="3" size-lg="3" size-md="4" size-sm="4" (click)="goToOxygen('OXYGEN')">
+        <ion-card>
+          <ion-grid class="ion-no-padding" style="padding-top: 5px; padding-left: 5px; padding-right: 5px">
+            <ion-row class="ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                <p class="bodyText" style="margin: 0px">
+                  Find nearby Oxygen Cylinder Suppliers
+                </p>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-no-padding" style="padding-top: 14px">
+              <ion-col size="8" class="ion-no-padding"> </ion-col>
+              <ion-col size="4" class="ion-no-padding">
+                <ion-icon name="medkit-outline" style="zoom: 3"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" size-xl="3" size-lg="3" size-md="4" size-sm="4" (click)="goToAmbulance('AMBULANCE')">
+        <ion-card>
+          <ion-grid class="ion-no-padding" style="padding-top: 5px; padding-left: 5px; padding-right: 5px">
+            <ion-row class="ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                <p class="bodyText" style="margin: 0px">Book Ambulance</p>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-no-padding" style="padding-top: 14px">
+              <ion-col size="8" class="ion-no-padding"> </ion-col>
+              <ion-col size="4" class="ion-no-padding">
+                <ion-icon name="medkit-outline" style="zoom: 3"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" size-xl="3" size-lg="3" size-md="4" size-sm="4" (click)="goToCollectSample('SAMPLECOLLECTION')">
+        <ion-card>
+          <ion-grid class="ion-no-padding" style="padding-top: 5px; padding-left: 5px; padding-right: 5px">
+            <ion-row class="ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                <p class="bodyText" style="margin: 0px">
+                  Get Sample collected at your door step
+                </p>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ion-no-padding">
+              <ion-col size="8" class="ion-no-padding"> </ion-col>
+              <ion-col size="4" class="ion-no-padding">
+                <ion-icon name="medkit-outline" style="zoom: 3"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,422 @@
+/**
+ * Material Angular Component Overrides
+ * Standardized rounded edges for all Material components
+ * Using MedicsCare theme system variables
+ */
+
+// ===================================
+// 🎨 MATERIAL FORM FIELDS
+// ===================================
+
+.mat-mdc-form-field {
+  --mdc-shape-small: var(--mc-radius-md);
+  --mdc-outlined-text-field-container-shape: var(--mc-radius-md);
+  --mdc-filled-text-field-container-shape: var(--mc-radius-md);
+
+  .mat-mdc-text-field-wrapper {
+    border-radius: var(--mc-radius-md) !important;
+  }
+
+  .mat-mdc-form-field-focus-overlay {
+    border-radius: var(--mc-radius-md) !important;
+  }
+
+  .mat-mdc-form-field-flex {
+    border-radius: var(--mc-radius-md);
+  }
+}
+
+// ===================================
+// 📋 MATERIAL SELECT
+// ===================================
+
+.mat-mdc-select {
+  .mat-mdc-select-trigger {
+    border-radius: var(--mc-radius-md);
+  }
+}
+
+.mat-mdc-select-panel {
+  border-radius: var(--mc-radius-lg) !important;
+  box-shadow: var(--mc-shadow-lg) !important;
+  margin-top: var(--mc-spacing-xs);
+}
+
+.mat-mdc-option {
+  border-radius: var(--mc-radius-sm);
+  margin: 0 var(--mc-spacing-xs);
+
+  &:first-child {
+    margin-top: var(--mc-spacing-xs);
+  }
+
+  &:last-child {
+    margin-bottom: var(--mc-spacing-xs);
+  }
+}
+
+// ===================================
+// 📅 MATERIAL DATEPICKER
+// ===================================
+
+.mat-datepicker-content {
+  border-radius: var(--mc-radius-xl) !important;
+  box-shadow: var(--mc-shadow-xl) !important;
+  overflow: hidden;
+}
+
+.mat-calendar {
+  border-radius: var(--mc-radius-lg);
+}
+
+.mat-calendar-body-cell {
+  border-radius: var(--mc-radius-sm);
+}
+
+.mat-calendar-body-selected {
+  border-radius: var(--mc-radius-sm);
+}
+
+.mat-datepicker-toggle-default-icon {
+  border-radius: var(--mc-radius-sm);
+}
+
+// ===================================
+// 🔘 MATERIAL BUTTONS
+// ===================================
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button {
+  border-radius: var(--mc-radius-md) !important;
+  --mdc-shape-small: var(--mc-radius-md);
+}
+
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  border-radius: var(--mc-radius-full) !important;
+}
+
+.mat-mdc-icon-button {
+  border-radius: var(--mc-radius-md);
+}
+
+// ===================================
+// 🎯 MATERIAL DIALOG
+// ===================================
+
+.mat-mdc-dialog-container {
+  border-radius: var(--mc-radius-xl) !important;
+  box-shadow: var(--mc-shadow-xl) !important;
+
+  .mdc-dialog__surface {
+    border-radius: var(--mc-radius-xl) !important;
+  }
+}
+
+// ===================================
+// 🍞 MATERIAL SNACKBAR
+// ===================================
+
+.mat-mdc-snack-bar-container {
+  border-radius: var(--mc-radius-lg) !important;
+  box-shadow: var(--mc-shadow-lg) !important;
+
+  .mdc-snackbar__surface {
+    border-radius: var(--mc-radius-lg) !important;
+  }
+}
+
+// ===================================
+// 📑 MATERIAL TABS
+// ===================================
+
+.mat-mdc-tab-group {
+  .mat-mdc-tab-header {
+    border-radius: var(--mc-radius-lg) var(--mc-radius-lg) 0 0;
+  }
+
+  .mat-mdc-tab {
+    border-radius: var(--mc-radius-md) var(--mc-radius-md) 0 0;
+  }
+
+  .mat-mdc-tab-body-wrapper {
+    border-radius: 0 0 var(--mc-radius-lg) var(--mc-radius-lg);
+  }
+}
+
+// ===================================
+// 🎴 MATERIAL CARDS
+// ===================================
+
+.mat-mdc-card {
+  border-radius: var(--mc-radius-lg) !important;
+  box-shadow: var(--mc-shadow-base) !important;
+
+  &:hover {
+    box-shadow: var(--mc-shadow-md) !important;
+  }
+}
+
+.mat-mdc-card-header {
+  border-radius: var(--mc-radius-lg) var(--mc-radius-lg) 0 0;
+}
+
+// ===================================
+// 🔘 MATERIAL RADIO BUTTONS
+// ===================================
+
+.mat-mdc-radio-button {
+  .mdc-radio {
+    .mdc-radio__outer-circle,
+    .mdc-radio__inner-circle {
+      border-radius: var(--mc-radius-full);
+    }
+  }
+}
+
+// ===================================
+// ☑️ MATERIAL CHECKBOXES
+// ===================================
+
+.mat-mdc-checkbox {
+  .mdc-checkbox {
+    .mdc-checkbox__background {
+      border-radius: var(--mc-radius-sm);
+    }
+  }
+}
+
+// ===================================
+// 🎚️ MATERIAL SLIDER
+// ===================================
+
+.mat-mdc-slider {
+  .mdc-slider__thumb {
+    border-radius: var(--mc-radius-full);
+  }
+
+  .mdc-slider__track {
+    border-radius: var(--mc-radius-full);
+  }
+}
+
+// ===================================
+// 📊 MATERIAL PROGRESS BAR
+// ===================================
+
+.mat-mdc-progress-bar {
+  border-radius: var(--mc-radius-full);
+
+  .mdc-linear-progress__bar-inner {
+    border-radius: var(--mc-radius-full);
+  }
+}
+
+.mat-mdc-progress-spinner {
+  circle {
+    stroke-linecap: round;
+  }
+}
+
+// ===================================
+// 🍔 MATERIAL MENU
+// ===================================
+
+.mat-mdc-menu-panel {
+  border-radius: var(--mc-radius-lg) !important;
+  box-shadow: var(--mc-shadow-lg) !important;
+}
+
+.mat-mdc-menu-item {
+  border-radius: var(--mc-radius-sm);
+  margin: 0 var(--mc-spacing-xs);
+
+  &:first-child {
+    margin-top: var(--mc-spacing-xs);
+  }
+
+  &:last-child {
+    margin-bottom: var(--mc-spacing-xs);
+  }
+}
+
+// ===================================
+// 🎯 MATERIAL TOOLTIP
+// ===================================
+
+.mat-mdc-tooltip {
+  border-radius: var(--mc-radius-md) !important;
+}
+
+// ===================================
+// 🎪 MATERIAL EXPANSION PANEL
+// ===================================
+
+.mat-expansion-panel {
+  border-radius: var(--mc-radius-lg) !important;
+  box-shadow: var(--mc-shadow-sm) !important;
+
+  &:not(.mat-expanded) {
+    &:not(:last-child) {
+      margin-bottom: var(--mc-spacing-sm);
+    }
+  }
+}
+
+.mat-expansion-panel-header {
+  border-radius: var(--mc-radius-lg);
+}
+
+// ===================================
+// 🎨 MATERIAL CHIPS
+// ===================================
+
+.mat-mdc-chip {
+  border-radius: var(--mc-radius-full) !important;
+  --mdc-chip-container-shape-radius: var(--mc-radius-full);
+}
+
+.mat-mdc-standard-chip {
+  border-radius: var(--mc-radius-full) !important;
+}
+
+// ===================================
+// 📱 MATERIAL BOTTOM SHEET
+// ===================================
+
+.mat-bottom-sheet-container {
+  border-radius: var(--mc-radius-xl) var(--mc-radius-xl) 0 0 !important;
+  box-shadow: var(--mc-shadow-xl) !important;
+}
+
+// ===================================
+// 🎭 MATERIAL AUTOCOMPLETE
+// ===================================
+
+.mat-mdc-autocomplete-panel {
+  border-radius: var(--mc-radius-lg) !important;
+  box-shadow: var(--mc-shadow-lg) !important;
+  margin-top: var(--mc-spacing-xs);
+}
+
+// ===================================
+// 🎪 MATERIAL STEPPER
+// ===================================
+
+.mat-stepper-horizontal,
+.mat-stepper-vertical {
+  border-radius: var(--mc-radius-lg);
+}
+
+.mat-step-header {
+  .mat-step-icon {
+    border-radius: var(--mc-radius-full);
+  }
+}
+
+// ===================================
+// 📋 MATERIAL LIST
+// ===================================
+
+.mat-mdc-list-item {
+  border-radius: var(--mc-radius-md);
+}
+
+.mat-mdc-list-item-interactive {
+  &:hover {
+    border-radius: var(--mc-radius-md);
+  }
+}
+
+// ===================================
+// 🎨 MATERIAL BADGE
+// ===================================
+
+.mat-badge-content {
+  border-radius: var(--mc-radius-full);
+}
+
+// ===================================
+// 🔄 MATERIAL PAGINATOR
+// ===================================
+
+.mat-mdc-paginator {
+  border-radius: var(--mc-radius-lg);
+}
+
+.mat-mdc-paginator-container {
+  border-radius: var(--mc-radius-lg);
+}
+
+// ===================================
+// 📊 MATERIAL TABLE
+// ===================================
+
+.mat-mdc-table {
+  border-radius: var(--mc-radius-lg);
+  overflow: hidden;
+
+  .mat-mdc-header-row {
+    border-radius: var(--mc-radius-lg) var(--mc-radius-lg) 0 0;
+  }
+}
+
+// ===================================
+// 🎯 MATERIAL BUTTON TOGGLE
+// ===================================
+
+.mat-button-toggle-group {
+  border-radius: var(--mc-radius-md);
+  box-shadow: var(--mc-shadow-sm);
+}
+
+.mat-button-toggle {
+  &:first-child {
+    border-radius: var(--mc-radius-md) 0 0 var(--mc-radius-md);
+  }
+
+  &:last-child {
+    border-radius: 0 var(--mc-radius-md) var(--mc-radius-md) 0;
+  }
+}
+
+// ===================================
+// 🌙 DARK MODE COMPATIBILITY
+// ===================================
+
+[data-theme="dark"] {
+  .mat-mdc-select-panel,
+  .mat-datepicker-content,
+  .mat-mdc-dialog-container,
+  .mat-mdc-menu-panel,
+  .mat-mdc-autocomplete-panel {
+    background: var(--mc-card-bg);
+    border: 1px solid var(--mc-border-secondary);
+  }
+
+  .mat-mdc-option:hover,
+  .mat-mdc-menu-item:hover {
+    background: var(--mc-bg-secondary);
+  }
+}
+
+// ===================================
+// ♿ HIGH CONTRAST MODE
+// ===================================
+
+[data-contrast="high"] {
+  .mat-mdc-form-field,
+  .mat-mdc-select-panel,
+  .mat-mdc-dialog-container,
+  .mat-mdc-card,
+  .mat-expansion-panel {
+    border-width: 2px;
+  }
+
+  .mat-mdc-button,
+  .mat-mdc-raised-button {
+    border-width: 2px;
+  }
+}

@@ -1,0 +1,96 @@
+<ion-content class="appointment-confirmed">
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <h1>Appointment Details</h1>
+      <p class="subtitle" *ngIf="!(fromAppointmentDetails)">Your appointment has been confirmed</p>
+    </header>
+
+    <!-- Main Card Container -->
+    <div class="appointment-card" *ngIf="confirmedAppointment">
+      <!-- Success Banner -->
+      <div *ngIf="!(fromAppointmentDetails)" class="success-banner">
+        <ion-icon name="checkmark-circle" class="success-icon"></ion-icon>
+        <h2>Appointment Booked Successfully</h2>
+      </div>
+
+      <!-- Appointment ID -->
+      <div class="detail-row">
+        <span class="detail-label">Appointment ID:</span>
+        <span class="detail-value">{{ confirmedAppointment?.bookingId }}</span>
+      </div>
+
+      <!-- Appointment Details -->
+      <div class="appointment-details">
+        <div class="detail-item">
+          <ion-icon name="person-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">{{ confirmedAppointment.patient.name }}</div>
+        </div>
+
+        <div class="detail-item">
+          <ion-icon name="calendar-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            {{ confirmedAppointment.appointmentDate | date:"MMM d, yyyy" }} at
+            {{ timeFormatTo12hour(confirmedAppointment.appointmentTime) }}
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <ion-icon name="medical-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">
+            <div class="doctor-name">{{ sanitizeDoctorName(confirmedAppointment.doctorName) }}</div>
+            <div class="specialty">{{ confirmedAppointment.specialityName }}</div>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="confirmedAppointment.videoConsultation">
+          <ion-icon name="videocam-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">Video Consultation</div>
+        </div>
+        <div class="detail-item" *ngIf="!confirmedAppointment.videoConsultation">
+          <ion-icon name="medkit-outline" class="detail-icon"></ion-icon>
+          <div class="detail-content">Consultation at Hospital</div>
+        </div>
+      </div>
+
+      <!-- Payment Details Section -->
+      <div *ngIf="confirmedAppointment.receiptId" class="payment-section">
+        <h3 class="section-title">Payment Details</h3>
+
+        <div class="payment-details">
+          <div class="payment-item">
+            <span class="payment-label">Payer</span>
+            <span class="payment-value">{{ user.firstName }} {{ user.lastName }}</span>
+          </div>
+
+          <div class="payment-item">
+            <span class="payment-label">Payment Date, Time</span>
+            <span class="payment-value">
+              {{ confirmedAppointment.paymentConfirmationDateTme | date:"dd-MM-yyyy" }},
+              {{ getTime(confirmedAppointment.paymentConfirmationDateTme) }}
+            </span>
+          </div>
+
+          <div class="payment-item">
+            <span class="payment-label">Transaction ID</span>
+            <span class="payment-value">
+              {{ confirmedAppointment.paymentDetails.successResponse.razorpay_payment_id }}
+            </span>
+          </div>
+
+          <div class="payment-total">
+            <span class="total-label">Paid Amount</span>
+            <span class="total-amount">₹{{ confirmedAppointment.consultationCharge.price }}.00</span>
+          </div>
+        </div>
+
+        <div class="download-section">
+          <ion-button fill="clear" (click)="downloadReceipt()" class="download-button">
+            <ion-icon slot="start" name="download-outline"></ion-icon>
+            Download Receipt
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

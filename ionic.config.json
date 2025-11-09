@@ -1,0 +1,7 @@
+{
+  "name": "medics-care",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

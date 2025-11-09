@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar class="primaryDark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="hospital-list" icon="chevron-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="titleHeader">
+      <ion-text class="titleText">Modify Hospital</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-grid>
+      <ion-row class="rowEqualDistribution">
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="hospitalName" autocomplete="off" placeholder="Hospital name" required
+              [(ngModel)]="hospital.name" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="hospitalAddress" autocomplete="off" placeholder="Hospital Address" required
+              [(ngModel)]="hospital.address" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <label>Payment Gateway Key</label>:
+          {{hospital.paymentGatewayDetails.key}}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="contactName" autocomplete="off" placeholder="Contact Name" required
+              [(ngModel)]="hospital.contactDetails.name" />
+
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="contactNumber" autocomplete="off" placeholder="Contact Number" required
+              [(ngModel)]="hospital.contactDetails.phone" />
+            <mat-error *ngIf="true">This field is Required</mat-error>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <mat-form-field class="display-full-width" hideRequiredMarker>
+            <input matInput name="contactTimings" autocomplete="off" placeholder="Contact timings" required
+              [(ngModel)]="hospital.contactDetails.timings" />
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+
+          <mat-slide-toggle name="active" [(ngModel)]="hospital.active">
+
+          </mat-slide-toggle> Active
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+
+</ion-content>
+
+<ion-footer padding-top no-border align="center">
+
+  <ion-button (click)="saveHospital()" [disabled]="disableSaveButton" margin-bottom class="button-secondary button-size"
+    translucent>
+    Save
+  </ion-button>
+
+</ion-footer>

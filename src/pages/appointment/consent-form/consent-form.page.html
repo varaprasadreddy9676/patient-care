@@ -1,0 +1,61 @@
+<ion-content>
+  <div class="body-text gridd" *ngIf="consentForm">
+    <div class="primaryLight primary-light-header">
+      <ion-row>
+        <ion-col size-lg="6" size-xs="12">
+          <b>Patient :</b> {{ this.details.patientName }}<br><br>
+          <b>DOB :</b> {{ this.details.patientDOB}}
+        </ion-col>
+
+        <ion-col size-lg="6" size-xs="12" style="margin-top: 13px">
+          <b>Consultant :</b> {{ this.details.doctorName }}<br><br>
+          <b>Hospital :</b> {{ this.details.hospitalName }}
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div class="language-field">
+      <ion-list>
+        <ion-item>
+          <ion-select label="Language" interface="popover" placeholder="Select One" name="selectedLanguage"
+            [(ngModel)]="selectedLanguage">
+            <ion-select-option *ngFor="let templateLanguage of templateLanguages" [value]="templateLanguage"
+              (click)="getConsentForm(templateLanguage.language)">{{ templateLanguage.language }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div [innerHtml]="consentForm.template" style="padding: 10px 15px 0 10px;"> </div>
+
+  </div>
+
+  <div no-border margin-bottom padding-start padding-end style="  margin-left: 2%;
+  margin-right: 2%">
+    <ion-row class="ion-no-padding">
+      <ion-col size-xl="6" size-md="3" class="ion-hide-sm-down">
+        <button mat-raised-button (click)="consentAction('DECLINED')" id="decline" size="small" class="button-cancel">
+          DECLINE
+        </button>
+      </ion-col>
+      <ion-col size-xl="6" size-md="3" class="ion-text-end ion-hide-sm-up">
+        <button mat-raised-button (click)="consentAction('DECLINED')" id="decline" size="small" class="button-cancel">
+          DECLINE
+        </button>
+      </ion-col>
+
+      <ion-col size-xl="5.5" size-md="3" class="ion-text-end ion-hide-sm-down ag">
+        <button mat-raised-button (click)="consentAction('AGREED')" id="agree" size="small" class="button-secondary">
+          AGREE
+        </button>
+      </ion-col>
+      <ion-col size-xl="5.5" size-md="3" class="ion-text-start ion-hide-sm-up">
+        <button mat-raised-button (click)="consentAction('AGREED')" id="agree" size="small" class="button-secondary">
+          AGREE
+        </button>
+      </ion-col>
+    </ion-row>
+
+
+  </div>
+</ion-content>

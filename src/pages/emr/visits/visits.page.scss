@@ -1,0 +1,594 @@
+/**
+ * MedicsCare Visits Page
+ * Professional visit history management using the MedicsCare Theme System
+ */
+
+.visits-page {
+  --padding-top: var(--mc-spacing-2xl);
+  --padding-bottom: var(--mc-spacing-2xl);
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-xl);
+  }
+
+  // ===================================
+  // 📋 HEADER SECTION
+  // ===================================
+
+  .header {
+    margin-bottom: var(--mc-spacing-2xl);
+
+    h1 {
+      font-size: var(--mc-font-heading-lg);
+      font-weight: 600;
+      color: var(--mc-text-primary);
+      margin: 0 0 var(--mc-spacing-xs) 0;
+    }
+
+    .subtitle {
+      font-size: var(--mc-font-body-md);
+      color: var(--mc-text-secondary);
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+
+  // ===================================
+  // 📊 LOADING STATE
+  // ===================================
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    gap: var(--mc-spacing-3);
+    animation: fadeIn 0.2s ease-out;
+
+    ion-spinner {
+      width: 40px;
+      height: 40px;
+      --color: var(--mc-color-primary-500);
+    }
+
+    .loading-text {
+      color: var(--mc-text-secondary);
+      font-size: var(--mc-font-body-md);
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  // ===================================
+  // 💀 SKELETON LOADERS
+  // ===================================
+
+  .skeleton-container {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .skeleton-card {
+    background: var(--mc-bg-card);
+    border-radius: var(--mc-radius-lg);
+    box-shadow: var(--mc-shadow-sm);
+    border: 1px solid var(--mc-card-border);
+    pointer-events: none;
+    margin-bottom: var(--mc-spacing-md);
+
+    .visit-summary {
+      padding: var(--mc-spacing-md) var(--mc-spacing-lg);
+    }
+
+    .visit-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--mc-spacing-md);
+    }
+
+    .skeleton-date-row {
+      display: flex;
+      align-items: center;
+      gap: var(--mc-spacing-md);
+      flex: 1;
+    }
+
+    .skeleton-date {
+      height: 20px;
+      width: 180px;
+      border-radius: var(--mc-radius-sm);
+      background: linear-gradient(
+        90deg,
+        #e0e0e0 0%,
+        #f0f0f0 50%,
+        #e0e0e0 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      display: block;
+
+      @media (max-width: 600px) {
+        height: 18px;
+        width: 140px;
+      }
+    }
+
+    .skeleton-badge {
+      height: 20px;
+      width: 50px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(
+        90deg,
+        #e0e0e0 0%,
+        #f0f0f0 50%,
+        #e0e0e0 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      display: block;
+
+      @media (max-width: 600px) {
+        height: 18px;
+        width: 40px;
+      }
+    }
+
+    .skeleton-doctor-info {
+      height: 18px;
+      width: 220px;
+      margin-bottom: var(--mc-spacing-md);
+      border-radius: var(--mc-radius-sm);
+      background: linear-gradient(
+        90deg,
+        #e0e0e0 0%,
+        #f0f0f0 50%,
+        #e0e0e0 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      display: block;
+
+      @media (max-width: 600px) {
+        height: 16px;
+        width: 180px;
+        margin-bottom: var(--mc-spacing-sm);
+      }
+    }
+
+    .skeleton-summary-info {
+      height: 40px;
+      width: 100%;
+      border-radius: var(--mc-radius-sm);
+      background: linear-gradient(
+        90deg,
+        #e0e0e0 0%,
+        #f0f0f0 50%,
+        #e0e0e0 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      display: block;
+
+      @media (max-width: 600px) {
+        height: 36px;
+      }
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  // Dark mode skeleton support
+  [data-theme="dark"] {
+    .skeleton-card {
+      background: var(--mc-card-bg);
+      border-color: var(--mc-card-border);
+
+      .skeleton-date,
+      .skeleton-badge,
+      .skeleton-doctor-info,
+      .skeleton-summary-info {
+        background: linear-gradient(
+          90deg,
+          #2a2a2a 0%,
+          #3a3a3a 50%,
+          #2a2a2a 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s ease-in-out infinite;
+      }
+    }
+  }
+
+  // ===================================
+  // 🏥 EMPTY STATE
+  // ===================================
+
+  .empty-state {
+    text-align: center;
+    padding: var(--mc-spacing-6) var(--mc-spacing-4);
+    color: var(--mc-text-tertiary);
+    animation: fadeInUp 0.3s ease-out;
+
+    .empty-icon {
+      font-size: calc(var(--mc-font-display-xl) * 1.33); // 64px based on display font
+      margin-bottom: var(--mc-spacing-4);
+      color: var(--mc-color-gray-400);
+    }
+
+    p {
+      font-size: var(--mc-font-body-md);
+      margin: 0 0 var(--mc-spacing-2) 0;
+
+      strong {
+        color: var(--mc-color-primary-500);
+        font-weight: 600;
+      }
+    }
+
+    .help-text {
+      font-size: var(--mc-font-body-sm);
+      color: var(--mc-text-tertiary);
+      font-style: italic;
+    }
+  }
+
+  // ===================================
+  // 👤 PATIENT CARD
+  // ===================================
+
+  .patient-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--mc-spacing-md) var(--mc-spacing-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--mc-spacing-lg);
+    animation: fadeInUp 0.25s ease-out;
+
+    .detail-item {
+      align-items: center;
+      padding: 0;
+
+      .patient-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--mc-color-primary-500);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-white);
+        font-weight: 600;
+        font-size: var(--mc-font-body-md);
+        margin-right: var(--mc-spacing-md);
+        flex-shrink: 0;
+      }
+
+      .detail-content {
+        .patient-name {
+          font-weight: 600;
+          color: var(--mc-text-primary);
+          font-size: var(--mc-font-heading-md);
+          margin-bottom: 2px;
+        }
+
+        .visit-count {
+          color: var(--mc-text-secondary);
+          font-size: var(--mc-font-body-sm);
+        }
+      }
+    }
+  }
+
+  // ===================================
+  // 📋 VISITS LIST
+  // ===================================
+
+  .visits-list {
+    // Compact spacing between cards
+    .visit-card {
+      margin-bottom: var(--mc-spacing-md);
+    }
+  }
+
+  // Visit Card - Individual visit item
+  .visit-card {
+    background: var(--mc-bg-card);
+    border-radius: var(--mc-radius-lg);
+    box-shadow: var(--mc-shadow-sm);
+    overflow: hidden;
+    animation: fadeInUp 0.25s ease-out forwards;
+    cursor: pointer;
+    transition: var(--mc-transition-base);
+    border: 1px solid var(--mc-card-border);
+    opacity: 0; // Start invisible for smoother animation
+
+    // Reduced staggered animation for smoother appearance (max 10 items with smaller delay)
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.03}s;
+      }
+    }
+
+    // Cards beyond 10th appear instantly to avoid long delays
+    &:nth-child(n+11) {
+      animation-delay: 0.3s;
+    }
+
+    &:hover {
+      box-shadow: var(--mc-shadow-md);
+      border-color: var(--mc-border-hover);
+      transform: translateY(-1px);
+    }
+
+    &:not(:last-child) {
+      margin-bottom: var(--mc-spacing-md);
+    }
+  }
+
+  // ===================================
+  // 📋 COMPACT VISIT SUMMARY
+  // ===================================
+
+  .visit-summary {
+    padding: var(--mc-spacing-md) var(--mc-spacing-lg);
+  }
+
+  .visit-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--mc-spacing-md);
+
+    .visit-datetime {
+      display: flex;
+      align-items: center;
+      gap: var(--mc-spacing-md);
+      flex: 1;
+
+      .inline-icon {
+        font-size: var(--mc-font-body-sm);
+        color: var(--mc-color-primary-500);
+        flex-shrink: 0;
+      }
+
+      .visit-date-time {
+        font-size: var(--mc-font-body-md);
+        font-weight: 600;
+        color: var(--mc-text-primary);
+        flex: 1;
+      }
+
+      .visit-type-badge {
+        font-size: var(--mc-font-body-xs);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        padding: 3px 6px;
+        border-radius: var(--radius-full);
+        margin-left: var(--mc-spacing-md);
+        flex-shrink: 0;
+
+        &.type-op {
+          background: var(--mc-color-primary-100);
+          color: var(--mc-color-primary-700);
+        }
+
+        &.type-ip {
+          background: var(--mc-color-warning-100);
+          color: var(--mc-color-warning-700);
+        }
+
+        &.type-checkup {
+          background: var(--mc-color-success-100);
+          color: var(--mc-color-success-700);
+        }
+
+        &.type-emergency {
+          background: var(--mc-color-error-100);
+          color: var(--mc-color-error-700);
+        }
+
+        &.type-followup {
+          background: var(--mc-color-info-100);
+          color: var(--mc-color-info-700);
+        }
+      }
+    }
+
+    .navigate-icon {
+      margin-left: var(--mc-spacing-md);
+      flex-shrink: 0;
+
+      ion-icon {
+        font-size: var(--mc-font-body-md);
+        color: var(--color-gray-400);
+        transition: all 0.2s ease;
+      }
+    }
+  }
+
+  .visit-doctor-info {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-md);
+    margin-bottom: var(--mc-spacing-md);
+
+    .inline-icon {
+      font-size: var(--mc-font-body-sm);
+      color: var(--mc-color-primary-500);
+      flex-shrink: 0;
+    }
+
+    .doctor-name {
+      font-size: var(--mc-font-body-md);
+      font-weight: 500;
+      color: var(--mc-text-primary);
+    }
+  }
+
+  .visit-summary-info {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--mc-spacing-md);
+
+    .inline-icon {
+      font-size: var(--mc-font-body-sm);
+      color: var(--mc-color-primary-500);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .summary-text {
+      flex: 1;
+      font-size: var(--mc-font-body-md);
+      color: var(--mc-text-secondary);
+      line-height: 1.4;
+
+      .reason-text {
+        font-weight: 500;
+        color: var(--mc-color-info-600);
+      }
+
+      .complaint-text {
+        color: var(--mc-text-secondary);
+      }
+    }
+  }
+
+
+  // ===================================
+  // 📱 RESPONSIVE DESIGN
+  // ===================================
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 0 var(--mc-spacing-md);
+    }
+
+    .header {
+      h1 {
+        font-size: var(--mc-font-heading-md);
+      }
+
+      .subtitle {
+        font-size: var(--mc-font-body-sm);
+      }
+    }
+
+    .patient-card {
+      padding: var(--mc-spacing-sm) var(--mc-spacing-md);
+      margin-bottom: var(--mc-spacing-md);
+
+      .patient-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: var(--mc-font-body-sm);
+      }
+    }
+
+    .visit-card {
+      margin-bottom: var(--mc-spacing-sm);
+
+      &:not(:last-child) {
+        margin-bottom: var(--mc-spacing-sm);
+      }
+    }
+
+    .visit-summary {
+      padding: var(--mc-spacing-sm) var(--mc-spacing-md);
+    }
+
+    .visit-header-row {
+      margin-bottom: var(--mc-spacing-sm);
+
+      .visit-datetime {
+        gap: var(--mc-spacing-sm);
+
+        .inline-icon {
+          font-size: var(--mc-font-body-sm);
+        }
+
+        .visit-date-time {
+          font-size: var(--mc-font-body-sm);
+        }
+
+        .visit-type-badge {
+          font-size: var(--mc-font-body-xs);
+          padding: 2px 4px;
+          margin-left: var(--spacing-1);
+        }
+      }
+
+      .navigate-icon {
+        ion-icon {
+          font-size: var(--mc-font-body-sm);
+        }
+      }
+    }
+
+    .visit-doctor-info {
+      margin-bottom: var(--mc-spacing-sm);
+      gap: var(--mc-spacing-sm);
+
+      .inline-icon {
+        font-size: var(--mc-font-body-sm);
+      }
+
+      .doctor-name {
+        font-size: var(--mc-font-body-sm);
+      }
+    }
+
+    .visit-summary-info {
+      gap: var(--mc-spacing-sm);
+
+      .inline-icon {
+        font-size: var(--mc-font-body-sm);
+      }
+
+      .summary-text {
+        font-size: var(--mc-font-body-sm);
+      }
+    }
+
+  }
+}
+
+// ===================================
+  // ✨ ANIMATIONS
+  // ===================================
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+

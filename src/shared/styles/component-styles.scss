@@ -1,0 +1,385 @@
+/**
+ * Global Component Styles with Modern Rounded Edges
+ * Standardized styling for common UI components across all pages
+ * Using MedicsCare theme system variables
+ */
+
+// ===================================
+// 🔘 BUTTON STYLES
+// ===================================
+
+ion-button {
+  --border-radius: var(--mc-radius-md);
+
+  &.button-rounded {
+    --border-radius: var(--mc-radius-lg);
+  }
+
+  &.button-pill {
+    --border-radius: var(--mc-radius-full);
+  }
+
+  &.button-compact {
+    --border-radius: var(--mc-radius-sm);
+  }
+}
+
+// Standard button overrides
+.btn, button {
+  border-radius: var(--mc-radius-md);
+  transition: var(--mc-transition-base);
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &.btn-rounded {
+    border-radius: var(--mc-radius-lg);
+  }
+
+  &.btn-pill {
+    border-radius: var(--mc-radius-full);
+  }
+}
+
+// ===================================
+// 🎨 MODAL & DIALOG STYLES
+// ===================================
+
+ion-modal {
+  --border-radius: var(--mc-radius-xl);
+
+  &.modal-sheet {
+    --border-radius: var(--mc-radius-xl) var(--mc-radius-xl) 0 0;
+  }
+}
+
+.modal-wrapper,
+.mat-dialog-container {
+  border-radius: var(--mc-radius-xl) !important;
+  overflow: hidden;
+}
+
+// ===================================
+// 🎯 ALERT & TOAST STYLES
+// ===================================
+
+ion-alert {
+  --border-radius: var(--mc-radius-lg);
+
+  .alert-wrapper {
+    border-radius: var(--mc-radius-lg);
+  }
+
+  .alert-button {
+    border-radius: var(--mc-radius-md);
+  }
+}
+
+ion-toast {
+  --border-radius: var(--mc-radius-md);
+
+  &.toast-rounded {
+    --border-radius: var(--mc-radius-lg);
+  }
+}
+
+// ===================================
+// 📊 LIST & ITEM STYLES
+// ===================================
+
+ion-list {
+  &.list-rounded {
+    border-radius: var(--mc-radius-lg);
+    overflow: hidden;
+  }
+}
+
+ion-item {
+  --border-radius: var(--mc-radius-md);
+
+  &.item-rounded {
+    --border-radius: var(--mc-radius-lg);
+    margin: var(--mc-spacing-2) 0;
+  }
+
+  &.item-compact {
+    --border-radius: var(--mc-radius-sm);
+  }
+}
+
+.list-item,
+.activity-item,
+.appointment-item,
+.record-item {
+  border-radius: var(--mc-radius-lg);
+  transition: var(--mc-transition-base);
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--mc-shadow-md);
+  }
+}
+
+// ===================================
+// 🎴 BADGE & CHIP STYLES
+// ===================================
+
+ion-badge {
+  border-radius: var(--mc-radius-sm);
+
+  &.badge-rounded {
+    border-radius: var(--mc-radius-full);
+  }
+}
+
+ion-chip {
+  border-radius: var(--mc-radius-full);
+
+  &.chip-square {
+    border-radius: var(--mc-radius-md);
+  }
+}
+
+.badge, .chip {
+  border-radius: var(--mc-radius-sm);
+  padding: var(--mc-spacing-1) var(--mc-spacing-3);
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--mc-font-body-sm);
+  font-weight: 500;
+
+  &.badge-rounded,
+  &.chip-rounded {
+    border-radius: var(--mc-radius-full);
+  }
+}
+
+// ===================================
+// 📦 CONTAINER & SECTION STYLES
+// ===================================
+
+.page-container,
+.content-container,
+.section-container {
+  border-radius: var(--mc-radius-lg);
+}
+
+.header-section,
+.banner-section {
+  border-radius: 0 0 var(--mc-radius-xl) var(--mc-radius-xl);
+}
+
+.footer-section {
+  border-radius: var(--mc-radius-xl) var(--mc-radius-xl) 0 0;
+}
+
+// ===================================
+// 🖼️ IMAGE & AVATAR STYLES
+// ===================================
+
+.avatar,
+ion-avatar {
+  border-radius: var(--mc-radius-full);
+
+  &.avatar-rounded {
+    border-radius: var(--mc-radius-lg);
+  }
+
+  &.avatar-square {
+    border-radius: var(--mc-radius-md);
+  }
+}
+
+.thumbnail,
+ion-thumbnail {
+  border-radius: var(--mc-radius-md);
+
+  &.thumbnail-rounded {
+    border-radius: var(--mc-radius-lg);
+  }
+}
+
+img.rounded {
+  border-radius: var(--mc-radius-md);
+
+  &.rounded-lg {
+    border-radius: var(--mc-radius-lg);
+  }
+
+  &.rounded-xl {
+    border-radius: var(--mc-radius-xl);
+  }
+}
+
+// ===================================
+// 🎛️ SEGMENT & TAB STYLES
+// ===================================
+
+ion-segment {
+  --border-radius: var(--mc-radius-md);
+
+  ion-segment-button {
+    --border-radius: var(--mc-radius-sm);
+  }
+}
+
+ion-tab-bar {
+  border-radius: var(--mc-radius-xl) var(--mc-radius-xl) 0 0;
+}
+
+// ===================================
+// 📱 MOBILE-SPECIFIC OVERRIDES
+// ===================================
+
+@media (max-width: 768px) {
+  // Slightly reduce border radius on mobile for better use of screen space
+  .page-container,
+  .content-container {
+    border-radius: var(--mc-radius-md);
+  }
+
+  .header-section,
+  .banner-section {
+    border-radius: 0 0 var(--mc-radius-lg) var(--mc-radius-lg);
+  }
+
+  ion-modal {
+    --border-radius: var(--mc-radius-lg);
+  }
+}
+
+// ===================================
+// 🎨 SPECIALTY COMPONENTS
+// ===================================
+
+// Action tiles (like quick actions on home page)
+.action-tile,
+.quick-action-card {
+  border-radius: var(--mc-radius-lg);
+  transition: var(--mc-transition-base);
+  border: 1px solid var(--mc-border-secondary);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--mc-shadow-lg);
+    border-color: var(--mc-border-focus);
+  }
+}
+
+// Health banners and notifications
+.health-banner,
+.notification-banner,
+.info-banner {
+  border-radius: var(--mc-radius-lg);
+  box-shadow: var(--mc-shadow-base);
+}
+
+// Activity cards
+.activity-card {
+  border-radius: var(--mc-radius-lg);
+  box-shadow: var(--mc-shadow-sm);
+  border: 1px solid var(--mc-border-secondary);
+  transition: var(--mc-transition-base);
+
+  &:hover {
+    transform: translateX(4px);
+    box-shadow: var(--mc-shadow-md);
+  }
+}
+
+// Empty states
+.empty-state {
+  border-radius: var(--mc-radius-xl);
+  box-shadow: var(--mc-card-shadow);
+  border: 1px solid var(--mc-card-border);
+}
+
+// Icon containers
+.icon-container,
+.banner-icon,
+.activity-icon,
+.tile-icon {
+  border-radius: var(--mc-radius-md);
+
+  &.rounded-lg {
+    border-radius: var(--mc-radius-lg);
+  }
+
+  &.rounded-full {
+    border-radius: var(--mc-radius-full);
+  }
+}
+
+// Search bars
+.searchbar,
+ion-searchbar {
+  --border-radius: var(--mc-radius-lg);
+  --box-shadow: var(--mc-shadow-sm);
+}
+
+// Floating Action Buttons
+ion-fab-button {
+  --border-radius: var(--mc-radius-full);
+  --box-shadow: var(--mc-shadow-lg);
+
+  &.fab-square {
+    --border-radius: var(--mc-radius-lg);
+  }
+}
+
+// ===================================
+// 🌙 DARK MODE COMPATIBILITY
+// ===================================
+
+[data-theme="dark"] {
+  ion-card,
+  .modern-card,
+  .action-tile,
+  .activity-card {
+    background: var(--mc-card-bg);
+    border-color: var(--mc-card-border);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  input[type="date"],
+  input[type="time"],
+  textarea,
+  select {
+    background: var(--mc-bg-secondary);
+    border-color: var(--mc-border-primary);
+    color: var(--mc-text-primary);
+
+    &:focus {
+      border-color: var(--mc-border-focus);
+    }
+  }
+}
+
+// ===================================
+// ♿ HIGH CONTRAST MODE
+// ===================================
+
+[data-contrast="high"] {
+  ion-card,
+  .modern-card,
+  .action-tile,
+  .activity-card,
+  button,
+  input,
+  select,
+  textarea {
+    border-width: 2px;
+  }
+
+  .action-tile:hover,
+  .activity-card:hover {
+    border-width: 3px;
+  }
+}

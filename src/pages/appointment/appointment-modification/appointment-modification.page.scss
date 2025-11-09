@@ -1,0 +1,68 @@
+/**
+ * MedicsCare Appointment Modification Page
+ * Professional appointment modification using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 PAGE LAYOUT
+// ===================================
+
+.display-full-width {
+  width: 100%;
+}
+
+ion-row {
+  padding: 0;
+}
+
+// ===================================
+// 📝 FORM ELEMENTS
+// ===================================
+
+span {
+  font-size: var(--mc-font-body-sm);
+}
+
+mat-label {
+  font-size: var(--mc-font-form-label);
+}
+
+.rowEqualDistribution {
+  height: 55px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+
+.radio-button {
+  padding: 0.5%;
+  padding-top: 5%;
+  margin-right: 1%;
+}
+
+mat-dialog-content {
+  border-radius: var(--mc-radius-sm);
+  padding-left: var(--mc-spacing-xs);
+  padding-right: var(--mc-spacing-xs);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+// ===================================
+// 🎨 TEXT COLORS
+// ===================================
+
+* {
+  color: var(--mc-text-primary);
+}
+
+// ===================================
+// 🔻 FOOTER STYLES
+// ===================================
+
+ion-footer {
+  margin-top: var(--mc-spacing-md);
+}

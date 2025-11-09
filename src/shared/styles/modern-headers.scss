@@ -1,0 +1,41 @@
+// Modern Header System
+// Clean, blur-backed headers with circular back buttons
+
+ion-toolbar {
+  --background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  --min-height: 60px;
+}
+
+ion-back-button {
+  --border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  --background: rgba(0, 0, 0, 0.05);
+  --color: #333;
+  margin: 8px;
+  
+  &:hover {
+    --background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Dark mode support - DISABLED to prevent automatic dark theme
+/*
+@media (prefers-color-scheme: dark) {
+  ion-toolbar {
+    --background: rgba(31, 41, 55, 0.85);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  ion-back-button {
+    --background: rgba(255, 255, 255, 0.1);
+    --color: #f9fafb;
+
+    &:hover {
+      --background: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+*/

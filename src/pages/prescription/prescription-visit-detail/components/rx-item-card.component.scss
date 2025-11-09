@@ -1,0 +1,378 @@
+/**
+ * MedicsCare :: Prescription Item Card Component
+ * Modern, professional prescription card inspired by CVS/Epic MyChart
+ */
+
+:host {
+  display: block;
+  margin-bottom: var(--mc-spacing-sm);
+}
+
+.rx-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+  border: 1px solid var(--mc-card-border);
+  border-radius: var(--mc-radius-lg);
+  box-shadow: var(--mc-shadow-sm);
+  overflow: hidden;
+  transition: all var(--mc-transition-base);
+  position: relative;
+
+  &:hover {
+    box-shadow: var(--mc-shadow-md);
+    transform: translateY(-1px);
+    border-color: var(--mc-color-primary-200);
+    background: linear-gradient(135deg, #ffffff 0%, #f0f5ff 100%);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: var(--mc-shadow-sm);
+  }
+
+  // Active prescription - subtle green tint
+  &.status-active {
+    background: linear-gradient(135deg, #f6fff8 0%, #f0fdf4 100%);
+    border-color: var(--mc-color-success-200);
+
+    &:hover {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    }
+  }
+
+  // Expired prescription - subtle gray tint
+  &.status-expired {
+    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+    border-color: var(--mc-color-gray-300);
+    opacity: 0.9;
+
+    &:hover {
+      background: linear-gradient(135deg, #f5f5f5 0%, #f0f0f0 100%);
+    }
+  }
+}
+
+// ===================================
+// 🎨 STATUS INDICATOR PILL (Left Side)
+// ===================================
+
+.status-pill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--mc-color-gray-300), var(--mc-color-gray-400));
+  transition: all var(--mc-transition-base);
+
+  &.active {
+    background: linear-gradient(180deg, var(--mc-color-success-400), var(--mc-color-success-600));
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+  }
+
+  &.expired {
+    background: linear-gradient(180deg, var(--mc-color-gray-300), var(--mc-color-gray-500));
+  }
+}
+
+// ===================================
+// 📋 MAIN CONTENT
+// ===================================
+
+.rx-content {
+  padding: var(--mc-spacing-md);
+  padding-left: calc(var(--mc-spacing-md) + 8px); // Extra space for status pill
+}
+
+// ===================================
+// 🏷️ HEADER ROW
+// ===================================
+
+.rx-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--mc-spacing-sm);
+  margin-bottom: var(--mc-spacing-sm);
+  padding-bottom: var(--mc-spacing-sm);
+  border-bottom: 1px solid rgba(0, 37, 130, 0.06);
+}
+
+// Add subtle background to active card headers
+.status-active .rx-header {
+  border-bottom-color: rgba(34, 197, 94, 0.08);
+}
+
+.status-expired .rx-header {
+  border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+.rx-name {
+  flex: 1;
+  font-size: var(--mc-font-body-lg);
+  font-weight: 600;
+  color: var(--mc-text-primary);
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px var(--mc-spacing-sm);
+  border-radius: var(--mc-radius-sm);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.2;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  &.active {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    color: var(--mc-color-success-800);
+    border: 1px solid var(--mc-color-success-300);
+  }
+
+  &.expired {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    color: var(--mc-color-gray-700);
+    border: 1px solid var(--mc-color-gray-400);
+  }
+}
+
+// ===================================
+// 📊 DETAILS GRID (Professional Label-Value Layout)
+// ===================================
+
+.rx-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--mc-spacing-sm) var(--mc-spacing-md);
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--mc-spacing-sm);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: calc(var(--mc-spacing-xs) * 1.5);
+  }
+
+  @media (max-width: 380px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--mc-spacing-xs);
+  }
+
+  @media (max-width: 320px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: calc(var(--mc-spacing-xs) * 0.8);
+  }
+
+  @media (max-width: 280px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: calc(var(--mc-spacing-xs) * 0.6);
+  }
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: var(--mc-spacing-xs);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: var(--mc-radius-sm);
+  border: 1px solid rgba(0, 37, 130, 0.04);
+  transition: all var(--mc-transition-base);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 37, 130, 0.08);
+  }
+}
+
+// Active prescription detail items
+.status-active .detail-item {
+  background: rgba(240, 253, 244, 0.4);
+  border-color: rgba(34, 197, 94, 0.08);
+
+  &:hover {
+    background: rgba(220, 252, 231, 0.6);
+    border-color: rgba(34, 197, 94, 0.15);
+  }
+}
+
+// Expired prescription detail items
+.status-expired .detail-item {
+  background: rgba(249, 250, 251, 0.5);
+  border-color: rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    background: rgba(243, 244, 246, 0.8);
+  }
+}
+
+.detail-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--mc-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.detail-value {
+  font-size: var(--mc-font-body-sm);
+  font-weight: 600;
+  color: var(--mc-text-primary);
+  line-height: 1.4;
+
+  &.time-value,
+  &.route-value {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    ion-icon {
+      font-size: 14px;
+      color: var(--mc-color-primary-500);
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ===================================
+// 📝 SPECIAL INSTRUCTIONS / REMARKS
+// ===================================
+
+.rx-remarks {
+  margin-top: var(--mc-spacing-sm);
+  padding: var(--mc-spacing-sm);
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #fbbf24;
+  border-left: 3px solid #f59e0b;
+  border-radius: var(--mc-radius-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mc-spacing-xs);
+  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.1);
+
+  .remarks-icon {
+    font-size: 18px;
+    color: #f59e0b;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .remarks-text {
+    flex: 1;
+    font-size: var(--mc-font-body-sm);
+    font-weight: 600;
+    color: #78350f;
+    line-height: 1.4;
+  }
+}
+
+// Active prescription remarks
+.status-active .rx-remarks {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-color: #60a5fa;
+  border-left-color: #3b82f6;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.1);
+
+  .remarks-icon {
+    color: #3b82f6;
+  }
+
+  .remarks-text {
+    color: #1e3a8a;
+  }
+}
+
+// Expired prescription remarks
+.status-expired .rx-remarks {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  border-color: #d1d5db;
+  border-left-color: #9ca3af;
+  box-shadow: 0 1px 3px rgba(156, 163, 175, 0.1);
+  opacity: 0.8;
+
+  .remarks-icon {
+    color: #6b7280;
+  }
+
+  .remarks-text {
+    color: #374151;
+  }
+}
+
+// ===================================
+// 📱 RESPONSIVE ADJUSTMENTS
+// ===================================
+
+@media (max-width: 600px) {
+  .rx-content {
+    padding: var(--mc-spacing-sm);
+    padding-left: calc(var(--mc-spacing-sm) + 8px);
+  }
+
+  .rx-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--mc-spacing-xs);
+    margin-bottom: var(--mc-spacing-xs);
+    padding-bottom: var(--mc-spacing-xs);
+  }
+
+  .rx-name {
+    font-size: var(--mc-font-body-md);
+  }
+
+  .status-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .detail-label {
+    font-size: 10px;
+  }
+
+  .detail-value {
+    font-size: var(--mc-font-body-sm);
+  }
+
+  .rx-remarks {
+    padding: var(--mc-spacing-xs);
+    margin-top: var(--mc-spacing-xs);
+
+    .remarks-icon {
+      font-size: 16px;
+    }
+
+    .remarks-text {
+      font-size: var(--mc-font-body-sm);
+    }
+  }
+}
+
+// ===================================
+// 🎨 ANIMATIONS
+// ===================================
+
+.rx-card {
+  animation: fadeInUp 0.3s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

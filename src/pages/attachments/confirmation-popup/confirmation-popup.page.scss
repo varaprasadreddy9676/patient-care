@@ -1,0 +1,360 @@
+/**
+ * MedicsCare Confirmation Popup Component
+ * Professional confirmation dialog using the MedicsCare Theme System
+ */
+
+// ===================================
+// 📱 DIALOG CONTAINER
+// ===================================
+
+.confirmation-dialog-container {
+  min-width: 450px;
+  max-width: 550px;
+  border-radius: var(--mc-radius-lg);
+  overflow: hidden;
+  background: var(--mc-bg-primary);
+  box-shadow: var(--mc-shadow-xl);
+  animation: fadeInScale 0.3s ease-out;
+
+  @media (max-width: 768px) {
+    min-width: 85vw;
+    max-width: 90vw;
+  }
+
+  @media (max-width: 480px) {
+    min-width: 92vw;
+    max-width: 95vw;
+  }
+}
+
+// ===================================
+// 📋 DIALOG HEADER
+// ===================================
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: var(--mc-spacing-md);
+  padding: var(--mc-spacing-xl) var(--mc-spacing-2xl);
+  background: linear-gradient(135deg, var(--mc-color-error-500) 0%, var(--mc-color-error-600) 100%);
+  border-bottom: 1px solid var(--mc-border-primary);
+
+  .header-icon {
+    font-size: var(--mc-icon-size-2xl);
+    color: var(--mc-text-inverse);
+    flex-shrink: 0;
+  }
+
+  .header-title {
+    margin: 0;
+    font-size: var(--font-heading-lg);
+    font-weight: 600;
+    color: var(--mc-text-inverse);
+    flex: 1;
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--mc-spacing-lg) var(--mc-spacing-xl);
+
+    .header-icon {
+      font-size: var(--mc-icon-size-xl);
+    }
+
+    .header-title {
+      font-size: var(--font-heading-md);
+    }
+  }
+}
+
+// ===================================
+// 📝 DIALOG CONTENT
+// ===================================
+
+.dialog-content {
+  padding: var(--mc-spacing-2xl);
+
+  @media (max-width: 480px) {
+    padding: var(--mc-spacing-xl) var(--mc-spacing-lg);
+  }
+}
+
+// ===================================
+// ⚠️ WARNING MESSAGE
+// ===================================
+
+.warning-message {
+  margin-bottom: var(--mc-spacing-xl);
+
+  .message-text {
+    margin: 0 0 var(--mc-spacing-md) 0;
+    color: var(--mc-text-primary);
+    font-size: var(--font-body-lg);
+    font-weight: 500;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .message-subtext {
+    margin: 0;
+    color: var(--mc-text-secondary);
+    font-size: var(--font-body-md);
+    line-height: 1.5;
+    text-align: center;
+
+    strong {
+      color: var(--mc-color-error-600);
+      font-weight: 600;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .message-text {
+      font-size: var(--font-body-md);
+    }
+
+    .message-subtext {
+      font-size: var(--font-body-sm);
+    }
+  }
+}
+
+// ===================================
+// 📋 FILES LIST
+// ===================================
+
+.files-list {
+  padding: var(--mc-spacing-lg);
+  background: var(--mc-bg-secondary);
+  border-radius: var(--mc-radius-md);
+  border: 1px solid var(--mc-border-secondary);
+  max-height: 200px;
+  overflow-y: auto;
+
+  .list-header {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-xs);
+    margin-bottom: var(--mc-spacing-md);
+    padding-bottom: var(--mc-spacing-sm);
+    border-bottom: 1px solid var(--mc-border-primary);
+
+    .list-icon {
+      font-size: var(--mc-icon-size-sm);
+      color: var(--mc-color-error-500);
+    }
+
+    .list-title {
+      font-size: var(--font-body-sm);
+      font-weight: 600;
+      color: var(--mc-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .file-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .file-item {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-sm);
+    padding: var(--mc-spacing-sm) 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--mc-border-tertiary);
+    }
+
+    .file-icon {
+      font-size: var(--mc-icon-size-sm);
+      color: var(--mc-color-error-500);
+      flex-shrink: 0;
+    }
+
+    .file-name {
+      font-size: var(--font-body-sm);
+      color: var(--mc-text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--mc-spacing-md);
+    max-height: 150px;
+
+    .list-header {
+      .list-title {
+        font-size: var(--font-body-xs);
+      }
+    }
+
+    .file-item {
+      .file-name {
+        font-size: var(--font-body-xs);
+      }
+    }
+  }
+}
+
+// ===================================
+// 🔘 DIALOG ACTIONS
+// ===================================
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--mc-spacing-md);
+  padding: var(--mc-spacing-xl) var(--mc-spacing-2xl);
+  background: var(--mc-bg-secondary);
+  border-top: 1px solid var(--mc-border-primary);
+
+  ion-button {
+    --border-radius: var(--mc-radius-md);
+    --padding-start: var(--mc-spacing-xl);
+    --padding-end: var(--mc-spacing-xl);
+    font-weight: 600;
+    text-transform: none;
+    min-width: 120px;
+    transition: var(--mc-transition-base);
+
+    ion-icon {
+      font-size: var(--mc-icon-size-sm);
+    }
+  }
+
+  .cancel-button {
+    --border-color: var(--mc-border-primary);
+    --border-width: 2px;
+    --color: var(--mc-text-secondary);
+
+    &:hover {
+      --color: var(--mc-text-primary);
+      --border-color: var(--mc-border-focus);
+    }
+  }
+
+  .delete-button {
+    --background: var(--mc-color-error-500);
+    --background-hover: var(--mc-color-error-600);
+    --color: var(--mc-text-inverse);
+    --box-shadow: var(--mc-shadow-md);
+
+    &:hover {
+      transform: translateY(-1px);
+      --box-shadow: var(--mc-shadow-lg);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+    padding: var(--mc-spacing-lg) var(--mc-spacing-xl);
+
+    ion-button {
+      width: 100%;
+      --padding-start: var(--mc-spacing-lg);
+      --padding-end: var(--mc-spacing-lg);
+    }
+  }
+}
+
+// ===================================
+// 🎬 ANIMATIONS
+// ===================================
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// ===================================
+// 🔧 MATERIAL DIALOG OVERRIDES
+// ===================================
+
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: var(--mc-radius-lg);
+  background: var(--mc-bg-primary);
+  box-shadow: var(--mc-shadow-xl);
+
+  // iOS-safe modal
+  .ios & {
+    max-height: calc(var(--app-height, 100vh) - 40px);
+  }
+}
+
+// ===================================
+// 🌙 DARK MODE SUPPORT
+// ===================================
+
+[data-theme="dark"] {
+  .confirmation-dialog-container {
+    background: var(--mc-bg-secondary);
+  }
+
+  .dialog-header {
+    background: linear-gradient(135deg, var(--mc-color-error-700) 0%, var(--mc-color-error-800) 100%);
+  }
+
+  .files-list {
+    background: var(--mc-bg-tertiary);
+    border-color: var(--mc-border-primary);
+  }
+
+  .warning-message {
+    .message-subtext {
+      strong {
+        color: var(--mc-color-error-400);
+      }
+    }
+  }
+
+  .dialog-actions {
+    background: var(--mc-bg-tertiary);
+  }
+}
+
+// ===================================
+// ♿ ACCESSIBILITY
+// ===================================
+
+// Ensure touch targets are large enough on mobile
+@media (max-width: 480px) {
+  ion-button {
+    min-height: 44px;
+  }
+}
+
+// Focus states for keyboard navigation
+.cancel-button,
+.delete-button {
+  &:focus-visible {
+    outline: 3px solid var(--mc-color-primary-500);
+    outline-offset: 2px;
+  }
+}

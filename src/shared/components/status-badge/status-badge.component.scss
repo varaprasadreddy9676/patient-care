@@ -1,0 +1,308 @@
+/**
+ * Status Badge Component
+ * Consistent 24px height badges for all status indicators
+ */
+
+.status-badge-container {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mc-spacing-1);
+  height: var(--mc-badge-height);
+  padding: 0 var(--mc-badge-padding-x);
+  border-radius: var(--mc-badge-radius);
+  font-size: var(--mc-badge-font-size);
+  font-weight: var(--mc-badge-font-weight);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+
+  .status-badge__icon {
+    font-size: var(--mc-icon-size-sm);
+    flex-shrink: 0;
+  }
+
+  .status-badge__text {
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Size Variants
+.status-badge--sm {
+  height: 20px;
+  padding: 0 var(--mc-spacing-1);
+  font-size: 0.625rem;
+  gap: var(--mc-spacing-1);
+
+  .status-badge__icon {
+    font-size: 10px;
+  }
+}
+
+.status-badge--md {
+  height: var(--mc-badge-height); // 24px
+  padding: 0 var(--mc-badge-padding-x);
+  font-size: var(--mc-badge-font-size);
+  gap: var(--mc-spacing-1);
+
+  .status-badge__icon {
+    font-size: var(--mc-icon-size-sm);
+  }
+}
+
+.status-badge--lg {
+  height: 28px;
+  padding: 0 var(--mc-spacing-3);
+  font-size: 0.875rem;
+  gap: var(--mc-spacing-2);
+
+  .status-badge__icon {
+    font-size: var(--mc-icon-size-base);
+  }
+}
+
+// Alignment Classes
+.status-badge--align-left {
+  justify-self: flex-start;
+  margin-right: auto;
+}
+
+.status-badge--align-right {
+  justify-self: flex-end;
+  margin-left: auto;
+}
+
+.status-badge--align-center {
+  justify-self: center;
+  margin: 0 auto;
+}
+
+// Status Color Variants - Light Theme
+.status-badge--scheduled {
+  background: var(--mc-color-info-50);
+  color: var(--mc-color-info-600);
+  border: 1px solid var(--mc-color-info-200);
+}
+
+.status-badge--confirmed {
+  background: var(--mc-color-primary-50);
+  color: var(--mc-color-primary-600);
+  border: 1px solid var(--mc-color-primary-200);
+}
+
+.status-badge--in-progress {
+  background: var(--mc-color-warning-50);
+  color: var(--mc-color-warning-600);
+  border: 1px solid var(--mc-color-warning-200);
+}
+
+.status-badge--completed {
+  background: var(--mc-color-success-50);
+  color: var(--mc-color-success-600);
+  border: 1px solid var(--mc-color-success-200);
+}
+
+.status-badge--cancelled,
+.status-badge--no-show {
+  background: var(--mc-color-error-50);
+  color: var(--mc-color-error-600);
+  border: 1px solid var(--mc-color-error-200);
+}
+
+.status-badge--paid {
+  background: var(--mc-color-success-50);
+  color: var(--mc-color-success-600);
+  border: 1px solid var(--mc-color-success-200);
+}
+
+.status-badge--pending {
+  background: var(--mc-color-warning-50);
+  color: var(--mc-color-warning-600);
+  border: 1px solid var(--mc-color-warning-200);
+}
+
+.status-badge--overdue {
+  background: var(--mc-color-error-50);
+  color: var(--mc-color-error-600);
+  border: 1px solid var(--mc-color-error-200);
+}
+
+.status-badge--partial {
+  background: var(--mc-color-info-50);
+  color: var(--mc-color-info-600);
+  border: 1px solid var(--mc-color-info-200);
+}
+
+.status-badge--refunded {
+  background: var(--mc-color-neutral-100);
+  color: var(--mc-color-neutral-600);
+  border: 1px solid var(--mc-color-neutral-200);
+}
+
+.status-badge--active {
+  background: var(--mc-color-success-50);
+  color: var(--mc-color-success-600);
+  border: 1px solid var(--mc-color-success-200);
+}
+
+.status-badge--inactive {
+  background: var(--mc-color-neutral-100);
+  color: var(--mc-color-neutral-600);
+  border: 1px solid var(--mc-color-neutral-200);
+}
+
+.status-badge--critical,
+.status-badge--emergency {
+  background: var(--mc-color-error-50);
+  color: var(--mc-color-error-600);
+  border: 1px solid var(--mc-color-error-200);
+}
+
+.status-badge--normal {
+  background: var(--mc-color-success-50);
+  color: var(--mc-color-success-600);
+  border: 1px solid var(--mc-color-success-200);
+}
+
+.status-badge--abnormal {
+  background: var(--mc-color-warning-50);
+  color: var(--mc-color-warning-600);
+  border: 1px solid var(--mc-color-warning-200);
+}
+
+.status-badge--draft,
+.status-badge--archived {
+  background: var(--mc-color-neutral-100);
+  color: var(--mc-color-neutral-600);
+  border: 1px solid var(--mc-color-neutral-200);
+}
+
+.status-badge--finalized {
+  background: var(--mc-color-success-50);
+  color: var(--mc-color-success-600);
+  border: 1px solid var(--mc-color-success-200);
+}
+
+.status-badge--amended {
+  background: var(--mc-color-warning-50);
+  color: var(--mc-color-warning-600);
+  border: 1px solid var(--mc-color-warning-200);
+}
+
+// Dark Theme Adjustments
+[data-theme="dark"] {
+  .status-badge--scheduled {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  .status-badge--confirmed {
+    background: rgba(29, 78, 216, 0.15);
+    color: #3b82f6;
+    border: 1px solid rgba(29, 78, 216, 0.3);
+  }
+
+  .status-badge--in-progress {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .status-badge--completed {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  .status-badge--cancelled,
+  .status-badge--no-show {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .status-badge--paid {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  .status-badge--pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .status-badge--overdue {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .status-badge--partial {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  .status-badge--refunded,
+  .status-badge--inactive,
+  .status-badge--draft,
+  .status-badge--archived {
+    background: rgba(100, 116, 139, 0.15);
+    color: #94a3b8;
+    border: 1px solid rgba(100, 116, 139, 0.3);
+  }
+
+  .status-badge--active,
+  .status-badge--normal,
+  .status-badge--finalized {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  .status-badge--critical,
+  .status-badge--emergency {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .status-badge--abnormal,
+  .status-badge--amended {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+}
+
+// Accessibility
+.status-badge-container:focus-visible {
+  outline: var(--mc-focus-ring-width) solid var(--mc-focus-ring-color);
+  outline-offset: var(--mc-focus-ring-offset);
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .status-badge-container {
+    border-width: 2px;
+  }
+}
+
+// Animation for status changes
+.status-badge-container {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

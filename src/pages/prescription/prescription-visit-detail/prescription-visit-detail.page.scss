@@ -1,0 +1,237 @@
+/**
+ * Collapsible section styles
+ */
+.section-collapsible {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: var(--mc-spacing-sm) 0;
+  margin: var(--mc-spacing-md) 0 var(--mc-spacing-sm);
+  border-radius: var(--mc-radius-md);
+  transition: all var(--mc-transition-base);
+
+  h2 {
+    font-size: var(--mc-font-body-lg);
+    font-weight: 600;
+    color: var(--mc-text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  &:hover {
+    background-color: var(--mc-bg-secondary);
+    padding-left: var(--mc-spacing-sm);
+    padding-right: var(--mc-spacing-sm);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-xs);
+  }
+
+  .chevron-icon {
+    font-size: 18px;
+    color: var(--mc-text-tertiary);
+    transition: transform var(--mc-transition-base);
+  }
+
+  // When section is open
+  &.section-open {
+    .chevron-icon {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.collapsible-content {
+  animation: fadeIn 0.4s ease-out;
+  padding-top: var(--mc-spacing-xs);
+}
+
+
+.prescription-detail-page {
+  --background: var(--mc-bg-primary);
+  --padding-top: var(--mc-spacing-lg);
+  --padding-bottom: 0; // Remove ion-content padding, we'll handle it in container
+
+  // ===================================
+  // 📱 CONTAINER LAYOUT
+  // ===================================
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--mc-spacing-lg);
+    padding-bottom: 100px; // Extra space for tab bar/footer at bottom
+
+    @media (max-width: 600px) {
+      padding: 0 var(--mc-spacing-md);
+      padding-bottom: 100px; // Ensure content doesn't hide behind footer
+    }
+
+    // iOS safe area support
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      padding-bottom: calc(100px + env(safe-area-inset-bottom));
+    }
+  }
+
+  // ===================================
+  // 📋 SECTION HEADERS
+  // ===================================
+
+  .section {
+    margin: var(--mc-spacing-lg) 0 var(--mc-spacing-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+      font-size: var(--mc-font-body-lg);
+      color: var(--mc-text-primary);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .count {
+      background: var(--mc-color-primary-500);
+      color: var(--mc-text-inverse);
+      border-radius: var(--mc-radius-full);
+      padding: 3px var(--mc-spacing-sm);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.2;
+      min-width: 24px;
+      text-align: center;
+    }
+  }
+
+  .mt20 {
+    margin-top: var(--mc-spacing-lg);
+  }
+
+  .mt26 {
+    margin-top: var(--mc-spacing-xl);
+  }
+
+  // ===================================
+  // 🔄 LOADING STATE
+  // ===================================
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mc-spacing-xl) var(--mc-spacing-lg);
+    min-height: 200px;
+    gap: var(--mc-spacing-md);
+    animation: fadeIn 0.5s ease-out;
+
+    ion-spinner {
+      --color: var(--mc-color-primary-500);
+      width: 40px;
+      height: 40px;
+    }
+
+    .loading-text {
+      color: var(--mc-text-secondary);
+      font-size: var(--mc-font-body-md);
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  // ===================================
+  // 📄 EMPTY STATE
+  // ===================================
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mc-spacing-xl) var(--mc-spacing-lg);
+    text-align: center;
+    animation: fadeInUp 0.5s ease-out;
+    background: var(--mc-bg-card);
+    border-radius: var(--mc-radius-lg);
+    border: 1px solid var(--mc-card-border);
+    margin: var(--mc-spacing-lg) 0;
+
+    .empty-icon {
+      font-size: 64px;
+      color: var(--mc-color-gray-400);
+      margin-bottom: var(--mc-spacing-md);
+      opacity: 0.8;
+    }
+
+    p {
+      font-size: var(--mc-font-body-md);
+      font-weight: 500;
+      color: var(--mc-text-secondary);
+      margin: var(--mc-spacing-xs) 0;
+      max-width: 320px;
+
+      &.help-text {
+        font-size: var(--mc-font-body-sm);
+        font-weight: 400;
+        color: var(--mc-text-tertiary);
+        margin-top: var(--mc-spacing-xs);
+      }
+    }
+  }
+
+  // ===================================
+  // 📱 RESPONSIVE DESIGN
+  // ===================================
+
+  @media (max-width: 600px) {
+    .section {
+      margin: var(--mc-spacing-md) 0 var(--mc-spacing-sm);
+
+      h2 {
+        font-size: var(--mc-font-body-md);
+      }
+
+      .count {
+        font-size: 10px;
+        padding: 2px var(--mc-spacing-xs);
+      }
+    }
+
+    .section-collapsible {
+      h2 {
+        font-size: var(--mc-font-body-md);
+      }
+    }
+  }
+}
+
+// ===================================
+// 🎨 ANIMATIONS
+// ===================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,247 @@
+/**
+ * MedicsCare Add Request Popup Component
+ * Professional customer service request dialog using the MedicsCare Theme System
+ */
+
+// ===================================
+// 🔧 MATERIAL COMPONENT STYLES
+// ===================================
+
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  box-shadow: var(--shadow-lg);
+  max-width: 500px;
+}
+
+// ===================================
+// 📋 DIALOG HEADER
+// ===================================
+
+.dialog-header {
+  padding: var(--spacing-5);
+  text-align: center;
+  border-bottom: 1px solid var(--color-gray-100);
+
+  .header-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-2);
+
+    .success-icon {
+      font-size: 56px;
+      color: var(--mc-color-success-500);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: var(--font-heading-md);
+      font-weight: 600;
+      color: var(--mc-color-success-600);
+    }
+  }
+
+  .header-submit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-2);
+
+    .submit-icon {
+      font-size: 48px;
+      color: var(--mc-color-primary-500);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: var(--font-heading-md);
+      font-weight: 600;
+      color: var(--mc-text-primary);
+    }
+  }
+}
+
+// ===================================
+// 📝 DIALOG CONTENT
+// ===================================
+
+.dialog-content {
+  padding: var(--spacing-5);
+}
+
+// ===================================
+// ✅ SUCCESS STATE
+// ===================================
+
+.success-content {
+  .success-message {
+    margin-bottom: var(--spacing-5);
+  }
+
+  .issue-confirmation {
+    font-size: var(--font-body-md);
+    color: var(--mc-text-primary);
+    margin: 0 0 var(--spacing-3) 0;
+    line-height: 1.6;
+    text-align: center;
+
+    strong {
+      color: var(--mc-color-primary-600);
+      font-weight: 600;
+    }
+  }
+
+  .process-info {
+    font-size: var(--font-body-sm);
+    color: var(--color-gray-600);
+    margin: 0;
+    text-align: center;
+    line-height: 1.5;
+  }
+}
+
+// ===================================
+// 📝 SUBMIT FORM
+// ===================================
+
+.submit-content {
+  .form-section {
+    margin-bottom: var(--spacing-5);
+  }
+
+  .form-label {
+    display: block;
+    font-size: var(--font-body-sm);
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .form-textarea {
+    width: 100%;
+    --mc-input-padding-x: var(--spacing-3);
+    --mc-input-padding-y: var(--spacing-3);
+    --mc-input-bg: var(--color-white);
+    --mc-input-border: var(--color-gray-300);
+    --mc-input-placeholder: var(--color-gray-400);
+    font-size: var(--font-body-md);
+    color: var(--mc-text-primary);
+  }
+}
+
+// ===================================
+// 🔘 DIALOG ACTIONS
+// ===================================
+
+.dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+
+  ion-button {
+    --border-radius: var(--radius-md);
+    --padding-top: var(--spacing-3);
+    --padding-bottom: var(--spacing-3);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .close-btn {
+    --background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-700));
+    --color: var(--color-white);
+    --box-shadow: var(--shadow-sm);
+
+    &:hover {
+      --background: linear-gradient(90deg, var(--color-primary-700), var(--color-primary-800));
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  .cancel-btn {
+    --border-color: var(--color-gray-300);
+    --color: var(--color-gray-700);
+
+    &:hover {
+      --background: var(--color-gray-50);
+      --border-color: var(--color-gray-400);
+    }
+  }
+
+  .submit-btn {
+    --background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-700));
+    --color: var(--color-white);
+    --box-shadow: var(--shadow-sm);
+
+    &:hover {
+      --background: linear-gradient(90deg, var(--color-primary-700), var(--color-primary-800));
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+// ===================================
+// 📱 RESPONSIVE DESIGN
+// ===================================
+
+@media (max-width: 600px) {
+  ::ng-deep .mat-dialog-container {
+    max-width: 90vw;
+  }
+
+  .dialog-header {
+    padding: var(--spacing-4);
+
+    .header-success .success-icon,
+    .header-submit .submit-icon {
+      font-size: 40px;
+    }
+
+    h2 {
+      font-size: var(--font-heading-sm);
+    }
+  }
+
+  .dialog-content {
+    padding: var(--spacing-4);
+  }
+
+  .success-content {
+    .issue-confirmation {
+      font-size: var(--font-body-sm);
+    }
+
+    .process-info {
+      font-size: var(--font-body-xs);
+    }
+  }
+
+  .submit-content {
+    .form-label {
+      font-size: var(--font-body-xs);
+    }
+
+    .form-textarea {
+      font-size: var(--font-body-sm);
+      padding: var(--spacing-2);
+    }
+  }
+
+  .dialog-actions {
+    gap: var(--spacing-2);
+
+    ion-button {
+      --padding-top: var(--spacing-2);
+      --padding-bottom: var(--spacing-2);
+      font-size: var(--font-body-sm);
+    }
+  }
+}
