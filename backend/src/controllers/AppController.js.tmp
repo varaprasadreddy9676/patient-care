@@ -1,0 +1,80 @@
+var mongoose = require('mongoose');
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+
+
+module.exports = function (app, route) {
+
+    var User = mongoose.model('User', app.models.user);
+
+    app.get(route + '/reboot', (req, res) => {
+
+        var reqUser = req.user;
+
+        User.findById(reqUser._id, function (errUSer, user) {
+
+            if (errUSer) {
+                var msg = {
+                    code: 'INVALID_USER',
+                    message: 'Invalid user'
+                }
+
+                console.log(msg);
+                res.status(500);
+                res.send(msg);
+            }
+
+            if (user.roles && user.roles.root) {
+
+                console.log('Server rebooting');
+                // process.exit(1);
+
+                setTimeout(function () {
+
+                    process.on("exit", function () {
+
+                        console.log('Server starting');
+
+                        var msg = {
+                            code: 'INIT_APP_REBOOT',
+                            message: 'Initiating app server reboot.'
+                        }
+
+                        res.status(200);
+                        res.send(msg);
+
+
+                        require("child_process").spawn(process.argv.shift(), process.argv, {
+                            cwd: process.cwd(),
+                            detached: true,
+                            stdio: "inherit"
+                        });
+                    });
+
+                    process.exit();
+
+                }, 1000);
+
+            } else {
+                var msg = {
+                    code: 'INSUFFICIENT_PRIVILEGE',
+                    message: 'Insufficient privilege. Not authorised to reboot the app'
+                }
+
+                console.log(msg);
+                res.status(500);
+                res.send(msg);
+            }
+
+        });
+
+    });
+
+
+    // Return middleware
+    return function (req, res, next) {
+        next();
+    };
+
+}

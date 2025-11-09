@@ -1,0 +1,35 @@
+module.exports = {
+    BASE_URL: "/api",
+    MONGO_DB_URL: "mongodb://sai:sai@13.127.106.100:27030/patient_app_db",
+    PORT: 3081,
+    SECRET_KEY: process.env.MMS_KEY ? process.env.MMS_KEY : "NANMAGAND",
+    communicationServerURL : "https://medicsprime.in/medics-communication-service/api/",
+
+    FAMILY_MEMBER_RELATIONS: {
+        SELF: "Self",
+        SPOUSE: "Spouse",
+        CHILD: "Child",
+        SON: "Son",
+        DAUGHTER: "Daughter",
+        PARENT: "Parent",
+        FATHER: "Father",
+        MOTHER: "Mother",
+        SIBLING: "Sibling",
+        BROTHER: "Brother",
+        SISTER: "Sister",
+        GRANDPARENT: "Grandparent",
+        GRANDFATHER: "Grandfather",
+        GRANDMOTHER: "Grandmother",
+        GRANDCHILD: "Grandchild",
+        GRANDSON: "Grandson",
+        GRANDDAUGHTER: "Granddaughter",
+        UNCLE: "Uncle",
+        AUNT: "Aunt",
+        COUSIN: "Cousin",
+        NIECE: "Niece",
+        NEPHEW: "Nephew",
+        FRIEND: "Friend",
+        PARTNER: "Partner",
+        OTHER: "Other"
+    }
+  };

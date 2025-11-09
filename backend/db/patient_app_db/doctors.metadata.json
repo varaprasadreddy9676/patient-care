@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"unique":true,"key":{"phone":{"$numberInt":"1"},"appId":{"$numberInt":"1"}},"name":"phone_1_appId_1","background":true}],"uuid":"e7844ae0cc4b49c78d3184370e9dd72d","collectionName":"doctors","type":"collection"}

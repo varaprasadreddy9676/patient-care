@@ -1,0 +1,7 @@
+* Added 'active' flag in Special Offers lookup
+* Added DL as a new field in Customer model
+* Added Contact, Phone, and DL to Supplier mails
+
+* Added City/State selection to Customer and Supplier
+
+* Added Active flag to Supplier and Catalogue, both UI and server

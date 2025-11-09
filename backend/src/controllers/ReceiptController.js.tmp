@@ -1,0 +1,66 @@
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+
+
+var httpService = require('../services/HTTPService.js');
+
+module.exports = function (app, route) {
+
+    app.get(route, function (req, res, next) {
+
+        var hospitalCode = req.query.hospitalCode;
+        var receiptId = req.query.receiptId;
+
+        _handleReceipt(res, hospitalCode, receiptId);
+
+    });
+
+
+    app.get(route + '/print', function (req, res, next) {
+
+        var hospitalCode = req.query.hospitalCode;
+        var receiptId = req.query.receiptId;
+
+        _handleReceipt(res, hospitalCode, receiptId);
+
+    });
+
+    function _handleReceipt(res, hospitalCode, receiptId) {
+
+        var url = '/receipts/' + receiptId;
+
+        httpService.doGet(hospitalCode, url, null, success, error);
+
+        function success(response) {
+
+            if (response.data) {
+
+                var data = {
+                    'receipt': response.data
+                };
+
+                res.status(200);
+                res.send(data);
+
+            } else {
+                error(response);
+            }
+
+        }
+
+        function error(error) {
+            console.error('Error: ' + error);
+            res.status(500);
+            res.send(error);
+        }
+
+    }
+
+
+    // Return middleware
+    return function (req, res, next) {
+        next();
+    };
+
+};

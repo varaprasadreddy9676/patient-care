@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"unique":true,"key":{"hospitalCode":{"$numberInt":"1"},"userId":{"$numberInt":"1"}},"name":"hospitalCode_1_userId_1","background":true}],"uuid":"b95e2a56372443ef9b65ba0ca2756fbb","collectionName":"doctor_hospital_accounts","type":"collection"}

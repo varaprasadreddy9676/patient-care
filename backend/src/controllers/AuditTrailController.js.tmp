@@ -1,0 +1,31 @@
+var restful = require('node-restful');
+var auditTrailService = require('../services/AuditTrailService.js');
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+
+
+module.exports = function (app, route) {
+
+	var resource = restful.model('audit_trails', app.models.auditTrail);
+	var rest = resource.methods(['get']);
+
+
+	app.get(route + "/event", function (req, res, next) {
+
+		res.status(200);
+		res.send(auditTrailService.events);
+
+	});
+
+
+	// Register this endpoint
+	rest.register(app, route);
+
+
+	// Return middleware
+	return function (req, res, next) {
+		next();
+	};
+
+};

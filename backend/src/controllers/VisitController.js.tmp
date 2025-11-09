@@ -1,0 +1,173 @@
+var mongoose = require('mongoose');
+var httpService = require('../services/HTTPService.js');
+var auditTrailService = require('../services/AuditTrailService.js');
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+
+
+module.exports = function(app, route) {
+
+    var FamilyMember = mongoose.model('family_member', app.models.familyMember);
+    var FamilyMemberHospitalAccount = mongoose.model('family_member_hospital_account', app.models.familyMemberHospitalAccount);
+    app.get(route + '/new', function(req, res, next) {
+
+        const hospitalCode = req.query.hospitalCode;
+        const patientId = req.query.patientId;
+        const visitDate = req.query.visitDate;
+
+        const body = {
+            'patientId': patientId,
+            'visitDate': visitDate // YYYY-MM-DD
+        };
+
+        const url = '/emr-visits/';
+
+        httpService.doGet(hospitalCode, url, body, success, error);
+
+        function success(response) {
+
+            if (response.data) {
+
+                const patientVisits = {
+                    'patientId': patientId,
+                    'visitDetails': response.data
+                };
+
+                res.status(200);
+                res.send(patientVisits);
+
+                auditTrailService.log(req, auditTrailService.events.VISIT_FETCHED,
+                    "Visit Records fetched at DOCUMENT tab in EMR  of " + patientId, patientVisits);
+            } else {
+                error(response);
+
+                auditTrailService.log(req, auditTrailService.events.FAILED_IN_FETCHING_VISIT,
+                    "Failed to get the Visit Records for user of patient with ID " + patientId);
+            }
+
+        }
+
+        function error(error) {
+            console.error('Error: ' + JSON.stringify(error));
+
+            res.status(500);
+            res.send(error);
+
+            auditTrailService.log(req, auditTrailService.events.FAILED_IN_FETCHING_VISIT,
+                "Failed to get the Visit Records for user of patient with ID " + patientId);
+        }
+
+    });
+
+    app.get(route, function(req, res, next) {
+
+        var userId = req.query.userId;
+
+        FamilyMemberHospitalAccount.find({
+            "userId": userId
+        }, function(errFamilyMemberHospitalAccount, familyMemberHospitalAccount) {
+
+            if (familyMemberHospitalAccount) {
+
+                var visits = [];
+                var count = familyMemberHospitalAccount.length;
+
+                familyMemberHospitalAccount.forEach(function(fmha, index) {
+
+                    var hospitalCode = fmha.hospitalCode;
+                    var patientId = fmha.patientId;
+                    var familyMemberId = fmha.familyMemberId;
+
+                    FamilyMember.findById(familyMemberId,
+                        function(errFamilyMember, familyMember) {
+
+                            var body = {
+                                'patientId': patientId,
+                            };
+
+                            var url = '/emr';
+
+                            httpService.doGet(hospitalCode, url, body, success, error);
+
+                            function success(response) {
+
+                                var data = response.data;
+
+                                if (data) {
+
+                                    data.visit.forEach(function(visit, index) {
+
+                                        var pastDatedVisit = isPastDate(visit.visitDate, visit.visitTime);
+                                        if (pastDatedVisit) {
+                                            data.visit.splice(index);
+                                        }
+
+                                    });
+
+                                    var patientVisits = {
+                                        'patientId': patientId,
+                                        'familyMemberId': familyMemberId,
+                                        'familyMemberName': familyMember.fullName,
+                                        'familyMemberGender': familyMember.gender,
+                                        'visitDetails': data
+                                    };
+
+                                    visits.push(patientVisits);
+
+                                    if (visits.length === count - 1) {
+                                        res.status(200);
+                                        res.send(visits);
+
+                                        auditTrailService.log(req, auditTrailService.events.VISIT_RECORD_OPENED,
+                                            'Visit Record opened for ' + familyMember.fullName);
+
+                                    }
+
+                                }
+
+                            }
+
+                            function error(error) {
+                                console.error('Error: ' + error);
+
+                                if (index === count - 1) {
+                                    res.status(500);
+                                    res.send(error);
+                                }
+                            }
+
+                        });
+
+                });
+
+            } else {
+                res.status(500);
+                res.send(errFamilyMemberHospitalAccount);
+            }
+
+        });
+
+    });
+
+    function isPastDate(date, time) {
+
+        const timeArray = time.split(':');
+
+        const dt = new Date(date);
+        dt.setHours(timeArray[0], timeArray[1], 0, 0);
+
+        if (dt >= new Date()) {
+            return true;
+        } else {
+            return false; // show visit record
+        }
+
+    }
+
+    // Return middleware
+    return function(req, res, next) {
+        next();
+    };
+
+};

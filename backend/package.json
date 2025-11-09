@@ -1,0 +1,48 @@
+{
+  "name": "medicscare",
+  "version": "1.1.7",
+  "description": "medics care, a patient app server",
+  "main": "medics-care.js",
+  "engines": {
+    "node": ">=14.0.0 <15.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "assert": "^2.0.0",
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.15.2",
+    "hashmap": "^2.4.0",
+    "helmet": "^4.6.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^7.4.0",
+    "lodash": "^4.17.4",
+    "method-override": "^2.3.7",
+    "moment": "^2.29.4",
+    "mongoose": "^4.9.0",
+    "morgan": "^1.10.0",
+    "node-locksmith": "^1.0.8",
+    "node-restful": "^0.2.6",
+    "nodemailer": "^4.0.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pdfjs-dist": "^2.1.266",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "rotating-file-stream": "^2.1.6",
+    "tiktoken": "^1.0.22",
+    "uuid": "^7.0.3",
+    "winston": "3.2.1",
+    "winston-daily-rotate-file": "4.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab:medics/medics-patient-app-server.git"
+  },
+  "keywords": [],
+  "start": "forever start medics-care.js"
+}

@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/sai/Documents/ubq/medics-care/medics-care-app-server/src/logs/.dfa4030a38e73aa4c09d73a8b76d9126fe7651c4-audit.json",
+    "files": [
+        {
+            "date": 1760083132034,
+            "name": "/Users/sai/Documents/ubq/medics-care/medics-care-app-server/src/logs/medics-care-2025-10-10.log",
+            "hash": "4fa50e1d38a3849c7781cbd6e3100629daa4acc3b176af2f8205ac10e986163d"
+        },
+        {
+            "date": 1761199006109,
+            "name": "/Users/sai/Documents/ubq/medics-care/medics-care-app-server/src/logs/medics-care-2025-10-23.log",
+            "hash": "27621a68cd7247aa26843c1767e3099661abd01816d041e13fa7c12ca2975bda"
+        }
+    ],
+    "hashType": "sha256"
+}

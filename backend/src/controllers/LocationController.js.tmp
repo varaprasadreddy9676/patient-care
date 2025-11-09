@@ -1,0 +1,70 @@
+var mongoose = require("mongoose");
+var restful = require('node-restful');
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+
+
+var httpService = require("../services/HTTPService.js");
+
+module.exports = function(app, route) {
+    var resource = restful.model('location', app.models.location);
+    var rest = resource.methods(['get', 'put']);
+
+    app.get(route + '/sync', function(req, res, next) {
+        var Location = mongoose.model("location", app.models.location);
+        let url = "/locations";
+        //  let hospitalCode = req.query.hospitalCode;
+        let body = {
+            entitycode: "FMP",
+        };
+        httpService.doGet("FMP", url, body, success, error);
+
+        function success(response) {
+            if (response.data) {
+                res.status(200);
+                res.send({ locations: response.data });
+                var locations = response.data.hospitals;
+
+                for (var i = 0; i < locations.length; i++) {
+                    var location = locations[i];
+                    location.entityId = location.id;
+
+                    if (location.name) {
+                        location.name = location.name.toUpperCase();
+                    }
+
+                    Location.update({
+                            code: location.code,
+                        }, {
+
+
+                            $setOnInsert: location,
+                        }, {
+                            upsert: true,
+                        },
+
+                        function(errHospital, updateResult) {
+                            if (errHospital) {
+                                console.error(errHospital.message);
+                            }
+                        }
+                    );
+                }
+            } else {
+                error(response);
+            }
+        }
+
+        function error(error) {
+            console.error("Error: " + error);
+            res.status(500);
+            res.send(error);
+        }
+    });
+    rest.register(app, route);
+    // Return middleware
+    return function(req, res, next) {
+        next();
+    };
+};

@@ -1,0 +1,1 @@
+mongodump -d patient_app_db -o db

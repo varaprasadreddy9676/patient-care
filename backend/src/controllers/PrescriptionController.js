@@ -1,0 +1,183 @@
+const mongoose = require("mongoose");
+const HTTPServiceV2 = require("../services/HTTPServiceV2"); // Updated service
+const httpService = new HTTPServiceV2();
+const notificationService = require("../services/NotificationService");
+const auditTrailService = require("../services/AuditTrailService");
+
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+const SelectedFamilyMemberHelper = require('../utils/SelectedFamilyMemberHelper');
+
+
+module.exports = function (app, route) {
+    const FamilyMember = mongoose.model("family_member", app.models.familyMember);
+    const FamilyMemberHospitalAccount = mongoose.model("family_member_hospital_account", app.models.familyMemberHospitalAccount);
+    const Appointment = mongoose.model("appointment", app.models.appointment);
+
+    /**
+     * Fetch active or historical prescriptions for a user.
+     */
+    app.get(route, async (req, res) => {
+        const { userId, selectedFamilyMemberId, activePrescription } = req.query;
+
+        if (!userId) {
+            return res.status(400).json({ message: "userId is required" });
+        }
+
+        try {
+            // SMART CHANGE: Filter by familyMemberId at query level
+            const query = { userId };
+            if (selectedFamilyMemberId) {
+                query.familyMemberId = selectedFamilyMemberId;
+            }
+
+            const accounts = await FamilyMemberHospitalAccount.find(query);
+
+            if (!accounts || accounts.length === 0) {
+                return res.status(200).json([]); // No accounts, return empty list
+            }
+
+            const prescriptions = await Promise.all(
+                accounts.map(async (account) => {
+                    const { hospitalCode, patientId, familyMemberId } = account;
+
+                    // Fetch family member details
+                    const familyMember = await FamilyMember.findById(familyMemberId).exec();
+                    if (!familyMember) return null;
+
+                    // Prepare request body
+                    const body = {
+                        patientId,
+                        activePrescription: activePrescription === "true",
+                        fetchAll: true
+                    };
+
+                    const url = "/prescriptions";
+
+                    try {
+                        const response = await httpService.doRequest(hospitalCode, "GET", url, body);
+
+                        if (response && response.data) {
+                            auditTrailService.log(
+                                req,
+                                auditTrailService.events.PRESCRIPTION_OPENED,
+                                `Prescription opened for ${familyMember.fullName}`
+                            );
+
+                            return {
+                                patientId,
+                                familyMemberId,
+                                familyMemberName: familyMember.fullName,
+                                familyMemberGender: familyMember.gender,
+                                prescription: response.data,
+                            };
+                        }
+                    } catch (error) {
+                        console.error(`Error fetching prescriptions for hospitalCode ${hospitalCode}:`, error.message);
+                        return null;
+                    }
+                })
+            );
+
+            res.status(200).json(prescriptions.filter((item) => item !== null));
+        } catch (error) {
+            console.error("Error fetching prescriptions:", error);
+            res.status(500).json({ message: "Failed to fetch prescriptions", error: error.message });
+        }
+    });
+
+    /**
+     * Send notification when a prescription is ready.
+     */
+    app.get(`${route}/ready`, async (req, res) => {
+        const { hospitalCode, visitId } = req.query;
+
+        if (!hospitalCode || !visitId) {
+            return res.status(400).json({ message: "hospitalCode and visitId are required" });
+        }
+
+        try {
+            const appointment = await Appointment.findOne({ "hospital.code": hospitalCode, visitId }).exec();
+
+            if (!appointment) {
+                return res.status(404).json({ message: "Appointment not found" });
+            }
+
+            const doctorName = `Dr. ${appointment.doctorName.replace(/Dr.|Dr /g, "").trim()}`;
+            const title = "Your prescription is ready";
+            const message = `Your prescription for the consultation with ${doctorName} (${appointment.specialityName}) is ready.`;
+
+            const notification = {
+                hospitalCode,
+                userId: appointment.userId,
+                objectId: appointment._id,
+                objectName: "Appointment",
+                title,
+                message,
+                path: "prescription",
+                notificationDetails: {
+                    doctorName: appointment.doctorName,
+                    specialityName: appointment.specialityName,
+                    appointmentDate: appointment.appointmentDate,
+                    appointmentTime: appointment.appointmentTime,
+                    videoConsultation: appointment.videoConsultation,
+                },
+            };
+
+            notificationService.sendNotification(notification);
+
+            auditTrailService.log(
+                req,
+                auditTrailService.events.PRESCRIPTION_READY,
+                `Prescription is ready for ${appointment.patient.name}`
+            );
+
+            res.status(200).json({ message: "Notification sent successfully" });
+        } catch (error) {
+            console.error("Error sending prescription ready notification:", error);
+            res.status(500).json({ message: "Failed to send notification", error: error.message });
+        }
+    });
+
+    /**
+     * Print a prescription for a patient.
+     */
+    app.get(`${route}/print`, async (req, res) => {
+        const { hospitalCode, patientId, visitId } = req.query;
+
+        if (!hospitalCode || !patientId || !visitId) {
+            return res.status(400).json({ message: "hospitalCode, patientId, and visitId are required" });
+        }
+
+        try {
+            const body = {
+                patientId,
+                visitId,
+                printOnly: true,
+            };
+
+            const url = "/prescriptions";
+
+            const response = await httpService.doRequest(hospitalCode, "GET", url, body);
+
+            if (response && response.data) {
+                auditTrailService.log(
+                    req,
+                    auditTrailService.events.PRESCRIPTION_PRINTED,
+                    `Prescription printed for patientId: ${patientId}, hospitalCode: ${hospitalCode}`
+                );
+
+                return res.status(200).json(response.data);
+            } else {
+                throw new Error("No data found in response");
+            }
+        } catch (error) {
+            console.error("Error printing prescription:", error.message);
+            res.status(500).json({ message: "Failed to print prescription", error: error.message });
+        }
+    });
+
+    // Return middleware
+    return (req, res, next) => next();
+};

@@ -1,0 +1,103 @@
+var mongoose = require('mongoose');
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+
+
+module.exports = function (app, route) {
+
+	// var resource = restful.model('reminder', app.models.reminder);
+	// var rest = resource.methods(['get', 'put', 'post', 'delete']);
+
+	var Reminder = mongoose.model('reminder', app.models.Reminder);
+
+	app.get(route, function (req, res, next) {
+
+		var userId = req.query.userId;
+
+		Reminder.find({
+			'userId': mongoose.Types.ObjectId(userId),
+			'active': true,
+			'remindAt': {
+				$gte: new Date()
+			}
+		}, function (err, reminders) {
+
+			if (!reminders) {
+				reminders = [];
+			}
+
+			res.status(200);
+			res.send(reminders);
+
+		});
+
+	});
+
+	app.get(route + "/markasread", function (req, res, next) {
+
+		var userId = req.query.userId;
+
+		Reminder.find({
+			'userId': mongoose.Types.ObjectId(userId),
+			'read': false
+		}, function (err, reminders) {
+
+			if (reminders.length > 0) {
+
+				reminders.forEach(function (reminder) {
+
+					reminder.read = true;
+
+					reminder.save();
+
+				});
+			}
+
+			// auditTrailService.log(req, auditTrailService.events.REMINDER_OPENED,	'Reminder opened');
+
+			res.status(200);
+			res.send('Marked all reminders as read for the user');
+
+		});
+
+	});
+
+
+	app.get(route + "/unread", function (req, res, next) {
+
+		var userId = req.query.userId;
+
+		Reminder.find({
+			'userId': mongoose.Types.ObjectId(userId),
+			'read': false,
+			'remindAt': {
+				$lt: new Date()
+			}
+		}, function (err, reminders) {
+
+			if (err) {
+
+				res.status(500);
+				res.send("Error! " + err);
+			} else {
+
+				var data = {
+					"count": reminders.length
+				};
+
+				res.status(200);
+				res.send(data);
+			}
+
+		});
+	});
+
+	// rest.register(app, route);
+
+	// Return middleware
+	return function (req, res, next) {
+		next();
+	};
+
+};

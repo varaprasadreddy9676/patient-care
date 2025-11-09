@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"unique":true,"key":{"familyMemberId":{"$numberInt":"1"},"fileName":{"$numberInt":"1"}},"name":"familyMemberId_1_fileName_1","background":true}],"uuid":"6e87b371ce8041e6bde042693c6bfbd7","collectionName":"family_member_attachments","type":"collection"}

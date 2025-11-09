@@ -1,0 +1,130 @@
+var restful = require('node-restful');
+var mongoose = require('mongoose');
+var auditTrailService = require('../services/AuditTrailService.js');
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+
+
+module.exports = function (app, route) {
+
+	var resource = restful.model('family_member', app.models.familyMember);
+	var rest = resource.methods(['get', 'put', 'post', 'delete']);
+
+	var FamilyMember = mongoose.model('family_member', app.models.familyMember);
+	var FamilyMemberHospitalAccount = mongoose.model('family_member_hospital_account', app.models.familyMemberHospitalAccount);
+
+	rest.before('post', function (req, res, next) {
+
+		var User = mongoose.model('User', app.models.user);
+
+		var userId = req.body.userId;
+
+		User.findById(userId)
+			.exec(function (err, user) {
+
+				if (!user) {
+
+					res.status(500);
+					console.error(message);
+
+					res.send({
+						"code": "INVALID_USER",
+						"message": "Invalid userId"
+					});
+
+				} else {
+					next();
+				}
+
+			});
+
+	});
+
+
+	rest.after('post', function (req, res, next) {
+
+		console.log("Data saved");
+
+		if (res.locals.bundle.errmsg) {
+			res.status(500);
+			console.error(errmsg);
+			next();
+		} else {
+
+			// Update the user with first name and other details....
+			var data = res.locals.bundle;
+
+			auditTrailService.log(req, auditTrailService.events.FAMILY_MEMBER_ADDED,
+				'Family member added', data);
+
+			res.send({
+				"data": data
+			});
+
+		}
+
+	});
+
+	rest.after('put', function (req, res, next) {
+
+		var data = res.locals.bundle;
+
+		auditTrailService.log(req, auditTrailService.events.FAMILY_MEMBER_MODIFIED,
+			'Family member modified', data);
+
+		next();
+
+	});
+
+	rest.before('delete', function (req, res, next) {
+
+		var familyMemberId = req.params.id;
+
+		FamilyMember.findById(familyMemberId, function (errFamilyMember, familyMember) {
+
+			if (familyMember && familyMember.isAppUser) {
+
+				var errmsg = {
+					"code": "FAILED",
+					"message": "Cannot delete the primary family member"
+				};
+
+				console.error(errmsg);
+				res.status(500);
+				res.send(errmsg);
+
+			} else {
+				next();
+			}
+
+		});
+
+	});
+
+	rest.after('delete', function (req, res, next) {
+
+		var familyMemberId = req.params.id;
+
+		FamilyMemberHospitalAccount.deleteMany({
+			"familyMemberId": familyMemberId
+		}, function (err, result) {
+			console.log("Deleted all mapping of family members");
+
+			auditTrailService.log(req, auditTrailService.events.FAMILY_MEMBER_DELETED,
+				'Family member deleted for familyMemberId: ' + familyMemberId);
+
+			next();
+		});
+
+	});
+
+	// Register this endpoint
+	rest.register(app, route);
+
+	// Return middleware
+	return function (req, res, next) {
+		next();
+	};
+
+};

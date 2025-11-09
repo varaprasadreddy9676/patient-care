@@ -1,0 +1,1 @@
+nodemon --debug index.js

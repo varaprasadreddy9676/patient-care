@@ -1,0 +1,52 @@
+var mongoose = require('mongoose');
+var httpService = require('../services/HTTPService.js');
+
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+
+
+module.exports = function(app, route) {
+
+    app.get(route + "/verify", function(req, res, next) {
+
+        var hospitalCode = req.query.hospitalCode;
+        var reportId = req.query.reportId;
+        var url = '/lab-reports/' + reportId;
+
+        httpService.doGet(hospitalCode, url, {}, success, error);
+
+        function success(response) {
+            if (response.data) {
+                console.log(response)
+                    // let pdf = new Buffer(response, 'base64');
+
+                res.writeHead(200, {
+                    'Content-Type': 'application/pdf',
+                    'Content-Disposition': 'attachment; filename="report.pdf"'
+                });
+                const download = Buffer.from(response.data.reportString.toString('utf-8'), 'base64');
+                res.end(download);
+                // res.status(200);
+                // console.log(JSON.stringify(response.data));
+                // res.send(response.data);
+
+            } else {
+                error(response);
+            }
+
+        }
+
+        function error(error) {
+            console.error('Error: ' + error);
+            return ResponseHandler.error(res, new AppError(ErrorCodes.DATABASE_ERROR, error.message || error));
+        }
+
+    });
+
+    // Return middleware
+    return function(req, res, next) {
+        next();
+    };
+
+};

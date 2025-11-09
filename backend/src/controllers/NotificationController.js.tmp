@@ -1,0 +1,96 @@
+var restful = require('node-restful');
+var mongoose = require('mongoose');
+const ResponseHandler = require('../utils/ResponseHandler');
+const AppError = require('../utils/AppError');
+const ErrorCodes = require('../utils/ErrorCodes');
+
+
+module.exports = function (app, route) {
+
+	var resource = restful.model('notification', app.models.notification);
+	var rest = resource.methods(['get', 'put', 'post', 'delete']);
+
+	var Notification = mongoose.model('notification', app.models.notification);
+
+	app.get(route, function (req, res, next) {
+
+		var userId = req.query.userId;
+
+		Notification.find({
+			userId: mongoose.Types.ObjectId(userId),
+			status: {
+				$ne: 'PENDING'
+			}
+		}, function (err, nots) {
+
+			res.status(200);
+			res.send(nots);
+
+		});
+
+	});
+
+	app.get(route + "/markasread", function (req, res, next) {
+
+		var userId = req.query.userId;
+
+		Notification.find({
+			'userId': mongoose.Types.ObjectId(userId),
+			'read': false
+		}, function (err, nots) {
+
+			if (nots.length > 0) {
+
+				nots.forEach(function (not) {
+
+					not.read = true;
+
+					not.save();
+
+				});
+			}
+
+			res.status(200);
+			res.send('Marked all notificaations as read for the user');
+
+		});
+
+	});
+
+	app.get(route + "/unread", function (req, res, next) {
+
+		var userId = req.query.userId;
+
+		Notification.find({
+			'userId': mongoose.Types.ObjectId(userId),
+			'read': false,
+			'status': {
+				$ne: 'PENDING'
+			}
+		}, function (err, notifications) {
+
+			if (err) {
+
+				res.status(500);
+				res.send("Error! " + err);
+			} else {
+
+				var data = {
+					"count": notifications.length
+				};
+
+				res.status(200);
+				res.send(data);
+			}
+
+		});
+	});
+
+	rest.register(app, route);
+
+	// Return middleware
+	return function (req, res, next) {
+		next();
+	};
+
+};
