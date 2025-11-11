@@ -54,6 +54,7 @@
     "@ionic/storage": "^4.0.0",
     "@ionic/storage-angular": "^4.0.0",
     "@types/marked": "^6.0.0",
+    "angulartics2": "^14.1.0",
     "capacitor-app-version": "^1.0.31",
     "firebase": "^12.3.0",
     "hammerjs": "^2.0.8",

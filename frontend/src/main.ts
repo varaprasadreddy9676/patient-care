@@ -22,6 +22,8 @@ import {
 } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { Angulartics2Module } from 'angulartics2';
+import { AnalyticsService } from './services/analytics/analytics.service';
 
 if (environment.production) {
   enableProdMode();
@@ -43,7 +45,8 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(
       BrowserModule,
       IonicModule.forRoot({ menuType: 'overlay' }),
-      IonicStorageModule.forRoot()
+      IonicStorageModule.forRoot(),
+      Angulartics2Module.forRoot()
     ),
     provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
     HttpService,
@@ -59,6 +62,7 @@ bootstrapApplication(AppComponent, {
     StorageService,
     PaymentGatewayService,
     AuthGuardService,
+    AnalyticsService,
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),

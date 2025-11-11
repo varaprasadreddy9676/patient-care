@@ -15,6 +15,7 @@ import { Preferences } from '@capacitor/preferences';
 import { BackButtonService } from 'src/services/navigation/backButton/back-button.service';
 import { PushNotificationService } from 'src/services/push-notification.service';
 import { LogoutService } from 'src/services/logout/logout.service';
+import { AnalyticsService } from 'src/services/analytics/analytics.service';
 
 @Component({
   selector: 'app-root',
@@ -47,7 +48,8 @@ export class AppComponent implements OnInit {
     private eventService: EventService,
     private backButtonService: BackButtonService,
     private pushNotificationService: PushNotificationService,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private analytics: AnalyticsService  // Initialize analytics
   ) {
     // // // console.log('All platforms', platform.platforms());
 
