@@ -133,6 +133,92 @@ export class BannerComponent implements OnInit, OnDestroy {
     return style;
   }
 
+  // Video methods
+  getYouTubeEmbedUrl(): any {
+    if (!this.banner || !this.banner.videoUrl) return '';
+
+    try {
+      // Extract video ID from various YouTube URL formats
+      const url = this.banner.videoUrl;
+      let videoId = '';
+
+      if (url.includes('youtube.com/watch?v=')) {
+        videoId = url.split('v=')[1]?.split('&')[0];
+      } else if (url.includes('youtu.be/')) {
+        videoId = url.split('youtu.be/')[1]?.split('?')[0];
+      } else if (url.includes('youtube.com/embed/')) {
+        videoId = url.split('embed/')[1]?.split('?')[0];
+      }
+
+      if (!videoId) return '';
+
+      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+      return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+    } catch (error) {
+      console.error('Error parsing YouTube URL:', error);
+      return '';
+    }
+  }
+
+  getVimeoEmbedUrl(): any {
+    if (!this.banner || !this.banner.videoUrl) return '';
+
+    try {
+      // Extract video ID from Vimeo URL
+      const url = this.banner.videoUrl;
+      let videoId = '';
+
+      if (url.includes('vimeo.com/')) {
+        videoId = url.split('vimeo.com/')[1]?.split('?')[0]?.split('/')[0];
+      }
+
+      if (!videoId) return '';
+
+      const embedUrl = `https://player.vimeo.com/video/${videoId}`;
+      return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+    } catch (error) {
+      console.error('Error parsing Vimeo URL:', error);
+      return '';
+    }
+  }
+
+  // GIF methods
+  getGifSrc(): string {
+    if (!this.banner) return '';
+
+    // Check for GIF URL
+    if ((this.banner as any).gifUrl) {
+      return (this.banner as any).gifUrl;
+    }
+
+    // Check for base64 GIF
+    if ((this.banner as any).gifBase64) {
+      const gifData = (this.banner as any).gifBase64;
+      if (gifData.startsWith('data:image')) {
+        return gifData;
+      }
+      return `data:image/gif;base64,${gifData}`;
+    }
+
+    return '';
+  }
+
+  // Helper methods for combo banners
+  hasImage(): boolean {
+    if (!this.banner) return false;
+    return !!(this.banner.imageBase64 || this.banner.imageUrl);
+  }
+
+  hasVideo(): boolean {
+    if (!this.banner) return false;
+    return !!((this.banner as any).videoUrl);
+  }
+
+  hasGif(): boolean {
+    if (!this.banner) return false;
+    return !!((this.banner as any).gifUrl || (this.banner as any).gifBase64);
+  }
+
   private getScrollPercentage(): number {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;

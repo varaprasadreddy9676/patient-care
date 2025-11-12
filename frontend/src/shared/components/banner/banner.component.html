@@ -14,10 +14,83 @@
       <img [src]="getImageSrc()" [alt]="banner.title" />
     </div>
 
-    <!-- Combo banner (text + image) -->
+    <!-- Video only banner -->
+    <div *ngIf="banner.contentType === 'video'" class="banner-video-content">
+      <!-- YouTube video -->
+      <iframe
+        *ngIf="banner.videoType === 'youtube'"
+        [src]="getYouTubeEmbedUrl()"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+
+      <!-- Vimeo video -->
+      <iframe
+        *ngIf="banner.videoType === 'vimeo'"
+        [src]="getVimeoEmbedUrl()"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+
+      <!-- Direct video (MP4/WebM) -->
+      <video
+        *ngIf="banner.videoType === 'direct'"
+        [src]="banner.videoUrl"
+        [poster]="banner.videoThumbnail"
+        controls
+        playsinline
+      >
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- GIF only banner -->
+    <div *ngIf="banner.contentType === 'gif'" class="banner-gif-content">
+      <img [src]="getGifSrc()" [alt]="banner.title" />
+    </div>
+
+    <!-- Combo banner (text + image/video/gif) -->
     <div *ngIf="banner.contentType === 'combo'" class="banner-combo-content">
-      <div class="combo-image">
-        <img [src]="getImageSrc()" [alt]="banner.title" />
+      <div class="combo-media">
+        <!-- Image in combo -->
+        <img *ngIf="hasImage()" [src]="getImageSrc()" [alt]="banner.title" />
+
+        <!-- Video in combo -->
+        <div *ngIf="hasVideo()" class="combo-video">
+          <!-- YouTube -->
+          <iframe
+            *ngIf="banner.videoType === 'youtube'"
+            [src]="getYouTubeEmbedUrl()"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+
+          <!-- Vimeo -->
+          <iframe
+            *ngIf="banner.videoType === 'vimeo'"
+            [src]="getVimeoEmbedUrl()"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+
+          <!-- Direct video -->
+          <video
+            *ngIf="banner.videoType === 'direct'"
+            [src]="banner.videoUrl"
+            [poster]="banner.videoThumbnail"
+            controls
+            playsinline
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <!-- GIF in combo -->
+        <img *ngIf="hasGif()" [src]="getGifSrc()" [alt]="banner.title" />
       </div>
       <div class="combo-text">
         <div class="rich-text" [innerHTML]="getSafeHtml()"></div>
