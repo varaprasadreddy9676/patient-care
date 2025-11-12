@@ -2,11 +2,13 @@ var restful = require('node-restful');
 const ResponseHandler = require('../utils/ResponseHandler');
 const AppError = require('../utils/AppError');
 const ErrorCodes = require('../utils/ErrorCodes');
+const { requireAdmin } = require('../middleware/adminAuth');
 
 module.exports = function (app, route) {
 
     var resource = restful.model('banners', app.models.banner);
-    var rest = resource.methods(['get', 'post', 'put', 'delete']);
+    // Disable auto-generated CRUD routes - we'll create them manually with admin protection
+    var rest = resource.methods([]);
 
     // Helper function to check if banner should be displayed based on schedule
     function isScheduleActive(banner) {
@@ -260,8 +262,8 @@ module.exports = function (app, route) {
         }
     });
 
-    // Get banner statistics
-    app.get(route + '/:id/statistics', async function (req, res, next) {
+    // Get banner statistics (ADMIN ONLY)
+    app.get(route + '/:id/statistics', requireAdmin, async function (req, res, next) {
         try {
             const bannerId = req.params.id;
 
@@ -394,8 +396,8 @@ module.exports = function (app, route) {
         }
     });
 
-    // List all banners with basic stats
-    app.get(route + '/list', async function (req, res, next) {
+    // List all banners with basic stats (ADMIN ONLY)
+    app.get(route + '/list', requireAdmin, async function (req, res, next) {
         try {
             const banners = await app.models.banner.find({}).sort({ createdAt: -1 });
 
@@ -433,8 +435,8 @@ module.exports = function (app, route) {
         }
     });
 
-    // Check for schedule conflicts
-    app.post(route + '/check-conflicts', async function (req, res, next) {
+    // Check for schedule conflicts (ADMIN ONLY)
+    app.post(route + '/check-conflicts', requireAdmin, async function (req, res, next) {
         try {
             const { schedule, displayLocation, priority, excludeBannerId } = req.body;
 
@@ -528,7 +530,65 @@ module.exports = function (app, route) {
         }
     });
 
-    // Register CRUD endpoints
+    // CRUD endpoints (ADMIN ONLY)
+    // Get single banner by ID
+    app.get(route + '/:id', requireAdmin, async function (req, res, next) {
+        try {
+            const banner = await app.models.banner.findById(req.params.id);
+            if (!banner) {
+                return ResponseHandler.error(res, new AppError(ErrorCodes.NOT_FOUND, 'Banner not found'));
+            }
+            return ResponseHandler.success(res, banner);
+        } catch (error) {
+            console.error('Get banner error:', error);
+            return ResponseHandler.error(res, new AppError(ErrorCodes.INTERNAL_SERVER_ERROR, error.message));
+        }
+    });
+
+    // Create new banner
+    app.post(route, requireAdmin, async function (req, res, next) {
+        try {
+            const banner = await app.models.banner.create(req.body);
+            return ResponseHandler.success(res, banner);
+        } catch (error) {
+            console.error('Create banner error:', error);
+            return ResponseHandler.error(res, new AppError(ErrorCodes.INTERNAL_SERVER_ERROR, error.message));
+        }
+    });
+
+    // Update banner
+    app.put(route + '/:id', requireAdmin, async function (req, res, next) {
+        try {
+            const banner = await app.models.banner.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true, runValidators: true }
+            );
+            if (!banner) {
+                return ResponseHandler.error(res, new AppError(ErrorCodes.NOT_FOUND, 'Banner not found'));
+            }
+            return ResponseHandler.success(res, banner);
+        } catch (error) {
+            console.error('Update banner error:', error);
+            return ResponseHandler.error(res, new AppError(ErrorCodes.INTERNAL_SERVER_ERROR, error.message));
+        }
+    });
+
+    // Delete banner
+    app.delete(route + '/:id', requireAdmin, async function (req, res, next) {
+        try {
+            const banner = await app.models.banner.findByIdAndDelete(req.params.id);
+            if (!banner) {
+                return ResponseHandler.error(res, new AppError(ErrorCodes.NOT_FOUND, 'Banner not found'));
+            }
+            return ResponseHandler.success(res, { message: 'Banner deleted successfully' });
+        } catch (error) {
+            console.error('Delete banner error:', error);
+            return ResponseHandler.error(res, new AppError(ErrorCodes.INTERNAL_SERVER_ERROR, error.message));
+        }
+    });
+
+    // Register any remaining restful endpoints (none in this case since we disabled auto-generation)
     rest.register(app, route);
 
     // Return middleware
