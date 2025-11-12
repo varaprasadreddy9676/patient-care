@@ -10,6 +10,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { NavController, Platform, IonicModule } from '@ionic/angular';
 import { HttpService } from 'src/services/http/http.service';
 import { NgIf, NgFor, CommonModule } from '@angular/common';
+import { BannerComponent } from 'src/shared/components/banner/banner.component';
 // import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 interface VisitAttachments {
@@ -22,7 +23,7 @@ interface VisitAttachments {
   templateUrl: './emr.page.html',
   styleUrls: ['./emr.page.scss'],
   standalone: true,
-  imports: [IonicModule, NgIf, NgFor, CommonModule],
+  imports: [IonicModule, NgIf, NgFor, CommonModule, BannerComponent],
 })
 export class EmrPage implements OnDestroy {
   user;

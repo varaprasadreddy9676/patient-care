@@ -11,6 +11,7 @@ import { DaysUntilPipe } from '../appointment/appointment-list/appointment-list.
 import { GlobalFamilyMemberService } from 'src/services/family-member/global-family-member.service';
 import { AdvertisementComponent } from 'src/shared/components/advertisement/advertisement.component';
 import { AdvertisementService, SimpleAdvertisement } from 'src/services/advertisement/advertisement.service';
+import { BannerComponent } from 'src/shared/components/banner/banner.component';
 import {
   Component,
   OnInit,
@@ -45,6 +46,7 @@ import { BackButtonService } from 'src/services/navigation/backButton/back-butto
     CommonModule,
     DaysUntilPipe,
     AdvertisementComponent,
+    BannerComponent,
   ],
 })
 export class HomePage implements OnInit, OnDestroy {

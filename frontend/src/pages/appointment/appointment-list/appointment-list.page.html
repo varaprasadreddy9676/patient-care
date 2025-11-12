@@ -6,6 +6,12 @@
       <p class="subtitle">Manage your upcoming and past appointments</p>
     </header>
 
+    <!-- Banner for Appointments Page -->
+    <app-banner
+      location="appointments"
+      [autoRefresh]="false">
+    </app-banner>
+
     <!-- Main Card -->
     <div class="main-card">
       <mat-tab-group mat-align-tabs="center" [selectedIndex]="activeTab" (selectedTabChange)="tabClick($event)">

@@ -36,13 +36,11 @@
       </div>
     </div>
 
-    <!-- Advertisement Component (placed right under header) -->
-    <app-advertisement
-      [customAds]="advertisements"
-      [autoRotate]="true"
-      [rotationInterval]="4000"
-      [showDots]="true">
-    </app-advertisement>
+    <!-- New Banner System (placed right under header) -->
+    <app-banner
+      location="home"
+      [autoRefresh]="false">
+    </app-banner>
 
     <!-- Upcoming Appointment Banner (only show if there are appointments, remove redundant promo) -->
     <div class="health-banner-section" *ngIf="hasScheduledAppointments()">

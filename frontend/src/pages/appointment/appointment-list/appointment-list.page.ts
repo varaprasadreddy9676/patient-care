@@ -50,6 +50,7 @@ import { MatInput } from '@angular/material/input';
 import { FilterUnique } from '../appointment-modification/appointment-modification.page';
 import { GlobalFamilyMemberService, FamilyMember as GlobalFamilyMember } from '../../../services/family-member/global-family-member.service';
 import { Subscription } from 'rxjs';
+import { BannerComponent } from 'src/shared/components/banner/banner.component';
 // import { HttpErrorResponse } from '@angular/common/http';
 
 @Pipe({
@@ -203,6 +204,7 @@ export class PickDateAdapter extends NativeDateAdapter {
     DatePipe,
     // FilterPipe,
     FilterUnique,
+    BannerComponent,
   ],
 })
 export class AppointmentListPage implements OnInit, OnDestroy {
