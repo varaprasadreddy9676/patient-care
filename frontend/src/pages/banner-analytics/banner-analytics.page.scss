@@ -1,0 +1,352 @@
+.analytics-container {
+  padding: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 1.5rem 0 1rem 0;
+    color: var(--ion-color-primary);
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 1rem 0;
+  }
+}
+
+// Overview Section
+.overview-section {
+  margin-bottom: 2rem;
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .stat-card {
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-icon {
+      font-size: 3rem;
+      color: var(--ion-color-primary);
+
+      ion-icon {
+        font-size: 3rem;
+      }
+    }
+
+    .stat-content {
+      flex: 1;
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--ion-color-dark);
+        line-height: 1;
+        margin-bottom: 0.25rem;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        color: var(--ion-color-medium);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+}
+
+// Filters Section
+.filters-section {
+  margin-bottom: 2rem;
+
+  .filter-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+
+    ion-item {
+      --background: var(--ion-color-light);
+      --border-radius: 8px;
+    }
+  }
+
+  .custom-date-range {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+}
+
+// Banner Details Section
+.banner-details-section {
+  background: var(--ion-color-light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+
+  .banner-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+
+    .info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .label {
+        font-size: 0.85rem;
+        color: var(--ion-color-medium);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .value {
+        font-size: 1rem;
+        color: var(--ion-color-dark);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Charts Section
+.charts-section {
+  margin-bottom: 2rem;
+
+  .performance-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 2rem 0;
+
+    .stat-item {
+      background: var(--ion-color-light);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      ion-icon {
+        font-size: 2rem;
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--ion-color-dark);
+      }
+
+      .stat-text {
+        font-size: 0.85rem;
+        color: var(--ion-color-medium);
+      }
+    }
+  }
+
+  .chart-row {
+    margin-bottom: 2rem;
+
+    &.chart-row-split {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  .chart-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 400px;
+    position: relative;
+
+    canvas {
+      max-height: 100%;
+    }
+  }
+}
+
+// Data Table Section
+.data-table-section {
+  margin-top: 2rem;
+
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+
+      thead {
+        background: var(--ion-color-primary);
+        color: white;
+
+        th {
+          padding: 1rem;
+          text-align: left;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-size: 0.85rem;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid var(--ion-color-light);
+
+          &:hover {
+            background: var(--ion-color-light-tint);
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          td {
+            padding: 1rem;
+            color: var(--ion-color-dark);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Empty State
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+// Loading State
+.loading-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--ion-color-medium);
+
+  ion-spinner {
+    --color: var(--ion-color-primary);
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .analytics-container {
+    padding: 0.5rem;
+
+    h2 {
+      font-size: 1.25rem;
+    }
+  }
+
+  .overview-section {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+      padding: 1rem;
+
+      .stat-icon ion-icon {
+        font-size: 2.5rem;
+      }
+
+      .stat-content .stat-value {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .charts-section {
+    .chart-container {
+      height: 300px;
+      padding: 1rem;
+    }
+
+    .performance-stats {
+      grid-template-columns: 1fr 1fr;
+
+      .stat-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  .data-table-section {
+    .table-wrapper {
+      table {
+        font-size: 0.8rem;
+
+        thead th,
+        tbody td {
+          padding: 0.75rem 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .charts-section {
+    .performance-stats {
+      grid-template-columns: 1fr;
+    }
+
+    .chart-row.chart-row-split {
+      grid-template-columns: 1fr;
+    }
+  }
+}

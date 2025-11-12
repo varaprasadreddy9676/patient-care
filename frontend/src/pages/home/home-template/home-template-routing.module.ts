@@ -71,6 +71,13 @@ export const homeTemplateRoutes: Routes = [
       ),
   },
   {
+    path: 'banner-analytics',
+    loadComponent: () =>
+      import('../../banner-analytics/banner-analytics.page').then(
+        (m) => m.BannerAnalyticsPage
+      ),
+  },
+  {
     path: 'select-patient',
     loadComponent: () =>
       import('../../appointment/select-patient/select-patient.page').then(

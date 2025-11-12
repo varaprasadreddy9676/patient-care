@@ -219,6 +219,10 @@ export class BannerAdminPage implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  goToAnalytics() {
+    this.router.navigate(['/home/banner-analytics']);
+  }
+
   private getDatePlusMonths(months: number): string {
     const date = new Date();
     date.setMonth(date.getMonth() + months);

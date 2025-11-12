@@ -1,0 +1,259 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Banner Analytics Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="analytics-container">
+    <!-- Overview Cards -->
+    <div class="overview-section">
+      <h2>Overview</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="eye-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ totalImpressions | number }}</div>
+            <div class="stat-label">Total Impressions</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="hand-left-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ totalClicks | number }}</div>
+            <div class="stat-label">Total Clicks</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="trending-up-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ averageCTR | number:'1.2-2' }}%</div>
+            <div class="stat-label">Average CTR</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="checkbox-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ activeBanners }}</div>
+            <div class="stat-label">Active Banners</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <h2>Filters</h2>
+      <div class="filter-controls">
+        <ion-item>
+          <ion-label>Banner</ion-label>
+          <ion-select
+            [(ngModel)]="selectedBannerId"
+            (ionChange)="onBannerChange()"
+            placeholder="Select a banner"
+            interface="popover"
+          >
+            <ion-select-option *ngFor="let banner of banners" [value]="banner._id">
+              {{ banner.title }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Date Range</ion-label>
+          <ion-select
+            [(ngModel)]="dateRange"
+            (ionChange)="onDateRangeChange()"
+            interface="popover"
+          >
+            <ion-select-option value="7">Last 7 Days</ion-select-option>
+            <ion-select-option value="30">Last 30 Days</ion-select-option>
+            <ion-select-option value="90">Last 90 Days</ion-select-option>
+            <ion-select-option value="180">Last 6 Months</ion-select-option>
+            <ion-select-option value="365">Last Year</ion-select-option>
+            <ion-select-option value="custom">Custom Range</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div class="custom-date-range" *ngIf="dateRange === 'custom'">
+          <ion-item>
+            <ion-label>Start Date</ion-label>
+            <ion-datetime-button datetime="startDate"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="startDate"
+                  presentation="date"
+                  [(ngModel)]="startDate"
+                  (ionChange)="applyCustomDateRange()"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>End Date</ion-label>
+            <ion-datetime-button datetime="endDate"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="endDate"
+                  presentation="date"
+                  [(ngModel)]="endDate"
+                  (ionChange)="applyCustomDateRange()"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banner Details -->
+    <div class="banner-details-section" *ngIf="selectedBanner">
+      <h2>Banner Details</h2>
+      <div class="banner-info">
+        <div class="info-row">
+          <span class="label">Title:</span>
+          <span class="value">{{ selectedBanner.title }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Status:</span>
+          <span class="value">
+            <ion-badge [color]="selectedBanner.isActive ? 'success' : 'danger'">
+              {{ selectedBanner.isActive ? 'Active' : 'Inactive' }}
+            </ion-badge>
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="label">Display Location:</span>
+          <span class="value">{{ selectedBanner.displayLocation }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Created:</span>
+          <span class="value">{{ selectedBanner.createdAt | date:'medium' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section" *ngIf="analyticsData">
+      <h2>Performance Metrics</h2>
+
+      <!-- Banner Performance Stats -->
+      <div class="performance-stats">
+        <div class="stat-item">
+          <ion-icon name="eye-outline" color="primary"></ion-icon>
+          <div>
+            <div class="stat-number">{{ analyticsData.totalImpressions | number }}</div>
+            <div class="stat-text">Impressions</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="hand-left-outline" color="success"></ion-icon>
+          <div>
+            <div class="stat-number">{{ analyticsData.totalClicks | number }}</div>
+            <div class="stat-text">Clicks</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="trending-up-outline" color="warning"></ion-icon>
+          <div>
+            <div class="stat-number">{{ analyticsData.ctr | number:'1.2-2' }}%</div>
+            <div class="stat-text">CTR</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="people-outline" color="tertiary"></ion-icon>
+          <div>
+            <div class="stat-number">{{ analyticsData.uniqueUsers | number }}</div>
+            <div class="stat-text">Unique Users</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Time Series Charts -->
+      <div class="chart-row">
+        <div class="chart-container">
+          <canvas #impressionsChart></canvas>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-container">
+          <canvas #clicksChart></canvas>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-container">
+          <canvas #ctrChart></canvas>
+        </div>
+      </div>
+
+      <!-- Distribution Charts -->
+      <div class="chart-row chart-row-split">
+        <div class="chart-container">
+          <canvas #platformChart></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas #locationChart></canvas>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="data-table-section">
+        <h3>Daily Breakdown</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Impressions</th>
+                <th>Clicks</th>
+                <th>CTR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let day of analyticsData.dailyStats">
+                <td>{{ day._id }}</td>
+                <td>{{ day.impressions | number }}</td>
+                <td>{{ day.clicks | number }}</td>
+                <td>{{ day.impressions > 0 ? ((day.clicks / day.impressions) * 100).toFixed(2) : 0 }}%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!analyticsData && !isLoading">
+      <ion-icon name="analytics-outline" size="large"></ion-icon>
+      <h3>No Analytics Data</h3>
+      <p>Select a banner to view its analytics</p>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <ion-spinner></ion-spinner>
+      <p>Loading analytics data...</p>
+    </div>
+  </div>
+</ion-content>
