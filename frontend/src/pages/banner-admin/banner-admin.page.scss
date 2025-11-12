@@ -3,12 +3,118 @@
  * Uses MedicsCare Theme System
  */
 
-.banner-item {
-  width: 100%;
+// Stats Dashboard
+.stats-dashboard {
+  padding: var(--mc-spacing-md);
+  background: var(--mc-bg-secondary);
+
+  .stat-card {
+    margin: 0;
+    box-shadow: var(--mc-shadow-sm);
+
+    ion-card-content {
+      padding: var(--mc-spacing-md);
+      text-align: center;
+    }
+
+    .stat-icon {
+      font-size: 32px;
+      margin-bottom: var(--mc-spacing-2);
+      color: var(--mc-color-primary-500);
+
+      &.success {
+        color: var(--mc-color-success-500);
+      }
+
+      &.primary {
+        color: var(--mc-color-info-500);
+      }
+
+      &.tertiary {
+        color: var(--mc-color-warning-500);
+      }
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--mc-text-primary);
+      margin-bottom: var(--mc-spacing-1);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--mc-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+// Search and Filter
+.search-filter-container {
+  padding: var(--mc-spacing-md);
+  background: var(--mc-bg-primary);
+  border-bottom: 1px solid var(--mc-border-primary);
+
+  ion-searchbar {
+    --background: var(--mc-bg-secondary);
+    --border-radius: var(--mc-radius-lg);
+    padding: 0;
+    margin-bottom: var(--mc-spacing-2);
+  }
+
+  .filter-row {
+    display: flex;
+    gap: var(--mc-spacing-2);
+    margin-bottom: var(--mc-spacing-2);
+
+    ion-select {
+      flex: 1;
+      --background: var(--mc-bg-secondary);
+      --padding-start: var(--mc-spacing-3);
+      --padding-end: var(--mc-spacing-3);
+      border: 1px solid var(--mc-border-primary);
+      border-radius: var(--mc-radius-md);
+      min-height: 40px;
+    }
+  }
+}
+
+// Bulk Actions Toolbar
+.bulk-actions-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: var(--mc-spacing-3);
+  background: var(--mc-color-primary-50);
+  border-radius: var(--mc-radius-md);
+  margin-top: var(--mc-spacing-2);
+
+  .selection-info {
+    display: flex;
+    align-items: center;
+    gap: var(--mc-spacing-2);
+    font-weight: 600;
+    color: var(--mc-text-primary);
+  }
+
+  .bulk-actions {
+    display: flex;
+    gap: var(--mc-spacing-1);
+  }
+}
+
+.banner-item {
+  width: 100%;
+  display: flex;
+  gap: var(--mc-spacing-3);
+  align-items: center;
   padding: var(--mc-spacing-3) 0;
+
+  .banner-checkbox {
+    flex-shrink: 0;
+  }
 
   .banner-info {
     flex: 1;

@@ -27,9 +27,137 @@
 <ion-content>
   <!-- Banner List -->
   <div *ngIf="selectedSegment === 'list'">
+    <!-- Quick Stats Dashboard -->
+    <div class="stats-dashboard">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="3">
+            <ion-card class="stat-card">
+              <ion-card-content>
+                <div class="stat-icon">
+                  <ion-icon name="megaphone-outline"></ion-icon>
+                </div>
+                <div class="stat-value">{{ getTotalBanners() }}</div>
+                <div class="stat-label">Total Banners</div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="6" size-md="3">
+            <ion-card class="stat-card">
+              <ion-card-content>
+                <div class="stat-icon success">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+                <div class="stat-value">{{ getActiveBanners() }}</div>
+                <div class="stat-label">Active</div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="6" size-md="3">
+            <ion-card class="stat-card">
+              <ion-card-content>
+                <div class="stat-icon primary">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+                <div class="stat-value">{{ getTotalImpressions() | number }}</div>
+                <div class="stat-label">Total Views</div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="6" size-md="3">
+            <ion-card class="stat-card">
+              <ion-card-content>
+                <div class="stat-icon tertiary">
+                  <ion-icon name="hand-left-outline"></ion-icon>
+                </div>
+                <div class="stat-value">{{ getTotalClicks() | number }}</div>
+                <div class="stat-label">Total Clicks</div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="search-filter-container">
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        (ionInput)="applyFilters()"
+        placeholder="Search banners..."
+        debounce="300">
+      </ion-searchbar>
+
+      <div class="filter-row">
+        <ion-select
+          [(ngModel)]="filterStatus"
+          (ionChange)="applyFilters()"
+          placeholder="Status"
+          interface="popover">
+          <ion-select-option value="all">All Status</ion-select-option>
+          <ion-select-option value="active">Active</ion-select-option>
+          <ion-select-option value="inactive">Inactive</ion-select-option>
+        </ion-select>
+
+        <ion-select
+          [(ngModel)]="filterLocation"
+          (ionChange)="applyFilters()"
+          placeholder="Location"
+          interface="popover">
+          <ion-select-option value="all">All Locations</ion-select-option>
+          <ion-select-option value="home">Home</ion-select-option>
+          <ion-select-option value="appointments">Appointments</ion-select-option>
+          <ion-select-option value="emr">EMR</ion-select-option>
+        </ion-select>
+
+        <ion-select
+          [(ngModel)]="sortBy"
+          (ionChange)="applySorting()"
+          placeholder="Sort By"
+          interface="popover">
+          <ion-select-option value="recent">Most Recent</ion-select-option>
+          <ion-select-option value="oldest">Oldest</ion-select-option>
+          <ion-select-option value="priority">Priority</ion-select-option>
+          <ion-select-option value="impressions">Most Viewed</ion-select-option>
+          <ion-select-option value="clicks">Most Clicked</ion-select-option>
+        </ion-select>
+      </div>
+
+      <!-- Bulk Actions Toolbar -->
+      <div class="bulk-actions-toolbar" *ngIf="selectedBanners.length > 0">
+        <div class="selection-info">
+          <ion-checkbox
+            [(ngModel)]="selectAll"
+            (ionChange)="toggleSelectAll()">
+          </ion-checkbox>
+          <span>{{ selectedBanners.length }} selected</span>
+        </div>
+        <div class="bulk-actions">
+          <ion-button size="small" fill="outline" (click)="bulkActivate()">
+            <ion-icon slot="start" name="eye-outline"></ion-icon>
+            Activate
+          </ion-button>
+          <ion-button size="small" fill="outline" (click)="bulkDeactivate()">
+            <ion-icon slot="start" name="eye-off-outline"></ion-icon>
+            Deactivate
+          </ion-button>
+          <ion-button size="small" fill="outline" color="danger" (click)="bulkDelete()">
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Delete
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
     <ion-list *ngIf="!loading && banners.length > 0">
       <ion-item *ngFor="let banner of banners" lines="full">
         <div class="banner-item">
+          <div class="banner-checkbox">
+            <ion-checkbox
+              [checked]="isSelected(banner.id)"
+              (ionChange)="toggleBannerSelection(banner.id)">
+            </ion-checkbox>
+          </div>
           <div class="banner-info">
             <h3>{{ banner.title }}</h3>
             <p class="description">{{ banner.description }}</p>
@@ -99,7 +227,9 @@
           <ion-select [(ngModel)]="form.contentType" name="contentType">
             <ion-select-option value="text">Text Only</ion-select-option>
             <ion-select-option value="image">Image Only</ion-select-option>
-            <ion-select-option value="combo">Text + Image</ion-select-option>
+            <ion-select-option value="video">Video Only</ion-select-option>
+            <ion-select-option value="gif">GIF Only</ion-select-option>
+            <ion-select-option value="combo">Combo (Text + Media)</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -118,6 +248,37 @@
         <ion-item *ngIf="form.contentType === 'image' || form.contentType === 'combo'">
           <ion-label position="floating">Or Image URL</ion-label>
           <ion-input [(ngModel)]="form.imageUrl" name="imageUrl" type="url"></ion-input>
+        </ion-item>
+
+        <!-- Video Fields -->
+        <ion-item *ngIf="form.contentType === 'video' || form.contentType === 'combo'">
+          <ion-label>Video Type</ion-label>
+          <ion-select [(ngModel)]="form.videoType" name="videoType">
+            <ion-select-option value="youtube">YouTube</ion-select-option>
+            <ion-select-option value="vimeo">Vimeo</ion-select-option>
+            <ion-select-option value="direct">Direct (MP4/WebM)</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="form.contentType === 'video' || form.contentType === 'combo'">
+          <ion-label position="floating">Video URL *</ion-label>
+          <ion-input [(ngModel)]="form.videoUrl" name="videoUrl" type="url" placeholder="https://youtube.com/watch?v=..."></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="form.contentType === 'video' || form.contentType === 'combo'">
+          <ion-label position="floating">Video Thumbnail URL (optional)</ion-label>
+          <ion-input [(ngModel)]="form.videoThumbnail" name="videoThumbnail" type="url" placeholder="https://example.com/thumbnail.jpg"></ion-input>
+        </ion-item>
+
+        <!-- GIF Fields -->
+        <ion-item *ngIf="form.contentType === 'gif' || form.contentType === 'combo'">
+          <ion-label position="floating">GIF URL</ion-label>
+          <ion-input [(ngModel)]="form.gifUrl" name="gifUrl" type="url" placeholder="https://example.com/animation.gif"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="form.contentType === 'gif' || form.contentType === 'combo'">
+          <ion-label position="stacked">Or Upload GIF</ion-label>
+          <input type="file" accept="image/gif" (change)="onGifFileSelected($event)" />
         </ion-item>
 
         <!-- Size -->

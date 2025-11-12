@@ -23,6 +23,7 @@ export class BannerAdminPage implements OnInit {
   searchTerm: string = '';
   filterStatus: string = 'all'; // 'all', 'active', 'inactive'
   filterLocation: string = 'all'; // 'all', 'home', 'appointments', 'emr'
+  sortBy: string = 'recent'; // 'recent', 'oldest', 'priority', 'impressions', 'clicks'
 
   // Bulk operations
   selectedBanners: Set<string> = new Set();
@@ -346,6 +347,29 @@ export class BannerAdminPage implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  async onGifFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/gif')) {
+      const alert = await this.alertController.create({
+        header: 'Invalid File',
+        message: 'Please select a GIF file',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    // Convert to base64
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.form.gifBase64 = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
   async saveBanner() {
     // Validation
     if (!this.form.title) {
@@ -515,5 +539,63 @@ export class BannerAdminPage implements OnInit {
       return !!(this.form.richTextContent && (this.form.imageBase64 || this.form.imageUrl));
     }
     return false;
+  }
+
+  // Selection methods
+  isSelected(bannerId: string): boolean {
+    return this.selectedBanners.has(bannerId);
+  }
+
+  toggleBannerSelection(bannerId: string) {
+    if (this.selectedBanners.has(bannerId)) {
+      this.selectedBanners.delete(bannerId);
+    } else {
+      this.selectedBanners.add(bannerId);
+    }
+    // Update selectAll state
+    this.selectAll = this.selectedBanners.size === this.banners.length;
+  }
+
+  // Sorting method
+  applySorting() {
+    let sorted = [...this.banners];
+
+    switch (this.sortBy) {
+      case 'recent':
+        sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        break;
+      case 'oldest':
+        sorted.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        break;
+      case 'priority':
+        sorted.sort((a, b) => b.priority - a.priority);
+        break;
+      case 'impressions':
+        sorted.sort((a, b) => b.totalImpressions - a.totalImpressions);
+        break;
+      case 'clicks':
+        sorted.sort((a, b) => b.totalClicks - a.totalClicks);
+        break;
+    }
+
+    this.banners = sorted;
+    this.applyFilters(); // Re-apply filters after sorting
+  }
+
+  // Stats methods
+  getTotalBanners(): number {
+    return this.banners.length;
+  }
+
+  getActiveBanners(): number {
+    return this.banners.filter(b => b.isActive).length;
+  }
+
+  getTotalImpressions(): number {
+    return this.banners.reduce((sum, banner) => sum + (banner.totalImpressions || 0), 0);
+  }
+
+  getTotalClicks(): number {
+    return this.banners.reduce((sum, banner) => sum + (banner.totalClicks || 0), 0);
   }
 }
