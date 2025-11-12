@@ -122,6 +122,155 @@
     border-radius: var(--mc-radius-sm);
   }
 
+  // Preview section
+  .preview-section {
+    margin-top: var(--mc-spacing-lg);
+    margin-bottom: var(--mc-spacing-lg);
+
+    ion-button {
+      margin-bottom: var(--mc-spacing-md);
+    }
+  }
+
+  .preview-container {
+    padding: var(--mc-spacing-md);
+    background: var(--mc-bg-secondary);
+    border-radius: var(--mc-radius-lg);
+    margin-top: var(--mc-spacing-md);
+  }
+
+  .preview-label {
+    margin-bottom: var(--mc-spacing-md);
+
+    h3 {
+      margin: 0 0 var(--mc-spacing-1) 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--mc-text-primary);
+    }
+
+    p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--mc-text-secondary);
+    }
+  }
+
+  // Preview banner styles (matching actual banner component)
+  .preview-banner {
+    width: 100%;
+    border-radius: var(--mc-radius-xl);
+    overflow: hidden;
+    box-shadow: var(--mc-shadow-md);
+    background: var(--mc-bg-primary);
+    margin-bottom: var(--mc-spacing-md);
+  }
+
+  // Size variations
+  .preview-banner.banner-small {
+    max-height: 120px;
+  }
+
+  .preview-banner.banner-medium {
+    max-height: 200px;
+  }
+
+  .preview-banner.banner-large {
+    max-height: 300px;
+  }
+
+  // Text only
+  .preview-text-content {
+    padding: var(--mc-spacing-lg);
+    background: linear-gradient(135deg, var(--mc-color-primary-500) 0%, var(--mc-color-primary-700) 100%);
+    color: var(--mc-text-on-primary);
+
+    .preview-rich-text {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--mc-text-on-primary);
+
+      h1, h2, h3 {
+        margin: 0 0 var(--mc-spacing-2) 0;
+        color: var(--mc-text-on-primary);
+      }
+
+      p {
+        margin: 0 0 var(--mc-spacing-2) 0;
+      }
+    }
+  }
+
+  // Image only
+  .preview-image-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--mc-bg-secondary);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  // Combo
+  .preview-combo-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: linear-gradient(135deg, var(--mc-color-primary-500) 0%, var(--mc-color-primary-700) 100%);
+    color: var(--mc-text-on-primary);
+    min-height: 150px;
+
+    .preview-combo-image {
+      flex: 0 0 40%;
+      max-width: 40%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    }
+
+    .preview-combo-text {
+      flex: 1;
+      padding: var(--mc-spacing-lg);
+
+      .preview-rich-text {
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--mc-text-on-primary);
+
+        h1, h2, h3 {
+          margin: 0 0 var(--mc-spacing-2) 0;
+          font-size: 18px;
+          color: var(--mc-text-on-primary);
+        }
+
+        p {
+          margin: 0 0 var(--mc-spacing-1) 0;
+        }
+      }
+    }
+  }
+
+  .preview-info {
+    display: flex;
+    gap: var(--mc-spacing-2);
+    flex-wrap: wrap;
+    margin-top: var(--mc-spacing-md);
+
+    ion-chip {
+      margin: 0;
+    }
+  }
+
   .form-actions {
     margin-top: var(--mc-spacing-6);
     padding-bottom: var(--mc-spacing-6);
@@ -132,15 +281,163 @@
   }
 }
 
+// Responsive adjustments
 @media (max-width: 768px) {
   .banner-item {
     flex-direction: column;
     align-items: flex-start;
 
+    .banner-info {
+      h3 {
+        font-size: 15px;
+      }
+
+      .description {
+        font-size: 12px;
+      }
+
+      .stats {
+        flex-wrap: wrap; // Allow stats to wrap on smaller screens
+        gap: var(--mc-spacing-2);
+      }
+    }
+
     .banner-actions {
       margin-top: var(--mc-spacing-3);
       width: 100%;
       justify-content: flex-start;
+
+      ion-button {
+        --padding-start: var(--mc-spacing-2);
+        --padding-end: var(--mc-spacing-2);
+      }
+    }
+  }
+
+  .form-container {
+    padding: var(--mc-spacing-3);
+
+    ion-list-header {
+      font-size: 14px;
+    }
+  }
+}
+
+// Small phones
+@media (max-width: 480px) {
+  .banner-item {
+    padding: var(--mc-spacing-2) 0;
+
+    .banner-info {
+      h3 {
+        font-size: 14px;
+      }
+
+      .description {
+        font-size: 11px;
+      }
+
+      .meta {
+        ion-badge {
+          font-size: 10px;
+          padding: 2px 6px;
+        }
+      }
+
+      .stats {
+        font-size: 11px;
+        gap: var(--mc-spacing-2);
+      }
+    }
+
+    .banner-actions {
+      ion-button {
+        font-size: 12px;
+        --padding-start: var(--mc-spacing-1);
+        --padding-end: var(--mc-spacing-1);
+      }
+    }
+  }
+
+  .loading-container {
+    padding: var(--mc-spacing-8) var(--mc-spacing-md);
+  }
+
+  .empty-state {
+    padding: var(--mc-spacing-12) var(--mc-spacing-md);
+
+    ion-icon {
+      font-size: 60px;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .form-container {
+    padding: var(--mc-spacing-2);
+
+    ion-list {
+      margin-bottom: var(--mc-spacing-md);
+    }
+
+    ion-list-header {
+      font-size: 13px;
+      margin-top: var(--mc-spacing-2);
+    }
+
+    ion-item {
+      --min-height: 44px; // Ensure touch target size
+    }
+
+    input[type="file"] {
+      font-size: 12px;
+      padding: var(--mc-spacing-1);
+    }
+
+    .form-actions {
+      margin-top: var(--mc-spacing-4);
+      padding-bottom: var(--mc-spacing-4);
+
+      ion-button {
+        margin-bottom: var(--mc-spacing-2);
+        --min-height: 44px; // iOS minimum touch target
+      }
+    }
+  }
+}
+
+// Very small phones (360px and below)
+@media (max-width: 360px) {
+  .banner-item {
+    .banner-info {
+      .stats {
+        flex-direction: column;
+        gap: var(--mc-spacing-1);
+        align-items: flex-start;
+      }
+    }
+  }
+
+  .empty-state {
+    padding: var(--mc-spacing-8) var(--mc-spacing-3);
+
+    ion-icon {
+      font-size: 50px;
+      margin-bottom: var(--mc-spacing-md);
+    }
+
+    h2 {
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 12px;
     }
   }
 }

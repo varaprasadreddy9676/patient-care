@@ -230,6 +230,63 @@
         </ion-item>
       </ion-list>
 
+      <!-- Preview Section -->
+      <div class="preview-section">
+        <ion-button
+          expand="block"
+          fill="outline"
+          color="secondary"
+          (click)="togglePreview()"
+          [disabled]="!isPreviewAvailable()">
+          <ion-icon slot="start" [name]="showPreview ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          {{ showPreview ? 'Hide Preview' : 'Show Preview' }}
+        </ion-button>
+
+        <div class="preview-container" *ngIf="showPreview && isPreviewAvailable()">
+          <div class="preview-label">
+            <h3>Preview</h3>
+            <p>This is how your banner will look:</p>
+          </div>
+
+          <div
+            [class]="getPreviewBannerClass()"
+            [style]="getPreviewBannerStyle()">
+
+            <!-- Text only preview -->
+            <div *ngIf="form.contentType === 'text'" class="preview-text-content">
+              <div class="preview-rich-text" [innerHTML]="getPreviewSafeHtml()"></div>
+            </div>
+
+            <!-- Image only preview -->
+            <div *ngIf="form.contentType === 'image'" class="preview-image-content">
+              <img [src]="getPreviewImageSrc()" [alt]="form.title" />
+            </div>
+
+            <!-- Combo preview -->
+            <div *ngIf="form.contentType === 'combo'" class="preview-combo-content">
+              <div class="preview-combo-image">
+                <img [src]="getPreviewImageSrc()" [alt]="form.title" />
+              </div>
+              <div class="preview-combo-text">
+                <div class="preview-rich-text" [innerHTML]="getPreviewSafeHtml()"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-info">
+            <ion-chip color="primary">
+              <ion-label>Size: {{ form.size }}</ion-label>
+            </ion-chip>
+            <ion-chip color="secondary">
+              <ion-label>Type: {{ form.contentType }}</ion-label>
+            </ion-chip>
+            <ion-chip color="tertiary">
+              <ion-label>Location: {{ form.displayLocation }}</ion-label>
+            </ion-chip>
+          </div>
+        </div>
+      </div>
+
       <div class="form-actions">
         <ion-button expand="block" type="submit" color="primary">
           {{ editingBannerId ? 'Update Banner' : 'Create Banner' }}

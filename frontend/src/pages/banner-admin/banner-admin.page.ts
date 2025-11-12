@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, AlertController, ToastController, ModalController } from '@ionic/angular';
 import { BannerService } from '../../services/banner/banner.service';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-banner-admin',
@@ -47,12 +48,14 @@ export class BannerAdminPage implements OnInit {
   };
 
   editingBannerId: string | null = null;
+  showPreview: boolean = false;
 
   constructor(
     private bannerService: BannerService,
     private alertController: AlertController,
     private toastController: ToastController,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {}
 
   async ngOnInit() {
@@ -230,5 +233,61 @@ export class BannerAdminPage implements OnInit {
       position: 'bottom'
     });
     await toast.present();
+  }
+
+  // Preview methods
+  togglePreview() {
+    this.showPreview = !this.showPreview;
+  }
+
+  getPreviewImageSrc(): string {
+    if (this.form.imageBase64) {
+      if (this.form.imageBase64.startsWith('data:image')) {
+        return this.form.imageBase64;
+      }
+      return `data:image/png;base64,${this.form.imageBase64}`;
+    }
+    if (this.form.imageUrl) {
+      return this.form.imageUrl;
+    }
+    return '';
+  }
+
+  getPreviewSafeHtml(): SafeHtml {
+    if (!this.form.richTextContent) return '';
+    return this.sanitizer.bypassSecurityTrustHtml(this.form.richTextContent);
+  }
+
+  getPreviewBannerClass(): string {
+    const classes = ['preview-banner'];
+    classes.push(`banner-${this.form.size}`);
+    classes.push(`banner-${this.form.contentType}`);
+    return classes.join(' ');
+  }
+
+  getPreviewBannerStyle(): any {
+    const style: any = {};
+    if (this.form.size === 'custom') {
+      if (this.form.customWidth) {
+        style.width = `${this.form.customWidth}px`;
+      }
+      if (this.form.customHeight) {
+        style.height = `${this.form.customHeight}px`;
+      }
+    }
+    return style;
+  }
+
+  isPreviewAvailable(): boolean {
+    if (this.form.contentType === 'text') {
+      return !!this.form.richTextContent;
+    }
+    if (this.form.contentType === 'image') {
+      return !!(this.form.imageBase64 || this.form.imageUrl);
+    }
+    if (this.form.contentType === 'combo') {
+      return !!(this.form.richTextContent && (this.form.imageBase64 || this.form.imageUrl));
+    }
+    return false;
   }
 }

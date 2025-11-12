@@ -28,21 +28,42 @@
     }
   }
 
-  // Size variations
+  // Size variations (responsive)
   .banner-small {
     max-height: 120px;
+
+    @media (max-width: 480px) {
+      max-height: 100px;
+    }
   }
 
   .banner-medium {
     max-height: 200px;
+
+    @media (max-width: 768px) {
+      max-height: 180px;
+    }
+
+    @media (max-width: 480px) {
+      max-height: 150px;
+    }
   }
 
   .banner-large {
     max-height: 300px;
+
+    @media (max-width: 768px) {
+      max-height: 250px;
+    }
+
+    @media (max-width: 480px) {
+      max-height: 200px;
+    }
   }
 
   .banner-custom {
     // Custom dimensions set via inline styles
+    // Will automatically scale on smaller screens with max-width: 100%
   }
 
   // Text only banner
@@ -137,11 +158,16 @@
   }
 
   // Responsive adjustments
+  // Tablet and below (768px)
   @media (max-width: 768px) {
     margin: var(--mc-spacing-3) 0;
 
+    .banner {
+      border-radius: var(--mc-radius-lg); // Slightly smaller radius on tablets
+    }
+
     .banner-combo-content {
-      flex-direction: column;
+      flex-direction: column; // Stack image and text vertically
 
       .combo-image {
         flex: 0 0 auto;
@@ -156,23 +182,81 @@
     }
   }
 
+  // Small phones (480px and below)
   @media (max-width: 480px) {
     margin: var(--mc-spacing-2) 0;
+
+    .banner {
+      border-radius: var(--mc-radius-md); // Even smaller radius on phones
+      // Ensure minimum touch target size for accessibility
+      min-height: 44px; // iOS minimum recommended touch target
+    }
 
     .banner-text-content {
       padding: var(--mc-spacing-md);
 
       .rich-text {
         font-size: 14px;
+
+        h1, h2, h3 {
+          font-size: 16px; // Smaller headings on mobile
+        }
       }
     }
 
     .banner-combo-content {
+      min-height: 120px; // Reduce min-height on mobile
+
+      .combo-image {
+        max-height: 120px; // Smaller image on mobile
+      }
+
       .combo-text {
         padding: var(--mc-spacing-3);
 
         .rich-text {
           font-size: 13px;
+
+          h1, h2, h3 {
+            font-size: 15px; // Smaller headings in combo on mobile
+          }
+        }
+      }
+    }
+  }
+
+  // Very small phones (360px and below - older devices)
+  @media (max-width: 360px) {
+    margin: var(--mc-spacing-2) 0;
+
+    .banner-text-content {
+      padding: var(--mc-spacing-3);
+
+      .rich-text {
+        font-size: 13px;
+
+        h1, h2, h3 {
+          font-size: 15px;
+        }
+      }
+    }
+
+    .banner-combo-content {
+      min-height: 100px;
+
+      .combo-image {
+        max-height: 100px;
+      }
+
+      .combo-text {
+        padding: var(--mc-spacing-2);
+
+        .rich-text {
+          font-size: 12px;
+
+          h1, h2, h3 {
+            font-size: 14px;
+          }
         }
       }
     }
