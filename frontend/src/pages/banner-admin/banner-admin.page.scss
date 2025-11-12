@@ -1,0 +1,146 @@
+/**
+ * Banner Admin Page
+ * Uses MedicsCare Theme System
+ */
+
+.banner-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--mc-spacing-3) 0;
+
+  .banner-info {
+    flex: 1;
+
+    h3 {
+      margin: 0 0 var(--mc-spacing-2) 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--mc-text-primary);
+    }
+
+    .description {
+      margin: 0 0 var(--mc-spacing-2) 0;
+      font-size: 13px;
+      color: var(--mc-text-secondary);
+    }
+
+    .meta {
+      margin-bottom: var(--mc-spacing-2);
+
+      ion-badge {
+        margin-right: var(--mc-spacing-1);
+        font-size: 11px;
+      }
+    }
+
+    .stats {
+      display: flex;
+      gap: var(--mc-spacing-md);
+      font-size: 12px;
+      color: var(--mc-text-tertiary);
+
+      span {
+        strong {
+          font-weight: 600;
+          color: var(--mc-text-primary);
+        }
+      }
+    }
+  }
+
+  .banner-actions {
+    display: flex;
+    gap: var(--mc-spacing-1);
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mc-spacing-10) var(--mc-spacing-lg);
+
+  ion-spinner {
+    margin-bottom: var(--mc-spacing-md);
+  }
+
+  p {
+    color: var(--mc-text-secondary);
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mc-spacing-16) var(--mc-spacing-lg);
+  text-align: center;
+
+  ion-icon {
+    font-size: 80px;
+    color: var(--mc-color-neutral-300);
+    margin-bottom: var(--mc-spacing-lg);
+  }
+
+  h2 {
+    margin: 0 0 var(--mc-spacing-2) 0;
+    font-size: 22px;
+    color: var(--mc-text-primary);
+  }
+
+  p {
+    margin: 0 0 var(--mc-spacing-lg) 0;
+    color: var(--mc-text-secondary);
+    font-size: 14px;
+  }
+}
+
+.form-container {
+  padding: var(--mc-spacing-md);
+
+  ion-list {
+    margin-bottom: var(--mc-spacing-lg);
+    background: var(--mc-bg-primary);
+    border-radius: var(--mc-radius-lg);
+  }
+
+  ion-list-header {
+    font-weight: 600;
+    margin-top: var(--mc-spacing-md);
+    color: var(--mc-text-primary);
+  }
+
+  input[type="file"] {
+    margin-top: var(--mc-spacing-2);
+    padding: var(--mc-spacing-2);
+    font-size: 14px;
+    border: 1px solid var(--mc-border-primary);
+    border-radius: var(--mc-radius-sm);
+  }
+
+  .form-actions {
+    margin-top: var(--mc-spacing-6);
+    padding-bottom: var(--mc-spacing-6);
+
+    ion-button {
+      margin-bottom: var(--mc-spacing-3);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-item {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .banner-actions {
+      margin-top: var(--mc-spacing-3);
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+}

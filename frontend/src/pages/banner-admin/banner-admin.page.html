@@ -1,0 +1,243 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Banner Management</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="selectedSegment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="list">
+        <ion-label>Banners</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="create">
+        <ion-label>{{ editingBannerId ? 'Edit' : 'Create' }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Banner List -->
+  <div *ngIf="selectedSegment === 'list'">
+    <ion-list *ngIf="!loading && banners.length > 0">
+      <ion-item *ngFor="let banner of banners" lines="full">
+        <div class="banner-item">
+          <div class="banner-info">
+            <h3>{{ banner.title }}</h3>
+            <p class="description">{{ banner.description }}</p>
+            <div class="meta">
+              <ion-badge [color]="banner.isActive ? 'success' : 'medium'">
+                {{ banner.isActive ? 'Active' : 'Inactive' }}
+              </ion-badge>
+              <ion-badge color="primary">{{ banner.contentType }}</ion-badge>
+              <ion-badge color="tertiary">{{ banner.displayLocation }}</ion-badge>
+            </div>
+            <div class="stats">
+              <span><strong>Impressions:</strong> {{ banner.totalImpressions }}</span>
+              <span><strong>Clicks:</strong> {{ banner.totalClicks }}</span>
+              <span><strong>CTR:</strong> {{ banner.clickThroughRate }}</span>
+            </div>
+          </div>
+          <div class="banner-actions">
+            <ion-button size="small" fill="clear" (click)="editBanner(banner)">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button size="small" fill="clear" (click)="toggleBannerStatus(banner)">
+              <ion-icon [name]="banner.isActive ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+            </ion-button>
+            <ion-button size="small" fill="clear" color="danger" (click)="deleteBanner(banner)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner></ion-spinner>
+      <p>Loading banners...</p>
+    </div>
+
+    <div *ngIf="!loading && banners.length === 0" class="empty-state">
+      <ion-icon name="megaphone-outline" size="large"></ion-icon>
+      <h2>No Banners Yet</h2>
+      <p>Create your first banner to get started</p>
+      <ion-button (click)="selectedSegment = 'create'">Create Banner</ion-button>
+    </div>
+  </div>
+
+  <!-- Create/Edit Banner Form -->
+  <div *ngIf="selectedSegment === 'create'" class="form-container">
+    <form (ngSubmit)="saveBanner()">
+      <!-- Basic Information -->
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Basic Information</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label position="floating">Title *</ion-label>
+          <ion-input [(ngModel)]="form.title" name="title" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Description</ion-label>
+          <ion-textarea [(ngModel)]="form.description" name="description" rows="2"></ion-textarea>
+        </ion-item>
+
+        <!-- Content Type -->
+        <ion-item>
+          <ion-label>Content Type</ion-label>
+          <ion-select [(ngModel)]="form.contentType" name="contentType">
+            <ion-select-option value="text">Text Only</ion-select-option>
+            <ion-select-option value="image">Image Only</ion-select-option>
+            <ion-select-option value="combo">Text + Image</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Rich Text Content -->
+        <ion-item *ngIf="form.contentType === 'text' || form.contentType === 'combo'">
+          <ion-label position="floating">Text Content (HTML)</ion-label>
+          <ion-textarea [(ngModel)]="form.richTextContent" name="richTextContent" rows="4"></ion-textarea>
+        </ion-item>
+
+        <!-- Image Upload -->
+        <ion-item *ngIf="form.contentType === 'image' || form.contentType === 'combo'">
+          <ion-label position="stacked">Image</ion-label>
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+        </ion-item>
+
+        <ion-item *ngIf="form.contentType === 'image' || form.contentType === 'combo'">
+          <ion-label position="floating">Or Image URL</ion-label>
+          <ion-input [(ngModel)]="form.imageUrl" name="imageUrl" type="url"></ion-input>
+        </ion-item>
+
+        <!-- Size -->
+        <ion-item>
+          <ion-label>Size</ion-label>
+          <ion-select [(ngModel)]="form.size" name="size">
+            <ion-select-option value="small">Small</ion-select-option>
+            <ion-select-option value="medium">Medium</ion-select-option>
+            <ion-select-option value="large">Large</ion-select-option>
+            <ion-select-option value="custom">Custom</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="form.size === 'custom'">
+          <ion-label position="floating">Width (px)</ion-label>
+          <ion-input [(ngModel)]="form.customWidth" name="customWidth" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="form.size === 'custom'">
+          <ion-label position="floating">Height (px)</ion-label>
+          <ion-input [(ngModel)]="form.customHeight" name="customHeight" type="number"></ion-input>
+        </ion-item>
+
+        <!-- Click Behavior -->
+        <ion-list-header>
+          <ion-label>Click Behavior</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Action</ion-label>
+          <ion-select [(ngModel)]="form.clickBehavior" name="clickBehavior">
+            <ion-select-option value="external">External URL</ion-select-option>
+            <ion-select-option value="internal">Internal Page</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="form.clickBehavior === 'external'">
+          <ion-label position="floating">External URL</ion-label>
+          <ion-input [(ngModel)]="form.externalUrl" name="externalUrl" type="url"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="form.clickBehavior === 'internal'">
+          <ion-label position="floating">Internal Route (e.g., /appointments)</ion-label>
+          <ion-input [(ngModel)]="form.internalRoute" name="internalRoute"></ion-input>
+        </ion-item>
+
+        <!-- Display Settings -->
+        <ion-list-header>
+          <ion-label>Display Settings</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Display Location</ion-label>
+          <ion-select [(ngModel)]="form.displayLocation" name="displayLocation">
+            <ion-select-option value="all">All Pages</ion-select-option>
+            <ion-select-option value="home">Home Only</ion-select-option>
+            <ion-select-option value="appointments">Appointments Only</ion-select-option>
+            <ion-select-option value="emr">EMR Only</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Priority (higher = more priority)</ion-label>
+          <ion-input [(ngModel)]="form.priority" name="priority" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Active</ion-label>
+          <ion-toggle [(ngModel)]="form.isActive" name="isActive"></ion-toggle>
+        </ion-item>
+
+        <!-- Schedule -->
+        <ion-list-header>
+          <ion-label>Schedule</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label position="floating">Start Date</ion-label>
+          <ion-input [(ngModel)]="form.schedule.startDate" name="startDate" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">End Date</ion-label>
+          <ion-input [(ngModel)]="form.schedule.endDate" name="endDate" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Start Time</ion-label>
+          <ion-input [(ngModel)]="form.schedule.startTime" name="startTime" type="time"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">End Time</ion-label>
+          <ion-input [(ngModel)]="form.schedule.endTime" name="endTime" type="time"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Frequency</ion-label>
+          <ion-select [(ngModel)]="form.schedule.frequency" name="frequency">
+            <ion-select-option value="always">Always</ion-select-option>
+            <ion-select-option value="daily">Daily</ion-select-option>
+            <ion-select-option value="weekly">Weekly</ion-select-option>
+            <ion-select-option value="specific_days">Specific Days</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Frequency Caps -->
+        <ion-item>
+          <ion-label position="floating">Max Impressions Per User (optional)</ion-label>
+          <ion-input [(ngModel)]="form.schedule.maxImpressionsPerUser" name="maxImpressionsPerUser" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Max Clicks Per User (optional)</ion-label>
+          <ion-input [(ngModel)]="form.schedule.maxClicksPerUser" name="maxClicksPerUser" type="number"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <div class="form-actions">
+        <ion-button expand="block" type="submit" color="primary">
+          {{ editingBannerId ? 'Update Banner' : 'Create Banner' }}
+        </ion-button>
+        <ion-button expand="block" fill="outline" (click)="resetForm(); selectedSegment = 'list'">
+          Cancel
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

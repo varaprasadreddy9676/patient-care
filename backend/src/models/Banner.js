@@ -1,0 +1,120 @@
+var mongoose = require('mongoose');
+
+var BannerSchema = new mongoose.Schema({
+    // Banner identification
+    title: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    description: String,
+
+    // Content - can have text, image, or both
+    contentType: {
+        type: String,
+        enum: ['text', 'image', 'combo'],
+        required: true
+    },
+    richTextContent: String, // HTML rich text content
+    imageBase64: String, // Base64 encoded image
+    imageUrl: String, // Or image URL
+
+    // Banner size
+    size: {
+        type: String,
+        enum: ['small', 'medium', 'large', 'custom'],
+        default: 'medium'
+    },
+    customWidth: Number, // pixels
+    customHeight: Number, // pixels
+
+    // Click behavior
+    clickBehavior: {
+        type: String,
+        enum: ['external', 'internal'],
+        required: true
+    },
+    externalUrl: String, // External link
+    internalRoute: String, // Internal app route like '/appointments', '/home'
+
+    // Scheduling
+    schedule: {
+        startDate: {
+            type: Date,
+            required: true
+        },
+        endDate: {
+            type: Date,
+            required: true
+        },
+        startTime: String, // HH:MM format like "09:00"
+        endTime: String, // HH:MM format like "18:00"
+
+        // Frequency
+        frequency: {
+            type: String,
+            enum: ['always', 'daily', 'weekly', 'specific_days'],
+            default: 'always'
+        },
+        daysOfWeek: [Number], // 0=Sunday, 1=Monday, etc. (for weekly/specific_days)
+
+        // Display frequency limits
+        maxImpressionsPerUser: Number, // Max times to show to same user
+        maxClicksPerUser: Number // Max clicks per user before hiding
+    },
+
+    // Display settings
+    displayLocation: {
+        type: String,
+        enum: ['home', 'appointments', 'emr', 'all'],
+        default: 'all'
+    },
+    priority: {
+        type: Number,
+        default: 0 // Higher number = higher priority
+    },
+
+    // Status
+    isActive: {
+        type: Boolean,
+        default: true
+    },
+
+    // Statistics (aggregate counts)
+    totalImpressions: {
+        type: Number,
+        default: 0
+    },
+    totalClicks: {
+        type: Number,
+        default: 0
+    },
+
+    // Metadata
+    createdBy: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+// Indexes for efficient queries
+BannerSchema.index({ isActive: 1, 'schedule.startDate': 1, 'schedule.endDate': 1 });
+BannerSchema.index({ displayLocation: 1, priority: -1 });
+BannerSchema.index({ createdAt: -1 });
+
+// Update updatedAt on save
+BannerSchema.pre('save', function(next) {
+    this.updatedAt = Date.now();
+    next();
+});
+
+// Export the schema
+module.exports = BannerSchema;

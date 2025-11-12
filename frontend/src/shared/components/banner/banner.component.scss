@@ -1,0 +1,180 @@
+/**
+ * Banner Component
+ * Uses MedicsCare Theme System
+ */
+
+.banner-container {
+  width: 100%;
+  margin: var(--mc-spacing-md) 0;
+  padding: 0;
+
+  .banner {
+    width: 100%;
+    border-radius: var(--mc-radius-xl);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--mc-shadow-md);
+    background: var(--mc-bg-primary);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--mc-shadow-lg);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: var(--mc-shadow-md);
+    }
+  }
+
+  // Size variations
+  .banner-small {
+    max-height: 120px;
+  }
+
+  .banner-medium {
+    max-height: 200px;
+  }
+
+  .banner-large {
+    max-height: 300px;
+  }
+
+  .banner-custom {
+    // Custom dimensions set via inline styles
+  }
+
+  // Text only banner
+  .banner-text-content {
+    padding: var(--mc-spacing-lg);
+    background: linear-gradient(135deg, var(--mc-color-primary-500) 0%, var(--mc-color-primary-700) 100%);
+    color: var(--mc-text-on-primary);
+
+    .rich-text {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--mc-text-on-primary);
+
+      h1, h2, h3 {
+        margin: 0 0 var(--mc-spacing-2) 0;
+        color: var(--mc-text-on-primary);
+      }
+
+      p {
+        margin: 0 0 var(--mc-spacing-2) 0;
+      }
+
+      a {
+        color: var(--mc-text-on-primary);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Image only banner
+  .banner-image-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--mc-bg-secondary);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  // Combo banner (text + image)
+  .banner-combo-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: linear-gradient(135deg, var(--mc-color-primary-500) 0%, var(--mc-color-primary-700) 100%);
+    color: var(--mc-text-on-primary);
+    min-height: 150px;
+
+    .combo-image {
+      flex: 0 0 40%;
+      max-width: 40%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    }
+
+    .combo-text {
+      flex: 1;
+      padding: var(--mc-spacing-lg);
+
+      .rich-text {
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--mc-text-on-primary);
+
+        h1, h2, h3 {
+          margin: 0 0 var(--mc-spacing-2) 0;
+          font-size: 18px;
+          color: var(--mc-text-on-primary);
+        }
+
+        p {
+          margin: 0 0 var(--mc-spacing-1) 0;
+        }
+
+        a {
+          color: var(--mc-text-on-primary);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    margin: var(--mc-spacing-3) 0;
+
+    .banner-combo-content {
+      flex-direction: column;
+
+      .combo-image {
+        flex: 0 0 auto;
+        max-width: 100%;
+        width: 100%;
+        max-height: 150px;
+      }
+
+      .combo-text {
+        padding: var(--mc-spacing-md);
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin: var(--mc-spacing-2) 0;
+
+    .banner-text-content {
+      padding: var(--mc-spacing-md);
+
+      .rich-text {
+        font-size: 14px;
+      }
+    }
+
+    .banner-combo-content {
+      .combo-text {
+        padding: var(--mc-spacing-3);
+
+        .rich-text {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}

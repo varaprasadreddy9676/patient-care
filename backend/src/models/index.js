@@ -27,6 +27,11 @@ module.exports = {
   chatMessage: require("./ChatMessage.js"),
   chatIdempotency: require("./ChatIdempotency.js"),
 
-  // Advertisement Model
+  // Advertisement Model (old - keeping for backward compatibility)
   advertisement: require("./Advertisement.js"),
+
+  // New Banner System
+  banner: require("./Banner.js"),
+  bannerClick: require("./BannerClick.js"),
+  bannerImpression: require("./BannerImpression.js"),
 };

@@ -40,8 +40,11 @@ module.exports = {
     [BASE_URL + '/location']: require('./controllers/LocationController'),
     [BASE_URL + '/token']: require('./controllers/AuthController'),
 
-    // Advertisement endpoints
+    // Advertisement endpoints (old system)
     [BASE_URL + '/advertisements']: require('./controllers/AdvertisementController'),
+
+    // Banner System (new comprehensive ad system)
+    [BASE_URL + '/banners']: require('./controllers/BannerController'),
 
     // AI Chat System
     [BASE_URL + '/v1/chat']: require('./controllers/ChatController'),
