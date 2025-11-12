@@ -2,7 +2,6 @@ var restful = require('node-restful');
 const ResponseHandler = require('../utils/ResponseHandler');
 const AppError = require('../utils/AppError');
 const ErrorCodes = require('../utils/ErrorCodes');
-const { upload, uploadImage, deleteImage, generateThumbnailUrl, generateResponsiveUrls } = require('../config/cloudinary');
 
 module.exports = function (app, route) {
 
@@ -430,63 +429,6 @@ module.exports = function (app, route) {
 
         } catch (error) {
             console.error('List banners error:', error);
-            return ResponseHandler.error(res, new AppError(ErrorCodes.INTERNAL_SERVER_ERROR, error.message));
-        }
-    });
-
-    // Image upload endpoint with Cloudinary
-    app.post(route + '/upload-image', upload.single('image'), async function (req, res, next) {
-        try {
-            if (!req.file) {
-                return ResponseHandler.error(res, new AppError(ErrorCodes.INVALID_INPUT, 'No image file provided'));
-            }
-
-            // Cloudinary automatically uploads the file through multer-storage-cloudinary
-            const cloudinaryFile = req.file;
-
-            // Generate thumbnail and responsive URLs
-            const thumbnailUrl = generateThumbnailUrl(cloudinaryFile.filename, 400, 300);
-            const responsiveUrls = generateResponsiveUrls(cloudinaryFile.filename);
-
-            return ResponseHandler.success(res, {
-                cloudinaryImage: {
-                    publicId: cloudinaryFile.filename,
-                    url: cloudinaryFile.path,
-                    secureUrl: cloudinaryFile.path,
-                    thumbnailUrl: thumbnailUrl,
-                    responsiveUrls: responsiveUrls,
-                    format: cloudinaryFile.format || 'jpg',
-                    width: cloudinaryFile.width,
-                    height: cloudinaryFile.height,
-                    uploadedAt: new Date()
-                },
-                message: 'Image uploaded successfully'
-            });
-
-        } catch (error) {
-            console.error('Image upload error:', error);
-            return ResponseHandler.error(res, new AppError(ErrorCodes.INTERNAL_SERVER_ERROR, error.message));
-        }
-    });
-
-    // Delete image from Cloudinary
-    app.delete(route + '/delete-image/:publicId', async function (req, res, next) {
-        try {
-            const publicId = req.params.publicId;
-
-            if (!publicId) {
-                return ResponseHandler.error(res, new AppError(ErrorCodes.INVALID_INPUT, 'publicId is required'));
-            }
-
-            const result = await deleteImage(publicId);
-
-            return ResponseHandler.success(res, {
-                deleted: result.result === 'ok',
-                message: 'Image deleted successfully'
-            });
-
-        } catch (error) {
-            console.error('Image delete error:', error);
             return ResponseHandler.error(res, new AppError(ErrorCodes.INTERNAL_SERVER_ERROR, error.message));
         }
     });

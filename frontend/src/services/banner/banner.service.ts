@@ -247,35 +247,6 @@ export class BannerService {
   }
 
   /**
-   * Upload image to Cloudinary (admin function)
-   */
-  async uploadImage(file: File): Promise<any> {
-    try {
-      const formData = new FormData();
-      formData.append('image', file);
-
-      const response = await this.httpService.post('/banners/upload-image', formData);
-      return response;
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Delete image from Cloudinary (admin function)
-   */
-  async deleteImage(publicId: string): Promise<any> {
-    try {
-      const response = await this.httpService.delete(`/banners/delete-image/${publicId}`);
-      return response;
-    } catch (error) {
-      console.error('Error deleting image:', error);
-      throw error;
-    }
-  }
-
-  /**
    * Check for schedule conflicts (admin function)
    */
   async checkScheduleConflicts(scheduleData: any): Promise<any> {

@@ -9,27 +9,30 @@ var BannerSchema = new mongoose.Schema({
     },
     description: String,
 
-    // Content - can have text, image, or both
+    // Content - can have text, image, video, or combinations
     contentType: {
         type: String,
-        enum: ['text', 'image', 'combo'],
+        enum: ['text', 'image', 'video', 'gif', 'combo'],
         required: true
     },
     richTextContent: String, // HTML rich text content
-    imageBase64: String, // Base64 encoded image (legacy)
-    imageUrl: String, // Or image URL (legacy)
 
-    // Cloudinary image integration (advanced)
-    cloudinaryImage: {
-        publicId: String, // Cloudinary public ID
-        url: String, // Cloudinary URL
-        secureUrl: String, // HTTPS URL
-        thumbnailUrl: String, // Optimized thumbnail
-        format: String, // Image format (jpg, png, etc.)
-        width: Number, // Original width
-        height: Number, // Original height
-        uploadedAt: Date
+    // Image content
+    imageBase64: String, // Base64 encoded image
+    imageUrl: String, // Or image URL
+
+    // Video content
+    videoUrl: String, // Video URL (YouTube, Vimeo, or direct MP4/WebM)
+    videoType: {
+        type: String,
+        enum: ['youtube', 'vimeo', 'direct'], // Video source type
+        default: 'direct'
     },
+    videoThumbnail: String, // Thumbnail image for video
+
+    // GIF content
+    gifUrl: String, // GIF URL
+    gifBase64: String, // Base64 encoded GIF
 
     // Banner size
     size: {
