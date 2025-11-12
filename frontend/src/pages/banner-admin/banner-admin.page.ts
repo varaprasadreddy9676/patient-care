@@ -15,8 +15,18 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class BannerAdminPage implements OnInit {
   banners: any[] = [];
+  filteredBanners: any[] = [];
   loading: boolean = true;
   selectedSegment: string = 'list'; // 'list' or 'create'
+
+  // Search and filter
+  searchTerm: string = '';
+  filterStatus: string = 'all'; // 'all', 'active', 'inactive'
+  filterLocation: string = 'all'; // 'all', 'home', 'appointments', 'emr'
+
+  // Bulk operations
+  selectedBanners: Set<string> = new Set();
+  selectAll: boolean = false;
 
   // Form data for creating/editing banner
   form: any = {
@@ -26,6 +36,11 @@ export class BannerAdminPage implements OnInit {
     richTextContent: '',
     imageBase64: '',
     imageUrl: '',
+    videoUrl: '',
+    videoType: 'direct',
+    videoThumbnail: '',
+    gifUrl: '',
+    gifBase64: '',
     size: 'medium',
     customWidth: null,
     customHeight: null,
@@ -66,12 +81,214 @@ export class BannerAdminPage implements OnInit {
     this.loading = true;
     try {
       this.banners = await this.bannerService.getAllBanners();
+      this.applyFilters();
     } catch (error) {
       console.error('Error loading banners:', error);
       await this.showToast('Error loading banners', 'danger');
     } finally {
       this.loading = false;
     }
+  }
+
+  // Search and Filter Methods
+  applyFilters() {
+    let filtered = [...this.banners];
+
+    // Apply search term
+    if (this.searchTerm) {
+      const term = this.searchTerm.toLowerCase();
+      filtered = filtered.filter(banner =>
+        banner.title?.toLowerCase().includes(term) ||
+        banner.description?.toLowerCase().includes(term)
+      );
+    }
+
+    // Apply status filter
+    if (this.filterStatus !== 'all') {
+      const isActive = this.filterStatus === 'active';
+      filtered = filtered.filter(banner => banner.isActive === isActive);
+    }
+
+    // Apply location filter
+    if (this.filterLocation !== 'all') {
+      filtered = filtered.filter(banner =>
+        banner.displayLocation === this.filterLocation ||
+        banner.displayLocation === 'all'
+      );
+    }
+
+    this.filteredBanners = filtered;
+  }
+
+  onSearchChange() {
+    this.applyFilters();
+  }
+
+  onFilterChange() {
+    this.applyFilters();
+  }
+
+  clearFilters() {
+    this.searchTerm = '';
+    this.filterStatus = 'all';
+    this.filterLocation = 'all';
+    this.applyFilters();
+  }
+
+  // Bulk Operations Methods
+  toggleSelectAll() {
+    if (this.selectAll) {
+      this.filteredBanners.forEach(banner => {
+        this.selectedBanners.add(banner._id);
+      });
+    } else {
+      this.selectedBanners.clear();
+    }
+  }
+
+  toggleSelectBanner(bannerId: string) {
+    if (this.selectedBanners.has(bannerId)) {
+      this.selectedBanners.delete(bannerId);
+    } else {
+      this.selectedBanners.add(bannerId);
+    }
+    this.updateSelectAllState();
+  }
+
+  updateSelectAllState() {
+    this.selectAll = this.filteredBanners.length > 0 &&
+      this.filteredBanners.every(banner => this.selectedBanners.has(banner._id));
+  }
+
+  async bulkActivate() {
+    if (this.selectedBanners.size === 0) {
+      await this.showToast('Please select banners to activate', 'warning');
+      return;
+    }
+
+    const alert = await this.alertController.create({
+      header: 'Activate Banners',
+      message: `Activate ${this.selectedBanners.size} selected banner(s)?`,
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        {
+          text: 'Activate',
+          handler: async () => {
+            await this.performBulkOperation(true);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async bulkDeactivate() {
+    if (this.selectedBanners.size === 0) {
+      await this.showToast('Please select banners to deactivate', 'warning');
+      return;
+    }
+
+    const alert = await this.alertController.create({
+      header: 'Deactivate Banners',
+      message: `Deactivate ${this.selectedBanners.size} selected banner(s)?`,
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        {
+          text: 'Deactivate',
+          handler: async () => {
+            await this.performBulkOperation(false);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async bulkDelete() {
+    if (this.selectedBanners.size === 0) {
+      await this.showToast('Please select banners to delete', 'warning');
+      return;
+    }
+
+    const alert = await this.alertController.create({
+      header: 'Delete Banners',
+      message: `Permanently delete ${this.selectedBanners.size} selected banner(s)? This cannot be undone.`,
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        {
+          text: 'Delete',
+          role: 'destructive',
+          handler: async () => {
+            await this.performBulkDelete();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  private async performBulkOperation(isActive: boolean) {
+    const loading = await this.alertController.create({
+      message: 'Processing...'
+    });
+    await loading.present();
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const bannerId of this.selectedBanners) {
+      try {
+        await this.bannerService.updateBanner(bannerId, { isActive });
+        successCount++;
+      } catch (error) {
+        console.error(`Error updating banner ${bannerId}:`, error);
+        errorCount++;
+      }
+    }
+
+    await loading.dismiss();
+
+    if (errorCount === 0) {
+      await this.showToast(`${successCount} banner(s) updated successfully`, 'success');
+    } else {
+      await this.showToast(`${successCount} succeeded, ${errorCount} failed`, 'warning');
+    }
+
+    this.selectedBanners.clear();
+    this.selectAll = false;
+    await this.loadBanners();
+  }
+
+  private async performBulkDelete() {
+    const loading = await this.alertController.create({
+      message: 'Deleting...'
+    });
+    await loading.present();
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const bannerId of this.selectedBanners) {
+      try {
+        await this.bannerService.deleteBanner(bannerId);
+        successCount++;
+      } catch (error) {
+        console.error(`Error deleting banner ${bannerId}:`, error);
+        errorCount++;
+      }
+    }
+
+    await loading.dismiss();
+
+    if (errorCount === 0) {
+      await this.showToast(`${successCount} banner(s) deleted successfully`, 'success');
+    } else {
+      await this.showToast(`${successCount} succeeded, ${errorCount} failed`, 'warning');
+    }
+
+    this.selectedBanners.clear();
+    this.selectAll = false;
+    await this.loadBanners();
   }
 
   segmentChanged(event: any) {
@@ -90,6 +307,11 @@ export class BannerAdminPage implements OnInit {
       richTextContent: '',
       imageBase64: '',
       imageUrl: '',
+      videoUrl: '',
+      videoType: 'direct',
+      videoThumbnail: '',
+      gifUrl: '',
+      gifBase64: '',
       size: 'medium',
       customWidth: null,
       customHeight: null,

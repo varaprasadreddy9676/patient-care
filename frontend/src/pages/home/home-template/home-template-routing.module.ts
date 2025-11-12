@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminGuard } from '../../../guards/admin.guard';
 
 export const homeTemplateRoutes: Routes = [
   {
@@ -65,6 +66,7 @@ export const homeTemplateRoutes: Routes = [
   },
   {
     path: 'banner-admin',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('../../banner-admin/banner-admin.page').then(
         (m) => m.BannerAdminPage
@@ -72,6 +74,7 @@ export const homeTemplateRoutes: Routes = [
   },
   {
     path: 'banner-analytics',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('../../banner-analytics/banner-analytics.page').then(
         (m) => m.BannerAnalyticsPage
