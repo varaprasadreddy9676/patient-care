@@ -1,0 +1,145 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>System Health Analytics</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="analytics-container">
+    <!-- Overview Cards -->
+    <div class="overview-section">
+      <h2>System Health Overview</h2>
+      <div class="stats-grid">
+        <div class="stat-card success-card">
+          <div class="stat-icon">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ successRate | number:'1.2-2' }}%</div>
+            <div class="stat-label">Success Rate</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="flash-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ totalEvents | number }}</div>
+            <div class="stat-label">Total Events</div>
+          </div>
+        </div>
+
+        <div class="stat-card error-card">
+          <div class="stat-icon">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ totalErrors | number }}</div>
+            <div class="stat-label">Total Errors</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Health Status Indicator -->
+      <div class="health-indicator" [class.healthy]="successRate >= 95" [class.warning]="successRate >= 90 && successRate < 95" [class.critical]="successRate < 90">
+        <ion-icon [name]="successRate >= 95 ? 'checkmark-circle' : successRate >= 90 ? 'warning' : 'alert-circle'"></ion-icon>
+        <span>System is {{ successRate >= 95 ? 'Healthy' : successRate >= 90 ? 'Warning' : 'Critical' }}</span>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <h2>Filters</h2>
+      <div class="filter-controls">
+        <ion-item>
+          <ion-label>Date Range</ion-label>
+          <ion-select
+            [(ngModel)]="dateRange"
+            (ionChange)="onDateRangeChange()"
+            interface="popover"
+          >
+            <ion-select-option value="7">Last 7 Days</ion-select-option>
+            <ion-select-option value="30">Last 30 Days</ion-select-option>
+            <ion-select-option value="90">Last 90 Days</ion-select-option>
+            <ion-select-option value="180">Last 6 Months</ion-select-option>
+            <ion-select-option value="365">Last Year</ion-select-option>
+            <ion-select-option value="custom">Custom Range</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div class="custom-date-range" *ngIf="dateRange === 'custom'">
+          <ion-item>
+            <ion-label>Start Date</ion-label>
+            <ion-datetime-button datetime="startDate"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="startDate"
+                  presentation="date"
+                  [(ngModel)]="startDate"
+                  (ionChange)="applyCustomDateRange()"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>End Date</ion-label>
+            <ion-datetime-button datetime="endDate"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="endDate"
+                  presentation="date"
+                  [(ngModel)]="endDate"
+                  (ionChange)="applyCustomDateRange()"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section" *ngIf="healthData">
+      <h2>Error Analysis</h2>
+
+      <!-- Errors Over Time -->
+      <div class="chart-row">
+        <div class="chart-container">
+          <canvas #errorsByDayChart></canvas>
+        </div>
+      </div>
+
+      <!-- Error Events & Failed Operations -->
+      <div class="chart-row chart-row-split" *ngIf="healthData.errorEvents && healthData.errorEvents.length > 0">
+        <div class="chart-container">
+          <canvas #errorEventsChart></canvas>
+        </div>
+        <div class="chart-container" *ngIf="healthData.failedOperations && healthData.failedOperations.length > 0">
+          <canvas #failedOpsChart></canvas>
+        </div>
+      </div>
+
+      <!-- No Errors Message -->
+      <div class="no-errors" *ngIf="totalErrors === 0">
+        <ion-icon name="checkmark-circle-outline" size="large" color="success"></ion-icon>
+        <h3>No Errors Detected</h3>
+        <p>Your system is running smoothly!</p>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <ion-spinner></ion-spinner>
+      <p>Loading system health data...</p>
+    </div>
+  </div>
+</ion-content>

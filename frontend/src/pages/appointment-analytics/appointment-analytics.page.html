@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Appointment Analytics</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="analytics-container">
+    <!-- Overview Cards -->
+    <div class="overview-section">
+      <h2>Overview</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="calendar-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ totalAppointments | number }}</div>
+            <div class="stat-label">Total Appointments</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon success">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ confirmedAppointments | number }}</div>
+            <div class="stat-label">Confirmed</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon danger">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ cancelledAppointments | number }}</div>
+            <div class="stat-label">Cancelled</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon warning">
+            <ion-icon name="trending-down-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ cancellationRate | number:'1.1-1' }}%</div>
+            <div class="stat-label">Cancellation Rate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <h2>Filters</h2>
+      <div class="filter-controls">
+        <ion-item>
+          <ion-label>Date Range</ion-label>
+          <ion-select
+            [(ngModel)]="dateRange"
+            (ionChange)="onDateRangeChange()"
+            interface="popover"
+          >
+            <ion-select-option value="7">Last 7 Days</ion-select-option>
+            <ion-select-option value="30">Last 30 Days</ion-select-option>
+            <ion-select-option value="90">Last 90 Days</ion-select-option>
+            <ion-select-option value="180">Last 6 Months</ion-select-option>
+            <ion-select-option value="365">Last Year</ion-select-option>
+            <ion-select-option value="custom">Custom Range</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div class="custom-date-range" *ngIf="dateRange === 'custom'">
+          <ion-item>
+            <ion-label>Start Date</ion-label>
+            <ion-datetime-button datetime="startDate"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="startDate"
+                  presentation="date"
+                  [(ngModel)]="startDate"
+                  (ionChange)="applyCustomDateRange()"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>End Date</ion-label>
+            <ion-datetime-button datetime="endDate"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="endDate"
+                  presentation="date"
+                  [(ngModel)]="endDate"
+                  (ionChange)="applyCustomDateRange()"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section" *ngIf="appointmentData">
+      <h2>Appointment Trends</h2>
+
+      <!-- Appointments Over Time -->
+      <div class="chart-row">
+        <div class="chart-container">
+          <canvas #appointmentsByDayChart></canvas>
+        </div>
+      </div>
+
+      <!-- Split Row: Status & Events -->
+      <div class="chart-row chart-row-split">
+        <div class="chart-container">
+          <canvas #appointmentsByStatusChart></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas #appointmentEventsChart></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <ion-spinner></ion-spinner>
+      <p>Loading appointment analytics...</p>
+    </div>
+  </div>
+</ion-content>

@@ -46,6 +46,9 @@ module.exports = {
     // Banner System (new comprehensive ad system)
     [BASE_URL + '/banners']: require('./controllers/BannerController'),
 
+    // App-wide Analytics Dashboard
+    [BASE_URL + '/analytics']: require('./controllers/AnalyticsController'),
+
     // AI Chat System
     [BASE_URL + '/v1/chat']: require('./controllers/ChatController'),
 

@@ -1,0 +1,236 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>App Analytics Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToAppointmentAnalytics()">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="analytics-container">
+    <!-- Overview Cards -->
+    <div class="overview-section">
+      <h2>Overview</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="people-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ totalUsers | number }}</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="person-add-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ newUsers | number }}</div>
+            <div class="stat-label">New Users</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="pulse-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ activeUsers | number }}</div>
+            <div class="stat-label">Active Users</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="flash-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ totalEvents | number }}</div>
+            <div class="stat-label">Total Events</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="calendar-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ totalAppointments | number }}</div>
+            <div class="stat-label">Appointments</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <ion-icon name="eye-outline"></ion-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value">{{ bannerImpressions | number }}</div>
+            <div class="stat-label">Banner Views</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <h2>Filters</h2>
+      <div class="filter-controls">
+        <ion-item>
+          <ion-label>Date Range</ion-label>
+          <ion-select
+            [(ngModel)]="dateRange"
+            (ionChange)="onDateRangeChange()"
+            interface="popover"
+          >
+            <ion-select-option value="7">Last 7 Days</ion-select-option>
+            <ion-select-option value="30">Last 30 Days</ion-select-option>
+            <ion-select-option value="90">Last 90 Days</ion-select-option>
+            <ion-select-option value="180">Last 6 Months</ion-select-option>
+            <ion-select-option value="365">Last Year</ion-select-option>
+            <ion-select-option value="custom">Custom Range</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div class="custom-date-range" *ngIf="dateRange === 'custom'">
+          <ion-item>
+            <ion-label>Start Date</ion-label>
+            <ion-datetime-button datetime="startDate"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="startDate"
+                  presentation="date"
+                  [(ngModel)]="startDate"
+                  (ionChange)="applyCustomDateRange()"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>End Date</ion-label>
+            <ion-datetime-button datetime="endDate"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="endDate"
+                  presentation="date"
+                  [(ngModel)]="endDate"
+                  (ionChange)="applyCustomDateRange()"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+
+    <!-- Session Statistics -->
+    <div class="session-stats-section" *ngIf="userEngagementData">
+      <h2>Session Statistics</h2>
+      <div class="session-stats">
+        <div class="stat-item">
+          <ion-icon name="timer-outline" color="primary"></ion-icon>
+          <div>
+            <div class="stat-number">{{ userEngagementData.sessionStats.totalSessions | number }}</div>
+            <div class="stat-text">Total Sessions</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="analytics-outline" color="success"></ion-icon>
+          <div>
+            <div class="stat-number">{{ userEngagementData.sessionStats.avgEventsPerSession | number:'1.1-1' }}</div>
+            <div class="stat-text">Avg Events/Session</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="time-outline" color="warning"></ion-icon>
+          <div>
+            <div class="stat-number">{{ (userEngagementData.sessionStats.avgSessionDuration / 1000 / 60) | number:'1.0-0' }}m</div>
+            <div class="stat-text">Avg Session Time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section" *ngIf="userEngagementData">
+      <h2>User Engagement Metrics</h2>
+
+      <!-- User Growth -->
+      <div class="chart-row">
+        <div class="chart-container">
+          <canvas #usersChart></canvas>
+        </div>
+      </div>
+
+      <!-- Active Users Trend -->
+      <div class="chart-row">
+        <div class="chart-container">
+          <canvas #activeUsersChart></canvas>
+        </div>
+      </div>
+
+      <!-- Split Row: Category & Top Events -->
+      <div class="chart-row chart-row-split">
+        <div class="chart-container">
+          <canvas #categoryChart></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas #eventsChart></canvas>
+        </div>
+      </div>
+
+      <!-- Content Analytics -->
+      <div class="chart-row">
+        <div class="chart-container">
+          <canvas #contentChart></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="quick-links-section">
+      <h2>More Analytics</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-card (click)="goToAppointmentAnalytics()" button>
+              <ion-card-content class="link-card">
+                <ion-icon name="calendar-outline" size="large"></ion-icon>
+                <h3>Appointments</h3>
+                <p>Booking trends & statistics</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="6">
+            <ion-card (click)="goToSystemHealth()" button>
+              <ion-card-content class="link-card">
+                <ion-icon name="shield-checkmark-outline" size="large"></ion-icon>
+                <h3>System Health</h3>
+                <p>Errors & performance</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <ion-spinner></ion-spinner>
+      <p>Loading analytics data...</p>
+    </div>
+  </div>
+</ion-content>
