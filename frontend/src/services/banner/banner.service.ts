@@ -6,10 +6,17 @@ import { Platform } from '@ionic/angular';
 export interface Banner {
   id: string;
   title: string;
-  contentType: 'text' | 'image' | 'combo';
+  contentType: 'text' | 'image' | 'video' | 'gif' | 'combo';
   richTextContent?: string;
   imageBase64?: string;
   imageUrl?: string;
+  // Video content
+  videoUrl?: string;
+  videoType?: 'youtube' | 'vimeo' | 'direct';
+  videoThumbnail?: string;
+  // GIF content
+  gifUrl?: string;
+  gifBase64?: string;
   size: 'small' | 'medium' | 'large' | 'custom';
   customWidth?: number;
   customHeight?: number;
