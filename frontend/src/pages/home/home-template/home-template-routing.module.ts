@@ -64,6 +64,13 @@ export const homeTemplateRoutes: Routes = [
       ),
   },
   {
+    path: 'banner-admin',
+    loadComponent: () =>
+      import('../../banner-admin/banner-admin.page').then(
+        (m) => m.BannerAdminPage
+      ),
+  },
+  {
     path: 'select-patient',
     loadComponent: () =>
       import('../../appointment/select-patient/select-patient.page').then(
