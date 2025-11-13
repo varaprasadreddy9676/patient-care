@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, LoadingController, AlertController } from '@ionic/angular';
@@ -21,7 +21,7 @@ Chart.register(...registerables);
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule]
 })
-export class AppAnalyticsPage implements OnInit {
+export class AppAnalyticsPage implements OnInit, OnDestroy {
   @ViewChild('usersChart', { static: false }) usersChartRef!: ElementRef;
   @ViewChild('activeUsersChart', { static: false }) activeUsersChartRef!: ElementRef;
   @ViewChild('eventsChart', { static: false }) eventsChartRef!: ElementRef;
@@ -71,6 +71,10 @@ export class AppAnalyticsPage implements OnInit {
 
   ngOnInit() {
     this.loadAnalytics();
+  }
+
+  ngOnDestroy() {
+    this.destroyCharts();
   }
 
   async onDateRangeChange() {

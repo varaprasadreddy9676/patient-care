@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, LoadingController, AlertController } from '@ionic/angular';
@@ -21,7 +21,7 @@ Chart.register(...registerables);
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule]
 })
-export class SystemHealthAnalyticsPage implements OnInit {
+export class SystemHealthAnalyticsPage implements OnInit, OnDestroy {
   @ViewChild('errorsByDayChart', { static: false }) errorsByDayChartRef!: ElementRef;
   @ViewChild('errorEventsChart', { static: false }) errorEventsChartRef!: ElementRef;
   @ViewChild('failedOpsChart', { static: false }) failedOpsChartRef!: ElementRef;
@@ -61,6 +61,10 @@ export class SystemHealthAnalyticsPage implements OnInit {
 
   ngOnInit() {
     this.loadAnalytics();
+  }
+
+  ngOnDestroy() {
+    this.destroyCharts();
   }
 
   async onDateRangeChange() {

@@ -81,6 +81,30 @@ export const homeTemplateRoutes: Routes = [
       ),
   },
   {
+    path: 'app-analytics',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('../../app-analytics/app-analytics.page').then(
+        (m) => m.AppAnalyticsPage
+      ),
+  },
+  {
+    path: 'appointment-analytics',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('../../appointment-analytics/appointment-analytics.page').then(
+        (m) => m.AppointmentAnalyticsPage
+      ),
+  },
+  {
+    path: 'system-health-analytics',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('../../system-health-analytics/system-health-analytics.page').then(
+        (m) => m.SystemHealthAnalyticsPage
+      ),
+  },
+  {
     path: 'select-patient',
     loadComponent: () =>
       import('../../appointment/select-patient/select-patient.page').then(

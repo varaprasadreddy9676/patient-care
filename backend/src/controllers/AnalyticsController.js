@@ -1,11 +1,12 @@
 const ResponseHandler = require('../utils/ResponseHandler');
 const AppError = require('../utils/AppError');
 const ErrorCodes = require('../utils/ErrorCodes');
+const { requireAdmin } = require('../middleware/adminAuth');
 
 module.exports = function (app, route) {
 
     // Get aggregate app-wide analytics
-    app.get(route + '/overview', async function (req, res, next) {
+    app.get(route + '/overview', requireAdmin, async function (req, res, next) {
         try {
             const { startDate, endDate } = req.query;
 
@@ -71,7 +72,7 @@ module.exports = function (app, route) {
     });
 
     // Get user engagement analytics
-    app.get(route + '/user-engagement', async function (req, res, next) {
+    app.get(route + '/user-engagement', requireAdmin, async function (req, res, next) {
         try {
             const { startDate, endDate } = req.query;
 
@@ -206,7 +207,7 @@ module.exports = function (app, route) {
     });
 
     // Get appointment analytics
-    app.get(route + '/appointments', async function (req, res, next) {
+    app.get(route + '/appointments', requireAdmin, async function (req, res, next) {
         try {
             const { startDate, endDate } = req.query;
 
@@ -312,7 +313,7 @@ module.exports = function (app, route) {
     });
 
     // Get system health analytics
-    app.get(route + '/system-health', async function (req, res, next) {
+    app.get(route + '/system-health', requireAdmin, async function (req, res, next) {
         try {
             const { startDate, endDate } = req.query;
 
@@ -407,7 +408,7 @@ module.exports = function (app, route) {
     });
 
     // Get content analytics
-    app.get(route + '/content', async function (req, res, next) {
+    app.get(route + '/content', requireAdmin, async function (req, res, next) {
         try {
             const { startDate, endDate } = req.query;
 
