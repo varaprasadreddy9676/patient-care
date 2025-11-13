@@ -148,5 +148,11 @@ var AppointmentSchema = new mongoose.Schema({
     usePushEach: true
 });
 
+// Indexes for analytics performance
+AppointmentSchema.index({ bookingDateTime: -1 });
+AppointmentSchema.index({ userId: 1, bookingDateTime: -1 });
+AppointmentSchema.index({ status: 1, bookingDateTime: -1 });
+AppointmentSchema.index({ appointmentDate: 1 });
+
 // Export the schema
 module.exports = AppointmentSchema;

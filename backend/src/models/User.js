@@ -64,6 +64,9 @@ UserSchema.index({
     unique: true,
 });
 
+// Index for analytics performance
+UserSchema.index({ registeredDateTime: -1 });
+
 UserSchema.methods.setOTP = function () {
 
     var otp = "";

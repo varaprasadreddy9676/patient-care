@@ -23,7 +23,7 @@ module.exports = function (app, route) {
 
             // 2. New Users in date range
             const newUsers = await app.models.user.countDocuments({
-                createdAt: { $gte: start, $lte: end }
+                registeredDateTime: { $gte: start, $lte: end }
             });
 
             // 3. Active Sessions (unique users with audit trail events)
@@ -38,7 +38,7 @@ module.exports = function (app, route) {
 
             // 5. Total Appointments
             const totalAppointments = await app.models.appointment.countDocuments({
-                createdAt: { $gte: start, $lte: end }
+                bookingDateTime: { $gte: start, $lte: end }
             });
 
             // 6. Banner Performance
@@ -86,13 +86,13 @@ module.exports = function (app, route) {
             const usersByDay = await app.models.user.aggregate([
                 {
                     $match: {
-                        createdAt: { $gte: start, $lte: end }
+                        registeredDateTime: { $gte: start, $lte: end }
                     }
                 },
                 {
                     $group: {
                         _id: {
-                            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+                            $dateToString: { format: "%Y-%m-%d", date: "$registeredDateTime" }
                         },
                         count: { $sum: 1 }
                     }
@@ -219,14 +219,14 @@ module.exports = function (app, route) {
 
             // Total appointments
             const totalAppointments = await app.models.appointment.countDocuments({
-                createdAt: { $gte: start, $lte: end }
+                bookingDateTime: { $gte: start, $lte: end }
             });
 
             // Appointments by status
             const appointmentsByStatus = await app.models.appointment.aggregate([
                 {
                     $match: {
-                        createdAt: { $gte: start, $lte: end }
+                        bookingDateTime: { $gte: start, $lte: end }
                     }
                 },
                 {
@@ -242,13 +242,13 @@ module.exports = function (app, route) {
             const appointmentsByDay = await app.models.appointment.aggregate([
                 {
                     $match: {
-                        createdAt: { $gte: start, $lte: end }
+                        bookingDateTime: { $gte: start, $lte: end }
                     }
                 },
                 {
                     $group: {
                         _id: {
-                            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+                            $dateToString: { format: "%Y-%m-%d", date: "$bookingDateTime" }
                         },
                         count: { $sum: 1 }
                     }
